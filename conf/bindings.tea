@@ -1,0 +1,29 @@
+Bindings {
+	Binding(name:"Program" class:"richTea.core.node.TreeNode");
+	
+	Binding(name:"Print" class:"richTea.impl.PrintNode" implicitAttributeName:"message") {
+		Attribute(name:"message");
+		Attribute(name:"appendNewLine" defaultValue:true);
+	}
+	
+	Binding(name:"Log" class:"richTea.impl.RichTeaLogger" implicitAttributeName:"message") {
+		Attribute(name:"message");
+		Attribute(name:"loggerName" defaultValue:"richTea");
+		Attribute(name:"level" defaultValue:"debug");
+	}
+	
+	Binding(name:"ForEach" class:"richTea.impl.ForEach" implicitAttributeName:"in") {
+		Attribute(name:"in")
+		Attribute(name:"as" defaultValue:"currentElement")
+	}
+	
+	Binding(name:"While" class:"richTea.impl.While" implicitAttributeName:"condition") {
+		Attribute(name:"condition")
+	}
+	
+	Binding(name:"Set" class:"richTea.impl.Set" implicitAttributeName:"target") {
+		Attribute(name:"target");
+		Attribute(name:"name");
+		Attribute(name:"value");
+	}
+}
