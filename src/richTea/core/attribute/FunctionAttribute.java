@@ -2,6 +2,7 @@ package richTea.core.attribute;
 
 import richTea.core.execution.ExecutionContext;
 import richTea.core.node.TreeNode;
+import richTea.core.resolver.Resolver;
 
 public class FunctionAttribute extends PrimativeAttribute {
 
@@ -10,11 +11,21 @@ public class FunctionAttribute extends PrimativeAttribute {
 	}
 	
 	@Override
+	public TreeNode getInitialValue() {
+		return (TreeNode) super.getInitialValue();
+	}
+	
+	@Override
+	public void setContext(Resolver context) {
+		super.setContext(context);
+		
+		if(context instanceof TreeNode) {
+			getInitialValue().setParent((TreeNode) context);
+		}
+	}
+	
+	@Override
 	public Object getValue() {
-		TreeNode function = (TreeNode) super.getValue();
-		
-		ExecutionContext executionContext = new ExecutionContext();
-		
-		return executionContext.execute(function).getReturnValue();
+		return new ExecutionContext().execute(getInitialValue());
 	}
 }

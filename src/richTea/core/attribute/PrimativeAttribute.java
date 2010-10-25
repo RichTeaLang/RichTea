@@ -49,4 +49,9 @@ public class PrimativeAttribute implements Attribute {
 		return clone;
 		
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s -> %s", getName(), getValue());
+	}
 }

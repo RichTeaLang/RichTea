@@ -7,7 +7,7 @@ public class PrintNode extends TreeNode {
 
 	@Override
 	public void execute(ExecutionContext executionContext) {
-		Object message = executionContext.currentScope.getValue("message");
+		Object message = getMessage();
 		
 		if(appendNewLine()) {
 			System.out.println(message);

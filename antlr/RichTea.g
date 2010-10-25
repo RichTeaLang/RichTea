@@ -60,22 +60,15 @@ tokens {	FUNCTION; CHILDREN;
 program
 	: function EOF!
 	;
-	
-function
-	:	implicitAttribute=datatype PERIOD root=function_chain { injectImplicitAttribute((Tree) $root.tree, (CommonTree) $implicitAttribute.tree); }
-			->	$root
-	|	function_chain
-			->	function_chain
-	;
 
-function_chain
-	:	(implicitAttributes+=chained_function PERIOD)* root=function_end { orderFunctionChain((Tree) $root.tree, $implicitAttributes); } 
+function
+	:	(implicitAttributes+=datatype PERIOD)? (implicitAttributes+=chained_function PERIOD)* root=function_end { orderFunctionChain((Tree) $root.tree, $implicitAttributes); } 
 			->	$root
 	;
 	
 chained_function
 	:	ID (OPEN_PAREN attribute_list? CLOSE_PAREN)?
-			-> ^(FUNCTION ^(NAME ID) ^(ATTRIBUTES attribute_list?))
+			-> ^(FUNCTION ^(NAME ID) ^(ATTRIBUTES attribute_list?) ^(CHILDREN))
 	;
 	
 function_end

@@ -6,20 +6,22 @@ import richTea.core.node.TreeNode;
 
 public class ExecutionContext {
 	
-	private Stack<Scope> stack;
-	
-	public Scope currentScope;
-	
+	private Stack<TreeNode> executionTrace;
+			
 	private boolean runChildren;
 	
+	private Object returnValue;
+	
 	public ExecutionContext() {
-		stack = new Stack<Scope>();
+		executionTrace = new Stack<TreeNode>();
 	}
 	
-	public Scope execute(TreeNode node) {
-		currentScope = new Scope(node.getAttributes(), currentScope);
-		
-		stack.push(currentScope);
+	public Stack<TreeNode> getExecutionTrace() {
+		return executionTrace;
+	}
+	
+	public Object execute(TreeNode node) {		
+		getExecutionTrace().push(node);
 		
 		setRunChildren(true);
 		
@@ -27,7 +29,9 @@ public class ExecutionContext {
 		
 		if(getRunChildren()) executeChildren(node);
 		
-		return stack.pop();
+		getExecutionTrace().pop();
+		
+		return getReturnValue();
 	}
 	
 	public void executeChildren(TreeNode node) {
@@ -44,11 +48,11 @@ public class ExecutionContext {
 		return runChildren;
 	}
 	
-	public void doReturn() {
-		doReturn(null);
+	public Object getReturnValue() {
+		return returnValue;
 	}
 	
-	public void doReturn(Object returnValue) {
-		currentScope.setReturnValue(returnValue);
+	public void setReturnValue(Object returnValue) {
+		this.returnValue = returnValue;
 	}
 }

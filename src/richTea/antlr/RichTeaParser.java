@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g 2010-10-24 14:56:20
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g 2010-10-24 23:21:21
 package richTea.antlr;
 
 import org.antlr.runtime.*;
@@ -192,7 +192,7 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "function"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:64:1: function : (implicitAttribute= datatype PERIOD root= function_chain -> $root | function_chain -> function_chain );
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:64:1: function : (implicitAttributes+= datatype PERIOD )* (implicitAttributes+= chained_function PERIOD )* root= function_end -> $root;
     public final RichTeaParser.function_return function() throws RecognitionException {
         RichTeaParser.function_return retval = new RichTeaParser.function_return();
         retval.start = input.LT(1);
@@ -200,162 +200,58 @@ public class RichTeaParser extends Parser {
         Tree root_0 = null;
 
         Token PERIOD3=null;
-        RichTeaParser.datatype_return implicitAttribute = null;
-
-        RichTeaParser.function_chain_return root = null;
-
-        RichTeaParser.function_chain_return function_chain4 = null;
-
-
-        Tree PERIOD3_tree=null;
-        RewriteRuleTokenStream stream_PERIOD=new RewriteRuleTokenStream(adaptor,"token PERIOD");
-        RewriteRuleSubtreeStream stream_function_chain=new RewriteRuleSubtreeStream(adaptor,"rule function_chain");
-        RewriteRuleSubtreeStream stream_datatype=new RewriteRuleSubtreeStream(adaptor,"rule datatype");
-        try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:65:2: (implicitAttribute= datatype PERIOD root= function_chain -> $root | function_chain -> function_chain )
-            int alt1=2;
-            int LA1_0 = input.LA(1);
-
-            if ( (LA1_0==OPEN_PAREN||LA1_0==OPEN_BRACE||LA1_0==OPEN_BOX||LA1_0==MINUS||(LA1_0>=NOT && LA1_0<=STRING)) ) {
-                alt1=1;
-            }
-            else if ( (LA1_0==ID) ) {
-                alt1=2;
-            }
-            else {
-                if (state.backtracking>0) {state.failed=true; return retval;}
-                NoViableAltException nvae =
-                    new NoViableAltException("", 1, 0, input);
-
-                throw nvae;
-            }
-            switch (alt1) {
-                case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:65:4: implicitAttribute= datatype PERIOD root= function_chain
-                    {
-                    pushFollow(FOLLOW_datatype_in_function135);
-                    implicitAttribute=datatype();
-
-                    state._fsp--;
-                    if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_datatype.add(implicitAttribute.getTree());
-                    PERIOD3=(Token)match(input,PERIOD,FOLLOW_PERIOD_in_function137); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_PERIOD.add(PERIOD3);
-
-                    pushFollow(FOLLOW_function_chain_in_function141);
-                    root=function_chain();
-
-                    state._fsp--;
-                    if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_function_chain.add(root.getTree());
-                    if ( state.backtracking==0 ) {
-                       injectImplicitAttribute((Tree) (root!=null?((Tree)root.tree):null), (CommonTree) (implicitAttribute!=null?((Tree)implicitAttribute.tree):null)); 
-                    }
-
-
-                    // AST REWRITE
-                    // elements: root
-                    // token labels: 
-                    // rule labels: retval, root
-                    // token list labels: 
-                    // rule list labels: 
-                    // wildcard labels: 
-                    if ( state.backtracking==0 ) {
-                    retval.tree = root_0;
-                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
-                    RewriteRuleSubtreeStream stream_root=new RewriteRuleSubtreeStream(adaptor,"rule root",root!=null?root.tree:null);
-
-                    root_0 = (Tree)adaptor.nil();
-                    // 66:4: -> $root
-                    {
-                        adaptor.addChild(root_0, stream_root.nextTree());
-
-                    }
-
-                    retval.tree = root_0;}
-                    }
-                    break;
-                case 2 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:67:4: function_chain
-                    {
-                    pushFollow(FOLLOW_function_chain_in_function156);
-                    function_chain4=function_chain();
-
-                    state._fsp--;
-                    if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_function_chain.add(function_chain4.getTree());
-
-
-                    // AST REWRITE
-                    // elements: function_chain
-                    // token labels: 
-                    // rule labels: retval
-                    // token list labels: 
-                    // rule list labels: 
-                    // wildcard labels: 
-                    if ( state.backtracking==0 ) {
-                    retval.tree = root_0;
-                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
-
-                    root_0 = (Tree)adaptor.nil();
-                    // 68:4: -> function_chain
-                    {
-                        adaptor.addChild(root_0, stream_function_chain.nextTree());
-
-                    }
-
-                    retval.tree = root_0;}
-                    }
-                    break;
-
-            }
-            retval.stop = input.LT(-1);
-
-            if ( state.backtracking==0 ) {
-
-            retval.tree = (Tree)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
-            }
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-    	retval.tree = (Tree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
-
-        }
-        finally {
-        }
-        return retval;
-    }
-    // $ANTLR end "function"
-
-    public static class function_chain_return extends ParserRuleReturnScope {
-        Tree tree;
-        public Object getTree() { return tree; }
-    };
-
-    // $ANTLR start "function_chain"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:71:1: function_chain : (implicitAttributes+= chained_function PERIOD )* root= function_end -> $root;
-    public final RichTeaParser.function_chain_return function_chain() throws RecognitionException {
-        RichTeaParser.function_chain_return retval = new RichTeaParser.function_chain_return();
-        retval.start = input.LT(1);
-
-        Tree root_0 = null;
-
-        Token PERIOD5=null;
+        Token PERIOD4=null;
         List list_implicitAttributes=null;
         RichTeaParser.function_end_return root = null;
 
         RuleReturnScope implicitAttributes = null;
-        Tree PERIOD5_tree=null;
+        Tree PERIOD3_tree=null;
+        Tree PERIOD4_tree=null;
         RewriteRuleTokenStream stream_PERIOD=new RewriteRuleTokenStream(adaptor,"token PERIOD");
         RewriteRuleSubtreeStream stream_chained_function=new RewriteRuleSubtreeStream(adaptor,"rule chained_function");
+        RewriteRuleSubtreeStream stream_datatype=new RewriteRuleSubtreeStream(adaptor,"rule datatype");
         RewriteRuleSubtreeStream stream_function_end=new RewriteRuleSubtreeStream(adaptor,"rule function_end");
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:72:2: ( (implicitAttributes+= chained_function PERIOD )* root= function_end -> $root)
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:72:4: (implicitAttributes+= chained_function PERIOD )* root= function_end
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:65:2: ( (implicitAttributes+= datatype PERIOD )* (implicitAttributes+= chained_function PERIOD )* root= function_end -> $root)
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:65:4: (implicitAttributes+= datatype PERIOD )* (implicitAttributes+= chained_function PERIOD )* root= function_end
             {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:72:4: (implicitAttributes+= chained_function PERIOD )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:65:4: (implicitAttributes+= datatype PERIOD )*
+            loop1:
+            do {
+                int alt1=2;
+                int LA1_0 = input.LA(1);
+
+                if ( (LA1_0==OPEN_PAREN||LA1_0==OPEN_BRACE||LA1_0==OPEN_BOX||LA1_0==MINUS||(LA1_0>=NOT && LA1_0<=STRING)) ) {
+                    alt1=1;
+                }
+
+
+                switch (alt1) {
+            	case 1 :
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:65:5: implicitAttributes+= datatype PERIOD
+            	    {
+            	    pushFollow(FOLLOW_datatype_in_function135);
+            	    implicitAttributes=datatype();
+
+            	    state._fsp--;
+            	    if (state.failed) return retval;
+            	    if ( state.backtracking==0 ) stream_datatype.add(implicitAttributes.getTree());
+            	    if (list_implicitAttributes==null) list_implicitAttributes=new ArrayList();
+            	    list_implicitAttributes.add(implicitAttributes.getTree());
+
+            	    PERIOD3=(Token)match(input,PERIOD,FOLLOW_PERIOD_in_function137); if (state.failed) return retval; 
+            	    if ( state.backtracking==0 ) stream_PERIOD.add(PERIOD3);
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop1;
+                }
+            } while (true);
+
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:65:43: (implicitAttributes+= chained_function PERIOD )*
             loop2:
             do {
                 int alt2=2;
@@ -374,9 +270,9 @@ public class RichTeaParser extends Parser {
 
                 switch (alt2) {
             	case 1 :
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:72:5: implicitAttributes+= chained_function PERIOD
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:65:44: implicitAttributes+= chained_function PERIOD
             	    {
-            	    pushFollow(FOLLOW_chained_function_in_function_chain177);
+            	    pushFollow(FOLLOW_chained_function_in_function144);
             	    implicitAttributes=chained_function();
 
             	    state._fsp--;
@@ -385,8 +281,8 @@ public class RichTeaParser extends Parser {
             	    if (list_implicitAttributes==null) list_implicitAttributes=new ArrayList();
             	    list_implicitAttributes.add(implicitAttributes.getTree());
 
-            	    PERIOD5=(Token)match(input,PERIOD,FOLLOW_PERIOD_in_function_chain179); if (state.failed) return retval; 
-            	    if ( state.backtracking==0 ) stream_PERIOD.add(PERIOD5);
+            	    PERIOD4=(Token)match(input,PERIOD,FOLLOW_PERIOD_in_function146); if (state.failed) return retval; 
+            	    if ( state.backtracking==0 ) stream_PERIOD.add(PERIOD4);
 
 
             	    }
@@ -397,7 +293,7 @@ public class RichTeaParser extends Parser {
                 }
             } while (true);
 
-            pushFollow(FOLLOW_function_end_in_function_chain185);
+            pushFollow(FOLLOW_function_end_in_function152);
             root=function_end();
 
             state._fsp--;
@@ -421,7 +317,7 @@ public class RichTeaParser extends Parser {
             RewriteRuleSubtreeStream stream_root=new RewriteRuleSubtreeStream(adaptor,"rule root",root!=null?root.tree:null);
 
             root_0 = (Tree)adaptor.nil();
-            // 73:4: -> $root
+            // 66:4: -> $root
             {
                 adaptor.addChild(root_0, stream_root.nextTree());
 
@@ -448,7 +344,7 @@ public class RichTeaParser extends Parser {
         }
         return retval;
     }
-    // $ANTLR end "function_chain"
+    // $ANTLR end "function"
 
     public static class chained_function_return extends ParserRuleReturnScope {
         Tree tree;
@@ -456,34 +352,34 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "chained_function"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:76:1: chained_function : ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )? -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ) ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:69:1: chained_function : ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )? -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ) ) ;
     public final RichTeaParser.chained_function_return chained_function() throws RecognitionException {
         RichTeaParser.chained_function_return retval = new RichTeaParser.chained_function_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token ID6=null;
-        Token OPEN_PAREN7=null;
-        Token CLOSE_PAREN9=null;
-        RichTeaParser.attribute_list_return attribute_list8 = null;
+        Token ID5=null;
+        Token OPEN_PAREN6=null;
+        Token CLOSE_PAREN8=null;
+        RichTeaParser.attribute_list_return attribute_list7 = null;
 
 
-        Tree ID6_tree=null;
-        Tree OPEN_PAREN7_tree=null;
-        Tree CLOSE_PAREN9_tree=null;
+        Tree ID5_tree=null;
+        Tree OPEN_PAREN6_tree=null;
+        Tree CLOSE_PAREN8_tree=null;
         RewriteRuleTokenStream stream_OPEN_PAREN=new RewriteRuleTokenStream(adaptor,"token OPEN_PAREN");
         RewriteRuleTokenStream stream_CLOSE_PAREN=new RewriteRuleTokenStream(adaptor,"token CLOSE_PAREN");
         RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
         RewriteRuleSubtreeStream stream_attribute_list=new RewriteRuleSubtreeStream(adaptor,"rule attribute_list");
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:77:2: ( ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )? -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ) )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:77:4: ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )?
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:70:2: ( ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )? -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ) ) )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:70:4: ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )?
             {
-            ID6=(Token)match(input,ID,FOLLOW_ID_in_chained_function208); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_ID.add(ID6);
+            ID5=(Token)match(input,ID,FOLLOW_ID_in_chained_function175); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_ID.add(ID5);
 
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:77:7: ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )?
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:70:7: ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -492,12 +388,12 @@ public class RichTeaParser extends Parser {
             }
             switch (alt4) {
                 case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:77:8: OPEN_PAREN ( attribute_list )? CLOSE_PAREN
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:70:8: OPEN_PAREN ( attribute_list )? CLOSE_PAREN
                     {
-                    OPEN_PAREN7=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_chained_function211); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_OPEN_PAREN.add(OPEN_PAREN7);
+                    OPEN_PAREN6=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_chained_function178); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_OPEN_PAREN.add(OPEN_PAREN6);
 
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:77:19: ( attribute_list )?
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:70:19: ( attribute_list )?
                     int alt3=2;
                     int LA3_0 = input.LA(1);
 
@@ -508,20 +404,20 @@ public class RichTeaParser extends Parser {
                         case 1 :
                             // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:0:0: attribute_list
                             {
-                            pushFollow(FOLLOW_attribute_list_in_chained_function213);
-                            attribute_list8=attribute_list();
+                            pushFollow(FOLLOW_attribute_list_in_chained_function180);
+                            attribute_list7=attribute_list();
 
                             state._fsp--;
                             if (state.failed) return retval;
-                            if ( state.backtracking==0 ) stream_attribute_list.add(attribute_list8.getTree());
+                            if ( state.backtracking==0 ) stream_attribute_list.add(attribute_list7.getTree());
 
                             }
                             break;
 
                     }
 
-                    CLOSE_PAREN9=(Token)match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_chained_function216); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_CLOSE_PAREN.add(CLOSE_PAREN9);
+                    CLOSE_PAREN8=(Token)match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_chained_function183); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_CLOSE_PAREN.add(CLOSE_PAREN8);
 
 
                     }
@@ -543,14 +439,14 @@ public class RichTeaParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Tree)adaptor.nil();
-            // 78:4: -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) )
+            // 71:4: -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ) )
             {
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:78:7: ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:71:7: ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ) )
                 {
                 Tree root_1 = (Tree)adaptor.nil();
                 root_1 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(FUNCTION, "FUNCTION"), root_1);
 
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:78:18: ^( NAME ID )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:71:18: ^( NAME ID )
                 {
                 Tree root_2 = (Tree)adaptor.nil();
                 root_2 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(NAME, "NAME"), root_2);
@@ -559,17 +455,24 @@ public class RichTeaParser extends Parser {
 
                 adaptor.addChild(root_1, root_2);
                 }
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:78:29: ^( ATTRIBUTES ( attribute_list )? )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:71:29: ^( ATTRIBUTES ( attribute_list )? )
                 {
                 Tree root_2 = (Tree)adaptor.nil();
                 root_2 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(ATTRIBUTES, "ATTRIBUTES"), root_2);
 
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:78:42: ( attribute_list )?
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:71:42: ( attribute_list )?
                 if ( stream_attribute_list.hasNext() ) {
                     adaptor.addChild(root_2, stream_attribute_list.nextTree());
 
                 }
                 stream_attribute_list.reset();
+
+                adaptor.addChild(root_1, root_2);
+                }
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:71:59: ^( CHILDREN )
+                {
+                Tree root_2 = (Tree)adaptor.nil();
+                root_2 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(CHILDREN, "CHILDREN"), root_2);
 
                 adaptor.addChild(root_1, root_2);
                 }
@@ -608,30 +511,30 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "function_end"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:81:1: function_end : ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )? ( OPEN_BRACE ( function )* CLOSE_BRACE )? ( SEMI_COLON )? -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ( function )* ) ) ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:74:1: function_end : ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )? ( OPEN_BRACE ( function )* CLOSE_BRACE )? ( SEMI_COLON )? -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ( function )* ) ) ;
     public final RichTeaParser.function_end_return function_end() throws RecognitionException {
         RichTeaParser.function_end_return retval = new RichTeaParser.function_end_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token ID10=null;
-        Token OPEN_PAREN11=null;
-        Token CLOSE_PAREN13=null;
-        Token OPEN_BRACE14=null;
-        Token CLOSE_BRACE16=null;
-        Token SEMI_COLON17=null;
-        RichTeaParser.attribute_list_return attribute_list12 = null;
+        Token ID9=null;
+        Token OPEN_PAREN10=null;
+        Token CLOSE_PAREN12=null;
+        Token OPEN_BRACE13=null;
+        Token CLOSE_BRACE15=null;
+        Token SEMI_COLON16=null;
+        RichTeaParser.attribute_list_return attribute_list11 = null;
 
-        RichTeaParser.function_return function15 = null;
+        RichTeaParser.function_return function14 = null;
 
 
-        Tree ID10_tree=null;
-        Tree OPEN_PAREN11_tree=null;
-        Tree CLOSE_PAREN13_tree=null;
-        Tree OPEN_BRACE14_tree=null;
-        Tree CLOSE_BRACE16_tree=null;
-        Tree SEMI_COLON17_tree=null;
+        Tree ID9_tree=null;
+        Tree OPEN_PAREN10_tree=null;
+        Tree CLOSE_PAREN12_tree=null;
+        Tree OPEN_BRACE13_tree=null;
+        Tree CLOSE_BRACE15_tree=null;
+        Tree SEMI_COLON16_tree=null;
         RewriteRuleTokenStream stream_OPEN_PAREN=new RewriteRuleTokenStream(adaptor,"token OPEN_PAREN");
         RewriteRuleTokenStream stream_SEMI_COLON=new RewriteRuleTokenStream(adaptor,"token SEMI_COLON");
         RewriteRuleTokenStream stream_CLOSE_PAREN=new RewriteRuleTokenStream(adaptor,"token CLOSE_PAREN");
@@ -641,13 +544,13 @@ public class RichTeaParser extends Parser {
         RewriteRuleSubtreeStream stream_attribute_list=new RewriteRuleSubtreeStream(adaptor,"rule attribute_list");
         RewriteRuleSubtreeStream stream_function=new RewriteRuleSubtreeStream(adaptor,"rule function");
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:82:2: ( ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )? ( OPEN_BRACE ( function )* CLOSE_BRACE )? ( SEMI_COLON )? -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ( function )* ) ) )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:82:4: ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )? ( OPEN_BRACE ( function )* CLOSE_BRACE )? ( SEMI_COLON )?
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:75:2: ( ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )? ( OPEN_BRACE ( function )* CLOSE_BRACE )? ( SEMI_COLON )? -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ( function )* ) ) )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:75:4: ID ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )? ( OPEN_BRACE ( function )* CLOSE_BRACE )? ( SEMI_COLON )?
             {
-            ID10=(Token)match(input,ID,FOLLOW_ID_in_function_end252); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_ID.add(ID10);
+            ID9=(Token)match(input,ID,FOLLOW_ID_in_function_end223); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_ID.add(ID9);
 
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:82:7: ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )?
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:75:7: ( OPEN_PAREN ( attribute_list )? CLOSE_PAREN )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -660,12 +563,12 @@ public class RichTeaParser extends Parser {
             }
             switch (alt6) {
                 case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:82:8: OPEN_PAREN ( attribute_list )? CLOSE_PAREN
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:75:8: OPEN_PAREN ( attribute_list )? CLOSE_PAREN
                     {
-                    OPEN_PAREN11=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_function_end255); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_OPEN_PAREN.add(OPEN_PAREN11);
+                    OPEN_PAREN10=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_function_end226); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_OPEN_PAREN.add(OPEN_PAREN10);
 
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:82:19: ( attribute_list )?
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:75:19: ( attribute_list )?
                     int alt5=2;
                     int LA5_0 = input.LA(1);
 
@@ -676,20 +579,20 @@ public class RichTeaParser extends Parser {
                         case 1 :
                             // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:0:0: attribute_list
                             {
-                            pushFollow(FOLLOW_attribute_list_in_function_end257);
-                            attribute_list12=attribute_list();
+                            pushFollow(FOLLOW_attribute_list_in_function_end228);
+                            attribute_list11=attribute_list();
 
                             state._fsp--;
                             if (state.failed) return retval;
-                            if ( state.backtracking==0 ) stream_attribute_list.add(attribute_list12.getTree());
+                            if ( state.backtracking==0 ) stream_attribute_list.add(attribute_list11.getTree());
 
                             }
                             break;
 
                     }
 
-                    CLOSE_PAREN13=(Token)match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_function_end260); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_CLOSE_PAREN.add(CLOSE_PAREN13);
+                    CLOSE_PAREN12=(Token)match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_function_end231); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_CLOSE_PAREN.add(CLOSE_PAREN12);
 
 
                     }
@@ -697,17 +600,17 @@ public class RichTeaParser extends Parser {
 
             }
 
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:82:49: ( OPEN_BRACE ( function )* CLOSE_BRACE )?
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:75:49: ( OPEN_BRACE ( function )* CLOSE_BRACE )?
             int alt8=2;
             alt8 = dfa8.predict(input);
             switch (alt8) {
                 case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:82:50: OPEN_BRACE ( function )* CLOSE_BRACE
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:75:50: OPEN_BRACE ( function )* CLOSE_BRACE
                     {
-                    OPEN_BRACE14=(Token)match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_function_end265); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_OPEN_BRACE.add(OPEN_BRACE14);
+                    OPEN_BRACE13=(Token)match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_function_end236); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_OPEN_BRACE.add(OPEN_BRACE13);
 
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:82:61: ( function )*
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:75:61: ( function )*
                     loop7:
                     do {
                         int alt7=2;
@@ -722,12 +625,12 @@ public class RichTeaParser extends Parser {
                     	case 1 :
                     	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:0:0: function
                     	    {
-                    	    pushFollow(FOLLOW_function_in_function_end267);
-                    	    function15=function();
+                    	    pushFollow(FOLLOW_function_in_function_end238);
+                    	    function14=function();
 
                     	    state._fsp--;
                     	    if (state.failed) return retval;
-                    	    if ( state.backtracking==0 ) stream_function.add(function15.getTree());
+                    	    if ( state.backtracking==0 ) stream_function.add(function14.getTree());
 
                     	    }
                     	    break;
@@ -737,8 +640,8 @@ public class RichTeaParser extends Parser {
                         }
                     } while (true);
 
-                    CLOSE_BRACE16=(Token)match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_function_end270); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_CLOSE_BRACE.add(CLOSE_BRACE16);
+                    CLOSE_BRACE15=(Token)match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_function_end241); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_CLOSE_BRACE.add(CLOSE_BRACE15);
 
 
                     }
@@ -746,7 +649,7 @@ public class RichTeaParser extends Parser {
 
             }
 
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:82:85: ( SEMI_COLON )?
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:75:85: ( SEMI_COLON )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -757,8 +660,8 @@ public class RichTeaParser extends Parser {
                 case 1 :
                     // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:0:0: SEMI_COLON
                     {
-                    SEMI_COLON17=(Token)match(input,SEMI_COLON,FOLLOW_SEMI_COLON_in_function_end274); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_SEMI_COLON.add(SEMI_COLON17);
+                    SEMI_COLON16=(Token)match(input,SEMI_COLON,FOLLOW_SEMI_COLON_in_function_end245); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_SEMI_COLON.add(SEMI_COLON16);
 
 
                     }
@@ -769,7 +672,7 @@ public class RichTeaParser extends Parser {
 
 
             // AST REWRITE
-            // elements: function, attribute_list, ID
+            // elements: function, ID, attribute_list
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -780,14 +683,14 @@ public class RichTeaParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Tree)adaptor.nil();
-            // 83:4: -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ( function )* ) )
+            // 76:4: -> ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ( function )* ) )
             {
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:83:7: ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ( function )* ) )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:76:7: ^( FUNCTION ^( NAME ID ) ^( ATTRIBUTES ( attribute_list )? ) ^( CHILDREN ( function )* ) )
                 {
                 Tree root_1 = (Tree)adaptor.nil();
                 root_1 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(FUNCTION, "FUNCTION"), root_1);
 
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:83:18: ^( NAME ID )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:76:18: ^( NAME ID )
                 {
                 Tree root_2 = (Tree)adaptor.nil();
                 root_2 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(NAME, "NAME"), root_2);
@@ -796,12 +699,12 @@ public class RichTeaParser extends Parser {
 
                 adaptor.addChild(root_1, root_2);
                 }
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:83:29: ^( ATTRIBUTES ( attribute_list )? )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:76:29: ^( ATTRIBUTES ( attribute_list )? )
                 {
                 Tree root_2 = (Tree)adaptor.nil();
                 root_2 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(ATTRIBUTES, "ATTRIBUTES"), root_2);
 
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:83:42: ( attribute_list )?
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:76:42: ( attribute_list )?
                 if ( stream_attribute_list.hasNext() ) {
                     adaptor.addChild(root_2, stream_attribute_list.nextTree());
 
@@ -810,12 +713,12 @@ public class RichTeaParser extends Parser {
 
                 adaptor.addChild(root_1, root_2);
                 }
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:83:59: ^( CHILDREN ( function )* )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:76:59: ^( CHILDREN ( function )* )
                 {
                 Tree root_2 = (Tree)adaptor.nil();
                 root_2 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(CHILDREN, "CHILDREN"), root_2);
 
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:83:70: ( function )*
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:76:70: ( function )*
                 while ( stream_function.hasNext() ) {
                     adaptor.addChild(root_2, stream_function.nextTree());
 
@@ -859,33 +762,33 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "attribute_list"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:86:1: attribute_list : attribute ( ( COMMA )? attribute )* -> ( ^( ATTRIBUTE attribute ) )* ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:79:1: attribute_list : attribute ( ( COMMA )? attribute )* -> ( ^( ATTRIBUTE attribute ) )* ;
     public final RichTeaParser.attribute_list_return attribute_list() throws RecognitionException {
         RichTeaParser.attribute_list_return retval = new RichTeaParser.attribute_list_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token COMMA19=null;
-        RichTeaParser.attribute_return attribute18 = null;
+        Token COMMA18=null;
+        RichTeaParser.attribute_return attribute17 = null;
 
-        RichTeaParser.attribute_return attribute20 = null;
+        RichTeaParser.attribute_return attribute19 = null;
 
 
-        Tree COMMA19_tree=null;
+        Tree COMMA18_tree=null;
         RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
         RewriteRuleSubtreeStream stream_attribute=new RewriteRuleSubtreeStream(adaptor,"rule attribute");
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:87:2: ( attribute ( ( COMMA )? attribute )* -> ( ^( ATTRIBUTE attribute ) )* )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:87:4: attribute ( ( COMMA )? attribute )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:80:2: ( attribute ( ( COMMA )? attribute )* -> ( ^( ATTRIBUTE attribute ) )* )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:80:4: attribute ( ( COMMA )? attribute )*
             {
-            pushFollow(FOLLOW_attribute_in_attribute_list316);
-            attribute18=attribute();
+            pushFollow(FOLLOW_attribute_in_attribute_list287);
+            attribute17=attribute();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) stream_attribute.add(attribute18.getTree());
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:87:14: ( ( COMMA )? attribute )*
+            if ( state.backtracking==0 ) stream_attribute.add(attribute17.getTree());
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:80:14: ( ( COMMA )? attribute )*
             loop11:
             do {
                 int alt11=2;
@@ -898,9 +801,9 @@ public class RichTeaParser extends Parser {
 
                 switch (alt11) {
             	case 1 :
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:87:15: ( COMMA )? attribute
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:80:15: ( COMMA )? attribute
             	    {
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:87:15: ( COMMA )?
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:80:15: ( COMMA )?
             	    int alt10=2;
             	    int LA10_0 = input.LA(1);
 
@@ -911,8 +814,8 @@ public class RichTeaParser extends Parser {
             	        case 1 :
             	            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:0:0: COMMA
             	            {
-            	            COMMA19=(Token)match(input,COMMA,FOLLOW_COMMA_in_attribute_list319); if (state.failed) return retval; 
-            	            if ( state.backtracking==0 ) stream_COMMA.add(COMMA19);
+            	            COMMA18=(Token)match(input,COMMA,FOLLOW_COMMA_in_attribute_list290); if (state.failed) return retval; 
+            	            if ( state.backtracking==0 ) stream_COMMA.add(COMMA18);
 
 
             	            }
@@ -920,12 +823,12 @@ public class RichTeaParser extends Parser {
 
             	    }
 
-            	    pushFollow(FOLLOW_attribute_in_attribute_list322);
-            	    attribute20=attribute();
+            	    pushFollow(FOLLOW_attribute_in_attribute_list293);
+            	    attribute19=attribute();
 
             	    state._fsp--;
             	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) stream_attribute.add(attribute20.getTree());
+            	    if ( state.backtracking==0 ) stream_attribute.add(attribute19.getTree());
 
             	    }
             	    break;
@@ -949,11 +852,11 @@ public class RichTeaParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Tree)adaptor.nil();
-            // 88:4: -> ( ^( ATTRIBUTE attribute ) )*
+            // 81:4: -> ( ^( ATTRIBUTE attribute ) )*
             {
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:88:7: ( ^( ATTRIBUTE attribute ) )*
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:81:7: ( ^( ATTRIBUTE attribute ) )*
                 while ( stream_attribute.hasNext() ) {
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:88:7: ^( ATTRIBUTE attribute )
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:81:7: ^( ATTRIBUTE attribute )
                     {
                     Tree root_1 = (Tree)adaptor.nil();
                     root_1 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(ATTRIBUTE, "ATTRIBUTE"), root_1);
@@ -997,34 +900,34 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "attribute"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:91:1: attribute : ID ( COLON | ASSIGN ) attribute_data -> ^( NAME ID ) ^( VALUE attribute_data ) ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:84:1: attribute : ID ( COLON | ASSIGN ) attribute_data -> ^( NAME ID ) ^( VALUE attribute_data ) ;
     public final RichTeaParser.attribute_return attribute() throws RecognitionException {
         RichTeaParser.attribute_return retval = new RichTeaParser.attribute_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token ID21=null;
-        Token COLON22=null;
-        Token ASSIGN23=null;
-        RichTeaParser.attribute_data_return attribute_data24 = null;
+        Token ID20=null;
+        Token COLON21=null;
+        Token ASSIGN22=null;
+        RichTeaParser.attribute_data_return attribute_data23 = null;
 
 
-        Tree ID21_tree=null;
-        Tree COLON22_tree=null;
-        Tree ASSIGN23_tree=null;
+        Tree ID20_tree=null;
+        Tree COLON21_tree=null;
+        Tree ASSIGN22_tree=null;
         RewriteRuleTokenStream stream_COLON=new RewriteRuleTokenStream(adaptor,"token COLON");
         RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
         RewriteRuleTokenStream stream_ASSIGN=new RewriteRuleTokenStream(adaptor,"token ASSIGN");
         RewriteRuleSubtreeStream stream_attribute_data=new RewriteRuleSubtreeStream(adaptor,"rule attribute_data");
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:92:2: ( ID ( COLON | ASSIGN ) attribute_data -> ^( NAME ID ) ^( VALUE attribute_data ) )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:92:4: ID ( COLON | ASSIGN ) attribute_data
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:85:2: ( ID ( COLON | ASSIGN ) attribute_data -> ^( NAME ID ) ^( VALUE attribute_data ) )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:85:4: ID ( COLON | ASSIGN ) attribute_data
             {
-            ID21=(Token)match(input,ID,FOLLOW_ID_in_attribute349); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_ID.add(ID21);
+            ID20=(Token)match(input,ID,FOLLOW_ID_in_attribute320); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_ID.add(ID20);
 
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:92:7: ( COLON | ASSIGN )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:85:7: ( COLON | ASSIGN )
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1043,19 +946,19 @@ public class RichTeaParser extends Parser {
             }
             switch (alt12) {
                 case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:92:8: COLON
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:85:8: COLON
                     {
-                    COLON22=(Token)match(input,COLON,FOLLOW_COLON_in_attribute352); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_COLON.add(COLON22);
+                    COLON21=(Token)match(input,COLON,FOLLOW_COLON_in_attribute323); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_COLON.add(COLON21);
 
 
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:92:16: ASSIGN
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:85:16: ASSIGN
                     {
-                    ASSIGN23=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_attribute356); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_ASSIGN.add(ASSIGN23);
+                    ASSIGN22=(Token)match(input,ASSIGN,FOLLOW_ASSIGN_in_attribute327); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_ASSIGN.add(ASSIGN22);
 
 
                     }
@@ -1063,12 +966,12 @@ public class RichTeaParser extends Parser {
 
             }
 
-            pushFollow(FOLLOW_attribute_data_in_attribute360);
-            attribute_data24=attribute_data();
+            pushFollow(FOLLOW_attribute_data_in_attribute331);
+            attribute_data23=attribute_data();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) stream_attribute_data.add(attribute_data24.getTree());
+            if ( state.backtracking==0 ) stream_attribute_data.add(attribute_data23.getTree());
 
 
             // AST REWRITE
@@ -1083,9 +986,9 @@ public class RichTeaParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Tree)adaptor.nil();
-            // 93:4: -> ^( NAME ID ) ^( VALUE attribute_data )
+            // 86:4: -> ^( NAME ID ) ^( VALUE attribute_data )
             {
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:93:7: ^( NAME ID )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:86:7: ^( NAME ID )
                 {
                 Tree root_1 = (Tree)adaptor.nil();
                 root_1 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(NAME, "NAME"), root_1);
@@ -1094,7 +997,7 @@ public class RichTeaParser extends Parser {
 
                 adaptor.addChild(root_0, root_1);
                 }
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:93:18: ^( VALUE attribute_data )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:86:18: ^( VALUE attribute_data )
                 {
                 Tree root_1 = (Tree)adaptor.nil();
                 root_1 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(VALUE, "VALUE"), root_1);
@@ -1135,21 +1038,21 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "attribute_data"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:96:1: attribute_data : ( function | datatype );
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:89:1: attribute_data : ( function | datatype );
     public final RichTeaParser.attribute_data_return attribute_data() throws RecognitionException {
         RichTeaParser.attribute_data_return retval = new RichTeaParser.attribute_data_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        RichTeaParser.function_return function25 = null;
+        RichTeaParser.function_return function24 = null;
 
-        RichTeaParser.datatype_return datatype26 = null;
+        RichTeaParser.datatype_return datatype25 = null;
 
 
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:97:2: ( function | datatype )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:90:2: ( function | datatype )
             int alt13=2;
             switch ( input.LA(1) ) {
             case OPEN_PAREN:
@@ -1283,30 +1186,30 @@ public class RichTeaParser extends Parser {
 
             switch (alt13) {
                 case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:97:4: function
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:90:4: function
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    pushFollow(FOLLOW_function_in_attribute_data390);
-                    function25=function();
+                    pushFollow(FOLLOW_function_in_attribute_data361);
+                    function24=function();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, function25.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, function24.getTree());
 
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:98:4: datatype
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:91:4: datatype
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    pushFollow(FOLLOW_datatype_in_attribute_data395);
-                    datatype26=datatype();
+                    pushFollow(FOLLOW_datatype_in_attribute_data366);
+                    datatype25=datatype();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, datatype26.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, datatype25.getTree());
 
                     }
                     break;
@@ -1338,23 +1241,23 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "datatype"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:1: datatype : ( expression | array | lookup );
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:95:1: datatype : ( expression | array | lookup );
     public final RichTeaParser.datatype_return datatype() throws RecognitionException {
         RichTeaParser.datatype_return retval = new RichTeaParser.datatype_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        RichTeaParser.expression_return expression27 = null;
+        RichTeaParser.expression_return expression26 = null;
 
-        RichTeaParser.array_return array28 = null;
+        RichTeaParser.array_return array27 = null;
 
-        RichTeaParser.lookup_return lookup29 = null;
+        RichTeaParser.lookup_return lookup28 = null;
 
 
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:103:2: ( expression | array | lookup )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:96:2: ( expression | array | lookup )
             int alt14=3;
             switch ( input.LA(1) ) {
             case OPEN_PAREN:
@@ -1387,44 +1290,44 @@ public class RichTeaParser extends Parser {
 
             switch (alt14) {
                 case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:103:4: expression
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:96:4: expression
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    pushFollow(FOLLOW_expression_in_datatype408);
-                    expression27=expression();
+                    pushFollow(FOLLOW_expression_in_datatype379);
+                    expression26=expression();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, expression27.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, expression26.getTree());
 
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:104:4: array
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:97:4: array
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    pushFollow(FOLLOW_array_in_datatype413);
-                    array28=array();
+                    pushFollow(FOLLOW_array_in_datatype384);
+                    array27=array();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, array28.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, array27.getTree());
 
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:105:5: lookup
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:98:5: lookup
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    pushFollow(FOLLOW_lookup_in_datatype419);
-                    lookup29=lookup();
+                    pushFollow(FOLLOW_lookup_in_datatype390);
+                    lookup28=lookup();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, lookup29.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, lookup28.getTree());
 
                     }
                     break;
@@ -1456,36 +1359,36 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "array"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:108:1: array : OPEN_BOX ( attribute_data ( COMMA attribute_data )* )? CLOSE_BOX -> ^( ARRAY ( attribute_data )* ) ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:101:1: array : OPEN_BOX ( attribute_data ( COMMA attribute_data )* )? CLOSE_BOX -> ^( ARRAY ( attribute_data )* ) ;
     public final RichTeaParser.array_return array() throws RecognitionException {
         RichTeaParser.array_return retval = new RichTeaParser.array_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token OPEN_BOX30=null;
-        Token COMMA32=null;
-        Token CLOSE_BOX34=null;
-        RichTeaParser.attribute_data_return attribute_data31 = null;
+        Token OPEN_BOX29=null;
+        Token COMMA31=null;
+        Token CLOSE_BOX33=null;
+        RichTeaParser.attribute_data_return attribute_data30 = null;
 
-        RichTeaParser.attribute_data_return attribute_data33 = null;
+        RichTeaParser.attribute_data_return attribute_data32 = null;
 
 
-        Tree OPEN_BOX30_tree=null;
-        Tree COMMA32_tree=null;
-        Tree CLOSE_BOX34_tree=null;
+        Tree OPEN_BOX29_tree=null;
+        Tree COMMA31_tree=null;
+        Tree CLOSE_BOX33_tree=null;
         RewriteRuleTokenStream stream_CLOSE_BOX=new RewriteRuleTokenStream(adaptor,"token CLOSE_BOX");
         RewriteRuleTokenStream stream_OPEN_BOX=new RewriteRuleTokenStream(adaptor,"token OPEN_BOX");
         RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
         RewriteRuleSubtreeStream stream_attribute_data=new RewriteRuleSubtreeStream(adaptor,"rule attribute_data");
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:109:2: ( OPEN_BOX ( attribute_data ( COMMA attribute_data )* )? CLOSE_BOX -> ^( ARRAY ( attribute_data )* ) )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:109:4: OPEN_BOX ( attribute_data ( COMMA attribute_data )* )? CLOSE_BOX
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:2: ( OPEN_BOX ( attribute_data ( COMMA attribute_data )* )? CLOSE_BOX -> ^( ARRAY ( attribute_data )* ) )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:4: OPEN_BOX ( attribute_data ( COMMA attribute_data )* )? CLOSE_BOX
             {
-            OPEN_BOX30=(Token)match(input,OPEN_BOX,FOLLOW_OPEN_BOX_in_array430); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_OPEN_BOX.add(OPEN_BOX30);
+            OPEN_BOX29=(Token)match(input,OPEN_BOX,FOLLOW_OPEN_BOX_in_array401); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_OPEN_BOX.add(OPEN_BOX29);
 
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:109:13: ( attribute_data ( COMMA attribute_data )* )?
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:13: ( attribute_data ( COMMA attribute_data )* )?
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -1494,15 +1397,15 @@ public class RichTeaParser extends Parser {
             }
             switch (alt16) {
                 case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:109:14: attribute_data ( COMMA attribute_data )*
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:14: attribute_data ( COMMA attribute_data )*
                     {
-                    pushFollow(FOLLOW_attribute_data_in_array433);
-                    attribute_data31=attribute_data();
+                    pushFollow(FOLLOW_attribute_data_in_array404);
+                    attribute_data30=attribute_data();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_attribute_data.add(attribute_data31.getTree());
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:109:29: ( COMMA attribute_data )*
+                    if ( state.backtracking==0 ) stream_attribute_data.add(attribute_data30.getTree());
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:29: ( COMMA attribute_data )*
                     loop15:
                     do {
                         int alt15=2;
@@ -1515,17 +1418,17 @@ public class RichTeaParser extends Parser {
 
                         switch (alt15) {
                     	case 1 :
-                    	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:109:30: COMMA attribute_data
+                    	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:30: COMMA attribute_data
                     	    {
-                    	    COMMA32=(Token)match(input,COMMA,FOLLOW_COMMA_in_array436); if (state.failed) return retval; 
-                    	    if ( state.backtracking==0 ) stream_COMMA.add(COMMA32);
+                    	    COMMA31=(Token)match(input,COMMA,FOLLOW_COMMA_in_array407); if (state.failed) return retval; 
+                    	    if ( state.backtracking==0 ) stream_COMMA.add(COMMA31);
 
-                    	    pushFollow(FOLLOW_attribute_data_in_array438);
-                    	    attribute_data33=attribute_data();
+                    	    pushFollow(FOLLOW_attribute_data_in_array409);
+                    	    attribute_data32=attribute_data();
 
                     	    state._fsp--;
                     	    if (state.failed) return retval;
-                    	    if ( state.backtracking==0 ) stream_attribute_data.add(attribute_data33.getTree());
+                    	    if ( state.backtracking==0 ) stream_attribute_data.add(attribute_data32.getTree());
 
                     	    }
                     	    break;
@@ -1541,8 +1444,8 @@ public class RichTeaParser extends Parser {
 
             }
 
-            CLOSE_BOX34=(Token)match(input,CLOSE_BOX,FOLLOW_CLOSE_BOX_in_array445); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_CLOSE_BOX.add(CLOSE_BOX34);
+            CLOSE_BOX33=(Token)match(input,CLOSE_BOX,FOLLOW_CLOSE_BOX_in_array416); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_CLOSE_BOX.add(CLOSE_BOX33);
 
 
 
@@ -1558,14 +1461,14 @@ public class RichTeaParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Tree)adaptor.nil();
-            // 110:4: -> ^( ARRAY ( attribute_data )* )
+            // 103:4: -> ^( ARRAY ( attribute_data )* )
             {
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:110:7: ^( ARRAY ( attribute_data )* )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:103:7: ^( ARRAY ( attribute_data )* )
                 {
                 Tree root_1 = (Tree)adaptor.nil();
                 root_1 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(ARRAY, "ARRAY"), root_1);
 
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:110:15: ( attribute_data )*
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:103:15: ( attribute_data )*
                 while ( stream_attribute_data.hasNext() ) {
                     adaptor.addChild(root_1, stream_attribute_data.nextTree());
 
@@ -1606,43 +1509,43 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "lookup"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:113:1: lookup : OPEN_BRACE ( ID ( PERIOD ID )* ) CLOSE_BRACE -> ^( LOOKUP ( ^( ID ) )+ ) ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:106:1: lookup : OPEN_BRACE ( ID ( PERIOD ID )* ) CLOSE_BRACE -> ^( LOOKUP ( ^( ID ) )+ ) ;
     public final RichTeaParser.lookup_return lookup() throws RecognitionException {
         RichTeaParser.lookup_return retval = new RichTeaParser.lookup_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token OPEN_BRACE35=null;
-        Token ID36=null;
-        Token PERIOD37=null;
-        Token ID38=null;
-        Token CLOSE_BRACE39=null;
+        Token OPEN_BRACE34=null;
+        Token ID35=null;
+        Token PERIOD36=null;
+        Token ID37=null;
+        Token CLOSE_BRACE38=null;
 
-        Tree OPEN_BRACE35_tree=null;
-        Tree ID36_tree=null;
-        Tree PERIOD37_tree=null;
-        Tree ID38_tree=null;
-        Tree CLOSE_BRACE39_tree=null;
+        Tree OPEN_BRACE34_tree=null;
+        Tree ID35_tree=null;
+        Tree PERIOD36_tree=null;
+        Tree ID37_tree=null;
+        Tree CLOSE_BRACE38_tree=null;
         RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
         RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
         RewriteRuleTokenStream stream_OPEN_BRACE=new RewriteRuleTokenStream(adaptor,"token OPEN_BRACE");
         RewriteRuleTokenStream stream_PERIOD=new RewriteRuleTokenStream(adaptor,"token PERIOD");
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:114:2: ( OPEN_BRACE ( ID ( PERIOD ID )* ) CLOSE_BRACE -> ^( LOOKUP ( ^( ID ) )+ ) )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:114:4: OPEN_BRACE ( ID ( PERIOD ID )* ) CLOSE_BRACE
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:107:2: ( OPEN_BRACE ( ID ( PERIOD ID )* ) CLOSE_BRACE -> ^( LOOKUP ( ^( ID ) )+ ) )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:107:4: OPEN_BRACE ( ID ( PERIOD ID )* ) CLOSE_BRACE
             {
-            OPEN_BRACE35=(Token)match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_lookup469); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_OPEN_BRACE.add(OPEN_BRACE35);
+            OPEN_BRACE34=(Token)match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_lookup440); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_OPEN_BRACE.add(OPEN_BRACE34);
 
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:114:15: ( ID ( PERIOD ID )* )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:114:16: ID ( PERIOD ID )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:107:15: ( ID ( PERIOD ID )* )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:107:16: ID ( PERIOD ID )*
             {
-            ID36=(Token)match(input,ID,FOLLOW_ID_in_lookup472); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_ID.add(ID36);
+            ID35=(Token)match(input,ID,FOLLOW_ID_in_lookup443); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_ID.add(ID35);
 
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:114:19: ( PERIOD ID )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:107:19: ( PERIOD ID )*
             loop17:
             do {
                 int alt17=2;
@@ -1655,13 +1558,13 @@ public class RichTeaParser extends Parser {
 
                 switch (alt17) {
             	case 1 :
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:114:20: PERIOD ID
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:107:20: PERIOD ID
             	    {
-            	    PERIOD37=(Token)match(input,PERIOD,FOLLOW_PERIOD_in_lookup475); if (state.failed) return retval; 
-            	    if ( state.backtracking==0 ) stream_PERIOD.add(PERIOD37);
+            	    PERIOD36=(Token)match(input,PERIOD,FOLLOW_PERIOD_in_lookup446); if (state.failed) return retval; 
+            	    if ( state.backtracking==0 ) stream_PERIOD.add(PERIOD36);
 
-            	    ID38=(Token)match(input,ID,FOLLOW_ID_in_lookup477); if (state.failed) return retval; 
-            	    if ( state.backtracking==0 ) stream_ID.add(ID38);
+            	    ID37=(Token)match(input,ID,FOLLOW_ID_in_lookup448); if (state.failed) return retval; 
+            	    if ( state.backtracking==0 ) stream_ID.add(ID37);
 
 
             	    }
@@ -1675,8 +1578,8 @@ public class RichTeaParser extends Parser {
 
             }
 
-            CLOSE_BRACE39=(Token)match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_lookup483); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_CLOSE_BRACE.add(CLOSE_BRACE39);
+            CLOSE_BRACE38=(Token)match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_lookup454); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_CLOSE_BRACE.add(CLOSE_BRACE38);
 
 
 
@@ -1692,9 +1595,9 @@ public class RichTeaParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Tree)adaptor.nil();
-            // 115:4: -> ^( LOOKUP ( ^( ID ) )+ )
+            // 108:4: -> ^( LOOKUP ( ^( ID ) )+ )
             {
-                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:115:7: ^( LOOKUP ( ^( ID ) )+ )
+                // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:108:7: ^( LOOKUP ( ^( ID ) )+ )
                 {
                 Tree root_1 = (Tree)adaptor.nil();
                 root_1 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(LOOKUP, "LOOKUP"), root_1);
@@ -1703,7 +1606,7 @@ public class RichTeaParser extends Parser {
                     throw new RewriteEarlyExitException();
                 }
                 while ( stream_ID.hasNext() ) {
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:115:16: ^( ID )
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:108:16: ^( ID )
                     {
                     Tree root_2 = (Tree)adaptor.nil();
                     root_2 = (Tree)adaptor.becomeRoot(stream_ID.nextNode(), root_2);
@@ -1748,29 +1651,29 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:120:1: expression : logical_expression ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:113:1: expression : logical_expression ;
     public final RichTeaParser.expression_return expression() throws RecognitionException {
         RichTeaParser.expression_return retval = new RichTeaParser.expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        RichTeaParser.logical_expression_return logical_expression40 = null;
+        RichTeaParser.logical_expression_return logical_expression39 = null;
 
 
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:121:2: ( logical_expression )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:121:4: logical_expression
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:114:2: ( logical_expression )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:114:4: logical_expression
             {
             root_0 = (Tree)adaptor.nil();
 
-            pushFollow(FOLLOW_logical_expression_in_expression512);
-            logical_expression40=logical_expression();
+            pushFollow(FOLLOW_logical_expression_in_expression483);
+            logical_expression39=logical_expression();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) adaptor.addChild(root_0, logical_expression40.getTree());
+            if ( state.backtracking==0 ) adaptor.addChild(root_0, logical_expression39.getTree());
 
             }
 
@@ -1800,34 +1703,34 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "logical_expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:124:1: logical_expression : boolean_expression ( OR boolean_expression )* ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:117:1: logical_expression : boolean_expression ( OR boolean_expression )* ;
     public final RichTeaParser.logical_expression_return logical_expression() throws RecognitionException {
         RichTeaParser.logical_expression_return retval = new RichTeaParser.logical_expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token OR42=null;
-        RichTeaParser.boolean_expression_return boolean_expression41 = null;
+        Token OR41=null;
+        RichTeaParser.boolean_expression_return boolean_expression40 = null;
 
-        RichTeaParser.boolean_expression_return boolean_expression43 = null;
+        RichTeaParser.boolean_expression_return boolean_expression42 = null;
 
 
-        Tree OR42_tree=null;
+        Tree OR41_tree=null;
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:125:2: ( boolean_expression ( OR boolean_expression )* )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:125:4: boolean_expression ( OR boolean_expression )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:118:2: ( boolean_expression ( OR boolean_expression )* )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:118:4: boolean_expression ( OR boolean_expression )*
             {
             root_0 = (Tree)adaptor.nil();
 
-            pushFollow(FOLLOW_boolean_expression_in_logical_expression524);
-            boolean_expression41=boolean_expression();
+            pushFollow(FOLLOW_boolean_expression_in_logical_expression495);
+            boolean_expression40=boolean_expression();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) adaptor.addChild(root_0, boolean_expression41.getTree());
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:125:23: ( OR boolean_expression )*
+            if ( state.backtracking==0 ) adaptor.addChild(root_0, boolean_expression40.getTree());
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:118:23: ( OR boolean_expression )*
             loop18:
             do {
                 int alt18=2;
@@ -1840,19 +1743,19 @@ public class RichTeaParser extends Parser {
 
                 switch (alt18) {
             	case 1 :
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:125:24: OR boolean_expression
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:118:24: OR boolean_expression
             	    {
-            	    OR42=(Token)match(input,OR,FOLLOW_OR_in_logical_expression527); if (state.failed) return retval;
+            	    OR41=(Token)match(input,OR,FOLLOW_OR_in_logical_expression498); if (state.failed) return retval;
             	    if ( state.backtracking==0 ) {
-            	    OR42_tree = (Tree)adaptor.create(OR42);
-            	    root_0 = (Tree)adaptor.becomeRoot(OR42_tree, root_0);
+            	    OR41_tree = (Tree)adaptor.create(OR41);
+            	    root_0 = (Tree)adaptor.becomeRoot(OR41_tree, root_0);
             	    }
-            	    pushFollow(FOLLOW_boolean_expression_in_logical_expression530);
-            	    boolean_expression43=boolean_expression();
+            	    pushFollow(FOLLOW_boolean_expression_in_logical_expression501);
+            	    boolean_expression42=boolean_expression();
 
             	    state._fsp--;
             	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, boolean_expression43.getTree());
+            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, boolean_expression42.getTree());
 
             	    }
             	    break;
@@ -1891,34 +1794,34 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "boolean_expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:128:1: boolean_expression : equality_expression ( AND equality_expression )* ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:121:1: boolean_expression : equality_expression ( AND equality_expression )* ;
     public final RichTeaParser.boolean_expression_return boolean_expression() throws RecognitionException {
         RichTeaParser.boolean_expression_return retval = new RichTeaParser.boolean_expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token AND45=null;
-        RichTeaParser.equality_expression_return equality_expression44 = null;
+        Token AND44=null;
+        RichTeaParser.equality_expression_return equality_expression43 = null;
 
-        RichTeaParser.equality_expression_return equality_expression46 = null;
+        RichTeaParser.equality_expression_return equality_expression45 = null;
 
 
-        Tree AND45_tree=null;
+        Tree AND44_tree=null;
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:129:2: ( equality_expression ( AND equality_expression )* )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:129:4: equality_expression ( AND equality_expression )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:122:2: ( equality_expression ( AND equality_expression )* )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:122:4: equality_expression ( AND equality_expression )*
             {
             root_0 = (Tree)adaptor.nil();
 
-            pushFollow(FOLLOW_equality_expression_in_boolean_expression543);
-            equality_expression44=equality_expression();
+            pushFollow(FOLLOW_equality_expression_in_boolean_expression514);
+            equality_expression43=equality_expression();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) adaptor.addChild(root_0, equality_expression44.getTree());
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:129:24: ( AND equality_expression )*
+            if ( state.backtracking==0 ) adaptor.addChild(root_0, equality_expression43.getTree());
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:122:24: ( AND equality_expression )*
             loop19:
             do {
                 int alt19=2;
@@ -1931,19 +1834,19 @@ public class RichTeaParser extends Parser {
 
                 switch (alt19) {
             	case 1 :
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:129:25: AND equality_expression
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:122:25: AND equality_expression
             	    {
-            	    AND45=(Token)match(input,AND,FOLLOW_AND_in_boolean_expression546); if (state.failed) return retval;
+            	    AND44=(Token)match(input,AND,FOLLOW_AND_in_boolean_expression517); if (state.failed) return retval;
             	    if ( state.backtracking==0 ) {
-            	    AND45_tree = (Tree)adaptor.create(AND45);
-            	    root_0 = (Tree)adaptor.becomeRoot(AND45_tree, root_0);
+            	    AND44_tree = (Tree)adaptor.create(AND44);
+            	    root_0 = (Tree)adaptor.becomeRoot(AND44_tree, root_0);
             	    }
-            	    pushFollow(FOLLOW_equality_expression_in_boolean_expression549);
-            	    equality_expression46=equality_expression();
+            	    pushFollow(FOLLOW_equality_expression_in_boolean_expression520);
+            	    equality_expression45=equality_expression();
 
             	    state._fsp--;
             	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, equality_expression46.getTree());
+            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, equality_expression45.getTree());
 
             	    }
             	    break;
@@ -1982,34 +1885,34 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "equality_expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:132:1: equality_expression : relational_expression ( ( EQ | NEQ ) relational_expression )* ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:125:1: equality_expression : relational_expression ( ( EQ | NEQ ) relational_expression )* ;
     public final RichTeaParser.equality_expression_return equality_expression() throws RecognitionException {
         RichTeaParser.equality_expression_return retval = new RichTeaParser.equality_expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token set48=null;
-        RichTeaParser.relational_expression_return relational_expression47 = null;
+        Token set47=null;
+        RichTeaParser.relational_expression_return relational_expression46 = null;
 
-        RichTeaParser.relational_expression_return relational_expression49 = null;
+        RichTeaParser.relational_expression_return relational_expression48 = null;
 
 
-        Tree set48_tree=null;
+        Tree set47_tree=null;
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:133:2: ( relational_expression ( ( EQ | NEQ ) relational_expression )* )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:133:4: relational_expression ( ( EQ | NEQ ) relational_expression )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:126:2: ( relational_expression ( ( EQ | NEQ ) relational_expression )* )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:126:4: relational_expression ( ( EQ | NEQ ) relational_expression )*
             {
             root_0 = (Tree)adaptor.nil();
 
-            pushFollow(FOLLOW_relational_expression_in_equality_expression563);
-            relational_expression47=relational_expression();
+            pushFollow(FOLLOW_relational_expression_in_equality_expression534);
+            relational_expression46=relational_expression();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) adaptor.addChild(root_0, relational_expression47.getTree());
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:133:26: ( ( EQ | NEQ ) relational_expression )*
+            if ( state.backtracking==0 ) adaptor.addChild(root_0, relational_expression46.getTree());
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:126:26: ( ( EQ | NEQ ) relational_expression )*
             loop20:
             do {
                 int alt20=2;
@@ -2022,13 +1925,13 @@ public class RichTeaParser extends Parser {
 
                 switch (alt20) {
             	case 1 :
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:133:27: ( EQ | NEQ ) relational_expression
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:126:27: ( EQ | NEQ ) relational_expression
             	    {
-            	    set48=(Token)input.LT(1);
-            	    set48=(Token)input.LT(1);
+            	    set47=(Token)input.LT(1);
+            	    set47=(Token)input.LT(1);
             	    if ( (input.LA(1)>=EQ && input.LA(1)<=NEQ) ) {
             	        input.consume();
-            	        if ( state.backtracking==0 ) root_0 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(set48), root_0);
+            	        if ( state.backtracking==0 ) root_0 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(set47), root_0);
             	        state.errorRecovery=false;state.failed=false;
             	    }
             	    else {
@@ -2037,12 +1940,12 @@ public class RichTeaParser extends Parser {
             	        throw mse;
             	    }
 
-            	    pushFollow(FOLLOW_relational_expression_in_equality_expression577);
-            	    relational_expression49=relational_expression();
+            	    pushFollow(FOLLOW_relational_expression_in_equality_expression548);
+            	    relational_expression48=relational_expression();
 
             	    state._fsp--;
             	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, relational_expression49.getTree());
+            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, relational_expression48.getTree());
 
             	    }
             	    break;
@@ -2081,34 +1984,34 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "relational_expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:136:1: relational_expression : additive_expression ( ( LT | LTEQ | GT | GTEQ ) additive_expression )* ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:129:1: relational_expression : additive_expression ( ( LT | LTEQ | GT | GTEQ ) additive_expression )* ;
     public final RichTeaParser.relational_expression_return relational_expression() throws RecognitionException {
         RichTeaParser.relational_expression_return retval = new RichTeaParser.relational_expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token set51=null;
-        RichTeaParser.additive_expression_return additive_expression50 = null;
+        Token set50=null;
+        RichTeaParser.additive_expression_return additive_expression49 = null;
 
-        RichTeaParser.additive_expression_return additive_expression52 = null;
+        RichTeaParser.additive_expression_return additive_expression51 = null;
 
 
-        Tree set51_tree=null;
+        Tree set50_tree=null;
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:137:2: ( additive_expression ( ( LT | LTEQ | GT | GTEQ ) additive_expression )* )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:137:4: additive_expression ( ( LT | LTEQ | GT | GTEQ ) additive_expression )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:130:2: ( additive_expression ( ( LT | LTEQ | GT | GTEQ ) additive_expression )* )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:130:4: additive_expression ( ( LT | LTEQ | GT | GTEQ ) additive_expression )*
             {
             root_0 = (Tree)adaptor.nil();
 
-            pushFollow(FOLLOW_additive_expression_in_relational_expression591);
-            additive_expression50=additive_expression();
+            pushFollow(FOLLOW_additive_expression_in_relational_expression562);
+            additive_expression49=additive_expression();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) adaptor.addChild(root_0, additive_expression50.getTree());
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:137:24: ( ( LT | LTEQ | GT | GTEQ ) additive_expression )*
+            if ( state.backtracking==0 ) adaptor.addChild(root_0, additive_expression49.getTree());
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:130:24: ( ( LT | LTEQ | GT | GTEQ ) additive_expression )*
             loop21:
             do {
                 int alt21=2;
@@ -2121,13 +2024,13 @@ public class RichTeaParser extends Parser {
 
                 switch (alt21) {
             	case 1 :
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:137:25: ( LT | LTEQ | GT | GTEQ ) additive_expression
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:130:25: ( LT | LTEQ | GT | GTEQ ) additive_expression
             	    {
-            	    set51=(Token)input.LT(1);
-            	    set51=(Token)input.LT(1);
+            	    set50=(Token)input.LT(1);
+            	    set50=(Token)input.LT(1);
             	    if ( (input.LA(1)>=LT && input.LA(1)<=GTEQ) ) {
             	        input.consume();
-            	        if ( state.backtracking==0 ) root_0 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(set51), root_0);
+            	        if ( state.backtracking==0 ) root_0 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(set50), root_0);
             	        state.errorRecovery=false;state.failed=false;
             	    }
             	    else {
@@ -2136,12 +2039,12 @@ public class RichTeaParser extends Parser {
             	        throw mse;
             	    }
 
-            	    pushFollow(FOLLOW_additive_expression_in_relational_expression613);
-            	    additive_expression52=additive_expression();
+            	    pushFollow(FOLLOW_additive_expression_in_relational_expression584);
+            	    additive_expression51=additive_expression();
 
             	    state._fsp--;
             	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, additive_expression52.getTree());
+            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, additive_expression51.getTree());
 
             	    }
             	    break;
@@ -2180,34 +2083,34 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "additive_expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:140:1: additive_expression : multiplicative_expression ( ( PLUS | MINUS ) multiplicative_expression )* ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:133:1: additive_expression : multiplicative_expression ( ( PLUS | MINUS ) multiplicative_expression )* ;
     public final RichTeaParser.additive_expression_return additive_expression() throws RecognitionException {
         RichTeaParser.additive_expression_return retval = new RichTeaParser.additive_expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token set54=null;
-        RichTeaParser.multiplicative_expression_return multiplicative_expression53 = null;
+        Token set53=null;
+        RichTeaParser.multiplicative_expression_return multiplicative_expression52 = null;
 
-        RichTeaParser.multiplicative_expression_return multiplicative_expression55 = null;
+        RichTeaParser.multiplicative_expression_return multiplicative_expression54 = null;
 
 
-        Tree set54_tree=null;
+        Tree set53_tree=null;
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:141:2: ( multiplicative_expression ( ( PLUS | MINUS ) multiplicative_expression )* )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:141:4: multiplicative_expression ( ( PLUS | MINUS ) multiplicative_expression )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:134:2: ( multiplicative_expression ( ( PLUS | MINUS ) multiplicative_expression )* )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:134:4: multiplicative_expression ( ( PLUS | MINUS ) multiplicative_expression )*
             {
             root_0 = (Tree)adaptor.nil();
 
-            pushFollow(FOLLOW_multiplicative_expression_in_additive_expression627);
-            multiplicative_expression53=multiplicative_expression();
+            pushFollow(FOLLOW_multiplicative_expression_in_additive_expression598);
+            multiplicative_expression52=multiplicative_expression();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) adaptor.addChild(root_0, multiplicative_expression53.getTree());
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:141:30: ( ( PLUS | MINUS ) multiplicative_expression )*
+            if ( state.backtracking==0 ) adaptor.addChild(root_0, multiplicative_expression52.getTree());
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:134:30: ( ( PLUS | MINUS ) multiplicative_expression )*
             loop22:
             do {
                 int alt22=2;
@@ -2220,13 +2123,13 @@ public class RichTeaParser extends Parser {
 
                 switch (alt22) {
             	case 1 :
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:141:31: ( PLUS | MINUS ) multiplicative_expression
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:134:31: ( PLUS | MINUS ) multiplicative_expression
             	    {
-            	    set54=(Token)input.LT(1);
-            	    set54=(Token)input.LT(1);
+            	    set53=(Token)input.LT(1);
+            	    set53=(Token)input.LT(1);
             	    if ( (input.LA(1)>=PLUS && input.LA(1)<=MINUS) ) {
             	        input.consume();
-            	        if ( state.backtracking==0 ) root_0 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(set54), root_0);
+            	        if ( state.backtracking==0 ) root_0 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(set53), root_0);
             	        state.errorRecovery=false;state.failed=false;
             	    }
             	    else {
@@ -2235,12 +2138,12 @@ public class RichTeaParser extends Parser {
             	        throw mse;
             	    }
 
-            	    pushFollow(FOLLOW_multiplicative_expression_in_additive_expression641);
-            	    multiplicative_expression55=multiplicative_expression();
+            	    pushFollow(FOLLOW_multiplicative_expression_in_additive_expression612);
+            	    multiplicative_expression54=multiplicative_expression();
 
             	    state._fsp--;
             	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, multiplicative_expression55.getTree());
+            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, multiplicative_expression54.getTree());
 
             	    }
             	    break;
@@ -2279,34 +2182,34 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "multiplicative_expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:144:1: multiplicative_expression : power_expression ( ( MULTIPLY | DIVIDE | MODULUS ) power_expression )* ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:137:1: multiplicative_expression : power_expression ( ( MULTIPLY | DIVIDE | MODULUS ) power_expression )* ;
     public final RichTeaParser.multiplicative_expression_return multiplicative_expression() throws RecognitionException {
         RichTeaParser.multiplicative_expression_return retval = new RichTeaParser.multiplicative_expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token set57=null;
-        RichTeaParser.power_expression_return power_expression56 = null;
+        Token set56=null;
+        RichTeaParser.power_expression_return power_expression55 = null;
 
-        RichTeaParser.power_expression_return power_expression58 = null;
+        RichTeaParser.power_expression_return power_expression57 = null;
 
 
-        Tree set57_tree=null;
+        Tree set56_tree=null;
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:145:2: ( power_expression ( ( MULTIPLY | DIVIDE | MODULUS ) power_expression )* )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:145:4: power_expression ( ( MULTIPLY | DIVIDE | MODULUS ) power_expression )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:138:2: ( power_expression ( ( MULTIPLY | DIVIDE | MODULUS ) power_expression )* )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:138:4: power_expression ( ( MULTIPLY | DIVIDE | MODULUS ) power_expression )*
             {
             root_0 = (Tree)adaptor.nil();
 
-            pushFollow(FOLLOW_power_expression_in_multiplicative_expression655);
-            power_expression56=power_expression();
+            pushFollow(FOLLOW_power_expression_in_multiplicative_expression626);
+            power_expression55=power_expression();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) adaptor.addChild(root_0, power_expression56.getTree());
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:145:21: ( ( MULTIPLY | DIVIDE | MODULUS ) power_expression )*
+            if ( state.backtracking==0 ) adaptor.addChild(root_0, power_expression55.getTree());
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:138:21: ( ( MULTIPLY | DIVIDE | MODULUS ) power_expression )*
             loop23:
             do {
                 int alt23=2;
@@ -2319,13 +2222,13 @@ public class RichTeaParser extends Parser {
 
                 switch (alt23) {
             	case 1 :
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:145:22: ( MULTIPLY | DIVIDE | MODULUS ) power_expression
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:138:22: ( MULTIPLY | DIVIDE | MODULUS ) power_expression
             	    {
-            	    set57=(Token)input.LT(1);
-            	    set57=(Token)input.LT(1);
+            	    set56=(Token)input.LT(1);
+            	    set56=(Token)input.LT(1);
             	    if ( (input.LA(1)>=MULTIPLY && input.LA(1)<=MODULUS) ) {
             	        input.consume();
-            	        if ( state.backtracking==0 ) root_0 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(set57), root_0);
+            	        if ( state.backtracking==0 ) root_0 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(set56), root_0);
             	        state.errorRecovery=false;state.failed=false;
             	    }
             	    else {
@@ -2334,12 +2237,12 @@ public class RichTeaParser extends Parser {
             	        throw mse;
             	    }
 
-            	    pushFollow(FOLLOW_power_expression_in_multiplicative_expression673);
-            	    power_expression58=power_expression();
+            	    pushFollow(FOLLOW_power_expression_in_multiplicative_expression644);
+            	    power_expression57=power_expression();
 
             	    state._fsp--;
             	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, power_expression58.getTree());
+            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, power_expression57.getTree());
 
             	    }
             	    break;
@@ -2378,34 +2281,34 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "power_expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:148:1: power_expression : unary_expression ( POWER unary_expression )* ;
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:141:1: power_expression : unary_expression ( POWER unary_expression )* ;
     public final RichTeaParser.power_expression_return power_expression() throws RecognitionException {
         RichTeaParser.power_expression_return retval = new RichTeaParser.power_expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token POWER60=null;
-        RichTeaParser.unary_expression_return unary_expression59 = null;
+        Token POWER59=null;
+        RichTeaParser.unary_expression_return unary_expression58 = null;
 
-        RichTeaParser.unary_expression_return unary_expression61 = null;
+        RichTeaParser.unary_expression_return unary_expression60 = null;
 
 
-        Tree POWER60_tree=null;
+        Tree POWER59_tree=null;
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:149:2: ( unary_expression ( POWER unary_expression )* )
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:149:4: unary_expression ( POWER unary_expression )*
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:142:2: ( unary_expression ( POWER unary_expression )* )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:142:4: unary_expression ( POWER unary_expression )*
             {
             root_0 = (Tree)adaptor.nil();
 
-            pushFollow(FOLLOW_unary_expression_in_power_expression687);
-            unary_expression59=unary_expression();
+            pushFollow(FOLLOW_unary_expression_in_power_expression658);
+            unary_expression58=unary_expression();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) adaptor.addChild(root_0, unary_expression59.getTree());
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:149:21: ( POWER unary_expression )*
+            if ( state.backtracking==0 ) adaptor.addChild(root_0, unary_expression58.getTree());
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:142:21: ( POWER unary_expression )*
             loop24:
             do {
                 int alt24=2;
@@ -2418,19 +2321,19 @@ public class RichTeaParser extends Parser {
 
                 switch (alt24) {
             	case 1 :
-            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:149:23: POWER unary_expression
+            	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:142:23: POWER unary_expression
             	    {
-            	    POWER60=(Token)match(input,POWER,FOLLOW_POWER_in_power_expression691); if (state.failed) return retval;
+            	    POWER59=(Token)match(input,POWER,FOLLOW_POWER_in_power_expression662); if (state.failed) return retval;
             	    if ( state.backtracking==0 ) {
-            	    POWER60_tree = (Tree)adaptor.create(POWER60);
-            	    root_0 = (Tree)adaptor.becomeRoot(POWER60_tree, root_0);
+            	    POWER59_tree = (Tree)adaptor.create(POWER59);
+            	    root_0 = (Tree)adaptor.becomeRoot(POWER59_tree, root_0);
             	    }
-            	    pushFollow(FOLLOW_unary_expression_in_power_expression694);
-            	    unary_expression61=unary_expression();
+            	    pushFollow(FOLLOW_unary_expression_in_power_expression665);
+            	    unary_expression60=unary_expression();
 
             	    state._fsp--;
             	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, unary_expression61.getTree());
+            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, unary_expression60.getTree());
 
             	    }
             	    break;
@@ -2469,28 +2372,28 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "unary_expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:152:1: unary_expression : ( primary_expression | NOT primary_expression | MINUS primary_expression -> ^( NEGATE primary_expression ) );
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:145:1: unary_expression : ( primary_expression | NOT primary_expression | MINUS primary_expression -> ^( NEGATE primary_expression ) );
     public final RichTeaParser.unary_expression_return unary_expression() throws RecognitionException {
         RichTeaParser.unary_expression_return retval = new RichTeaParser.unary_expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token NOT63=null;
-        Token MINUS65=null;
-        RichTeaParser.primary_expression_return primary_expression62 = null;
+        Token NOT62=null;
+        Token MINUS64=null;
+        RichTeaParser.primary_expression_return primary_expression61 = null;
 
-        RichTeaParser.primary_expression_return primary_expression64 = null;
+        RichTeaParser.primary_expression_return primary_expression63 = null;
 
-        RichTeaParser.primary_expression_return primary_expression66 = null;
+        RichTeaParser.primary_expression_return primary_expression65 = null;
 
 
-        Tree NOT63_tree=null;
-        Tree MINUS65_tree=null;
+        Tree NOT62_tree=null;
+        Tree MINUS64_tree=null;
         RewriteRuleTokenStream stream_MINUS=new RewriteRuleTokenStream(adaptor,"token MINUS");
         RewriteRuleSubtreeStream stream_primary_expression=new RewriteRuleSubtreeStream(adaptor,"rule primary_expression");
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:153:2: ( primary_expression | NOT primary_expression | MINUS primary_expression -> ^( NEGATE primary_expression ) )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:146:2: ( primary_expression | NOT primary_expression | MINUS primary_expression -> ^( NEGATE primary_expression ) )
             int alt25=3;
             switch ( input.LA(1) ) {
             case OPEN_PAREN:
@@ -2521,50 +2424,50 @@ public class RichTeaParser extends Parser {
 
             switch (alt25) {
                 case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:153:4: primary_expression
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:146:4: primary_expression
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    pushFollow(FOLLOW_primary_expression_in_unary_expression707);
-                    primary_expression62=primary_expression();
+                    pushFollow(FOLLOW_primary_expression_in_unary_expression678);
+                    primary_expression61=primary_expression();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, primary_expression62.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, primary_expression61.getTree());
 
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:154:4: NOT primary_expression
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:147:4: NOT primary_expression
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    NOT63=(Token)match(input,NOT,FOLLOW_NOT_in_unary_expression712); if (state.failed) return retval;
+                    NOT62=(Token)match(input,NOT,FOLLOW_NOT_in_unary_expression683); if (state.failed) return retval;
                     if ( state.backtracking==0 ) {
-                    NOT63_tree = (Tree)adaptor.create(NOT63);
-                    root_0 = (Tree)adaptor.becomeRoot(NOT63_tree, root_0);
+                    NOT62_tree = (Tree)adaptor.create(NOT62);
+                    root_0 = (Tree)adaptor.becomeRoot(NOT62_tree, root_0);
                     }
-                    pushFollow(FOLLOW_primary_expression_in_unary_expression715);
-                    primary_expression64=primary_expression();
+                    pushFollow(FOLLOW_primary_expression_in_unary_expression686);
+                    primary_expression63=primary_expression();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, primary_expression64.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, primary_expression63.getTree());
 
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:155:4: MINUS primary_expression
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:148:4: MINUS primary_expression
                     {
-                    MINUS65=(Token)match(input,MINUS,FOLLOW_MINUS_in_unary_expression720); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_MINUS.add(MINUS65);
+                    MINUS64=(Token)match(input,MINUS,FOLLOW_MINUS_in_unary_expression691); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_MINUS.add(MINUS64);
 
-                    pushFollow(FOLLOW_primary_expression_in_unary_expression722);
-                    primary_expression66=primary_expression();
+                    pushFollow(FOLLOW_primary_expression_in_unary_expression693);
+                    primary_expression65=primary_expression();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_primary_expression.add(primary_expression66.getTree());
+                    if ( state.backtracking==0 ) stream_primary_expression.add(primary_expression65.getTree());
 
 
                     // AST REWRITE
@@ -2579,9 +2482,9 @@ public class RichTeaParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Tree)adaptor.nil();
-                    // 155:29: -> ^( NEGATE primary_expression )
+                    // 148:29: -> ^( NEGATE primary_expression )
                     {
-                        // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:155:32: ^( NEGATE primary_expression )
+                        // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:148:32: ^( NEGATE primary_expression )
                         {
                         Tree root_1 = (Tree)adaptor.nil();
                         root_1 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(NEGATE, "NEGATE"), root_1);
@@ -2624,25 +2527,25 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "primary_expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:158:1: primary_expression : ( OPEN_PAREN logical_expression CLOSE_PAREN | expression_value );
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:151:1: primary_expression : ( OPEN_PAREN logical_expression CLOSE_PAREN | expression_value );
     public final RichTeaParser.primary_expression_return primary_expression() throws RecognitionException {
         RichTeaParser.primary_expression_return retval = new RichTeaParser.primary_expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token OPEN_PAREN67=null;
-        Token CLOSE_PAREN69=null;
-        RichTeaParser.logical_expression_return logical_expression68 = null;
+        Token OPEN_PAREN66=null;
+        Token CLOSE_PAREN68=null;
+        RichTeaParser.logical_expression_return logical_expression67 = null;
 
-        RichTeaParser.expression_value_return expression_value70 = null;
+        RichTeaParser.expression_value_return expression_value69 = null;
 
 
-        Tree OPEN_PAREN67_tree=null;
-        Tree CLOSE_PAREN69_tree=null;
+        Tree OPEN_PAREN66_tree=null;
+        Tree CLOSE_PAREN68_tree=null;
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:159:2: ( OPEN_PAREN logical_expression CLOSE_PAREN | expression_value )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:152:2: ( OPEN_PAREN logical_expression CLOSE_PAREN | expression_value )
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -2661,32 +2564,32 @@ public class RichTeaParser extends Parser {
             }
             switch (alt26) {
                 case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:159:4: OPEN_PAREN logical_expression CLOSE_PAREN
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:152:4: OPEN_PAREN logical_expression CLOSE_PAREN
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    OPEN_PAREN67=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_primary_expression742); if (state.failed) return retval;
-                    pushFollow(FOLLOW_logical_expression_in_primary_expression745);
-                    logical_expression68=logical_expression();
+                    OPEN_PAREN66=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_primary_expression713); if (state.failed) return retval;
+                    pushFollow(FOLLOW_logical_expression_in_primary_expression716);
+                    logical_expression67=logical_expression();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, logical_expression68.getTree());
-                    CLOSE_PAREN69=(Token)match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_primary_expression747); if (state.failed) return retval;
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, logical_expression67.getTree());
+                    CLOSE_PAREN68=(Token)match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_primary_expression718); if (state.failed) return retval;
 
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:160:5: expression_value
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:153:5: expression_value
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    pushFollow(FOLLOW_expression_value_in_primary_expression754);
-                    expression_value70=expression_value();
+                    pushFollow(FOLLOW_expression_value_in_primary_expression725);
+                    expression_value69=expression_value();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, expression_value70.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, expression_value69.getTree());
 
                     }
                     break;
@@ -2718,27 +2621,27 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "expression_value"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:163:1: expression_value : ( NUMBER | BOOLEAN | STRING );
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:156:1: expression_value : ( NUMBER | BOOLEAN | STRING );
     public final RichTeaParser.expression_value_return expression_value() throws RecognitionException {
         RichTeaParser.expression_value_return retval = new RichTeaParser.expression_value_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token set71=null;
+        Token set70=null;
 
-        Tree set71_tree=null;
+        Tree set70_tree=null;
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:164:2: ( NUMBER | BOOLEAN | STRING )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:157:2: ( NUMBER | BOOLEAN | STRING )
             // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:
             {
             root_0 = (Tree)adaptor.nil();
 
-            set71=(Token)input.LT(1);
+            set70=(Token)input.LT(1);
             if ( (input.LA(1)>=NUMBER && input.LA(1)<=STRING) ) {
                 input.consume();
-                if ( state.backtracking==0 ) adaptor.addChild(root_0, (Tree)adaptor.create(set71));
+                if ( state.backtracking==0 ) adaptor.addChild(root_0, (Tree)adaptor.create(set70));
                 state.errorRecovery=false;state.failed=false;
             }
             else {
@@ -2774,10 +2677,10 @@ public class RichTeaParser extends Parser {
     public final void synpred2_RichTea_fragment() throws RecognitionException {   
         List list_implicitAttributes=null;
         RuleReturnScope implicitAttributes = null;
-        // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:72:5: (implicitAttributes+= chained_function PERIOD )
-        // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:72:5: implicitAttributes+= chained_function PERIOD
+        // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:65:44: (implicitAttributes+= chained_function PERIOD )
+        // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:65:44: implicitAttributes+= chained_function PERIOD
         {
-        pushFollow(FOLLOW_chained_function_in_synpred2_RichTea177);
+        pushFollow(FOLLOW_chained_function_in_synpred2_RichTea144);
         implicitAttributes=chained_function();
 
         state._fsp--;
@@ -2785,7 +2688,7 @@ public class RichTeaParser extends Parser {
         if (list_implicitAttributes==null) list_implicitAttributes=new ArrayList();
         list_implicitAttributes.add(implicitAttributes);
 
-        match(input,PERIOD,FOLLOW_PERIOD_in_synpred2_RichTea179); if (state.failed) return ;
+        match(input,PERIOD,FOLLOW_PERIOD_in_synpred2_RichTea146); if (state.failed) return ;
 
         }
     }
@@ -2793,10 +2696,10 @@ public class RichTeaParser extends Parser {
 
     // $ANTLR start synpred13_RichTea
     public final void synpred13_RichTea_fragment() throws RecognitionException {   
-        // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:97:4: ( function )
-        // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:97:4: function
+        // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:90:4: ( function )
+        // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:90:4: function
         {
-        pushFollow(FOLLOW_function_in_synpred13_RichTea390);
+        pushFollow(FOLLOW_function_in_synpred13_RichTea361);
         function();
 
         state._fsp--;
@@ -2842,26 +2745,26 @@ public class RichTeaParser extends Parser {
     static final String DFA8_eotS =
         "\10\uffff";
     static final String DFA8_eofS =
-        "\1\2\4\uffff\1\3\2\uffff";
+        "\1\2\5\uffff\1\4\1\uffff";
     static final String DFA8_minS =
-        "\2\17\2\uffff\2\16\1\17\1\16";
+        "\2\17\1\uffff\1\16\1\uffff\1\17\2\16";
     static final String DFA8_maxS =
-        "\2\53\2\uffff\2\53\1\17\1\53";
+        "\2\53\1\uffff\1\53\1\uffff\1\17\2\53";
     static final String DFA8_acceptS =
-        "\2\uffff\1\2\1\1\4\uffff";
+        "\2\uffff\1\2\1\uffff\1\1\3\uffff";
     static final String DFA8_specialS =
         "\10\uffff}>";
     static final String[] DFA8_transitionS = {
             "\3\2\1\1\3\2\2\uffff\2\2\11\uffff\1\2\4\uffff\4\2",
-            "\1\4\1\3\1\uffff\2\3\4\uffff\1\3\12\uffff\1\3\4\uffff\4\3",
+            "\1\3\1\4\1\uffff\2\4\4\uffff\1\4\12\uffff\1\4\4\uffff\4\4",
             "",
+            "\1\5\2\4\1\uffff\1\4\1\6\1\4\3\uffff\1\4\12\uffff\1\4\4\uffff"+
+            "\4\4",
             "",
-            "\1\6\2\3\1\uffff\1\3\1\5\1\3\3\uffff\1\3\12\uffff\1\3\4\uffff"+
-            "\4\3",
-            "\1\2\7\3\2\uffff\2\3\11\uffff\1\3\4\uffff\4\3",
             "\1\7",
-            "\1\6\2\3\1\uffff\1\3\1\5\1\3\3\uffff\1\3\12\uffff\1\3\4\uffff"+
-            "\4\3"
+            "\1\2\7\4\2\uffff\2\4\11\uffff\1\4\4\uffff\4\4",
+            "\1\5\2\4\1\uffff\1\4\1\6\1\4\3\uffff\1\4\12\uffff\1\4\4\uffff"+
+            "\4\4"
     };
 
     static final short[] DFA8_eot = DFA.unpackEncodedString(DFA8_eotS);
@@ -2894,7 +2797,7 @@ public class RichTeaParser extends Parser {
             this.transition = DFA8_transition;
         }
         public String getDescription() {
-            return "82:49: ( OPEN_BRACE ( function )* CLOSE_BRACE )?";
+            return "75:49: ( OPEN_BRACE ( function )* CLOSE_BRACE )?";
         }
     }
  
@@ -2902,80 +2805,78 @@ public class RichTeaParser extends Parser {
     public static final BitSet FOLLOW_function_in_program118 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_program120 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_datatype_in_function135 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_PERIOD_in_function137 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_function_chain_in_function141 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_function_chain_in_function156 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_chained_function_in_function_chain177 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_PERIOD_in_function_chain179 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_function_end_in_function_chain185 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_chained_function208 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_OPEN_PAREN_in_chained_function211 = new BitSet(new long[]{0x0000000000028000L});
-    public static final BitSet FOLLOW_attribute_list_in_chained_function213 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_CLOSE_PAREN_in_chained_function216 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_function_end252 = new BitSet(new long[]{0x0000000000150002L});
-    public static final BitSet FOLLOW_OPEN_PAREN_in_function_end255 = new BitSet(new long[]{0x0000000000028000L});
-    public static final BitSet FOLLOW_attribute_list_in_function_end257 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_CLOSE_PAREN_in_function_end260 = new BitSet(new long[]{0x0000000000140002L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_function_end265 = new BitSet(new long[]{0x00000F08010D8000L});
-    public static final BitSet FOLLOW_function_in_function_end267 = new BitSet(new long[]{0x00000F08010D8000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_function_end270 = new BitSet(new long[]{0x0000000000100002L});
-    public static final BitSet FOLLOW_SEMI_COLON_in_function_end274 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_attribute_in_attribute_list316 = new BitSet(new long[]{0x0000000000208002L});
-    public static final BitSet FOLLOW_COMMA_in_attribute_list319 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_attribute_in_attribute_list322 = new BitSet(new long[]{0x0000000000208002L});
-    public static final BitSet FOLLOW_ID_in_attribute349 = new BitSet(new long[]{0x0000000000C00000L});
-    public static final BitSet FOLLOW_COLON_in_attribute352 = new BitSet(new long[]{0x00000F0801058000L});
-    public static final BitSet FOLLOW_ASSIGN_in_attribute356 = new BitSet(new long[]{0x00000F0801058000L});
-    public static final BitSet FOLLOW_attribute_data_in_attribute360 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_function_in_attribute_data390 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_datatype_in_attribute_data395 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_datatype408 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_array_in_datatype413 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_lookup_in_datatype419 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_BOX_in_array430 = new BitSet(new long[]{0x00000F0803058000L});
-    public static final BitSet FOLLOW_attribute_data_in_array433 = new BitSet(new long[]{0x0000000002200000L});
-    public static final BitSet FOLLOW_COMMA_in_array436 = new BitSet(new long[]{0x00000F0801058000L});
-    public static final BitSet FOLLOW_attribute_data_in_array438 = new BitSet(new long[]{0x0000000002200000L});
-    public static final BitSet FOLLOW_CLOSE_BOX_in_array445 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_lookup469 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_ID_in_lookup472 = new BitSet(new long[]{0x0000000000084000L});
-    public static final BitSet FOLLOW_PERIOD_in_lookup475 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_ID_in_lookup477 = new BitSet(new long[]{0x0000000000084000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_lookup483 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_logical_expression_in_expression512 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_boolean_expression_in_logical_expression524 = new BitSet(new long[]{0x0000000004000002L});
-    public static final BitSet FOLLOW_OR_in_logical_expression527 = new BitSet(new long[]{0x00000F0800010000L});
-    public static final BitSet FOLLOW_boolean_expression_in_logical_expression530 = new BitSet(new long[]{0x0000000004000002L});
-    public static final BitSet FOLLOW_equality_expression_in_boolean_expression543 = new BitSet(new long[]{0x0000000008000002L});
-    public static final BitSet FOLLOW_AND_in_boolean_expression546 = new BitSet(new long[]{0x00000F0800010000L});
-    public static final BitSet FOLLOW_equality_expression_in_boolean_expression549 = new BitSet(new long[]{0x0000000008000002L});
-    public static final BitSet FOLLOW_relational_expression_in_equality_expression563 = new BitSet(new long[]{0x0000000030000002L});
-    public static final BitSet FOLLOW_set_in_equality_expression566 = new BitSet(new long[]{0x00000F0800010000L});
-    public static final BitSet FOLLOW_relational_expression_in_equality_expression577 = new BitSet(new long[]{0x0000000030000002L});
-    public static final BitSet FOLLOW_additive_expression_in_relational_expression591 = new BitSet(new long[]{0x00000003C0000002L});
-    public static final BitSet FOLLOW_set_in_relational_expression594 = new BitSet(new long[]{0x00000F0800010000L});
-    public static final BitSet FOLLOW_additive_expression_in_relational_expression613 = new BitSet(new long[]{0x00000003C0000002L});
-    public static final BitSet FOLLOW_multiplicative_expression_in_additive_expression627 = new BitSet(new long[]{0x0000000C00000002L});
-    public static final BitSet FOLLOW_set_in_additive_expression630 = new BitSet(new long[]{0x00000F0800010000L});
-    public static final BitSet FOLLOW_multiplicative_expression_in_additive_expression641 = new BitSet(new long[]{0x0000000C00000002L});
-    public static final BitSet FOLLOW_power_expression_in_multiplicative_expression655 = new BitSet(new long[]{0x0000007000000002L});
-    public static final BitSet FOLLOW_set_in_multiplicative_expression658 = new BitSet(new long[]{0x00000F0800010000L});
-    public static final BitSet FOLLOW_power_expression_in_multiplicative_expression673 = new BitSet(new long[]{0x0000007000000002L});
-    public static final BitSet FOLLOW_unary_expression_in_power_expression687 = new BitSet(new long[]{0x0000008000000002L});
-    public static final BitSet FOLLOW_POWER_in_power_expression691 = new BitSet(new long[]{0x00000F0800010000L});
-    public static final BitSet FOLLOW_unary_expression_in_power_expression694 = new BitSet(new long[]{0x0000008000000002L});
-    public static final BitSet FOLLOW_primary_expression_in_unary_expression707 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NOT_in_unary_expression712 = new BitSet(new long[]{0x00000E0000010000L});
-    public static final BitSet FOLLOW_primary_expression_in_unary_expression715 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_MINUS_in_unary_expression720 = new BitSet(new long[]{0x00000E0000010000L});
-    public static final BitSet FOLLOW_primary_expression_in_unary_expression722 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_PAREN_in_primary_expression742 = new BitSet(new long[]{0x00000F0800010000L});
-    public static final BitSet FOLLOW_logical_expression_in_primary_expression745 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_CLOSE_PAREN_in_primary_expression747 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_value_in_primary_expression754 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PERIOD_in_function137 = new BitSet(new long[]{0x00000F0801058000L});
+    public static final BitSet FOLLOW_chained_function_in_function144 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_PERIOD_in_function146 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_function_end_in_function152 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ID_in_chained_function175 = new BitSet(new long[]{0x0000000000010002L});
+    public static final BitSet FOLLOW_OPEN_PAREN_in_chained_function178 = new BitSet(new long[]{0x0000000000028000L});
+    public static final BitSet FOLLOW_attribute_list_in_chained_function180 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_CLOSE_PAREN_in_chained_function183 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ID_in_function_end223 = new BitSet(new long[]{0x0000000000150002L});
+    public static final BitSet FOLLOW_OPEN_PAREN_in_function_end226 = new BitSet(new long[]{0x0000000000028000L});
+    public static final BitSet FOLLOW_attribute_list_in_function_end228 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_CLOSE_PAREN_in_function_end231 = new BitSet(new long[]{0x0000000000140002L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_function_end236 = new BitSet(new long[]{0x00000F08010D8000L});
+    public static final BitSet FOLLOW_function_in_function_end238 = new BitSet(new long[]{0x00000F08010D8000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_function_end241 = new BitSet(new long[]{0x0000000000100002L});
+    public static final BitSet FOLLOW_SEMI_COLON_in_function_end245 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_attribute_in_attribute_list287 = new BitSet(new long[]{0x0000000000208002L});
+    public static final BitSet FOLLOW_COMMA_in_attribute_list290 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_attribute_in_attribute_list293 = new BitSet(new long[]{0x0000000000208002L});
+    public static final BitSet FOLLOW_ID_in_attribute320 = new BitSet(new long[]{0x0000000000C00000L});
+    public static final BitSet FOLLOW_COLON_in_attribute323 = new BitSet(new long[]{0x00000F0801058000L});
+    public static final BitSet FOLLOW_ASSIGN_in_attribute327 = new BitSet(new long[]{0x00000F0801058000L});
+    public static final BitSet FOLLOW_attribute_data_in_attribute331 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_function_in_attribute_data361 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_datatype_in_attribute_data366 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_datatype379 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_array_in_datatype384 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_lookup_in_datatype390 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPEN_BOX_in_array401 = new BitSet(new long[]{0x00000F0803058000L});
+    public static final BitSet FOLLOW_attribute_data_in_array404 = new BitSet(new long[]{0x0000000002200000L});
+    public static final BitSet FOLLOW_COMMA_in_array407 = new BitSet(new long[]{0x00000F0801058000L});
+    public static final BitSet FOLLOW_attribute_data_in_array409 = new BitSet(new long[]{0x0000000002200000L});
+    public static final BitSet FOLLOW_CLOSE_BOX_in_array416 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_lookup440 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_ID_in_lookup443 = new BitSet(new long[]{0x0000000000084000L});
+    public static final BitSet FOLLOW_PERIOD_in_lookup446 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_ID_in_lookup448 = new BitSet(new long[]{0x0000000000084000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_lookup454 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_logical_expression_in_expression483 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_boolean_expression_in_logical_expression495 = new BitSet(new long[]{0x0000000004000002L});
+    public static final BitSet FOLLOW_OR_in_logical_expression498 = new BitSet(new long[]{0x00000F0800010000L});
+    public static final BitSet FOLLOW_boolean_expression_in_logical_expression501 = new BitSet(new long[]{0x0000000004000002L});
+    public static final BitSet FOLLOW_equality_expression_in_boolean_expression514 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_AND_in_boolean_expression517 = new BitSet(new long[]{0x00000F0800010000L});
+    public static final BitSet FOLLOW_equality_expression_in_boolean_expression520 = new BitSet(new long[]{0x0000000008000002L});
+    public static final BitSet FOLLOW_relational_expression_in_equality_expression534 = new BitSet(new long[]{0x0000000030000002L});
+    public static final BitSet FOLLOW_set_in_equality_expression537 = new BitSet(new long[]{0x00000F0800010000L});
+    public static final BitSet FOLLOW_relational_expression_in_equality_expression548 = new BitSet(new long[]{0x0000000030000002L});
+    public static final BitSet FOLLOW_additive_expression_in_relational_expression562 = new BitSet(new long[]{0x00000003C0000002L});
+    public static final BitSet FOLLOW_set_in_relational_expression565 = new BitSet(new long[]{0x00000F0800010000L});
+    public static final BitSet FOLLOW_additive_expression_in_relational_expression584 = new BitSet(new long[]{0x00000003C0000002L});
+    public static final BitSet FOLLOW_multiplicative_expression_in_additive_expression598 = new BitSet(new long[]{0x0000000C00000002L});
+    public static final BitSet FOLLOW_set_in_additive_expression601 = new BitSet(new long[]{0x00000F0800010000L});
+    public static final BitSet FOLLOW_multiplicative_expression_in_additive_expression612 = new BitSet(new long[]{0x0000000C00000002L});
+    public static final BitSet FOLLOW_power_expression_in_multiplicative_expression626 = new BitSet(new long[]{0x0000007000000002L});
+    public static final BitSet FOLLOW_set_in_multiplicative_expression629 = new BitSet(new long[]{0x00000F0800010000L});
+    public static final BitSet FOLLOW_power_expression_in_multiplicative_expression644 = new BitSet(new long[]{0x0000007000000002L});
+    public static final BitSet FOLLOW_unary_expression_in_power_expression658 = new BitSet(new long[]{0x0000008000000002L});
+    public static final BitSet FOLLOW_POWER_in_power_expression662 = new BitSet(new long[]{0x00000F0800010000L});
+    public static final BitSet FOLLOW_unary_expression_in_power_expression665 = new BitSet(new long[]{0x0000008000000002L});
+    public static final BitSet FOLLOW_primary_expression_in_unary_expression678 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NOT_in_unary_expression683 = new BitSet(new long[]{0x00000E0000010000L});
+    public static final BitSet FOLLOW_primary_expression_in_unary_expression686 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_MINUS_in_unary_expression691 = new BitSet(new long[]{0x00000E0000010000L});
+    public static final BitSet FOLLOW_primary_expression_in_unary_expression693 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPEN_PAREN_in_primary_expression713 = new BitSet(new long[]{0x00000F0800010000L});
+    public static final BitSet FOLLOW_logical_expression_in_primary_expression716 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_CLOSE_PAREN_in_primary_expression718 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_value_in_primary_expression725 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_set_in_expression_value0 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_chained_function_in_synpred2_RichTea177 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_PERIOD_in_synpred2_RichTea179 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_function_in_synpred13_RichTea390 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_chained_function_in_synpred2_RichTea144 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_PERIOD_in_synpred2_RichTea146 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_function_in_synpred13_RichTea361 = new BitSet(new long[]{0x0000000000000002L});
 
 }

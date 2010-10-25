@@ -93,8 +93,6 @@ public class RichTeaNodeFactory {
 						
 				if(attribute != null) 
 				{
-					attribute.setContext(node);
-
 					boolean isImplicitAttribute = attribute.getName().equalsIgnoreCase("implicitAttribute");
 					
 					if(isImplicitAttribute) {
@@ -109,6 +107,7 @@ public class RichTeaNodeFactory {
 					}
 					
 					if(!isImplicitAttribute) {
+						attribute.setContext(node);
 						nodeAttributes.setAttribute(attribute);
 					}
 				}
