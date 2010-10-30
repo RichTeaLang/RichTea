@@ -16,8 +16,9 @@ public class AttributeContainerNode implements Resolver {
 	protected Logger log;
 	
 	public AttributeContainerNode() {
-		attributes = new AttributeSet();
 		log = Logger.getLogger(getClass());
+		
+		attributes = new AttributeSet();
 		
 		setResolver(createResolver());
 	}

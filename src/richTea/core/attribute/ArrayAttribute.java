@@ -1,13 +1,10 @@
 package richTea.core.attribute;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import richTea.core.resolver.Resolver;
 
 public class ArrayAttribute extends PrimativeAttribute {
-
-	public ArrayAttribute(String name, List<Attribute> elements) {
+	
+	public ArrayAttribute(String name, Attribute[] elements) {
 		super(name, elements);
 	}
 	
@@ -20,20 +17,21 @@ public class ArrayAttribute extends PrimativeAttribute {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<Attribute> getInitialValue() {
-		return (List<Attribute>) super.getInitialValue();
+	public Attribute[] getInitialValue() {
+		return (Attribute[]) super.getInitialValue();
 	}
 	
 	@Override
-	public List<Object> getValue() {		
-		List<Object> arrayValues = new ArrayList<Object>();
+	public Object[] getValue() {	
+		Attribute[] arrayAttributes = getInitialValue();
 		
-		for(Attribute arrayElement : getInitialValue()) {
-			arrayValues.add(arrayElement.getValue());
+		Object[] value = new Object[arrayAttributes.length];
+		
+		for(int i = 0; i < value.length; i++) {
+			value[i] = arrayAttributes[i].getValue();
 		}
 		
-		return arrayValues;
+		return value;
 	}
 }

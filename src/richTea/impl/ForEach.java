@@ -1,24 +1,21 @@
 package richTea.impl;
 
-import richTea.core.execution.ExecutionContext;
-import richTea.core.node.TreeNode;
+import richTea.core.execution.AbstractFunction;
 
-public class ForEach extends TreeNode {
+public class ForEach extends AbstractFunction {
 	
 	@Override
-	public void execute(ExecutionContext executionContext) {
+	protected void run() {
 		Iterable<Object> inList = inList();
 		String as = as();
 		
 		for(Object element : inList) {
-			setValue(as, element);
+			context.setValue(as, element);
 			
-			for(TreeNode child : getChildren()) {
-				executionContext.execute(child);
-			}
+			context.executeChildren();
 		}
 		
-		executionContext.setRunChildren(false);
+		context.setRunChildren(false);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -28,5 +25,5 @@ public class ForEach extends TreeNode {
 	
 	protected String as() {
 		return getString("as");
-	}
+	}	
 }

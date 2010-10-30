@@ -86,10 +86,10 @@ public class RichTeaAttributeFactory {
 	}
 	
 	protected Attribute createArrayAttribute(String name, Tree value) {
-		List<Attribute> arrayElements = new ArrayList<Attribute>();
+		Attribute[] arrayElements = new Attribute[value.getChildCount()];
 		
-		for(int i = 0; i < value.getChildCount(); i++) {
-			arrayElements.add(create(String.format("name[%s]", i), value.getChild(i)));
+		for(int i = 0; i < arrayElements.length; i++) {
+			arrayElements[i] = create(String.format("name[%s]", i), value.getChild(i));
 		}
 		
 		return new ArrayAttribute(name, arrayElements);

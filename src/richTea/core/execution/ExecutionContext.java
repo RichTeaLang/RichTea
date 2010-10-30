@@ -3,38 +3,47 @@ package richTea.core.execution;
 import java.util.Stack;
 
 import richTea.core.node.TreeNode;
+import richTea.core.resolver.Resolver;
 
-public class ExecutionContext {
+public class ExecutionContext implements Resolver {
 	
-	private Stack<TreeNode> executionTrace;
+	private Stack<TreeNode> executionStack;
 			
 	private boolean runChildren;
 	
 	private Object returnValue;
 	
 	public ExecutionContext() {
-		executionTrace = new Stack<TreeNode>();
+		executionStack = new Stack<TreeNode>();
 	}
 	
-	public Stack<TreeNode> getExecutionTrace() {
-		return executionTrace;
+	public Stack<TreeNode> getExecutionStack() {
+		return executionStack;
+	}
+	
+	public TreeNode getCurrentNode() {
+		return executionStack.peek();
 	}
 	
 	public Object execute(TreeNode node) {		
-		getExecutionTrace().push(node);
+		getExecutionStack().push(node);
 		
 		setRunChildren(true);
 		
-		node.execute(this);
+		node.getFunction().execute(this);
 		
 		if(getRunChildren()) executeChildren(node);
 		
-		getExecutionTrace().pop();
+		getExecutionStack().pop();
 		
 		return getReturnValue();
 	}
 	
-	public void executeChildren(TreeNode node) {
+	public void executeChildren() {
+		executeChildren(getCurrentNode());
+	}
+	
+	protected void executeChildren(TreeNode node) {
 		for(TreeNode child : node.getChildren()) {
 			execute(child);
 		}
@@ -54,5 +63,14 @@ public class ExecutionContext {
 	
 	public void setReturnValue(Object returnValue) {
 		this.returnValue = returnValue;
+	}
+
+	@Override
+	public Object getValue(String key) {
+		return getCurrentNode().getValue(key);
+	}
+	
+	public void setValue(String key, Object value) {
+		getCurrentNode().setValue(key, value);
 	}
 }

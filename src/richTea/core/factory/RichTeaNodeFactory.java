@@ -8,8 +8,10 @@ import richTea.antlr.tree.AttributeData;
 import richTea.antlr.tree.NodeData;
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.AttributeSet;
+import richTea.core.execution.EmptyFunction;
 import richTea.core.factory.bindings.Binding;
 import richTea.core.factory.bindings.BindingSet;
+import richTea.core.factory.bindings.FunctionBinding;
 import richTea.core.node.TreeNode;
 
 public class RichTeaNodeFactory {
@@ -47,30 +49,30 @@ public class RichTeaNodeFactory {
 				
 				buildChildren(node, nodeData);
 				
-			} catch(ClassNotFoundException exception) {
-				log.error(String.format("Unable to find specified node class %s", binding.getFullyQualifiedClassName()));
-			}catch(ClassCastException exception) {
-				log.error(String.format("Specified class for '%s' does not implement %s", binding.getBindingName(), TreeNode.class.getName()), exception);
+				if(binding instanceof FunctionBinding) {
+					setFunctionOnNode(node, (FunctionBinding) binding);
+				}else {
+					setFunctionOnNode(node, binding);
+				}
+				
+				node.initialize();
 			}catch(InstantiationException exception) {
-				log.error(String.format("Unable to create instance of %s", binding.getFullyQualifiedClassName(), exception));
+				log.error(String.format("Unable to create instance of %s", binding.getNodeClassName()), exception);
 			}catch(IllegalAccessException exception) {
-				log.error(String.format("Unable to access constructor for %s", binding.getFullyQualifiedClassName()), exception);
+				log.error(String.format("Unable to access constructor for %s", binding.getNodeClassName()), exception);
 			}
 		}
 		
 		return node;
 	}
 	
+	
 	protected Binding getNodeBinding(NodeData nodeData) {
 		return getBindings().getBinding(nodeData.getName().toLowerCase());
 	}
 	
-	protected Class<? extends TreeNode> getNodeClass(Binding binding) throws ClassNotFoundException, ClassCastException {
-		String fullyQualifiedClassName = binding.getFullyQualifiedClassName();
-		
-		Class<?> nodeClass = ClassLoader.getSystemClassLoader().loadClass(fullyQualifiedClassName);
-		
-		return nodeClass.asSubclass(TreeNode.class);
+	protected Class<? extends TreeNode> getNodeClass(Binding binding) {
+		return binding.getNodeClass();
 	}
 	
 	protected TreeNode instanciateNodeFromClass(Class<? extends TreeNode> nodeClass) throws InstantiationException, IllegalAccessException {
@@ -125,5 +127,13 @@ public class RichTeaNodeFactory {
 				if(childNode != null) node.addChild(childNode);
 			}
 		}
+	}
+	
+	protected void setFunctionOnNode(TreeNode node, Binding binding) {
+		node.setRichTeaFunction(new EmptyFunction());
+	}
+	
+	protected void setFunctionOnNode(TreeNode node, FunctionBinding binding) {
+		node.setRichTeaFunction(binding.getFunctionImplementation());
 	}
 }

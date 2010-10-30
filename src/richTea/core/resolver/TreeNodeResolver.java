@@ -9,30 +9,19 @@ public class TreeNodeResolver extends BasicNodeResolver {
 	}
 	
 	@Override
-	public TreeNode getOwner() {
-		return (TreeNode) super.getOwner();
+	public TreeNode getContext() {
+		return (TreeNode) super.getContext();
 	}
 	
 	@Override
 	public Object getValue(String key) {
 		Object value = super.getValue(key);
 		
-		TreeNode owner = getOwner();
+		TreeNode owner = getContext();
 		
-		if(value == null && !owner.getAttributes().hasAttribute(key)) {
-			if(value == null) {
-				// Couldn't find a child to return, so look in the parent node
-				TreeNode parent = owner.getParent();
-				
-				if(parent != null) {
-					value = parent.getValue(key);
-				}
-				
-				if(value == null) {
-					// Couldn't find an attribute to return, so lookup children in the node
-					value = owner.getChildByID(key);
-				}
-			}
+		if(value == null && !owner.getAttributes().hasAttribute(key)) {			
+			// Couldn't find an attribute to return, so lookup children in the node
+			value = owner.getChildByID(key);
 		}
 		
 		return value;

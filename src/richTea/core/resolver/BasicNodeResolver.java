@@ -1,7 +1,5 @@
 package richTea.core.resolver;
 
-import java.lang.reflect.Method;
-
 import richTea.core.factory.bindings.Binding;
 import richTea.core.node.BasicNode;
 
@@ -12,8 +10,8 @@ public class BasicNodeResolver extends AttributeResolver {
 	}
 	
 	@Override
-	public BasicNode getOwner() {
-		return (BasicNode) super.getOwner();
+	public BasicNode getContext() {
+		return (BasicNode) super.getContext();
 	}
 
 	@Override
@@ -21,29 +19,11 @@ public class BasicNodeResolver extends AttributeResolver {
 		Object value = super.getValue(attributeName);
 		
 		if(value == null) {
-			BasicNode owner = getOwner();
+			BasicNode owner = getContext();
 			Binding binding = owner.getBinding();
 			
 			if(binding != null) {				
 				value = binding.getDefaultAttributeValue(attributeName);
-				
-				if(value == null) {
-					
-					String methodName = "get" + attributeName;
-					
-					Method[] methods = owner.getClass().getMethods();
-					
-					for(Method method : methods) {
-						if(method.getName().equalsIgnoreCase(methodName)) {
-							try {
-								value = method.invoke(owner);
-								break;
-							}catch (Exception e) {
-								// This is a 'fall back and hope' method of resolving an attribute.  Swallow any errors
-							}
-						}
-					}
-				}
 			}
 		}
 		

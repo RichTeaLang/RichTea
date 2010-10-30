@@ -9,10 +9,10 @@ public class BasicNode extends AttributeContainerNode {
 	private Binding binding;
 	
 	@Override
-	protected Resolver createResolver() {
+	public Resolver createResolver() {
 		return new BasicNodeResolver(this);
 	}
-	
+		
 	public Binding getBinding() {
 		return binding;
 	}

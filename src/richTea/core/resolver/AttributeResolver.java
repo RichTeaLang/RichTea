@@ -3,20 +3,19 @@ package richTea.core.resolver;
 import richTea.core.attribute.Attribute;
 import richTea.core.node.AttributeContainerNode;
 
-public class AttributeResolver implements Resolver {
-		
-	private AttributeContainerNode owner;
-	
+public class AttributeResolver extends AbstractResolver {
+			
 	public AttributeResolver(AttributeContainerNode owner) {
-		this.owner = owner;
+		super(owner);
 	}
 	
-	public AttributeContainerNode getOwner() {
-		return owner;
+	@Override
+	public AttributeContainerNode getContext() {
+		return (AttributeContainerNode) super.getContext();
 	}
 
 	public Object getValue(String attributeName) {
-		Attribute attribute = getOwner().getAttributes().getAttribute(attributeName);
+		Attribute attribute = getContext().getAttributes().getAttribute(attributeName);
 		
 		return attribute != null ? attribute.getValue() : null;
 	}

@@ -2,29 +2,51 @@ package richTea.core.factory.bindings;
 
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.AttributeSet;
+import richTea.core.attribute.StringAttribute;
 import richTea.core.node.TreeNode;
 
 public class Binding extends TreeNode {
 	
 	private AttributeSet defaultAttributes;
+	
+	private Class<? extends TreeNode> nodeClass;
 
 	public Binding() {
 		defaultAttributes = new AttributeSet();
+		defaultAttributes.setAttribute(new StringAttribute("nodeClass", TreeNode.class.getName()));
 	}
 	
-	public Binding(String name, String fullyQualifiedClassName) {
-		this();
+	@Override
+	public void initialize() {
+		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
 		
-		setValue("name", name);
-		setValue("class", fullyQualifiedClassName);
-	}
-
-	public String getBindingName() {
-		return (String) getValue("name");
+		String nodeClassName = getNodeClassName();
+		
+		try {
+			nodeClass = classLoader.loadClass(nodeClassName).asSubclass(TreeNode.class);
+		} catch (ClassNotFoundException e) {
+			log.error(String.format("Could not find class %s for binding %s", nodeClassName, getBindingName()), e);
+		}
 	}
 	
-	public String getFullyQualifiedClassName() {
-		return (String) getValue("class");
+	public String getBindingName() {
+		return getString("name");
+	}
+	
+	protected void setBindingName(String name) {
+		setValue("name", name);
+	}
+	
+	public String getNodeClassName() {
+		return getString("nodeClass");
+	}
+	
+	protected void setNodeClassName(String nodeClassName) {
+		setValue("nodeClass", nodeClassName);
+	}
+	
+	public Class<? extends TreeNode> getNodeClass() {
+		return nodeClass;
 	}
 	
 	public Object getDefaultAttributeValue(String attributeName) {
@@ -38,7 +60,7 @@ public class Binding extends TreeNode {
 	}
 	
 	public String getImplicitAttributeName() {
-		return (String) getValue("implicitAttributeName");
+		return getString("implicitAttributeName");
 	}
 	
 	@Override
@@ -52,6 +74,6 @@ public class Binding extends TreeNode {
 	
 	@Override 
 	public String toString() {
-		return String.format("Binding [name:%s, class:%s]", getBindingName(), getFullyQualifiedClassName());
+		return String.format("Binding [name:%s, class:%s]", getBindingName(), getNodeClass());
 	}
 }

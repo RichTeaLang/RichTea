@@ -1,9 +1,8 @@
 package richTea.core.attribute;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
-import richTea.core.resolver.Resolver;
+import richTea.core.resolver.ResolverUtils;
 
 public class LookupAttribute extends PrimativeAttribute {
 
@@ -21,37 +20,20 @@ public class LookupAttribute extends PrimativeAttribute {
 		Object value = null;
 		
 		if(lookupPathLength > 0) {
-			value = getContext().getValue(lookupPath.get(0));
+			String nextElement = null;
 			
-			for(int i = 1; i < lookupPathLength; i++) {
-				String nextElement = lookupPath.get(i);
+			value = getContext(); // "this" (implicit starting point)
+			
+			for(int i = 0; i < lookupPathLength; i++) {
+				nextElement = lookupPath.get(i);
 				
-				if(value == null) {
-					return null; // We couldn't resolve all the way to the end of the lookup path
-				} else if (value instanceof Resolver) {					
-					value = ((Resolver) value).getValue(nextElement);
-				} else {
-					Method[] methods = value.getClass().getMethods();
-					Method methodToInvoke = null;
-					
-					for(Method method : methods) {
-						if(method.getName().equalsIgnoreCase(nextElement)) {
-							methodToInvoke = method;
-							break;
-						}
-					}
-					
-					if(methodToInvoke != null) {
-						try {
-							value = methodToInvoke.invoke(value);
-						}catch (Exception e) {
-							// This is a 'fall back and hope' method of resolving an attribute.  Swallow any errors
-						}
-					} else {
-						return null; // We couldn't resolve all the way to the end of the lookup path
-					}
+				if(value != null) {
+					value = ResolverUtils.resolve(value, nextElement);
+				}else {
+					value = null; // Couldn't resolve the entire path so value == null
+					break;
 				}
-			}	
+			}
 		}
 		
 		return value;

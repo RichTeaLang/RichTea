@@ -4,24 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import richTea.core.resolver.Resolver;
-import richTea.core.resolver.TreeNodeResolver;
-
 public class TreeNode extends ExecutableNode {
-	
-	private TreeNode parent;
-	
+		
 	protected List<TreeNode> children;
 	
 	public TreeNode() {
 		setID(UUID.randomUUID().toString());
-		children = new ArrayList<TreeNode>();
+		
+		setValue("this", this);
+		setValue("children", (children = new ArrayList<TreeNode>()));
 	}
 	
-	@Override
-	protected Resolver createResolver() {
-		return new TreeNodeResolver(this);
-	}
+	public void initialize() {}
 	
 	public String getID() {
 		return getString("id");
@@ -32,12 +26,12 @@ public class TreeNode extends ExecutableNode {
 	}
 	
 	public TreeNode getParent() {
-		return parent;
+		return (TreeNode) getValue("parent");
 	}
 	
 	public void setParent(TreeNode parent) {
 		if(parent != this) {
-			this.parent = parent;
+			setValue("parent", parent);
 		}else {
 			throw new IllegalArgumentException("Cannot make a node a parent of itself");
 		}

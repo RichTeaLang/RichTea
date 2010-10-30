@@ -1,12 +1,11 @@
 package richTea.impl;
 
-import richTea.core.execution.ExecutionContext;
-import richTea.core.node.TreeNode;
+import richTea.core.execution.AbstractFunction;
 
-public class PrintNode extends TreeNode {
+public class PrintNode extends AbstractFunction {
 
 	@Override
-	public void execute(ExecutionContext executionContext) {
+	protected void run() {
 		Object message = getMessage();
 		
 		if(appendNewLine()) {

@@ -1,12 +1,12 @@
 package richTea.impl;
 
-import richTea.core.execution.ExecutionContext;
+import richTea.core.execution.AbstractFunction;
 import richTea.core.node.TreeNode;
 
-public class Set extends TreeNode {
+public class Set extends AbstractFunction {
 	
 	@Override
-	public void execute(ExecutionContext executionContext) {
+	protected void run() {
 		TreeNode target = getTarget();
 		
 		if(target != null) {

@@ -1,17 +1,16 @@
 package richTea.impl;
 
-import richTea.core.execution.ExecutionContext;
-import richTea.core.node.TreeNode;
+import richTea.core.execution.AbstractFunction;
 
-public class While extends TreeNode {
+public class While extends AbstractFunction {
 	
 	@Override 
-	public void execute(ExecutionContext executionContext) {
+	protected void run() {
 		while(getWhileCondition()) {
-			executionContext.executeChildren(this);
+			context.executeChildren();
 		}
 		
-		executionContext.setRunChildren(false);
+		context.setRunChildren(false);
 	}
 	
 	protected Boolean getWhileCondition() {

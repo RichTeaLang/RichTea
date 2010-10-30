@@ -3,13 +3,12 @@ package richTea.impl;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import richTea.core.execution.ExecutionContext;
-import richTea.core.node.TreeNode;
+import richTea.core.execution.AbstractFunction;
 
-public class RichTeaLogger extends TreeNode {
+public class RichTeaLogger extends AbstractFunction {
 	
 	@Override
-	public void execute(ExecutionContext executionContext) {
+	protected void run() {
 		Logger logger = getLogger();
 		Level level = getLevel();
 		String message = getMessage();

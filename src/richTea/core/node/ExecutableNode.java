@@ -1,8 +1,16 @@
 package richTea.core.node;
 
-import richTea.core.execution.ExecutionContext;
+import richTea.core.execution.RichTeaFunction;
 
 public class ExecutableNode extends BasicNode {
-		
-	public void execute(ExecutionContext executionStack) {}
+	
+	private RichTeaFunction function;
+	
+	public RichTeaFunction getFunction() {
+		return function;
+	}
+	
+	public void setRichTeaFunction(RichTeaFunction function) {
+		this.function = function;
+	}
 }
