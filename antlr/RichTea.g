@@ -88,14 +88,14 @@ attribute
 	
 attribute_data
 	:	function
+	|	array
 	|	datatype
 	;
 	
 
 datatype
 	:	expression
-	|	array
-	| 	lookup
+
 	;
 
 array
@@ -157,6 +157,7 @@ expression_value
 	:	NUMBER
 	|	BOOLEAN
 	|	STRING
+	| 	lookup
 	;
 
 /*	TOKENS	*/
