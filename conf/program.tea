@@ -1,4 +1,22 @@
-Program(x:"Horses" y="horses") {
+Program(id:"root" x:1) {
+	Set(target:{parent} name:"x" value:0);
+	({x} < 100000).While {
+		Set(target:{parent.parent} name:"x" value:{x} + 1) {
+			{x}.Print
+		}
+	}
+}
 
-	(20 == 21).Print
+int x = 0;
+while(++x < 100000) {
+	System.out.println(x);
+}
+
+
+
+Program(x:0) {
+	{x}.Set(to:-1)
+	While(condition:({x}.Increment < 10000)) {
+		{x}.Print
+	}
 }

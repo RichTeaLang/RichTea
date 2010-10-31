@@ -2,6 +2,7 @@ package richTea.core.execution;
 
 import java.util.Stack;
 
+import richTea.core.attribute.Attribute;
 import richTea.core.node.TreeNode;
 import richTea.core.resolver.Resolver;
 
@@ -61,13 +62,21 @@ public class ExecutionContext implements Resolver {
 		return returnValue;
 	}
 	
-	public void setReturnValue(Object returnValue) {
+	public void doReturn() {
+		doReturn(null);
+	}
+	
+	public void doReturn(Object returnValue) {
 		this.returnValue = returnValue;
 	}
 
 	@Override
 	public Object getValue(String key) {
 		return getCurrentNode().getValue(key);
+	}
+	
+	public Attribute getAttribute(String key) {
+		return getCurrentNode().getAttributes().getAttribute(key);
 	}
 	
 	public void setValue(String key, Object value) {
