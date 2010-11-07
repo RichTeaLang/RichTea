@@ -36,6 +36,7 @@ tokens {	FUNCTION; CHILDREN;
    			if(subTree.getType() == ATTRIBUTES) return subTree;
    		}
    		
+		System.out.println(functionNode.toStringTree());
    		return null; // Won't ever happen if we have a valid AST.
    	}
 
@@ -58,17 +59,17 @@ tokens {	FUNCTION; CHILDREN;
 }
 
 program
-	: function EOF!
+	: function
 	;
 
 function
-	:	(implicitAttributes+=datatype PERIOD)? (implicitAttributes+=chained_function PERIOD)* root=function_end { orderFunctionChain((Tree) $root.tree, $implicitAttributes); } 
+	:	(implicitAttributes+=datatype PERIOD)? (implicitAttributes+=chained_function PERIOD)* root=function_end { orderFunctionChain((Tree) $root.tree, $implicitAttributes); }
 			->	$root
 	;
 	
 chained_function
 	:	ID (OPEN_PAREN attribute_list? CLOSE_PAREN)?
-			-> ^(FUNCTION ^(NAME ID) ^(ATTRIBUTES attribute_list?) ^(CHILDREN))
+			-> ^(FUNCTION ^(NAME ID) ^(ATTRIBUTES attribute_list?) ^(CHILDREN)) // Create CHILDREN node for consistency
 	;
 	
 function_end
@@ -95,7 +96,7 @@ attribute_data
 
 datatype
 	:	expression
-
+	| 	array
 	;
 
 array
@@ -131,11 +132,11 @@ relational_expression
 	;
 	
 additive_expression
-	:	multiplicative_expression (( PLUS | MINUS )^ multiplicative_expression)*
+	:	multiplicative_expression (( PLUS_EQUALS | MINUS_EQUALS | PLUS | MINUS )^ multiplicative_expression)*
 	;
 	
 multiplicative_expression
-	:	power_expression (( MULTIPLY | DIVIDE | MODULUS )^ power_expression)*
+	:	power_expression (( MULTIPLY_EQUALS | DIVIDE_EQUALS | MULTIPLY | DIVIDE | MODULUS )^ power_expression)*
 	;
 	
 power_expression
@@ -184,11 +185,16 @@ COMMENT
     ;
 
 WHITESPACE
-	:	(' ' | '\t' | '\r' | '\n') {$channel=HIDDEN;} 
+	:	('\r' | '\n' | '\r\n' | ' ' | '\t' ) {$channel=HIDDEN;} 
 	;
 
 COMMA	:	','	;
 PERIOD	:	'.'	;
+
+PLUS_EQUALS		:	PLUS ASSIGN;
+MULTIPLY_EQUALS	:	MULTIPLY ASSIGN;
+MINUS_EQUALS	:	MINUS ASSIGN;
+DIVIDE_EQUALS	:	DIVIDE ASSIGN;
 
 PLUS	:	'+'	;
 MINUS	:	'-'	;

@@ -16,6 +16,7 @@ public class Binding extends TreeNode {
 		defaultAttributes.setAttribute(new StringAttribute("nodeClass", TreeNode.class.getName()));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize() {
 		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
@@ -23,7 +24,7 @@ public class Binding extends TreeNode {
 		String nodeClassName = getNodeClassName();
 		
 		try {
-			nodeClass = classLoader.loadClass(nodeClassName).asSubclass(TreeNode.class);
+			nodeClass = (Class<? extends TreeNode>) classLoader.loadClass(nodeClassName);
 		} catch (ClassNotFoundException e) {
 			log.error(String.format("Could not find class %s for binding %s", nodeClassName, getBindingName()), e);
 		}

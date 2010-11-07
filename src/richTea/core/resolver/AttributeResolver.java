@@ -19,4 +19,9 @@ public class AttributeResolver extends AbstractResolver {
 		
 		return attribute != null ? attribute.getValue() : null;
 	}
+
+	@Override
+	public Attribute getAttribute(String key) {
+		return getContext().getAttribute(key);
+	}
 }

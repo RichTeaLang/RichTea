@@ -1,31 +1,29 @@
 package richTea.impl;
 
+import richTea.core.attribute.Attribute;
+import richTea.core.attribute.modifier.SetModifier;
 import richTea.core.execution.AbstractFunction;
-import richTea.core.node.TreeNode;
 
 public class Set extends AbstractFunction {
 	
 	@Override
 	protected void run() {
-		TreeNode target = getTarget();
+		Attribute attribute = getAttribute();
 		
-		if(target != null) {
-			String attributeName = getAttributeName();
-			Object attributeValue = getAttributeValue();
+		if(attribute != null) {
+			Object value = getAttributeValue();
 			
-			target.setValue(attributeName, attributeValue);
+			attribute.modify(new SetModifier(value));
+			
+			context.doReturn(value);
 		}
 	}
 	
-	protected TreeNode getTarget() {
-		return (TreeNode) getValue("target");
-	}
-	
-	protected String getAttributeName() {
-		return getString("name");
+	protected Attribute getAttribute() {
+		return context.getAttribute("attribute");
 	}
 
 	protected Object getAttributeValue() {
-		return getValue("value");
+		return getValue("to");
 	}
 }

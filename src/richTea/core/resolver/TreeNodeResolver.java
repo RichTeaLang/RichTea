@@ -1,4 +1,4 @@
-package richTea.core.resolver;
+ package richTea.core.resolver;
 
 import richTea.core.node.TreeNode;
 

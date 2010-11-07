@@ -1,7 +1,7 @@
 package richTea.core.factory.bindings;
 
 import richTea.core.attribute.Attribute;
-import richTea.core.attribute.AttributeSet;
+import richTea.core.attribute.modifier.AttributeModifier;
 import richTea.core.node.TreeNode;
 import richTea.core.resolver.Resolver;
 
@@ -19,23 +19,18 @@ public class AttributeNode extends TreeNode implements Attribute {
 		return getValue("defaultValue");
 	}
 	
+	@Override
+	public Object modify(AttributeModifier modifier) {
+		Attribute attribute = getAttributes().getAttribute("defaultValue");
+		
+		return attribute != null ? attribute.modify(modifier) : null;
+	}
+	
 	public Resolver getContext() {
 		return getResolver();
 	}
 	
 	public void setContext(Resolver context) {
 		setResolver(context);
-	}
-	
-	@Override 
-	public Attribute clone() {
-		AttributeNode clone = new AttributeNode();
-		AttributeSet cloneAttributes = clone.getAttributes();
-	
-		for(Attribute attribute : getAttributes().clone().getAttributes()) {
-			cloneAttributes.setAttribute(attribute);
-		}
-		
-		return clone;
 	}
 }

@@ -8,10 +8,7 @@ import org.antlr.runtime.RecognitionException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.HTMLLayout;
-import org.apache.log4j.Layout;
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.xml.XMLLayout;
 
 import richTea.antlr.RichTeaLexer;
 import richTea.antlr.RichTeaParser;
@@ -26,16 +23,16 @@ import richTea.core.node.TreeNode;
 public class RichTea {
 	
 	public static void main(String[] args) {
-		new RichTea();
+		new RichTea(args[0]);
 	}
 	
 	protected Logger log;
 	
-	public RichTea() {
+	public RichTea(String programFile) {
 		BasicConfigurator.configure();
 		log = Logger.getLogger(getClass());
 		try {
-			log.addAppender(new FileAppender(new HTMLLayout(), "../output.html"));
+			log.addAppender(new FileAppender(new HTMLLayout(), "./output.html"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,27 +42,14 @@ public class RichTea {
 			BindingSet bindings = (BindingSet) loadRichTeaFile("./conf/bindings.tea", new BootstrapBindingSet());
 			
 			try {
-				TreeNode programRoot = (TreeNode) loadRichTeaFile("./conf/program.tea", bindings);
+				TreeNode programRoot = (TreeNode) loadRichTeaFile(programFile, bindings);
 				
 				if(programRoot != null) {
-					while(true) {
-						long startTime = System.currentTimeMillis();
-						
-						new ExecutionContext().execute(programRoot);
-						
-						log.info(String.format("RichTea Execution took %s ms", System.currentTimeMillis() - startTime));
-						
-						startTime = System.currentTimeMillis();
-						
-						int x = 0;
-						
-						while(x < 100000) { 
-							System.out.println(x);
-							x++;
-						}
-						
-						log.info(String.format("Java Execution took %s ms", System.currentTimeMillis() - startTime));
-					}
+					long startTime = System.currentTimeMillis();
+					
+					new ExecutionContext().execute(programRoot);
+					
+					log.info(String.format("RichTea Execution took %s ms", System.currentTimeMillis() - startTime));
 				}
 			}catch (IOException exception) {
 				log.error("Unable to load program file", exception);

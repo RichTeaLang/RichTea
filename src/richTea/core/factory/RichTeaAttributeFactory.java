@@ -9,8 +9,10 @@ import richTea.antlr.RichTeaParser;
 import richTea.antlr.tree.AttributeData;
 import richTea.antlr.tree.NodeData;
 import richTea.core.attribute.ArrayAttribute;
+import richTea.core.attribute.AssignmentAttribute;
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.BooleanAttribute;
+import richTea.core.attribute.ExpressionAttribute;
 import richTea.core.attribute.FunctionAttribute;
 import richTea.core.attribute.LookupAttribute;
 import richTea.core.attribute.NumberAttribute;
@@ -68,6 +70,18 @@ public class RichTeaAttributeFactory {
 				break;
 			case RichTeaParser.PLUS :
 				attribute = createPlusAttribute(name, value);
+				break;
+			case RichTeaParser.PLUS_EQUALS :
+				attribute = createAssignmentAttribute(name, createPlusAttribute(name, value));
+				break;
+			case RichTeaParser.MINUS_EQUALS :
+				attribute = createAssignmentAttribute(name, createMinusAttribute(name, value));
+				break;
+			case RichTeaParser.MULTIPLY_EQUALS :
+				attribute = createAssignmentAttribute(name, createMultiplyAttribute(name, value));
+				break;
+			case RichTeaParser.DIVIDE_EQUALS :
+				attribute = createAssignmentAttribute(name, createDivideAttribute(name, value));
 				break;
 			case RichTeaParser.MINUS :
 				attribute = createMinusAttribute(name, value);
@@ -147,20 +161,24 @@ public class RichTeaAttributeFactory {
 		return new FunctionAttribute(name, function);
 	}
 	
-	protected Attribute createPlusAttribute(String name, Tree value) {
+	protected ExpressionAttribute createPlusAttribute(String name, Tree value) {
 		return new PlusAttribute(name, getAttributeElements("operand", value));
 	}
-	
-	protected Attribute createMinusAttribute(String name, Tree value) {
+		
+	protected ExpressionAttribute createMinusAttribute(String name, Tree value) {
 		return new MinusAttribute(name, getAttributeElements("operand", value));
 	}
 	
-	protected Attribute createMultiplyAttribute(String name, Tree value) {
+	protected ExpressionAttribute createMultiplyAttribute(String name, Tree value) {
 		return new MultiplyAttribute(name, getAttributeElements("operand", value));
 	}
 	
-	protected Attribute createDivideAttribute(String name, Tree value) {
+	protected ExpressionAttribute createDivideAttribute(String name, Tree value) {
 		return new DivideAttribute(name, getAttributeElements("operand", value));
+	}
+	
+	protected Attribute createAssignmentAttribute(String name, ExpressionAttribute value) {
+		return new AssignmentAttribute(name, value);
 	}
 	
 	protected Attribute createAndAttribute(String name, Tree value) {

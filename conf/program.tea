@@ -1,22 +1,25 @@
-Program(id:"root" x:1) {
-	Set(target:{parent} name:"x" value:0);
-	({x} < 100000).While {
-		Set(target:{parent.parent} name:"x" value:{x} + 1) {
-			{x}.Print
-		}
+Program(x:0 y:1 z:0 fib:30) {
+
+	({fib} -= 1 >= 0).While {
+		{z}.Set(to:{x} + {y});
+		{x}.Set(to:{y}).Print;
+		{y}.Set(to:{z});
 	}
+	
+	
+	If(this.parent.x == 40) {
+	
+	}
+	
+	Set(z to:30)
 }
 
-int x = 0;
-while(++x < 100000) {
-	System.out.println(x);
-}
-
-
-
-Program(x:0) {
-	{x}.Set(to:-1)
-	While(condition:({x}.Increment < 10000)) {
-		{x}.Print
+Program(x:0 y:1 z:0 fib:30) {
+	While(fib -= 1 >= 0) {
+		Set(z to:x + y)
+		Set(x to:y)
+		Set(y to:z)
 	}
+	
+	Print(x)
 }

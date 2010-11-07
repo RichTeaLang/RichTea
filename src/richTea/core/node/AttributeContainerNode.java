@@ -2,6 +2,7 @@ package richTea.core.node;
 
 import org.apache.log4j.Logger;
 
+import richTea.core.attribute.Attribute;
 import richTea.core.attribute.AttributeSet;
 import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.resolver.AttributeResolver;
@@ -63,5 +64,10 @@ public class AttributeContainerNode implements Resolver {
 
 	public AttributeSet getAttributes() {
 		return attributes;
+	}
+
+	@Override
+	public Attribute getAttribute(String key) {
+		return getAttributes().getAttribute(key);
 	}
 }

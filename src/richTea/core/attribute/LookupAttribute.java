@@ -2,6 +2,8 @@ package richTea.core.attribute;
 
 import java.util.List;
 
+import richTea.core.attribute.modifier.AttributeModifier;
+import richTea.core.node.TreeNode;
 import richTea.core.resolver.ResolverUtils;
 
 public class LookupAttribute extends PrimativeAttribute {
@@ -9,7 +11,7 @@ public class LookupAttribute extends PrimativeAttribute {
 	public LookupAttribute(String name, List<String> lookupPath) {
 		super(name, lookupPath);
 	}
-	
+		
 	@Override
 	public Object getValue() {
 		@SuppressWarnings("unchecked")
@@ -28,7 +30,7 @@ public class LookupAttribute extends PrimativeAttribute {
 				nextElement = lookupPath.get(i);
 				
 				if(value != null) {
-					value = ResolverUtils.resolve(value, nextElement);
+					value = ResolverUtils.resolveValue(value, nextElement);
 				}else {
 					value = null; // Couldn't resolve the entire path so value == null
 					break;
@@ -37,5 +39,38 @@ public class LookupAttribute extends PrimativeAttribute {
 		}
 		
 		return value;
+	}
+	
+	protected Attribute getAttribute() {
+		@SuppressWarnings("unchecked")
+		List<String> lookupPath = (List<String>) super.getValue();
+		
+		int lookupPathLength = lookupPath.size();
+	
+		Attribute value = this;;
+		
+		if(lookupPathLength > 0) {
+			String nextElement = null;
+			
+			for(int i = 0; i < lookupPathLength; i++) {
+				nextElement = lookupPath.get(i);
+				
+				if(value != null) {
+					value = ResolverUtils.resolveAttribute((TreeNode) value.getContext(), nextElement);
+				}else {
+					value = null; // Couldn't resolve the entire path so value == null
+					break;
+				}
+			}
+		}
+		
+		return value;
+	}
+	
+	@Override
+	public Object modify(AttributeModifier modifier) {
+		Attribute attribute = getAttribute();
+		
+		return attribute.modify(modifier);
 	}
 }

@@ -19,8 +19,7 @@ public class BasicNodeResolver extends AttributeResolver {
 		Object value = super.getValue(attributeName);
 		
 		if(value == null) {
-			BasicNode owner = getContext();
-			Binding binding = owner.getBinding();
+			Binding binding = getContext().getBinding();
 			
 			if(binding != null) {				
 				value = binding.getDefaultAttributeValue(attributeName);

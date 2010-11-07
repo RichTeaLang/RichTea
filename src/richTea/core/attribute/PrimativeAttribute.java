@@ -1,5 +1,6 @@
 package richTea.core.attribute;
 
+import richTea.core.attribute.modifier.AttributeModifier;
 import richTea.core.resolver.Resolver;
 
 public class PrimativeAttribute implements Attribute {
@@ -31,6 +32,12 @@ public class PrimativeAttribute implements Attribute {
 	
 	public Object getValue() {
 		return getInitialValue();
+	}
+	
+	public Object modify(AttributeModifier modifier) {
+		this.initialValue = modifier.modify(this);
+		
+		return getValue();
 	}
 	
 	public Resolver getContext() {

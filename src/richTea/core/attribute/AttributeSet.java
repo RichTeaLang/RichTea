@@ -26,14 +26,4 @@ public class AttributeSet {
 	public Attribute[] getAttributes() {
 		return attributes.values().toArray(new Attribute[attributes.size()]);
 	}
-	
-	public AttributeSet clone() {
-		AttributeSet clone = new AttributeSet();
-		
-		for(Attribute attribute : getAttributes()) {
-			clone.setAttribute(attribute.clone());
-		}
-		
-		return clone;
-	}
 }
