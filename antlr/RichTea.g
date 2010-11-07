@@ -5,76 +5,20 @@ options	{ 	output=AST;
 			language=Java;
 			backtrack=true; }
 						
-tokens {	FUNCTION; CHILDREN;
-			ATTRIBUTE; ATTRIBUTES; NAME; VALUE;
-			ARRAY; ARRAY_ELEMENT; LOOKUP; NEGATE;}
+tokens {	FUNCTION; CHILDREN; ATTRIBUTES;
+			ATTRIBUTE; NAME; VALUE;
+			ARRAY; LOOKUP; NEGATE;	}
 			
 @header {package richTea.antlr;}
 @lexer::header {package richTea.antlr;}
-			
-@members {
-	private void orderFunctionChain(Tree root, List nodes) {
-		if(nodes != null) {
-			for(int i = nodes.size() - 1; i >= 0; i--) {
-				Tree implicitAttributeTree = (Tree) nodes.get(i);
-						
-				injectImplicitAttribute(root, implicitAttributeTree);
-				
-				root = implicitAttributeTree;		
-			}
-		}
-	}
-	
-	private void injectImplicitAttribute(Tree root, Tree implicitAttributeTree) {
-		getAttributeList(root).addChild(createImplicitAttribute(implicitAttributeTree));
-	}
-	
-	private Tree getAttributeList(Tree functionNode) {
-   		for(int i = 0; i < functionNode.getChildCount(); i++) {
-   			Tree subTree = functionNode.getChild(i);
-   			
-   			if(subTree.getType() == ATTRIBUTES) return subTree;
-   		}
-   		
-		System.out.println(functionNode.toStringTree());
-   		return null; // Won't ever happen if we have a valid AST.
-   	}
-
-	private Tree createImplicitAttribute(Tree implicitAttribute) {
-		Tree attribute = createSubTree(ATTRIBUTE, "ATTRIBUTE");
-			Tree attributeName = createSubTree(NAME, "NAME");
-			Tree attributeValue = createSubTree(VALUE, "VALUE");
-			
-		attribute.addChild(attributeName);
-			attributeName.addChild(createSubTree(ID, "implicitAttribute"));
-		attribute.addChild(attributeValue);
-			attributeValue.addChild(implicitAttribute);
-				
-		return attribute;
-	}
-	
-	private Tree createSubTree(int tokenType, String tokenText) {
-		return (Tree) adaptor.create(new CommonToken(tokenType, tokenText));
-	} 
-}
 
 program
 	: function
 	;
-
+	
 function
-	:	(implicitAttributes+=datatype PERIOD)? (implicitAttributes+=chained_function PERIOD)* root=function_end { orderFunctionChain((Tree) $root.tree, $implicitAttributes); }
-			->	$root
-	;
-	
-chained_function
-	:	ID (OPEN_PAREN attribute_list? CLOSE_PAREN)?
-			-> ^(FUNCTION ^(NAME ID) ^(ATTRIBUTES attribute_list?) ^(CHILDREN)) // Create CHILDREN node for consistency
-	;
-	
-function_end
-	:	ID (OPEN_PAREN attribute_list? CLOSE_PAREN)? (OPEN_BRACE function* CLOSE_BRACE)? SEMI_COLON?
-			-> ^(FUNCTION ^(NAME ID) ^(ATTRIBUTES attribute_list?) ^(CHILDREN function*))
+	:	ID (OPEN_PAREN attribute_data? attribute_list? CLOSE_PAREN) (OPEN_BRACE function* CLOSE_BRACE)? SEMI_COLON?
+			-> ^(FUNCTION ^(NAME ID) ^(ATTRIBUTES ^(ATTRIBUTE ^(NAME ID["implicitAttribute"]) ^(VALUE attribute_data))? attribute_list?) ^(CHILDREN function*))
 	;
 	
 attribute_list
@@ -88,9 +32,8 @@ attribute
 	;
 	
 attribute_data
-	:	function
-	|	array
-	|	datatype
+	:	datatype
+	|	function
 	;
 	
 
@@ -105,7 +48,7 @@ array
 	;
 	
 lookup
-	:	OPEN_BRACE (ID (PERIOD ID)* ) CLOSE_BRACE
+	:	(ID (PERIOD ID)* ) 
 			-> ^(LOOKUP ^(ID)+)
 	;
 
