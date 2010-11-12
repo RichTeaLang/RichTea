@@ -1,13 +1,11 @@
 package richTea.core.attribute.math;
 
-import java.util.List;
-
 import richTea.core.attribute.Attribute;
 
 public class MinusAttribute extends AbstractMathExpressionAttribute {
 
-	public MinusAttribute(String name, List<Attribute> operands) {
-		super(name, operands);
+	public MinusAttribute(String name, Attribute leftOperand, Attribute rightOperand) {
+		super(name, leftOperand, rightOperand);
 	}
 
 	@Override

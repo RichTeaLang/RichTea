@@ -1,13 +1,11 @@
 package richTea.core.attribute.bool;
 
-import java.util.List;
-
 import richTea.core.attribute.Attribute;
 
 public class OrAttribute extends AbstractBooleanExpressionAttribute {
 
-	public OrAttribute(String name, List<Attribute> operands) {
-		super(name, operands);
+	public OrAttribute(String name, Attribute leftOperand, Attribute rightOperand) {
+		super(name, leftOperand, rightOperand);
 	}
 
 	@Override

@@ -1,25 +1,66 @@
-Program(x:0 y:1 z:0 fib:30) {
-
-	({fib} -= 1 >= 0).While {
-		{z}.Set(to:{x} + {y});
-		{x}.Set(to:{y}).Print;
-		{y}.Set(to:{z});
+(name:"Code Snippets" version:0.1) {
+	Print(name + " (Version: " + version + ")");
+	
+	Print("");
+	
+	Print("Increment 0 by 1 = " + (0 + 1))
+	Print("Decrement 0 by 1 = " + (0 - 1))
+	Print("Multiply 5 by 10 = " + (5 * 10))
+	Print("Divide 10 by 2 = " + (10 / 2));
+	
+	Print("");
+	
+	(x:20){
+		Print("Printing numbers from " + x + " to 0");
+		
+		While(x >= 0) {
+			Print(x appendNewLine:false)
+			Print(", " appendNewLine:false if:x > 0)
+			Increment(x by:0-1)
+		}
+		Print("" appendNewLine:true)
+	}
+	
+	Print("");
+	
+	ForEach("value"  in:[false, true]) {
+		Print("Not " + value + " = ", appendNewLine:false);
+		Print(!value ? "true" : "false");
+	}
+	
+	Print("Ignore me!" if:false);
+	
+	(x:5) {
+		While(x -= 1 > 0) {
+			If(x == 1 then: {
+				Print(x + " equals one");
+			} else: {
+				Print(x + " doesn't equal one");
+			})
+		}
+	}
+		
+	Print("");
+	
+	(fib:10) {
+		(x:0 y:1 z:0) {
+			while(fib -= 1 >= 0) {
+				Set(z to: x + y)
+				Set(x to: y)
+				Set(y to: z)
+			}
+			
+			Print("Fib(10) == " + x)
+		}
+	}
+	
+	Print("");
+	
+	(string:"Java Method Invocation:") {
+		Print(string);
+		Print(" - " + string.toUpperCase + " (String.toUpperCase)")
+		Print(" - " + string.toLowerCase + " (String.toLowerCase)")
 	}
 	
 	
-	If(this.parent.x == 40) {
-	
-	}
-	
-	Set(z to:30)
-}
-
-Program(x:0 y:1 z:0 fib:30) {
-	While(fib -= 1 >= 0) {
-		Set(z to:x + y)
-		Set(x to:y)
-		Set(y to:z)
-	}
-	
-	Print(x)
 }

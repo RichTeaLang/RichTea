@@ -7,7 +7,7 @@ options	{ 	output=AST;
 						
 tokens {	FUNCTION; CHILDREN; ATTRIBUTES;
 			ATTRIBUTE; NAME; VALUE;
-			ARRAY; LOOKUP; NEGATE;	}
+			ARRAY; VARIABLE; TERNARY_OPERATOR; NEGATE;	}
 			
 @header {package richTea.antlr;}
 @lexer::header {package richTea.antlr;}
@@ -17,8 +17,11 @@ program
 	;
 	
 function
-	:	ID (OPEN_PAREN attribute_data? attribute_list? CLOSE_PAREN) (OPEN_BRACE function* CLOSE_BRACE)? SEMI_COLON?
-			-> ^(FUNCTION ^(NAME ID) ^(ATTRIBUTES ^(ATTRIBUTE ^(NAME ID["implicitAttribute"]) ^(VALUE attribute_data))? attribute_list?) ^(CHILDREN function*))
+	:	ID (OPEN_PAREN datatype? COMMA? attribute_list? CLOSE_PAREN)? (OPEN_BRACE function* CLOSE_BRACE)? SEMI_COLON?
+			-> ^(FUNCTION ^(NAME ID) ^(ATTRIBUTES ^(ATTRIBUTE ^(NAME ID["implicitAttribute"]) ^(VALUE datatype))? attribute_list?) ^(CHILDREN function*))
+			
+	|	(OPEN_PAREN attribute_list? CLOSE_PAREN)? OPEN_BRACE function* CLOSE_BRACE
+			->	^(FUNCTION ^(NAME ID["scope"]) ^(ATTRIBUTES attribute_list?) ^(CHILDREN function*))
 	;
 	
 attribute_list
@@ -27,35 +30,26 @@ attribute_list
 	;
 	
 attribute
-	:	ID (COLON | ASSIGN)! attribute_data	
-			->	^(NAME ID) ^(VALUE attribute_data)
-	;
-	
-attribute_data
-	:	datatype
-	|	function
-	;
-	
+	:	ID (COLON | ASSIGN)! datatype	
+			->	^(NAME ID) ^(VALUE datatype)
+	;	
 
 datatype
 	:	expression
+	|	function
 	| 	array
 	;
 
 array
-	:	OPEN_BOX (attribute_data (COMMA attribute_data)* )? CLOSE_BOX
-			->	^(ARRAY attribute_data*)
+	:	OPEN_BOX (datatype (COMMA datatype)* )? CLOSE_BOX
+			->	^(ARRAY datatype*)
 	;
 	
-lookup
-	:	(ID (PERIOD ID)* ) 
-			-> ^(LOOKUP ^(ID)+)
-	;
-
 /*	EXPRESSION EVALUATION	*/
 	
 expression
-	:	logical_expression
+	:	logical_expression (QUESTION_MARK logical_expression COLON logical_expression) -> ^(TERNARY_OPERATOR logical_expression+)
+	|	logical_expression
 	;
 	
 logical_expression
@@ -101,7 +95,12 @@ expression_value
 	:	NUMBER
 	|	BOOLEAN
 	|	STRING
-	| 	lookup
+	| 	variable
+	;
+	
+variable
+	:	(ID (PERIOD ID)* ) 
+			-> ^(VARIABLE ^(ID)+)
 	;
 
 /*	TOKENS	*/
@@ -159,6 +158,7 @@ NOT	:	'!'		;
 ASSIGN		:	'=' ;
 COLON		:	':'	;
 SEMI_COLON	: 	';'	;
+QUESTION_MARK	:	'?';
 
 OPEN_PAREN 	:	'(' ;
 CLOSE_PAREN :	')' ;

@@ -47,7 +47,7 @@ public class AttributeContainerNode implements Resolver {
 	}
 	
 	public String getString(String attributeName) {
-		return getValue(attributeName).toString();
+		return String.valueOf(getValue(attributeName));
 	}
 	
 	public Boolean getBoolean(String attributeName) {

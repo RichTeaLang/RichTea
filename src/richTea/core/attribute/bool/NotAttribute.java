@@ -1,13 +1,21 @@
 package richTea.core.attribute.bool;
 
+import richTea.core.attribute.AbstractAttribute;
 import richTea.core.attribute.Attribute;
-import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.resolver.Resolver;
 
-public class NotAttribute extends PrimativeAttribute {
+public class NotAttribute extends AbstractAttribute {
 
-	public NotAttribute(String name, Attribute initialValue) {
-		super(name, initialValue);
+	private Attribute initalValue;
+	
+	public NotAttribute(String name, Attribute initalValue) {
+		super(name);
+		
+		this.initalValue = initalValue;
+	}
+	
+	protected Attribute getInitialValue() {
+		return initalValue;
 	}
 	
 	@Override
@@ -15,11 +23,6 @@ public class NotAttribute extends PrimativeAttribute {
 		super.setContext(context);
 		
 		getInitialValue().setContext(context);
-	}
-	
-	@Override
-	public Attribute getInitialValue() {
-		return (Attribute) super.getInitialValue();
 	}
 	
 	@Override

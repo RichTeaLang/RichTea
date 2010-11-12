@@ -12,13 +12,17 @@ public abstract class AbstractFunction implements RichTeaFunction, Resolver {
 	public void execute(ExecutionContext context) {
 		this.context = context;
 		
-		run();
+		if(shouldExecute()) run();
 		
 		context = null;
 	}
 	
 	public Object getValue(String attributeName) {
 		return context.getValue(attributeName);
+	}
+	
+	public boolean shouldExecute() {
+		return Boolean.parseBoolean(getValueOrDefault("if", true).toString());
 	}
 	
 	public Attribute getAttribute(String key) {
@@ -32,7 +36,7 @@ public abstract class AbstractFunction implements RichTeaFunction, Resolver {
 	}
 	
 	public String getString(String attributeName) {
-		return getValue(attributeName).toString();
+		return String.valueOf(getValue(attributeName));
 	}
 	
 	public Boolean getBoolean(String attributeName) {

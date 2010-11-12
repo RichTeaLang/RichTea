@@ -1,14 +1,12 @@
 package richTea.core.attribute.math;
 
-import java.util.List;
-
 import richTea.core.attribute.Attribute;
-import richTea.core.attribute.ExpressionAttribute;
+import richTea.core.attribute.expression.AbstractExpressionAttribute;
 
-public abstract class AbstractMathExpressionAttribute extends ExpressionAttribute {
+public abstract class AbstractMathExpressionAttribute extends AbstractExpressionAttribute {
 
-	public AbstractMathExpressionAttribute(String name, List<Attribute> operands) {
-		super(name, operands);
+	public AbstractMathExpressionAttribute(String name, Attribute leftOperand, Attribute rightOperand) {
+		super(name, leftOperand, rightOperand);
 	}
 	
 	@Override

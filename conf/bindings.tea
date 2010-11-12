@@ -1,5 +1,5 @@
-Bindings {
-	Node(name:"Program" class:"richTea.core.node.TreeNode");
+Bindings() {
+	Function(name:"Scope" functionClass:"richTea.core.execution.EmptyFunction")
 	
 	Function(name:"Print" functionClass:"richTea.impl.PrintNode" implicitAttributeName:"message") {
 		Attribute(name:"message");
@@ -12,13 +12,22 @@ Bindings {
 		Attribute(name:"level" defaultValue:"debug");
 	}
 	
-	Function(name:"ForEach" functionClass:"richTea.impl.ForEach" implicitAttributeName:"in") {
+	Function(name:"If" functionClass:"richTea.impl.If" implicitAttributeName:"expression") {
+		Attribute(name:"expression");
+	}
+	
+	Function(name:"ForEach" functionClass:"richTea.impl.ForEach" implicitAttributeName:"as") {
 		Attribute(name:"in")
-		Attribute(name:"as" defaultValue:"currentElement")
+		Attribute(name:"as" defaultValue:"i")
 	}
 	
 	Function(name:"While" functionClass:"richTea.impl.While" implicitAttributeName:"condition") {
 		Attribute(name:"condition")
+	}
+	
+	Function(name:"Do" functionClass:"richTea.impl.DoWhile" implicitAttributeName:"action") {
+		Attribute(name:"action")
+		Attribute(name:"while")
 	}
 	
 	Function(name:"Set" functionClass:"richTea.impl.Set" implicitAttributeName:"attribute") {

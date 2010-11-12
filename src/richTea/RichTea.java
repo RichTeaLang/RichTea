@@ -34,7 +34,6 @@ public class RichTea {
 		try {
 			log.addAppender(new FileAppender(new HTMLLayout(), "./output.html"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

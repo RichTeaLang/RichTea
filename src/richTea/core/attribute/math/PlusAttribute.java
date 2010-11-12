@@ -1,13 +1,11 @@
 package richTea.core.attribute.math;
 
-import java.util.List;
-
 import richTea.core.attribute.Attribute;
 
 public class PlusAttribute extends AbstractMathExpressionAttribute {
 
-	public PlusAttribute(String name, List<Attribute> operands) {
-		super(name, operands);
+	public PlusAttribute(String name, Attribute leftOperand, Attribute rightOperand) {
+		super(name, leftOperand, rightOperand);
 	}
 	
 	@Override
@@ -16,7 +14,7 @@ public class PlusAttribute extends AbstractMathExpressionAttribute {
 		
 		if(value == null) {
 			// If we couldn't perform a typical math operation, we concat the values as Strings
-			value = value1.toString() + value2.toString();
+			value = String.valueOf(value1) + String.valueOf(value2);
 		}
 		
 		return value;

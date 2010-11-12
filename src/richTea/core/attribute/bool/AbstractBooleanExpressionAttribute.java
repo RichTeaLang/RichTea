@@ -1,14 +1,12 @@
 package richTea.core.attribute.bool;
 
-import java.util.List;
-
 import richTea.core.attribute.Attribute;
-import richTea.core.attribute.ExpressionAttribute;
+import richTea.core.attribute.expression.AbstractExpressionAttribute;
 
-public abstract class AbstractBooleanExpressionAttribute extends ExpressionAttribute {
+public abstract class AbstractBooleanExpressionAttribute extends AbstractExpressionAttribute {
 
-	public AbstractBooleanExpressionAttribute(String name, List<Attribute> operands) {
-		super(name, operands);
+	public AbstractBooleanExpressionAttribute(String name, Attribute leftOperand, Attribute rightOperand) {
+		super(name, leftOperand, rightOperand);;
 	}
 
 	@Override

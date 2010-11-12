@@ -1,13 +1,11 @@
 package richTea.core.attribute.bool;
 
-import java.util.List;
-
 import richTea.core.attribute.Attribute;
 
 public class LessThanAttribute extends AbstractMathBooleanExpressionAttribute {
 
-	public LessThanAttribute(String name, List<Attribute> operands) {
-		super(name, operands);
+	public LessThanAttribute(String name, Attribute leftOperand, Attribute rightOperand) {
+		super(name, leftOperand, rightOperand);
 	}
 
 	@Override

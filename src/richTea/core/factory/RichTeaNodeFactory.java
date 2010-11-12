@@ -61,6 +61,8 @@ public class RichTeaNodeFactory {
 			}catch(IllegalAccessException exception) {
 				log.error(String.format("Unable to access constructor for %s", binding.getNodeClassName()), exception);
 			}
+		}else {
+			log.error(String.format("No node binding found for %s", nodeData.getName()));
 		}
 		
 		return node;
@@ -68,7 +70,7 @@ public class RichTeaNodeFactory {
 	
 	
 	protected Binding getNodeBinding(NodeData nodeData) {
-		return getBindings().getBinding(nodeData.getName().toLowerCase());
+		return getBindings().getBinding(nodeData.getName());
 	}
 	
 	protected Class<? extends TreeNode> getNodeClass(Binding binding) {

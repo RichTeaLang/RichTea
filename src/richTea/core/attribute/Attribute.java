@@ -8,11 +8,9 @@ public interface Attribute {
 	public String getName();
 	public void setName(String name);
 	
-	public Object getValue();
-	public Object modify(AttributeModifier modifier);
-	
 	public Resolver getContext();
 	public void setContext(Resolver context);
 	
-	
+	public Object getValue();
+	public Object modify(AttributeModifier modifier);
 }

@@ -1,13 +1,11 @@
 package richTea.core.attribute.math;
 
-import java.util.List;
-
 import richTea.core.attribute.Attribute;
 
 public class DivideAttribute extends AbstractMathExpressionAttribute {
 
-	public DivideAttribute(String name, List<Attribute> operands) {
-		super(name, operands);
+	public DivideAttribute(String name, Attribute leftOperand, Attribute rightOperand) {
+		super(name, leftOperand, rightOperand);
 	}
 
 	@Override
