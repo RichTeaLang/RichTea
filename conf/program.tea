@@ -10,15 +10,15 @@
 	
 	Print("");
 	
-	(x:20){
-		Print("Printing numbers from " + x + " to 0");
+	(from:20 to:8){
+		Print("Printing numbers from " + from + " to " + to);
 		
-		While(x >= 0) {
-			Print(x appendNewLine:false)
-			Print(", " appendNewLine:false if:x > 0)
-			Increment(x by:0-1)
+		While(from >= to) {
+			Print(from appendNewLine:false)
+			Print(", " appendNewLine:false if:from > to)
+			Increment(from by:0-1)
 		}
-		Print("" appendNewLine:true)
+		Print("")
 	}
 	
 	Print("");
@@ -29,6 +29,7 @@
 	}
 	
 	Print("Ignore me!" if:false);
+	Print("Conditional execution on any function" if:10 == 10)
 	
 	(x:5) {
 		While(x -= 1 > 0) {
@@ -40,7 +41,23 @@
 		}
 	}
 		
-	Print("");
+	Print("Switch on values" prependNewLine:true)
+	
+	ForEach("elem" in:["case2", "case1", "case0"]) {
+		Switch(elem 
+			case1: {
+				Print("Case 1")
+			}
+			
+			case2: {
+				Print("Case 2");
+			}
+			
+			default: {
+				Print("Default case called");
+			}
+		)
+	}	
 	
 	(fib:10) {
 		(x:0 y:1 z:0) {
@@ -56,11 +73,9 @@
 	
 	Print("");
 	
-	(string:"Java Method Invocation:") {
+	(string:"Java Method Invocation") {
 		Print(string);
 		Print(" - " + string.toUpperCase + " (String.toUpperCase)")
 		Print(" - " + string.toLowerCase + " (String.toLowerCase)")
 	}
-	
-	
 }

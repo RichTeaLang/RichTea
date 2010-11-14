@@ -87,8 +87,8 @@ unary_expression
 	;
 	
 primary_expression
-	:	OPEN_PAREN! logical_expression CLOSE_PAREN!
-	| 	expression_value
+	:	expression_value
+	|	OPEN_PAREN! logical_expression CLOSE_PAREN!
 	;
 
 expression_value

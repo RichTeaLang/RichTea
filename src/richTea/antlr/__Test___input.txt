@@ -1,1 +1,0 @@
-Print("Printing numbers from " + x + " to 0");

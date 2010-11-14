@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g 2010-11-12 00:28:14
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g 2010-11-14 02:19:25
 package richTea.antlr;
 
 import org.antlr.runtime.*;
@@ -389,7 +389,7 @@ public class RichTeaParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: function, ID, ID, datatype, attribute_list
+                    // elements: function, attribute_list, ID, datatype, ID
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -422,7 +422,7 @@ public class RichTeaParser extends Parser {
                         root_2 = (Tree)adaptor.becomeRoot((Tree)adaptor.create(ATTRIBUTES, "ATTRIBUTES"), root_2);
 
                         // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:21:42: ( ^( ATTRIBUTE ^( NAME ID[\"implicitAttribute\"] ) ^( VALUE datatype ) ) )?
-                        if ( stream_ID.hasNext()||stream_datatype.hasNext() ) {
+                        if ( stream_datatype.hasNext()||stream_ID.hasNext() ) {
                             // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:21:42: ^( ATTRIBUTE ^( NAME ID[\"implicitAttribute\"] ) ^( VALUE datatype ) )
                             {
                             Tree root_3 = (Tree)adaptor.nil();
@@ -451,8 +451,8 @@ public class RichTeaParser extends Parser {
                             }
 
                         }
-                        stream_ID.reset();
                         stream_datatype.reset();
+                        stream_ID.reset();
                         // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:21:106: ( attribute_list )?
                         if ( stream_attribute_list.hasNext() ) {
                             adaptor.addChild(root_2, stream_attribute_list.nextTree());
@@ -878,7 +878,7 @@ public class RichTeaParser extends Parser {
 
 
             // AST REWRITE
-            // elements: ID, datatype
+            // elements: datatype, ID
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -960,6 +960,34 @@ public class RichTeaParser extends Parser {
             // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:38:2: ( expression | function | array )
             int alt15=3;
             switch ( input.LA(1) ) {
+            case MINUS:
+            case NOT:
+            case NUMBER:
+            case BOOLEAN:
+            case STRING:
+                {
+                alt15=1;
+                }
+                break;
+            case ID:
+                {
+                int LA15_2 = input.LA(2);
+
+                if ( (synpred15_RichTea()) ) {
+                    alt15=1;
+                }
+                else if ( (synpred16_RichTea()) ) {
+                    alt15=2;
+                }
+                else {
+                    if (state.backtracking>0) {state.failed=true; return retval;}
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 15, 2, input);
+
+                    throw nvae;
+                }
+                }
+                break;
             case OPEN_PAREN:
                 {
                 switch ( input.LA(2) ) {
@@ -977,11 +1005,11 @@ public class RichTeaParser extends Parser {
                     {
                     int LA15_6 = input.LA(3);
 
-                    if ( ((LA15_6>=COLON && LA15_6<=ASSIGN)) ) {
-                        alt15=2;
-                    }
-                    else if ( (LA15_6==CLOSE_PAREN||(LA15_6>=OR && LA15_6<=POWER)||LA15_6==PERIOD) ) {
+                    if ( (LA15_6==CLOSE_PAREN||(LA15_6>=OR && LA15_6<=POWER)||LA15_6==PERIOD) ) {
                         alt15=1;
+                    }
+                    else if ( ((LA15_6>=COLON && LA15_6<=ASSIGN)) ) {
+                        alt15=2;
                     }
                     else {
                         if (state.backtracking>0) {state.failed=true; return retval;}
@@ -1000,39 +1028,11 @@ public class RichTeaParser extends Parser {
                 default:
                     if (state.backtracking>0) {state.failed=true; return retval;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 15, 1, input);
-
-                    throw nvae;
-                }
-
-                }
-                break;
-            case MINUS:
-            case NOT:
-            case NUMBER:
-            case BOOLEAN:
-            case STRING:
-                {
-                alt15=1;
-                }
-                break;
-            case ID:
-                {
-                int LA15_3 = input.LA(2);
-
-                if ( (synpred15_RichTea()) ) {
-                    alt15=1;
-                }
-                else if ( (synpred16_RichTea()) ) {
-                    alt15=2;
-                }
-                else {
-                    if (state.backtracking>0) {state.failed=true; return retval;}
-                    NoViableAltException nvae =
                         new NoViableAltException("", 15, 3, input);
 
                     throw nvae;
                 }
+
                 }
                 break;
             case OPEN_BRACE:
@@ -2240,32 +2240,32 @@ public class RichTeaParser extends Parser {
     };
 
     // $ANTLR start "primary_expression"
-    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:89:1: primary_expression : ( OPEN_PAREN logical_expression CLOSE_PAREN | expression_value );
+    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:89:1: primary_expression : ( expression_value | OPEN_PAREN logical_expression CLOSE_PAREN );
     public final RichTeaParser.primary_expression_return primary_expression() throws RecognitionException {
         RichTeaParser.primary_expression_return retval = new RichTeaParser.primary_expression_return();
         retval.start = input.LT(1);
 
         Tree root_0 = null;
 
-        Token OPEN_PAREN65=null;
-        Token CLOSE_PAREN67=null;
-        RichTeaParser.logical_expression_return logical_expression66 = null;
+        Token OPEN_PAREN66=null;
+        Token CLOSE_PAREN68=null;
+        RichTeaParser.expression_value_return expression_value65 = null;
 
-        RichTeaParser.expression_value_return expression_value68 = null;
+        RichTeaParser.logical_expression_return logical_expression67 = null;
 
 
-        Tree OPEN_PAREN65_tree=null;
-        Tree CLOSE_PAREN67_tree=null;
+        Tree OPEN_PAREN66_tree=null;
+        Tree CLOSE_PAREN68_tree=null;
 
         try {
-            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:90:2: ( OPEN_PAREN logical_expression CLOSE_PAREN | expression_value )
+            // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:90:2: ( expression_value | OPEN_PAREN logical_expression CLOSE_PAREN )
             int alt27=2;
             int LA27_0 = input.LA(1);
 
-            if ( (LA27_0==OPEN_PAREN) ) {
+            if ( (LA27_0==ID||(LA27_0>=NUMBER && LA27_0<=STRING)) ) {
                 alt27=1;
             }
-            else if ( (LA27_0==ID||(LA27_0>=NUMBER && LA27_0<=STRING)) ) {
+            else if ( (LA27_0==OPEN_PAREN) ) {
                 alt27=2;
             }
             else {
@@ -2277,32 +2277,32 @@ public class RichTeaParser extends Parser {
             }
             switch (alt27) {
                 case 1 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:90:4: OPEN_PAREN logical_expression CLOSE_PAREN
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:90:4: expression_value
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    OPEN_PAREN65=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_primary_expression673); if (state.failed) return retval;
-                    pushFollow(FOLLOW_logical_expression_in_primary_expression676);
-                    logical_expression66=logical_expression();
+                    pushFollow(FOLLOW_expression_value_in_primary_expression673);
+                    expression_value65=expression_value();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, logical_expression66.getTree());
-                    CLOSE_PAREN67=(Token)match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_primary_expression678); if (state.failed) return retval;
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, expression_value65.getTree());
 
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:91:5: expression_value
+                    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:91:4: OPEN_PAREN logical_expression CLOSE_PAREN
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    pushFollow(FOLLOW_expression_value_in_primary_expression685);
-                    expression_value68=expression_value();
+                    OPEN_PAREN66=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_primary_expression678); if (state.failed) return retval;
+                    pushFollow(FOLLOW_logical_expression_in_primary_expression681);
+                    logical_expression67=logical_expression();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, expression_value68.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, logical_expression67.getTree());
+                    CLOSE_PAREN68=(Token)match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_primary_expression683); if (state.failed) return retval;
 
                     }
                     break;
@@ -2389,7 +2389,7 @@ public class RichTeaParser extends Parser {
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    NUMBER69=(Token)match(input,NUMBER,FOLLOW_NUMBER_in_expression_value696); if (state.failed) return retval;
+                    NUMBER69=(Token)match(input,NUMBER,FOLLOW_NUMBER_in_expression_value695); if (state.failed) return retval;
                     if ( state.backtracking==0 ) {
                     NUMBER69_tree = (Tree)adaptor.create(NUMBER69);
                     adaptor.addChild(root_0, NUMBER69_tree);
@@ -2402,7 +2402,7 @@ public class RichTeaParser extends Parser {
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    BOOLEAN70=(Token)match(input,BOOLEAN,FOLLOW_BOOLEAN_in_expression_value701); if (state.failed) return retval;
+                    BOOLEAN70=(Token)match(input,BOOLEAN,FOLLOW_BOOLEAN_in_expression_value700); if (state.failed) return retval;
                     if ( state.backtracking==0 ) {
                     BOOLEAN70_tree = (Tree)adaptor.create(BOOLEAN70);
                     adaptor.addChild(root_0, BOOLEAN70_tree);
@@ -2415,7 +2415,7 @@ public class RichTeaParser extends Parser {
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    STRING71=(Token)match(input,STRING,FOLLOW_STRING_in_expression_value706); if (state.failed) return retval;
+                    STRING71=(Token)match(input,STRING,FOLLOW_STRING_in_expression_value705); if (state.failed) return retval;
                     if ( state.backtracking==0 ) {
                     STRING71_tree = (Tree)adaptor.create(STRING71);
                     adaptor.addChild(root_0, STRING71_tree);
@@ -2428,7 +2428,7 @@ public class RichTeaParser extends Parser {
                     {
                     root_0 = (Tree)adaptor.nil();
 
-                    pushFollow(FOLLOW_variable_in_expression_value712);
+                    pushFollow(FOLLOW_variable_in_expression_value711);
                     variable72=variable();
 
                     state._fsp--;
@@ -2489,7 +2489,7 @@ public class RichTeaParser extends Parser {
             // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:4: ( ID ( PERIOD ID )* )
             // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:5: ID ( PERIOD ID )*
             {
-            ID73=(Token)match(input,ID,FOLLOW_ID_in_variable725); if (state.failed) return retval; 
+            ID73=(Token)match(input,ID,FOLLOW_ID_in_variable724); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_ID.add(ID73);
 
             // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:8: ( PERIOD ID )*
@@ -2507,10 +2507,10 @@ public class RichTeaParser extends Parser {
             	case 1 :
             	    // C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g:102:9: PERIOD ID
             	    {
-            	    PERIOD74=(Token)match(input,PERIOD,FOLLOW_PERIOD_in_variable728); if (state.failed) return retval; 
+            	    PERIOD74=(Token)match(input,PERIOD,FOLLOW_PERIOD_in_variable727); if (state.failed) return retval; 
             	    if ( state.backtracking==0 ) stream_PERIOD.add(PERIOD74);
 
-            	    ID75=(Token)match(input,ID,FOLLOW_ID_in_variable730); if (state.failed) return retval; 
+            	    ID75=(Token)match(input,ID,FOLLOW_ID_in_variable729); if (state.failed) return retval; 
             	    if ( state.backtracking==0 ) stream_ID.add(ID75);
 
 
@@ -3034,7 +3034,7 @@ public class RichTeaParser extends Parser {
     static final String DFA18_specialS =
         "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\2\uffff}>";
     static final String[] DFA18_transitionS = {
-            "\1\5\1\1\25\uffff\1\7\6\uffff\1\6\1\2\1\3\1\4",
+            "\1\4\1\5\25\uffff\1\7\6\uffff\1\6\1\1\1\2\1\3",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -3261,17 +3261,17 @@ public class RichTeaParser extends Parser {
     public static final BitSet FOLLOW_primary_expression_in_unary_expression646 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_MINUS_in_unary_expression651 = new BitSet(new long[]{0x0000E0000000C000L});
     public static final BitSet FOLLOW_primary_expression_in_unary_expression653 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_PAREN_in_primary_expression673 = new BitSet(new long[]{0x0000F0200000C000L});
-    public static final BitSet FOLLOW_logical_expression_in_primary_expression676 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_CLOSE_PAREN_in_primary_expression678 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_value_in_primary_expression685 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NUMBER_in_expression_value696 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_BOOLEAN_in_expression_value701 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_in_expression_value706 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_variable_in_expression_value712 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_variable725 = new BitSet(new long[]{0x0001000000000002L});
-    public static final BitSet FOLLOW_PERIOD_in_variable728 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_ID_in_variable730 = new BitSet(new long[]{0x0001000000000002L});
+    public static final BitSet FOLLOW_expression_value_in_primary_expression673 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPEN_PAREN_in_primary_expression678 = new BitSet(new long[]{0x0000F0200000C000L});
+    public static final BitSet FOLLOW_logical_expression_in_primary_expression681 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_CLOSE_PAREN_in_primary_expression683 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NUMBER_in_expression_value695 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_BOOLEAN_in_expression_value700 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_expression_value705 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_variable_in_expression_value711 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ID_in_variable724 = new BitSet(new long[]{0x0001000000000002L});
+    public static final BitSet FOLLOW_PERIOD_in_variable727 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_ID_in_variable729 = new BitSet(new long[]{0x0001000000000002L});
     public static final BitSet FOLLOW_OPEN_PAREN_in_synpred4_RichTea125 = new BitSet(new long[]{0x0000F0200087C000L});
     public static final BitSet FOLLOW_datatype_in_synpred4_RichTea127 = new BitSet(new long[]{0x0000000000034000L});
     public static final BitSet FOLLOW_COMMA_in_synpred4_RichTea130 = new BitSet(new long[]{0x0000000000024000L});

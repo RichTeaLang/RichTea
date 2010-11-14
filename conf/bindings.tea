@@ -3,6 +3,7 @@ Bindings() {
 	
 	Function(name:"Print" functionClass:"richTea.impl.PrintNode" implicitAttributeName:"message") {
 		Attribute(name:"message");
+		Attribute(name:"prependNewLine" defaultValue:false);
 		Attribute(name:"appendNewLine" defaultValue:true);
 	}
 	
@@ -14,7 +15,11 @@ Bindings() {
 	
 	Function(name:"If" functionClass:"richTea.impl.If" implicitAttributeName:"expression") {
 		Attribute(name:"expression");
+		Branch(name:"then");
+		Branch(name:"else");
 	}
+	
+	Function(name:"Switch" functionClass:"richTea.impl.Switch" implicitAttributeName:"value")
 	
 	Function(name:"ForEach" functionClass:"richTea.impl.ForEach" implicitAttributeName:"as") {
 		Attribute(name:"in")
@@ -46,4 +51,10 @@ Bindings() {
 	}
 	
 	Function(name:"GetSystemTime" functionClass:"richTea.impl.GetSystemTime")
+	
+	Function(name:"Beep" functionClass:"richTea.impl.Beep");
+	
+	Function(name:"CopyToClipboard" functionClass:"richTea.impl.CopyToClipboard" implicitAttributeName:"text") {
+		Attribute(name:"text");
+	}
 }

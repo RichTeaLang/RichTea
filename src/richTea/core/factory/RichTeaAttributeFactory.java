@@ -40,7 +40,6 @@ public class RichTeaAttributeFactory {
 	private RichTeaNodeFactory nodeFactory;
 	
 	public RichTeaAttributeFactory(RichTeaNodeFactory nodeFactory) {
-		
 		this.nodeFactory = nodeFactory;
 	}
 	
