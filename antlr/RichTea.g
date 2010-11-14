@@ -1,12 +1,15 @@
 grammar RichTea;
 
 options	{ 	output=AST;
+			k=2;
 			ASTLabelType=Tree;
 			language=Java;
 			backtrack=true; }
 						
-tokens {	FUNCTION; CHILDREN; ATTRIBUTES;
+tokens {	FUNCTION; 
+			CHILDREN; ATTRIBUTES;
 			ATTRIBUTE; NAME; VALUE;
+			BRANCHES; BRANCH;
 			ARRAY; VARIABLE; TERNARY_OPERATOR; NEGATE;	}
 			
 @header {package richTea.antlr;}
@@ -17,22 +20,46 @@ program
 	;
 	
 function
-	:	ID (OPEN_PAREN datatype? COMMA? attribute_list? CLOSE_PAREN)? (OPEN_BRACE function* CLOSE_BRACE)? SEMI_COLON?
-			-> ^(FUNCTION ^(NAME ID) ^(ATTRIBUTES ^(ATTRIBUTE ^(NAME ID["implicitAttribute"]) ^(VALUE datatype))? attribute_list?) ^(CHILDREN function*))
+	:	ID (OPEN_PAREN function_data? CLOSE_PAREN)?
+			-> ^(FUNCTION ^(NAME ID) function_data?)
 			
-	|	(OPEN_PAREN attribute_list? CLOSE_PAREN)? OPEN_BRACE function* CLOSE_BRACE
-			->	^(FUNCTION ^(NAME ID["scope"]) ^(ATTRIBUTES attribute_list?) ^(CHILDREN function*))
+	|	OPEN_PAREN function_data CLOSE_PAREN
+			->	^(FUNCTION ^(NAME ID["scope"]) function_data)
+	;
+
+function_data
+	:	attribute_list branch_list	
 	;
 	
 attribute_list
-	:	attribute (COMMA? attribute)*	
-			->	^(ATTRIBUTE attribute)*
+	:	attributes+=implicitAttribute? (COMMA? attributes+=attribute)*
+			-> ^(ATTRIBUTES ^(ATTRIBUTE $attributes)*)
 	;
 	
 attribute
 	:	ID (COLON | ASSIGN)! datatype	
 			->	^(NAME ID) ^(VALUE datatype)
+	;
+
+implicitAttribute
+	:	datatype
+			->	^(NAME ID["implicitAttribute"]) ^(VALUE datatype)
 	;	
+	
+branch_list
+	:	branches+=implicitBranch? (COMMA? branches+=branch)*
+			-> ^(BRANCHES ^(BRANCH $branches)*)
+	;
+	
+branch 
+	:	HASH? (name=ID | name=STRING) OPEN_BRACE function* CLOSE_BRACE
+			->	^(NAME $name) ^(CHILDREN function*)
+	;
+
+implicitBranch 
+	:	HASH? OPEN_BRACE function* CLOSE_BRACE
+			->	^(NAME ID["implicitBranch"]) ^(CHILDREN function*)
+	;
 
 datatype
 	:	expression
@@ -132,6 +159,7 @@ WHITESPACE
 
 COMMA	:	','	;
 PERIOD	:	'.'	;
+HASH	:	'#'	;
 
 PLUS_EQUALS		:	PLUS ASSIGN;
 MULTIPLY_EQUALS	:	MULTIPLY ASSIGN;
