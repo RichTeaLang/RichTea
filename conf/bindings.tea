@@ -1,20 +1,23 @@
 Bindings(#bindings {
 	Function(name:"Scope" functionClass:"richTea.impl.Scope" implicitAttributeName:"if" implicitBranchName:"do")
 	
-	Function(name:"Print" functionClass:"richTea.impl.PrintNode" implicitAttributeName:"message" #attributes {
-		Attribute(name:"message");
-		Attribute(name:"prependNewLine" defaultValue:false);
-		Attribute(name:"appendNewLine" defaultValue:true);
-	})
+	Function(name:"Print" functionClass:"richTea.impl.PrintNode" implicitAttributeName:"message" 
+		#attributes {
+			Attribute(name:"message");
+			Attribute(name:"prependNewLine" defaultValue:false);
+			Attribute(name:"appendNewLine" defaultValue:true);
+		}
+	)
 	
-	Function(name:"Log" functionClass:"richTea.impl.RichTeaLogger" implicitAttributeName:"message" #attributes {
-		Attribute(name:"message");
-		Attribute(name:"loggerName" defaultValue:"richTea");
-		Attribute(name:"level" defaultValue:"debug");
-	})
+	Function(name:"Log" functionClass:"richTea.impl.RichTeaLogger" implicitAttributeName:"message"
+		#attributes {
+			Attribute(name:"message");
+			Attribute(name:"loggerName" defaultValue:"richTea");
+			Attribute(name:"level" defaultValue:"debug");
+		}
+	)
 	
 	Function(name:"If" functionClass:"richTea.impl.If" implicitAttributeName:"expression" implicitBranchName:"then" 
-	
 		#attributes {
 			Attribute(name:"expression");
 			Branch(name:"then");
@@ -23,40 +26,54 @@ Bindings(#bindings {
 	
 	Function(name:"Switch" functionClass:"richTea.impl.Switch" implicitAttributeName:"value")
 	
-	Function(name:"ForEach" functionClass:"richTea.impl.ForEach" implicitAttributeName:"as" #attributes {
-		Attribute(name:"in")
-		Attribute(name:"as" defaultValue:"i")
-	})
+	Function(name:"ForEach" functionClass:"richTea.impl.ForEach" implicitAttributeName:"as" implicitBranchName:"do"
+		#attributes {
+			Attribute(name:"in")
+			Attribute(name:"as" defaultValue:"i")
+		}
+	)
 	
-	Function(name:"While" functionClass:"richTea.impl.While" implicitAttributeName:"condition" #attributes {
-		Attribute(name:"condition")
-	})
+	Function(name:"While" functionClass:"richTea.impl.While" implicitAttributeName:"condition" implicitBranchName:"do" 
+		#attributes {
+			Attribute(name:"condition")
+		}
+	)
 	
-	Function(name:"Do" functionClass:"richTea.impl.DoWhile" implicitAttributeName:"action" #attributes {
-		Attribute(name:"action")
-		Attribute(name:"while")
-	})
+	Function(name:"Do" functionClass:"richTea.impl.DoWhile" implicitAttributeName:"action" 
+		#attributes {
+			Attribute(name:"action")
+			Attribute(name:"while")
+		}
+	)
 	
-	Function(name:"Set" functionClass:"richTea.impl.Set" implicitAttributeName:"attribute" #attributes {
-		Attribute(name:"attribute");
-		Attribute(name:"to");
-	})
+	Function(name:"Set" functionClass:"richTea.impl.Set" implicitAttributeName:"attribute" 
+		#attributes {
+			Attribute(name:"attribute");
+			Attribute(name:"to");
+		}
+	)
 	
-	Function(name:"GetArrayData" functionClass:"richTea.impl.GetArrayData" implicitAttributeName:"array" #attributes {
-		Attribute(name:"array")
-		Attribute(name:"index" defaultValue:0)
-	})
+	Function(name:"GetArrayData" functionClass:"richTea.impl.GetArrayData" implicitAttributeName:"array" 
+		#attributes {
+			Attribute(name:"array")
+			Attribute(name:"index" defaultValue:0)
+		}
+	)
 	
-	Function(name:"Increment" functionClass:"richTea.impl.Increment" implicitAttributeName:"attribute" #attributes {
-		Attribute(name:"attribute")
-		Attribute(name:"by" defaultValue:1)
-	})
+	Function(name:"Increment" functionClass:"richTea.impl.Increment" implicitAttributeName:"attribute" 
+		#attributes {
+			Attribute(name:"attribute")
+			Attribute(name:"by" defaultValue:1)
+		}
+	)
 	
 	Function(name:"GetSystemTime" functionClass:"richTea.impl.GetSystemTime")
 	
 	Function(name:"Beep" functionClass:"richTea.impl.Beep");
 	
-	Function(name:"CopyToClipboard" functionClass:"richTea.impl.CopyToClipboard" implicitAttributeName:"text" #attributes {
-		Attribute(name:"text");
-	})
+	Function(name:"CopyToClipboard" functionClass:"richTea.impl.CopyToClipboard" implicitAttributeName:"text" 
+		#attributes {
+			Attribute(name:"text");
+		}
+	)
 })
