@@ -22,7 +22,7 @@ public abstract class AbstractFunction implements RichTeaFunction, Resolver {
 	}
 	
 	public boolean shouldExecute() {
-		return Boolean.parseBoolean(getValueOrDefault("if", true).toString());
+		return Boolean.parseBoolean(String.valueOf(getValueOrDefault("if", true)));
 	}
 	
 	public Attribute getAttribute(String key) {
@@ -39,7 +39,7 @@ public abstract class AbstractFunction implements RichTeaFunction, Resolver {
 		return String.valueOf(getValue(attributeName));
 	}
 	
-	public Boolean getBoolean(String attributeName) {
+	public boolean getBoolean(String attributeName) {
 		return Boolean.parseBoolean(getString(attributeName));
 	}
 	

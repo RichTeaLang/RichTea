@@ -12,10 +12,8 @@ public class ForEach extends AbstractFunction {
 		for(Object element : inList) {
 			context.setValue(as, element);
 			
-			context.executeChildren();
+			context.executeBranch("do");
 		}
-		
-		context.setRunChildren(false);
 	}
 	
 	@SuppressWarnings("unchecked")

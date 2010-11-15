@@ -12,6 +12,7 @@ import org.antlr.runtime.tree.Tree;
 import org.apache.log4j.Logger;
 
 import richTea.antlr.tree.AttributeData;
+import richTea.antlr.tree.BranchData;
 import richTea.antlr.tree.NodeData;
 
 public class RichTeaTreeAdaptor extends CommonTreeAdaptor {
@@ -26,6 +27,7 @@ public class RichTeaTreeAdaptor extends CommonTreeAdaptor {
 		treeTypes = new HashMap<Integer, Class<? extends Tree>>();
 		treeTypes.put(RichTeaParser.FUNCTION, NodeData.class);
 		treeTypes.put(RichTeaParser.ATTRIBUTE, AttributeData.class);
+		treeTypes.put(RichTeaParser.BRANCH, BranchData.class);
 	}
 	
 	@Override 

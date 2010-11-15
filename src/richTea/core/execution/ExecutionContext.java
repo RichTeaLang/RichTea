@@ -3,14 +3,13 @@ package richTea.core.execution;
 import java.util.Stack;
 
 import richTea.core.attribute.Attribute;
+import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 import richTea.core.resolver.Resolver;
 
 public class ExecutionContext implements Resolver {
 	
 	private Stack<TreeNode> executionStack;
-			
-	private boolean runChildren;
 	
 	private Object returnValue;
 	
@@ -27,35 +26,25 @@ public class ExecutionContext implements Resolver {
 	}
 	
 	public Object execute(TreeNode node) {		
-		getExecutionStack().push(node);
-		
-		setRunChildren(true);
+		getExecutionStack().push(node);;
 		
 		node.getFunction().execute(this);
-		
-		if(getRunChildren()) executeChildren(node);
 		
 		getExecutionStack().pop();
 		
 		return getReturnValue();
 	}
 	
-	public void executeChildren() {
-		executeChildren(getCurrentNode());
-	}
-	
-	protected void executeChildren(TreeNode node) {
-		for(TreeNode child : node.getChildren()) {
-			execute(child);
+	public boolean executeBranch(String branchName) {
+		Branch branch = getCurrentNode().getBranchByName(branchName);
+		
+		if(branch != null) {
+			for(TreeNode node : branch.getChildren()) {
+				execute(node);
+			}
 		}
-	}
-	
-	public void setRunChildren(boolean runChildren) {
-		this.runChildren = runChildren;
-	}
-	
-	public boolean getRunChildren() {
-		return runChildren;
+		
+		return branch != null;
 	}
 	
 	public Object getReturnValue() {

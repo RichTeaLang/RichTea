@@ -7,13 +7,11 @@ public class While extends AbstractFunction {
 	@Override 
 	protected void run() {
 		while(getWhileCondition()) {
-			context.executeChildren();
+			context.executeBranch("do");
 		}
-		
-		context.setRunChildren(false);
 	}
 	
-	protected Boolean getWhileCondition() {
+	protected boolean getWhileCondition() {
 		return getBoolean("condition");
 	}
 }

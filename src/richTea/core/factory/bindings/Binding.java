@@ -3,6 +3,7 @@ package richTea.core.factory.bindings;
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.AttributeSet;
 import richTea.core.attribute.StringAttribute;
+import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 
 public class Binding extends TreeNode {
@@ -64,13 +65,23 @@ public class Binding extends TreeNode {
 		return getString("implicitAttributeName");
 	}
 	
+	public String getImplicitBranchName() {
+		return getString("implicitBranchName");
+	}
+	
 	@Override
-	public boolean addChild(TreeNode child) {
-		if((child instanceof Attribute) && super.addChild(child)) {
-			getDefaultAttributes().setAttribute((Attribute) child);
+	public boolean addBranch(Branch branch) {
+		boolean added = super.addBranch(branch);
+		
+		if(added && branch.getName().equalsIgnoreCase("attributes")) {
+			for(TreeNode child : branch.getChildren()) {
+				if(child instanceof Attribute) {
+					getDefaultAttributes().setAttribute((Attribute) child);
+				}
+			}
 		}
 		
-		return containsChild(child);
+		return added;
 	}
 	
 	@Override 

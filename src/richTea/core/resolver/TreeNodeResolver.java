@@ -20,8 +20,8 @@ public class TreeNodeResolver extends BasicNodeResolver {
 		TreeNode owner = getContext();
 		
 		if(value == null && !owner.getAttributes().hasAttribute(key)) {			
-			// Couldn't find an attribute to return, so lookup children in the node
-			value = owner.getChildByID(key);
+			// Couldn't find an attribute to return, so lookup branches in the node
+			value = owner.getBranchByName(key);
 		}
 		
 		return value;

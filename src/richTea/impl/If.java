@@ -8,7 +8,7 @@ public class If extends AbstractFunction {
 	protected void run() {
 		boolean expressionValue = getExpressionValue();
 		
-		getValue(expressionValue ? "then" : "else");
+		context.executeBranch(expressionValue ? "then" : "else");
 	}
 	
 	protected boolean getExpressionValue() {

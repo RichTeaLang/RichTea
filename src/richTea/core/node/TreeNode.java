@@ -1,18 +1,18 @@
 package richTea.core.node;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class TreeNode extends ExecutableNode {
 		
-	protected List<TreeNode> children;
-	
+	protected Map<String, Branch> branches;
+		
 	public TreeNode() {
 		setID(UUID.randomUUID().toString());
 		
 		setValue("this", this);
-		setValue("children", (children = new ArrayList<TreeNode>()));
+		setValue("branches", branches = new HashMap<String, Branch>());
 	}
 	
 	public void initialize() {}
@@ -30,51 +30,36 @@ public class TreeNode extends ExecutableNode {
 	}
 	
 	public void setParent(TreeNode parent) {
-		if(parent != this) {
-			setValue("parent", parent);
-		}else {
-			throw new IllegalArgumentException("Cannot make a node a parent of itself");
+		setValue("parent", parent);
+	}
+	
+	public boolean addBranch(Branch branch) {
+		boolean added = false;
+		
+		if(!hasBranch(branch.getName())) {			
+			branches.put(branch.getName().toLowerCase(), branch);
+			branch.setParent(this);
+			added = true;
 		}
+		
+		return added;
 	}
 
-	public boolean addChild(TreeNode child) {
-		if(!containsChild(child)) {
-			child.setParent(this);
-			
-			children.add(child);
-		}
-		
-		return containsChild(child);
+	public boolean hasBranch(String name) {
+		return branches.containsKey(name.toLowerCase());
 	}
 	
-	public boolean containsChild(TreeNode child) {
-		return children.contains(child);
+	public Branch getBranchByName(String name) {
+		return branches.get(name.toLowerCase());
 	}
 	
-	public TreeNode getChildByID(String id) {
-		TreeNode requestedChild = null;
-		
-		if(id != null) {
-			for(TreeNode child : getChildren()) {
-				if(id.equalsIgnoreCase(child.getID())) {
-					requestedChild = child;
-					break;
-				}
-			}
-		}
-		
-		return requestedChild;
+	public TreeNode[] getBranches() {
+		return branches.values().toArray(new TreeNode[branches.size()]);
 	}
 	
-	public TreeNode[] getChildren() {
-		return children.toArray(new TreeNode[children.size()]);
-	}
-	
-	public boolean removeChild(TreeNode child) {
-		if(containsChild(child) && children.remove(child)) {
-			child.setParent(null);
-		}
+	public boolean removeBranch(Branch branch) {
+		Branch removedBranch = branches.remove(branch.getName().toLowerCase());
 		
-		return containsChild(child);
+		return removedBranch != null;
 	}
 }

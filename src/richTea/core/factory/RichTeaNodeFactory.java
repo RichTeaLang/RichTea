@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import richTea.antlr.tree.AttributeData;
+import richTea.antlr.tree.BranchData;
 import richTea.antlr.tree.NodeData;
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.AttributeSet;
@@ -12,6 +13,7 @@ import richTea.core.execution.EmptyFunction;
 import richTea.core.factory.bindings.Binding;
 import richTea.core.factory.bindings.BindingSet;
 import richTea.core.factory.bindings.FunctionBinding;
+import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 
 public class RichTeaNodeFactory {
@@ -47,7 +49,7 @@ public class RichTeaNodeFactory {
 				
 				buildAttributes(node, nodeData);
 				
-				buildChildren(node, nodeData);
+				buildBranches(node, nodeData);
 				
 				if(binding instanceof FunctionBinding) {
 					setFunctionOnNode(node, (FunctionBinding) binding);
@@ -119,15 +121,46 @@ public class RichTeaNodeFactory {
 		}
 	}
 	
-	protected void buildChildren(TreeNode node, NodeData nodeData) {
-		List<NodeData> children = nodeData.getChildNodes();
+	protected void buildBranches(TreeNode node, NodeData nodeData) {
+		List<BranchData> branches = nodeData.getBranches();
 		
-		if(children != null) {
-			for(NodeData child : children) {
-				TreeNode childNode = create(child);
-				
-				if(childNode != null) node.addChild(childNode);
+		if(branches != null) {
+			for(BranchData branch : branches) {
+				buildBranch(node, branch);
 			}
+		}
+	}
+	
+	protected void buildBranch(TreeNode node, BranchData branchData) {	
+		Branch branch = new Branch(branchData.getName());
+		
+		boolean isImplicitBranch = branch.getName().equalsIgnoreCase("implicitBranch");
+		
+		if(isImplicitBranch) {
+			// Try rename the implictBranch only if we haven't already set an branch with the explicit name
+			String implicitBranchName = node.getBinding().getImplicitBranchName();
+			
+			if(!node.hasBranch(implicitBranchName)) {
+				branch.setName(implicitBranchName); // Rename implicitBranch to it's explicit name
+				
+				isImplicitBranch = false;
+			}
+		}
+				
+		if(!isImplicitBranch) {
+			List<NodeData> children = branchData.getChildren();
+			
+			if(children != null) {
+				for(NodeData child : branchData.getChildren()) {
+					TreeNode branchChild = create(child);
+					
+					if(branchChild != null) {
+						branch.addChild(branchChild);
+					}
+				}
+			}
+			
+			node.addBranch(branch);
 		}
 	}
 	

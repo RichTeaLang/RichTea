@@ -1,7 +1,7 @@
 grammar RichTea;
 
 options	{ 	output=AST;
-			k=2;
+			k=2; // Needed to correctly match implicitAttributes in the attribute_list rule
 			ASTLabelType=Tree;
 			language=Java;
 			backtrack=true; }
@@ -20,10 +20,10 @@ program
 	;
 	
 function
-	:	ID (OPEN_PAREN function_data? CLOSE_PAREN)?
+	:	ID (OPEN_PAREN function_data? CLOSE_PAREN)? SEMI_COLON?
 			-> ^(FUNCTION ^(NAME ID) function_data?)
 			
-	|	OPEN_PAREN function_data CLOSE_PAREN
+	|	OPEN_PAREN function_data CLOSE_PAREN SEMI_COLON?
 			->	^(FUNCTION ^(NAME ID["scope"]) function_data)
 	;
 

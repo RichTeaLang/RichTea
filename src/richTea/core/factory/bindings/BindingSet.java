@@ -2,6 +2,8 @@ package richTea.core.factory.bindings;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 
 public class BindingSet extends TreeNode {
@@ -21,11 +23,17 @@ public class BindingSet extends TreeNode {
 	}
 	
 	@Override
-	public boolean addChild(TreeNode child) {
-		if((child instanceof Binding) && super.addChild(child)) {
-			registerBinding((Binding) child);
+	public boolean addBranch(Branch branch) {
+		boolean added = super.addBranch(branch);
+		
+		if(branch.getName().equalsIgnoreCase("bindings")) {
+			for(TreeNode child : branch.getChildren()) {
+				if(child instanceof Binding) {
+					registerBinding((Binding) child);
+				}
+			}
 		}
 		
-		return containsChild(child);
+		return added;
 	}
 }
