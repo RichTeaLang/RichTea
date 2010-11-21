@@ -90,8 +90,6 @@ public class RichTeaNodeFactory {
 	protected void buildAttributes(TreeNode node, NodeData functionData) {
 		List<AttributeData> attributes = functionData.getAttributes();
 		
-		AttributeSet nodeAttributes = node.getAttributes();
-		
 		if(attributes != null) {
 			for(AttributeData attributeData : attributes) {
 				
@@ -105,7 +103,7 @@ public class RichTeaNodeFactory {
 						// Try rename the implictAttribute only if we haven't already set an attribute with the explicit name
 						String implicitAttributeName = node.getBinding().getImplicitAttributeName();
 						
-						if(implicitAttributeName != null && !nodeAttributes.hasAttribute(implicitAttributeName)) {
+						if(implicitAttributeName != null && !node.hasAttribute(implicitAttributeName)) {
 							attribute.setName(implicitAttributeName); // Rename implicitAttribute to it's explicit name
 							
 							isImplicitAttribute = false;
@@ -113,8 +111,8 @@ public class RichTeaNodeFactory {
 					}
 					
 					if(!isImplicitAttribute) {
-						attribute.setContext(node);
-						nodeAttributes.setAttribute(attribute);
+						attribute.setOwner(node);
+						node.setAttribute(attribute);
 					}
 				}
 			}

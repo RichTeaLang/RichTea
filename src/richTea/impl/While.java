@@ -12,6 +12,6 @@ public class While extends AbstractFunction {
 	}
 	
 	protected boolean getWhileCondition() {
-		return getBoolean("condition");
+		return context.getBoolean("condition");
 	}
 }

@@ -24,7 +24,7 @@ public class VariableAttribute extends PrimativeAttribute {
 		if(lookupPathLength > 0) {
 			String nextElement = null;
 			
-			value = getContext(); // "this" (implicit starting point)
+			value = getOwner(); // "this" (implicit starting point)
 			
 			for(int i = 0; i < lookupPathLength; i++) {
 				nextElement = lookupPath.get(i);
@@ -56,7 +56,7 @@ public class VariableAttribute extends PrimativeAttribute {
 				nextElement = lookupPath.get(i);
 				
 				if(value != null) {
-					value = ResolverUtils.resolveAttribute((TreeNode) value.getContext(), nextElement);
+					value = ResolverUtils.resolveAttribute((TreeNode) value.getOwner(), nextElement);
 				}else {
 					value = null; // Couldn't resolve the entire path so value == null
 					break;

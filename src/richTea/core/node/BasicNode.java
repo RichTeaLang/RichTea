@@ -1,17 +1,11 @@
 package richTea.core.node;
 
+import richTea.core.attribute.AttributeSet;
 import richTea.core.factory.bindings.Binding;
-import richTea.core.resolver.BasicNodeResolver;
-import richTea.core.resolver.Resolver;
 
-public class BasicNode extends AttributeContainerNode {
+public class BasicNode extends AttributeSet {
 		
 	private Binding binding;
-	
-	@Override
-	public Resolver createResolver() {
-		return new BasicNodeResolver(this);
-	}
 		
 	public Binding getBinding() {
 		return binding;

@@ -17,14 +17,14 @@ public class RichTeaLogger extends AbstractFunction {
 	}
 	
 	protected Logger getLogger() {
-		return Logger.getLogger(getString("loggerName"));
+		return Logger.getLogger(context.getString("loggerName"));
 	}
 	
 	protected Level getLevel() {
-		return Level.toLevel(getString("level"));
+		return Level.toLevel(context.getString("level"));
 	}
 	
 	protected String getMessage() {
-		return getString("message");
+		return context.getString("message");
 	}
 }

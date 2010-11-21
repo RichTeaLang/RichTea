@@ -2,7 +2,7 @@ package richTea.core.attribute.bool;
 
 import richTea.core.attribute.AbstractAttribute;
 import richTea.core.attribute.Attribute;
-import richTea.core.resolver.Resolver;
+import richTea.core.node.TreeNode;
 
 public class NotAttribute extends AbstractAttribute {
 
@@ -19,10 +19,10 @@ public class NotAttribute extends AbstractAttribute {
 	}
 	
 	@Override
-	public void setContext(Resolver context) {
-		super.setContext(context);
+	public void setOwner(TreeNode owner) {
+		super.setOwner(owner);
 		
-		getInitialValue().setContext(context);
+		getInitialValue().setOwner(owner);
 	}
 	
 	@Override

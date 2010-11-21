@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import richTea.core.attribute.modifier.AttributeModifier;
-import richTea.core.resolver.Resolver;
+import richTea.core.node.TreeNode;
 
 public class ArrayAttribute extends AbstractAttribute {
 	
@@ -21,11 +21,11 @@ public class ArrayAttribute extends AbstractAttribute {
 	}
 	
 	@Override
-	public void setContext(Resolver context) {
-		super.setContext(context);
+	public void setOwner(TreeNode owner) {
+		super.setOwner(owner);
 		
 		for(Attribute attribute : getAttributes()) {
-			attribute.setContext(context);
+			attribute.setOwner(owner);
 		}
 	}
 	

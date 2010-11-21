@@ -1,6 +1,6 @@
 package richTea.core.attribute;
 
-import richTea.core.resolver.Resolver;
+import richTea.core.node.TreeNode;
 
 public class TernaryExpressionAttribute extends AbstractAttribute {
 
@@ -29,12 +29,12 @@ public class TernaryExpressionAttribute extends AbstractAttribute {
 	}
 	
 	@Override
-	public void setContext(Resolver context) {
-		super.setContext(context);
+	public void setOwner(TreeNode owner) {
+		super.setOwner(owner);
 		
-		getExpression().setContext(context);
-		getTrueAttribute().setContext(context);
-		getFalseAttribute().setContext(context);
+		getExpression().setOwner(owner);
+		getTrueAttribute().setOwner(owner);
+		getFalseAttribute().setOwner(owner);
 	}
 
 	@Override

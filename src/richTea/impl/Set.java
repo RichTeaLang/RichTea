@@ -20,10 +20,10 @@ public class Set extends AbstractFunction {
 	}
 	
 	protected Attribute getAttribute() {
-		return context.getAttribute("attribute");
+		return context.getCurrentNode().getAttribute("attribute");
 	}
 
 	protected Object getAttributeValue() {
-		return getValue("to");
+		return context.getValue("to");
 	}
 }

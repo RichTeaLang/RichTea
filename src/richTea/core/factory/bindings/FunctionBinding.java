@@ -31,7 +31,7 @@ public class FunctionBinding extends Binding {
 	}
 	
 	public String getFunctionClassName() {
-		return getString("functionClass");
+		return resolver.getString("functionClass");
 	}
 	
 	public RichTeaFunction getFunctionImplementation() {

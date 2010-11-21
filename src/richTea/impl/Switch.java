@@ -8,11 +8,11 @@ public class Switch extends AbstractFunction {
 	protected void run() {
 		String switchValue = getSwitchValue();
 		
-		getValue(switchValue);
+		context.executeBranch(switchValue);
 	}
 	
 	protected String getSwitchValue() {
-		return getString("value");
+		return context.getString("value");
 	}
 
 }

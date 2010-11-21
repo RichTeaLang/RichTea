@@ -20,14 +20,14 @@ public class PrintNode extends AbstractFunction {
 	}
 	
 	protected Object getMessage() {
-		return getValue("message");
+		return context.getValue("message");
 	}
 	
 	protected boolean prependNewLine() {
-		return getBoolean("prependNewLine");
+		return context.getBoolean("prependNewLine");
 	}
 	
 	protected boolean appendNewLine() {
-		return getBoolean("appendNewLine");
+		return context.getBoolean("appendNewLine");
 	}
 }

@@ -15,6 +15,6 @@ public class CopyToClipboard extends AbstractFunction {
 	}
 	
 	protected String getText() {
-		return getString("text");
+		return context.getString("text");
 	}
 }

@@ -3,17 +3,8 @@ package richTea.core.resolver;
 import richTea.core.factory.bindings.Binding;
 import richTea.core.node.BasicNode;
 
-public class BasicNodeResolver extends AttributeResolver {
-	
-	public BasicNodeResolver(BasicNode owner) {
-		super(owner);
-	}
-	
-	@Override
-	public BasicNode getContext() {
-		return (BasicNode) super.getContext();
-	}
-
+public class BasicNodeResolver<T extends BasicNode> extends AttributeResolver<T> {
+		
 	@Override
 	public Object getValue(String attributeName) {
 		Object value = super.getValue(attributeName);

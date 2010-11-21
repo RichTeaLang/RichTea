@@ -12,6 +12,6 @@ public class If extends AbstractFunction {
 	}
 	
 	protected boolean getExpressionValue() {
-		return getBoolean("expression");
+		return context.getBoolean("expression");
 	}
 }

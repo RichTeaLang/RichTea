@@ -2,7 +2,6 @@ package richTea.core.attribute;
 
 import richTea.core.execution.ExecutionContext;
 import richTea.core.node.TreeNode;
-import richTea.core.resolver.Resolver;
 
 public class FunctionAttribute extends AbstractAttribute {
 
@@ -19,12 +18,10 @@ public class FunctionAttribute extends AbstractAttribute {
 	}
 	
 	@Override
-	public void setContext(Resolver context) {
-		super.setContext(context);
+	public void setOwner(TreeNode owner) {
+		super.setOwner(owner);
 		
-		if(context instanceof TreeNode) {
-			getFunction().setParent((TreeNode) context);
-		}
+		getFunction().setParent(owner);
 	}
 	
 	@Override

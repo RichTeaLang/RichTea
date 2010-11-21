@@ -7,16 +7,12 @@ public class DoWhile extends AbstractFunction {
 	@Override
 	protected void run() {
 		while(getWhile()) {
-			doAction();
+			context.executeBranch("action");
 		}
 	}
 	
-	protected void doAction() {
-		getValue("action");
-	}
-	
 	protected boolean getWhile() {
-		return getBoolean("while");
+		return context.getBoolean("while");
 	}
 
 }

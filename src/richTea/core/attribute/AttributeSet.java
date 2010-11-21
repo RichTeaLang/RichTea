@@ -3,8 +3,12 @@ package richTea.core.attribute;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 public class AttributeSet {
 		
+	protected Logger log = Logger.getLogger(getClass());
+	
 	private Map<String, Attribute> attributes;
 	
 	public AttributeSet() {

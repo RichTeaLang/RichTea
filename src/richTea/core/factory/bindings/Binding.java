@@ -4,9 +4,10 @@ import richTea.core.attribute.Attribute;
 import richTea.core.attribute.AttributeSet;
 import richTea.core.attribute.StringAttribute;
 import richTea.core.node.Branch;
+import richTea.core.node.DataNode;
 import richTea.core.node.TreeNode;
 
-public class Binding extends TreeNode {
+public class Binding extends DataNode {
 	
 	private AttributeSet defaultAttributes;
 	
@@ -32,7 +33,7 @@ public class Binding extends TreeNode {
 	}
 	
 	public String getBindingName() {
-		return getString("name");
+		return resolver.getString("name");
 	}
 	
 	protected void setBindingName(String name) {
@@ -40,7 +41,7 @@ public class Binding extends TreeNode {
 	}
 	
 	public String getNodeClassName() {
-		return getString("nodeClass");
+		return resolver.getString("nodeClass");
 	}
 	
 	protected void setNodeClassName(String nodeClassName) {
@@ -62,11 +63,11 @@ public class Binding extends TreeNode {
 	}
 	
 	public String getImplicitAttributeName() {
-		return getString("implicitAttributeName");
+		return resolver.getString("implicitAttributeName");
 	}
 	
 	public String getImplicitBranchName() {
-		return getString("implicitBranchName");
+		return resolver.getString("implicitBranchName");
 	}
 	
 	@Override

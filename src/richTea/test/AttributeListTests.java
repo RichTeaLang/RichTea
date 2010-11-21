@@ -29,7 +29,7 @@ public class AttributeListTests {
 	public void testAttributeList() throws RecognitionException {
 		TreeNode node = buildNode("(x:1 y:2 z:3){}");
 		
-		assertTrue(node.getAttributes().getAttributes().length == 5);
+		assertTrue(node.getAttributes().length == 5);
 		
 	}
 	

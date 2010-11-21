@@ -18,10 +18,10 @@ public class Increment extends AbstractFunction {
 	}
 	
 	protected Attribute getAttribute() {
-		return context.getAttribute("attribute");
+		return context.getCurrentNode().getAttribute("attribute");
 	}
 	
 	protected Number getBy() {
-		return getNumber("by");
+		return context.getNumber("by");
 	}
 }

@@ -2,19 +2,22 @@ package richTea.core.execution;
 
 import java.util.Stack;
 
-import richTea.core.attribute.Attribute;
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
-import richTea.core.resolver.Resolver;
+import richTea.core.resolver.AbstractResolver;
+import richTea.core.resolver.BasicNodeResolver;
 
-public class ExecutionContext implements Resolver {
+public class ExecutionContext extends AbstractResolver {
 	
 	private Stack<TreeNode> executionStack;
+	
+	private BasicNodeResolver<TreeNode> resolver;
 	
 	private Object returnValue;
 	
 	public ExecutionContext() {
 		executionStack = new Stack<TreeNode>();
+		resolver = new BasicNodeResolver<TreeNode>();
 	}
 	
 	public Stack<TreeNode> getExecutionStack() {
@@ -26,25 +29,37 @@ public class ExecutionContext implements Resolver {
 	}
 	
 	public Object execute(TreeNode node) {		
-		getExecutionStack().push(node);;
+		getExecutionStack().push(node);
+		
+		resolver.setContext(node);
 		
 		node.getFunction().execute(this);
 		
 		getExecutionStack().pop();
 		
+		resolver.setContext(null);
+		
 		return getReturnValue();
 	}
 	
 	public boolean executeBranch(String branchName) {
+		boolean branchExecuted = false;
+		
+		TreeNode previousContext = getCurrentNode();
+		
 		Branch branch = getCurrentNode().getBranchByName(branchName);
 		
 		if(branch != null) {
 			for(TreeNode node : branch.getChildren()) {
 				execute(node);
 			}
+			
+			branchExecuted = true;
 		}
 		
-		return branch != null;
+		resolver.setContext(previousContext);
+		
+		return branchExecuted;
 	}
 	
 	public Object getReturnValue() {
@@ -61,14 +76,6 @@ public class ExecutionContext implements Resolver {
 
 	@Override
 	public Object getValue(String key) {
-		return getCurrentNode().getValue(key);
-	}
-	
-	public Attribute getAttribute(String key) {
-		return getCurrentNode().getAttributes().getAttribute(key);
-	}
-	
-	public void setValue(String key, Object value) {
-		getCurrentNode().setValue(key, value);
+		return resolver.getValue(key);
 	}
 }

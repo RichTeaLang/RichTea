@@ -2,35 +2,25 @@ package richTea.core.node;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
-public class TreeNode extends ExecutableNode {
+public class TreeNode extends FunctionNode {
 		
-	protected Map<String, Branch> branches;
-		
+	private TreeNode parent;
+	
+	private Map<String, Branch> branches;
+	
 	public TreeNode() {
-		setID(UUID.randomUUID().toString());
-		
-		setValue("this", this);
-		setValue("branches", branches = new HashMap<String, Branch>());
+		branches = new HashMap<String, Branch>();
 	}
 	
 	public void initialize() {}
 	
-	public String getID() {
-		return getString("id");
-	}
-	
-	public void setID(String id) {
-		setValue("id", id);
-	}
-	
 	public TreeNode getParent() {
-		return (TreeNode) getValue("parent");
+		return parent;
 	}
 	
 	public void setParent(TreeNode parent) {
-		setValue("parent", parent);
+		this.parent = parent;
 	}
 	
 	public boolean addBranch(Branch branch) {

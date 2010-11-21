@@ -3,27 +3,28 @@ package richTea.core.node;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Branch extends AttributeContainerNode {
+public class Branch {
 	
-	protected TreeNode parent;
-	
-	protected List<TreeNode> children;
+	private String name;
+	private TreeNode parent;
+	private List<TreeNode> children;
 	
 	public Branch(String name) {
 		setName(name);
-		setValue("children", children = new ArrayList<TreeNode>());
+		
+		children = new ArrayList<TreeNode>();
 	}
 	
 	public String getName() {
-		return getString("name");
+		return name;
 	}
 	
-	public void setName(String id) {
-		setValue("name", id);
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public void setParent(TreeNode parent) {
-		setValue("parent", parent);
+		this.parent = parent;
 		
 		for(TreeNode child : getChildren()) {
 			child.setParent(parent);
@@ -31,35 +32,23 @@ public class Branch extends AttributeContainerNode {
 	}
 	
 	public TreeNode getParent() {
-		return (TreeNode) getValue("parent");
+		return parent;
 	}
 
 	public boolean addChild(TreeNode child) {
+		boolean added = false;
+		
 		if(!containsChild(child)) {
-
 			children.add(child);
+			
+			added = true;
 		}
 		
-		return containsChild(child);
+		return added;
 	}
 	
 	public boolean containsChild(TreeNode child) {
 		return children.contains(child);
-	}
-	
-	public TreeNode getChildByID(String id) {
-		TreeNode requestedChild = null;
-		
-		if(id != null) {
-			for(TreeNode child : getChildren()) {
-				if(id.equalsIgnoreCase(child.getID())) {
-					requestedChild = child;
-					break;
-				}
-			}
-		}
-		
-		return requestedChild;
 	}
 	
 	public TreeNode[] getChildren() {
@@ -67,10 +56,14 @@ public class Branch extends AttributeContainerNode {
 	}
 	
 	public boolean removeChild(TreeNode child) {
+		boolean removed = false;
+		
 		if(containsChild(child) && children.remove(child)) {
-			child.setParent(getParent());
+			child.setParent(null);
+			
+			removed = true;
 		}
 		
-		return containsChild(child);
+		return removed;
 	}
 }

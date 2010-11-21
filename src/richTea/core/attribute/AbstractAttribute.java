@@ -1,13 +1,13 @@
 package richTea.core.attribute;
 
 import richTea.core.attribute.modifier.AttributeModifier;
-import richTea.core.resolver.Resolver;
+import richTea.core.node.TreeNode;
 
 public abstract class AbstractAttribute implements Attribute {
 	
 	private String name;
 	
-	private Resolver context;
+	private TreeNode owner;
 	
 	public AbstractAttribute(String name) {
 		setName(name);
@@ -24,13 +24,13 @@ public abstract class AbstractAttribute implements Attribute {
 	}
 	
 	@Override
-	public Resolver getContext() {
-		return context;
+	public TreeNode getOwner() {
+		return owner;
 	}
 
 	@Override
-	public void setContext(Resolver context) {
-		this.context = context;
+	public void setOwner(TreeNode owner) {
+		this.owner = owner;
 	}
 	
 	@Override

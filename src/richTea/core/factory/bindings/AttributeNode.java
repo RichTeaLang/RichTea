@@ -1,36 +1,39 @@
 package richTea.core.factory.bindings;
 
 import richTea.core.attribute.Attribute;
+import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.attribute.modifier.AttributeModifier;
+import richTea.core.node.DataNode;
 import richTea.core.node.TreeNode;
-import richTea.core.resolver.Resolver;
 
-public class AttributeNode extends TreeNode implements Attribute {
+public class AttributeNode extends DataNode implements Attribute {
+	
+	private TreeNode owner;
 	
 	public String getName() {
-		return (String) getValue("name");
+		return resolver.getString("name");
 	}
 	
 	public void setName(String name) {
-		setValue("name", name);
+		setAttribute(new PrimativeAttribute("name", name));
 	}
 	
 	public Object getValue() {
-		return getValue("defaultValue");
+		return resolver.getValue("defaultValue");
 	}
 	
 	@Override
 	public Object modify(AttributeModifier modifier) {
-		Attribute attribute = getAttributes().getAttribute("defaultValue");
+		Attribute attribute = getAttribute("defaultValue");
 		
 		return attribute != null ? attribute.modify(modifier) : null;
 	}
 	
-	public Resolver getContext() {
-		return getResolver();
+	public TreeNode getOwner() {
+		return owner;
 	}
 	
-	public void setContext(Resolver context) {
-		setResolver(context);
+	public void setOwner(TreeNode owner) {
+		this.owner = owner;
 	}
 }

@@ -17,10 +17,10 @@ public class GetArrayData extends AbstractFunction {
 	
 	@SuppressWarnings("unchecked")
 	protected List<Object> getArray() {
-		return (List<Object>) getValue("array");
+		return (List<Object>) context.getValue("array");
 	}
 	
 	protected int getIndex() {
-		return getNumber("index").intValue();
+		return (int) context.getNumber("index");
 	}
 }
