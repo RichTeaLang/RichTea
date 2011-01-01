@@ -7,7 +7,7 @@ import richTea.core.node.TreeNode;
 import richTea.core.resolver.ResolverUtils;
 
 public class VariableAttribute extends PrimativeAttribute {
-
+	
 	public VariableAttribute(String name, List<String> lookupPath) {
 		super(name, lookupPath);
 	}

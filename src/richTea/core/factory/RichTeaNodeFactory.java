@@ -8,7 +8,6 @@ import richTea.antlr.tree.AttributeData;
 import richTea.antlr.tree.BranchData;
 import richTea.antlr.tree.NodeData;
 import richTea.core.attribute.Attribute;
-import richTea.core.attribute.AttributeSet;
 import richTea.core.execution.EmptyFunction;
 import richTea.core.factory.bindings.Binding;
 import richTea.core.factory.bindings.BindingSet;

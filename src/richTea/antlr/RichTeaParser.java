@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g 2010-11-15 23:42:43
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 C:\\Users\\Richard\\Documents\\RichTea\\antlr\\RichTea.g 2010-11-21 15:42:14
 package richTea.antlr;
 
 import org.antlr.runtime.*;
@@ -266,7 +266,7 @@ public class RichTeaParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: function_data, ID
+                    // elements: ID, function_data
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 

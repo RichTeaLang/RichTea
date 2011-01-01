@@ -8,7 +8,9 @@ public class Switch extends AbstractFunction {
 	protected void run() {
 		String switchValue = getSwitchValue();
 		
-		context.executeBranch(switchValue);
+		if(!context.executeBranch(switchValue)) {
+			context.executeBranch("default");
+		}
 	}
 	
 	protected String getSwitchValue() {

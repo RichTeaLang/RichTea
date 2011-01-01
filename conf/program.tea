@@ -15,7 +15,7 @@
 
 		While(from >= to {
 			Print(from appendNewLine:false)
-			Print(", " appendNewLine:false if:from > to)
+			Print(", " appendNewLine:false if:from != to)
 			Increment(from by:0-1)
 		})
 		Print("")
@@ -42,22 +42,25 @@
 		})
 	})
 
-	Print("Switch on values" prependNewLine:true)
-
-	ForEach("elem" in:["case2", "case1", "case0"] {
-		Switch(elem 
-			case1 {
-				Print("Case 1")
-			}
-
-			case2 {
-				Print("Case 2");
-			}
-
-			default {
-				Print("Default case called");
-			}
-		)
+	(values:["case2", "case1", "case0"] {
+	
+		Print("Switching on values " + values prependNewLine:true)
+	
+		ForEach("elem" in:values {
+			Switch(elem 
+				case1 {
+					Print("Switch Case 1")
+				}
+	
+				case2 {
+					Print("Switch Case 2");
+				}
+	
+				default {
+					Print("Default case called");
+				}
+			)
+		})
 	})
 
 	Print("");
