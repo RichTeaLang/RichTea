@@ -71,18 +71,16 @@ public class Binding extends DataNode {
 	}
 	
 	@Override
-	public boolean addBranch(Branch branch) {
-		boolean added = super.addBranch(branch);
+	public void addBranch(Branch branch) {
+		super.addBranch(branch);
 		
-		if(added && branch.getName().equalsIgnoreCase("attributes")) {
+		if(branch.getName().equalsIgnoreCase("attributes")) {
 			for(TreeNode child : branch.getChildren()) {
 				if(child instanceof Attribute) {
 					getDefaultAttributes().setAttribute((Attribute) child);
 				}
 			}
 		}
-		
-		return added;
 	}
 	
 	@Override 

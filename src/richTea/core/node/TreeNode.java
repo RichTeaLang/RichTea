@@ -23,16 +23,11 @@ public class TreeNode extends FunctionNode {
 		this.parent = parent;
 	}
 	
-	public boolean addBranch(Branch branch) {
-		boolean added = false;
-		
+	public void addBranch(Branch branch) {		
 		if(!hasBranch(branch.getName())) {			
 			branches.put(branch.getName().toLowerCase(), branch);
 			branch.setParent(this);
-			added = true;
 		}
-		
-		return added;
 	}
 
 	public boolean hasBranch(String name) {
@@ -47,9 +42,7 @@ public class TreeNode extends FunctionNode {
 		return branches.values().toArray(new TreeNode[branches.size()]);
 	}
 	
-	public boolean removeBranch(Branch branch) {
-		Branch removedBranch = branches.remove(branch.getName().toLowerCase());
-		
-		return removedBranch != null;
+	public void removeBranch(Branch branch) {
+		branches.remove(branch.getName().toLowerCase());
 	}
 }

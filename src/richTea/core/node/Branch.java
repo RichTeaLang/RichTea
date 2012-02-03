@@ -3,7 +3,7 @@ package richTea.core.node;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Branch {
+public class Branch extends TreeNode {
 	
 	private String name;
 	private TreeNode parent;
@@ -35,16 +35,11 @@ public class Branch {
 		return parent;
 	}
 
-	public boolean addChild(TreeNode child) {
-		boolean added = false;
-		
+	public void addChild(TreeNode child) {		
 		if(!containsChild(child)) {
+			child.setParent(parent);
 			children.add(child);
-			
-			added = true;
 		}
-		
-		return added;
 	}
 	
 	public boolean containsChild(TreeNode child) {
@@ -55,15 +50,9 @@ public class Branch {
 		return children.toArray(new TreeNode[children.size()]);
 	}
 	
-	public boolean removeChild(TreeNode child) {
-		boolean removed = false;
-		
+	public void removeChild(TreeNode child) {		
 		if(containsChild(child) && children.remove(child)) {
 			child.setParent(null);
-			
-			removed = true;
 		}
-		
-		return removed;
 	}
 }

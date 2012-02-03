@@ -23,8 +23,8 @@ public class BindingSet extends TreeNode {
 	}
 	
 	@Override
-	public boolean addBranch(Branch branch) {
-		boolean added = super.addBranch(branch);
+	public void addBranch(Branch branch) {
+		super.addBranch(branch);
 		
 		if(branch.getName().equalsIgnoreCase("bindings")) {
 			for(TreeNode child : branch.getChildren()) {
@@ -33,7 +33,5 @@ public class BindingSet extends TreeNode {
 				}
 			}
 		}
-		
-		return added;
 	}
 }
