@@ -24,10 +24,10 @@ public class PrintNode extends AbstractFunction {
 	}
 	
 	protected boolean prependNewLine() {
-		return context.getBoolean("prependNewLine");
+		return context.getBooleanOrDefault("prependNewLine", false);
 	}
 	
 	protected boolean appendNewLine() {
-		return context.getBoolean("appendNewLine");
+		return context.getBooleanOrDefault("appendNewLine", true);
 	}
 }
