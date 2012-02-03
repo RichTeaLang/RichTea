@@ -14,7 +14,7 @@ public abstract class AbstractFunction implements RichTeaFunction {
 		context = null;
 	}
 	
-	public boolean shouldExecute() {
+	protected boolean shouldExecute() {
 		return context.getBooleanOrDefault("if", true);
 	}
 }
