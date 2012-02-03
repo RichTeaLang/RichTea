@@ -66,11 +66,11 @@ public class ExecutionContext extends AbstractResolver {
 		return returnValue;
 	}
 	
-	public void doReturn() {
-		doReturn(null);
+	public void returnValue() {
+		returnValue(null);
 	}
 	
-	public void doReturn(Object returnValue) {
+	public void returnValue(Object returnValue) {
 		this.returnValue = returnValue;
 	}
 

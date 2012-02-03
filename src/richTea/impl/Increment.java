@@ -13,7 +13,7 @@ public class Increment extends AbstractFunction {
 		if(attribute != null) {
 			Object newValue = attribute.modify(new IncrementModifier(getBy().doubleValue()));
 			
-			context.doReturn(newValue);
+			context.returnValue(newValue);
 		}
 	}
 	
