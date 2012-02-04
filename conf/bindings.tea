@@ -1,7 +1,7 @@
 Bindings(#bindings {
 	Function(name:"Scope" functionClass:"richTea.impl.Scope" implicitAttributeName:"if" implicitBranchName:"do")
 	
-	Function(name:"Print" functionClass:"richTea.impl.PrintNode" implicitAttributeName:"message" 
+	Function(name:"Print" functionClass:"richTea.impl.Print" implicitAttributeName:"message" 
 		#attributes {
 			Attribute(name:"message");
 			Attribute(name:"prependNewLine" defaultValue:false);
@@ -22,27 +22,28 @@ Bindings(#bindings {
 			Attribute(name:"expression");
 			Branch(name:"then");
 			Branch(name:"else");
-	})
+		}
+	)
 	
 	Function(name:"Switch" functionClass:"richTea.impl.Switch" implicitAttributeName:"value")
 	
-	Function(name:"ForEach" functionClass:"richTea.impl.ForEach" implicitAttributeName:"as" implicitBranchName:"do"
+	Function(name:"For" functionClass:"richTea.impl.loop.For" implicitAttributeName:"count" implicitBranchName:"do"
 		#attributes {
-			Attribute(name:"in")
-			Attribute(name:"as" defaultValue:"i")
+			Attribute(name:"count");
+			Attribute(name:"as" defaultValue:"i");
 		}
 	)
 	
-	Function(name:"While" functionClass:"richTea.impl.While" implicitAttributeName:"condition" implicitBranchName:"do" 
+	Function(name:"ForEach" functionClass:"richTea.impl.loop.ForEach" implicitAttributeName:"as" implicitBranchName:"do"
+		#attributes {
+			Attribute(name:"in");
+			Attribute(name:"as" defaultValue:"i");
+		}
+	)
+	
+	Function(name:"While" functionClass:"richTea.impl.loop.While" implicitAttributeName:"condition" implicitBranchName:"do" 
 		#attributes {
 			Attribute(name:"condition")
-		}
-	)
-	
-	Function(name:"Do" functionClass:"richTea.impl.DoWhile" implicitAttributeName:"action" 
-		#attributes {
-			Attribute(name:"action")
-			Attribute(name:"while")
 		}
 	)
 	
