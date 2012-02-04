@@ -2,7 +2,7 @@ package richTea.impl;
 
 import richTea.core.execution.AbstractFunction;
 
-public class PrintNode extends AbstractFunction {
+public class Print extends AbstractFunction {
 
 	@Override
 	protected void run() {
