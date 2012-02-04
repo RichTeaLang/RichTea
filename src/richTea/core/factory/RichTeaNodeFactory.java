@@ -137,7 +137,7 @@ public class RichTeaNodeFactory {
 			// Try rename the implictBranch only if we haven't already set an branch with the explicit name
 			String implicitBranchName = node.getBinding().getImplicitBranchName();
 			
-			if(!node.hasBranch(implicitBranchName)) {
+			if(implicitBranchName != null && !node.hasBranch(implicitBranchName)) {
 				branch.setName(implicitBranchName); // Rename implicitBranch to it's explicit name
 				
 				isImplicitBranch = false;

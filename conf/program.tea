@@ -9,6 +9,12 @@
 	Print("Divide 10 by 2 = " + (10 / 2));
 
 	Print("");
+	
+	For(10 {
+		Print(i * 2 + " " appendNewLine:false);
+	})
+	
+	Print("")
 
 	(from:20 to:8 {
 		Print("Printing numbers from " + from + " to " + to);
@@ -18,6 +24,7 @@
 			Print(", " appendNewLine:false if:from != to)
 			Increment(from by:0-1)
 		})
+		
 		Print("")
 	})
 
@@ -64,6 +71,8 @@
 	})
 
 	Print("");
+	
+	Print(GetSystemTime());
 
 	(string:"Java Method Invocation" {
 		Print(string);

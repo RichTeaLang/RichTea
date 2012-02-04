@@ -1,23 +1,28 @@
 package richTea.core.execution;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 import richTea.core.resolver.AbstractResolver;
-import richTea.core.resolver.BasicNodeResolver;
+import richTea.core.resolver.AttributeResolver;
+import richTea.core.resolver.ExecutionContextResolver;
 
 public class ExecutionContext extends AbstractResolver {
 	
 	private Stack<TreeNode> executionStack;
 	
-	private BasicNodeResolver<TreeNode> resolver;
+	public Map<String, Object> attributes = new HashMap<String, Object>();
+	
+	private AttributeResolver<TreeNode> resolver;
 	
 	private Object returnValue;
 	
 	public ExecutionContext() {
 		executionStack = new Stack<TreeNode>();
-		resolver = new BasicNodeResolver<TreeNode>();
+		resolver = new ExecutionContextResolver<TreeNode>(this);
 	}
 	
 	public Stack<TreeNode> getExecutionStack() {
