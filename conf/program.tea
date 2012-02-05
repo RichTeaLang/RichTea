@@ -1,5 +1,10 @@
-(name:"Code Snippets" version:0.1 {
+/**
+ * Sample RichTea program
+ */
+(name:"Code Snippets" version:0.1 timeStarted:0 {
 	Print(name + " (Version: " + version + ")");
+	
+	Set(timeStarted to:GetSystemTime())
 
 	Print("");
 
@@ -8,13 +13,13 @@
 	Print("Multiply 5 by 10 = " + (5 * 10))
 	Print("Divide 10 by 2 = " + (10 / 2));
 
-	Print("");
+	Print("For loop: " prependNewLine:true appendNewLine:false);
 	
-	For(10 {
-		Print(i * 2 + " " appendNewLine:false);
+	For(10 as:"loopCount" {
+		Print(loopCount * 2 + " " appendNewLine:false);
 	})
 	
-	Print("")
+	Print("" prependNewLine:true)
 
 	(from:20 to:8 {
 		Print("Printing numbers from " + from + " to " + to);
@@ -71,12 +76,18 @@
 	})
 
 	Print("");
-	
-	Print(GetSystemTime());
 
 	(string:"Java Method Invocation" {
 		Print(string);
 		Print(" - " + string.toUpperCase + " (String.toUpperCase)")
 		Print(" - " + string.toLowerCase + " (String.toLowerCase)")
 	})
+	
+	(timeNow:GetSystemTime() {
+		(timeElapsed:timeNow - timeStarted {
+			Print("Program Completed in: " + timeElapsed + "ms");
+		})
+	})
+	
+	OpenWebpage("http://www.richwalton.co.uk/wiki")
 })
