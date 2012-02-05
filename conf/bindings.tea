@@ -17,7 +17,7 @@ Bindings(#bindings {
 		}
 	)
 	
-	Function(name:"If" functionClass:"richTea.impl.If" implicitAttributeName:"expression" implicitBranchName:"then" 
+	Function(name:"If" functionClass:"richTea.impl.conditional.If" implicitAttributeName:"expression" implicitBranchName:"then" 
 		#attributes {
 			Attribute(name:"expression");
 			Branch(name:"then");
@@ -25,7 +25,7 @@ Bindings(#bindings {
 		}
 	)
 	
-	Function(name:"Switch" functionClass:"richTea.impl.Switch" implicitAttributeName:"value")
+	Function(name:"Switch" functionClass:"richTea.impl.conditional.Switch" implicitAttributeName:"value")
 	
 	Function(name:"For" functionClass:"richTea.impl.loop.For" implicitAttributeName:"count" implicitBranchName:"do"
 		#attributes {
@@ -75,6 +75,12 @@ Bindings(#bindings {
 	Function(name:"CopyToClipboard" functionClass:"richTea.impl.CopyToClipboard" implicitAttributeName:"text" 
 		#attributes {
 			Attribute(name:"text");
+		}
+	)
+	
+	Function(name:"OpenWebpage" functionClass:"richTea.impl.OpenWebpage" implicitAttributeName:"url"
+		#attributes {
+			Attribute(name:"url")
 		}
 	)
 })
