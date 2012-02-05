@@ -159,7 +159,7 @@ public class RichTeaAttributeFactory {
 	}
 	
 	protected Attribute createArrayAttribute(String name, Tree value) {		
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new ArrayAttribute(name, Arrays.asList(operands));
 	}
@@ -171,25 +171,25 @@ public class RichTeaAttributeFactory {
 	}
 	
 	protected ExpressionAttribute createPlusAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new PlusAttribute(name, operands[0], operands[1]);
 	}
 		
 	protected ExpressionAttribute createMinusAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new MinusAttribute(name, operands[0], operands[1]);
 	}
 	
 	protected ExpressionAttribute createMultiplyAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new MultiplyAttribute(name, operands[0], operands[1]);
 	}
 	
 	protected ExpressionAttribute createDivideAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new DivideAttribute(name, operands[0], operands[1]);
 	}
@@ -199,13 +199,13 @@ public class RichTeaAttributeFactory {
 	}
 	
 	protected Attribute createAndAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new AndAttribute(name, operands[0], operands[1]);
 	}
 	
 	protected Attribute createOrAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new OrAttribute(name, operands[0], operands[1]);
 	}
@@ -217,43 +217,43 @@ public class RichTeaAttributeFactory {
 	}
 	
 	protected Attribute createEqualsAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new EqualsAttribute(name, operands[0], operands[1]);
 	}
 	
 	protected Attribute createNotEqualsAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new NotEqualsAttribute(name, operands[0], operands[1]);
 	}
 	
 	protected Attribute createLessThanAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new LessThanAttribute(name, operands[0], operands[1]);
 	}
 	
 	protected Attribute createLessThanOrEqualToAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new LessThanOrEqualToAttribute(name, operands[0], operands[1]);
 	}
 	
 	protected Attribute createGreaterThanAttribute(String name, Tree value) {	
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new GreaterThanAttribute(name, operands[0], operands[1]);
 	}
 	
 	protected Attribute createGreaterThanOrEqualToAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new GreaterThanOrEqualToAttribute(name, operands[0], operands[1]);
 	}
 	
 	protected Attribute createTernaryExpressionAttribute(String name, Tree value) {
-		Attribute[] operands = getAttributeOperands(name + "[operand]", value);
+		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new TernaryExpressionAttribute(name, operands[0], operands[1], operands[2]);
 	}
@@ -262,7 +262,7 @@ public class RichTeaAttributeFactory {
 		Attribute[] elementAttributes = new Attribute[elements.getChildCount()];
 		
 		for(int i = 0; i < elementAttributes.length; i++) {
-			elementAttributes[i] = create(String.format("%s[%s]", elementPrefix, i), elements.getChild(i));
+			elementAttributes[i] = create(String.format("%s[operand][%s]", elementPrefix, i), elements.getChild(i));
 		}
 		
 		return elementAttributes;
