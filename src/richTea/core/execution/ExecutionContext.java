@@ -1,7 +1,5 @@
 package richTea.core.execution;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 import richTea.core.node.Branch;
@@ -13,8 +11,6 @@ import richTea.core.resolver.ExecutionContextResolver;
 public class ExecutionContext extends AbstractResolver {
 	
 	private Stack<TreeNode> executionStack;
-	
-	public Map<String, Object> attributes = new HashMap<String, Object>();
 	
 	private AttributeResolver<TreeNode> resolver;
 	
@@ -50,20 +46,20 @@ public class ExecutionContext extends AbstractResolver {
 	public boolean executeBranch(String branchName) {
 		boolean branchExecuted = false;
 		
-		TreeNode previousContext = getCurrentNode();
-		
 		Branch branch = getCurrentNode().getBranchByName(branchName);
 		
 		if(branch != null) {
+			TreeNode previousContext = getCurrentNode();
+			
 			for(TreeNode node : branch.getChildren()) {
 				execute(node);
 			}
 			
 			branchExecuted = true;
+			
+			resolver.setContext(previousContext);
 		}
-		
-		resolver.setContext(previousContext);
-		
+
 		return branchExecuted;
 	}
 	

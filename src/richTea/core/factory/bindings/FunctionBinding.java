@@ -26,7 +26,6 @@ public class FunctionBinding extends Binding {
 			log.error(String.format("Unable in instantiate class %s for binding %s", functionClassName, getBindingName()), e);
 		} catch (IllegalAccessException e) {
 			log.error(String.format("Unable in access constructor for class %s for binding %s", functionClassName, getBindingName()), e);
-			e.printStackTrace();
 		}
 	}
 	
