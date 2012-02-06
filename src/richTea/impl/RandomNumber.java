@@ -2,7 +2,7 @@ package richTea.impl;
 
 import richTea.core.execution.AbstractFunction;
 
-public class Random extends AbstractFunction {
+public class RandomNumber extends AbstractFunction {
 
 	@Override
 	protected void run() throws Exception {
@@ -10,7 +10,7 @@ public class Random extends AbstractFunction {
 		double maximum = getMaximum();
 		
 		if(minimum < maximum) {
-			double randomNumberInRange = (int) minimum + Math.random() * ((maximum - minimum) + 1);
+			double randomNumberInRange = minimum + (int) (Math.random() * ((maximum - minimum) + 1));
 
 			context.returnValue(randomNumberInRange);
 		} else {
