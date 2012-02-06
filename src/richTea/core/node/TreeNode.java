@@ -23,11 +23,9 @@ public class TreeNode extends FunctionNode {
 		this.parent = parent;
 	}
 	
-	public void addBranch(Branch branch) {		
-		if(!hasBranch(branch.getName())) {			
-			branches.put(branch.getName().toLowerCase(), branch);
-			branch.setParent(this);
-		}
+	public void addBranch(Branch branch) {			
+		branches.put(branch.getName().toLowerCase(), branch);
+		branch.setParent(this);
 	}
 
 	public boolean hasBranch(String name) {
