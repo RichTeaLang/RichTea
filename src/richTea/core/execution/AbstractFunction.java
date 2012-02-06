@@ -4,8 +4,9 @@ import org.apache.log4j.Logger;
 
 public abstract class AbstractFunction implements RichTeaFunction {
 
-	protected ExecutionContext context;
 	protected Logger log = Logger.getLogger(getClass());
+	
+	protected ExecutionContext context;
 	
 	abstract protected void run() throws Exception;
 	

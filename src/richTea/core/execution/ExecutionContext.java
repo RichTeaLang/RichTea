@@ -5,20 +5,19 @@ import java.util.Stack;
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 import richTea.core.resolver.AbstractResolver;
-import richTea.core.resolver.AttributeResolver;
-import richTea.core.resolver.ExecutionContextResolver;
+import richTea.core.resolver.BasicNodeResolver;
 
 public class ExecutionContext extends AbstractResolver {
 	
 	private Stack<TreeNode> executionStack;
 	
-	private AttributeResolver<TreeNode> resolver;
+	private BasicNodeResolver<TreeNode> resolver;
 	
 	private Object returnValue;
 	
 	public ExecutionContext() {
 		executionStack = new Stack<TreeNode>();
-		resolver = new ExecutionContextResolver<TreeNode>(this);
+		resolver = new BasicNodeResolver<TreeNode>();
 	}
 	
 	public Stack<TreeNode> getExecutionStack() {
