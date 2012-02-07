@@ -162,10 +162,10 @@ public class RichTeaNodeFactory {
 	}
 	
 	protected void setFunctionOnNode(TreeNode node, Binding binding) {
-		node.setRichTeaFunction(new EmptyFunction());
+		node.setFunction(new EmptyFunction());
 	}
 	
 	protected void setFunctionOnNode(TreeNode node, FunctionBinding binding) {
-		node.setRichTeaFunction(binding.getFunctionImplementation());
+		node.setFunction(binding.getFunctionImplementation());
 	}
 }

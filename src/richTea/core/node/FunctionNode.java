@@ -10,7 +10,7 @@ public class FunctionNode extends BasicNode {
 		return function;
 	}
 	
-	public void setRichTeaFunction(RichTeaFunction function) {
+	public void setFunction(RichTeaFunction function) {
 		this.function = function;
 	}
 }
