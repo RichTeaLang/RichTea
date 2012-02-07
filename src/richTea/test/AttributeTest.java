@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.tree.CommonTree;
 import org.junit.Test;
 
 import richTea.antlr.RichTeaLexer;
@@ -28,21 +29,21 @@ public class AttributeTest {
 	public void testCreateNumberAttribute() throws RecognitionException {
 		 Attribute attribute = buildAttribute("x=1");
 		   
-		  assertTrue(attribute.getValue().equals(1.0));
+		 assertTrue(attribute.getValue().equals(1.0));
 	}
 	
 	@Test
 	public void testCreateStringAttribute() throws RecognitionException {
 		 Attribute attribute = buildAttribute("x=\"Hello world\"");
 		   
-		  assertTrue(attribute.getValue().equals("Hello world"));
+		 assertTrue(attribute.getValue().equals("Hello world"));
 	}
 	
 	@Test
 	public void testCreateBooleanAttribute() throws RecognitionException {
 		 Attribute attribute = buildAttribute("x=true");
 		   
-		  assertTrue(attribute.getValue().equals(true));
+		 assertTrue(attribute.getValue().equals(true));
 	}
 	
 	@Test
@@ -59,7 +60,8 @@ public class AttributeTest {
 		RichTeaParser parser = new RichTeaParser(new CommonTokenStream(lexer));
 		parser.setTreeAdaptor(new RichTeaTreeAdaptor());
 		
-		AttributeData attributeData = (AttributeData) parser.attribute_list().getTree();
+		CommonTree parseTree = (CommonTree) parser.attribute_list().getTree();
+		AttributeData attributeData = (AttributeData) parseTree.getChild(0);
 		
 		return factory.create(attributeData);
 	}
