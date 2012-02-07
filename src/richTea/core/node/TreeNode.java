@@ -32,7 +32,7 @@ public class TreeNode extends FunctionNode {
 		return branches.containsKey(name.toLowerCase());
 	}
 	
-	public Branch getBranchByName(String name) {
+	public Branch getBranch(String name) {
 		return branches.get(name.toLowerCase());
 	}
 	

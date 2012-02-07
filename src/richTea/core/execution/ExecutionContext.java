@@ -45,7 +45,7 @@ public class ExecutionContext extends AbstractResolver {
 	public boolean executeBranch(String branchName) {
 		boolean branchExecuted = false;
 		
-		Branch branch = getCurrentNode().getBranchByName(branchName);
+		Branch branch = getCurrentNode().getBranch(branchName);
 		
 		if(branch != null) {
 			TreeNode previousContext = getCurrentNode();
