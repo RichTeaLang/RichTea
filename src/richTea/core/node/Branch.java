@@ -3,7 +3,7 @@ package richTea.core.node;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Branch extends TreeNode {
+public class Branch {
 	
 	private String name;
 	private TreeNode parent;
