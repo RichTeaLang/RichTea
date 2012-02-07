@@ -2,9 +2,9 @@
  * Sample RichTea program
  */
 (name:"Code Snippets" version:0.1 timeStarted:0 {
-	Print(name + " (Version: " + version + ")");
-	
 	Set(timeStarted to:GetSystemTime())
+	
+	Print(name + " (Version: " + version + ")");
 
 	Print("");
 
@@ -82,14 +82,10 @@
 		Print(" - " + string.toUpperCase + " (String.toUpperCase)")
 		Print(" - " + string.toLowerCase + " (String.toLowerCase)")
 	})
+
+	Print("Random numbers: " + (RandomNumber(minimum:2 maximum:4) * RandomNumber(minimum:2 maximum:4)))
 	
-	(timeNow:GetSystemTime() {
-		(timeElapsed:timeNow - timeStarted {
-			Print("Program Completed in: " + timeElapsed + "ms");
-		})
-	})
-	
-	Print(RandomNumber(minimum:2 maximum:4) * RandomNumber(minimum:2 maximum:4))
+	Print("Program Completed in: " + (GetSystemTime() - timeStarted) + "ms");
 	
 	OpenWebpage("http://www.richwalton.co.uk/wiki")
 })
