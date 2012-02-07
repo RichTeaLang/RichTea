@@ -36,8 +36,8 @@ public class TreeNode extends FunctionNode {
 		return branches.get(name.toLowerCase());
 	}
 	
-	public TreeNode[] getBranches() {
-		return branches.values().toArray(new TreeNode[branches.size()]);
+	public Branch[] getBranches() {
+		return branches.values().toArray(new Branch[branches.size()]);
 	}
 	
 	public void removeBranch(Branch branch) {
