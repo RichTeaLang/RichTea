@@ -16,15 +16,18 @@ tokens {	FUNCTION;
 @lexer::header {package richTea.antlr;}
 
 program
-	: function
+	:	function_scope
+	;
+		
+function_scope
+	:	function
+	| 	OPEN_PAREN function_data CLOSE_PAREN SEMI_COLON?
+			->	^(FUNCTION ^(NAME ID["scope"]) function_data)
 	;
 	
 function
-	:	ID (OPEN_PAREN function_data? CLOSE_PAREN)? SEMI_COLON?
+	:	ID (OPEN_PAREN function_data? CLOSE_PAREN) SEMI_COLON?
 			-> ^(FUNCTION ^(NAME ID) function_data?)
-			
-	|	OPEN_PAREN function_data CLOSE_PAREN SEMI_COLON?
-			->	^(FUNCTION ^(NAME ID["scope"]) function_data)
 	;
 
 function_data
@@ -52,13 +55,13 @@ branch_list
 	;
 	
 branch 
-	:	HASH? (name=ID | name=STRING) OPEN_BRACE function* CLOSE_BRACE
-			->	^(NAME $name) ^(CHILDREN function*)
+	:	HASH? (name=ID | name=STRING) OPEN_BRACE function_scope* CLOSE_BRACE
+			->	^(NAME $name) ^(CHILDREN function_scope*)
 	;
 
 implicitBranch 
-	:	HASH? OPEN_BRACE function* CLOSE_BRACE
-			->	^(NAME ID["implicitBranch"]) ^(CHILDREN function*)
+	:	HASH? OPEN_BRACE function_scope* CLOSE_BRACE
+			->	^(NAME ID["implicitBranch"]) ^(CHILDREN function_scope*)
 	;
 
 datatype
@@ -123,6 +126,7 @@ expression_value
 	|	BOOLEAN
 	|	STRING
 	| 	variable
+	|	function
 	;
 	
 variable
