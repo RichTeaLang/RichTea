@@ -11,11 +11,10 @@ import richTea.core.attribute.Attribute;
 import richTea.core.attribute.FunctionAttribute;
 import richTea.core.attribute.VariableAttribute;
 
-public class AttributeTests extends NodeBuilderTestBase {
+public class AttributeTests extends RichTeaTestBase {
 	
 	@Test
-	public void testAttributeName() throws RecognitionException
-	{
+	public void testAttributeName() throws RecognitionException {
 		Attribute attribute = buildAttribute("attributeName=1");
 		
 		assertTrue(attribute.getName().equals("attributeName"));
@@ -23,28 +22,24 @@ public class AttributeTests extends NodeBuilderTestBase {
 	
 	@Test
 	public void testCreateNumberAttribute() throws RecognitionException {
-		 Attribute attribute = buildAttribute("x=1");
-		   
-		 assertTrue(attribute.getValue().equals(1.0));
+		testAttributeValue("x=1", 1.0);
 	}
 	
 	@Test
 	public void testCreateStringAttribute() throws RecognitionException {
-		 Attribute attribute = buildAttribute("x=\"Hello world\"");
-		   
-		 assertTrue(attribute.getValue().equals("Hello world"));
+		testAttributeValue("x=\"Hello world\"", "Hello world");
 	}
 	
 	@Test
 	public void testCreateBooleanAttribute() throws RecognitionException {
-		testAttribute("x=true", true);
-		testAttribute("x=false", false);
+		testAttributeValue("x=true", true);
+		testAttributeValue("x=false", false);
 	}
 	
 	@Test
 	public void testCreateTernaryAttribute() throws RecognitionException {
-		testAttribute("x=true ? false : true", false);
-		testAttribute("x=false ? false : true", true);
+		testAttributeValue("x=true ? false : true", false);
+		testAttributeValue("x=false ? false : true", true);
 	}
 	
 	@Test

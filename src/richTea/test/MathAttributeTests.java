@@ -7,26 +7,26 @@ import org.junit.Test;
 
 import richTea.core.attribute.Attribute;
 
-public class MathAttributeTests extends NodeBuilderTestBase {
+public class MathAttributeTests extends RichTeaTestBase {
 	
 	@Test
 	public void testAddition() throws RecognitionException {
-		testAttribute("99 + 1", 100.0);
+		testAttributeValue("99 + 1", 100.0);
 	}
 	
 	@Test
 	public void testSubtraction() throws RecognitionException {
-		testAttribute("99 - 1", 98.0);
+		testAttributeValue("99 - 1", 98.0);
 	}
 	
 	@Test
 	public void testMultiplcation() throws RecognitionException {
-		testAttribute("12 * 12", 144.0);
+		testAttributeValue("12 * 12", 144.0);
 	}
 	
 	@Test
 	public void testDivision() throws RecognitionException {
-		testAttribute("50 / 2", 25.0);
+		testAttributeValue("50 / 2", 25.0);
 	}
 	
 	@Test

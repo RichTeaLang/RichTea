@@ -19,12 +19,12 @@ import richTea.core.factory.RichTeaNodeFactory;
 import richTea.core.factory.bindings.BootstrapBindingSet;
 import richTea.core.node.TreeNode;
 
-public class NodeBuilderTestBase {
+public class RichTeaTestBase {
 	
 	private RichTeaNodeFactory nodeFactory;
 	private RichTeaAttributeFactory attributeFactory;
 
-	public NodeBuilderTestBase() {
+	public RichTeaTestBase() {
 		BasicConfigurator.configure();
 		
 		nodeFactory = new RichTeaNodeFactory(new BootstrapBindingSet());
@@ -36,6 +36,10 @@ public class NodeBuilderTestBase {
 		AttributeData attributeData = (AttributeData) parseTree.getChild(0);
 		
 		return attributeFactory.create(attributeData);
+	}
+	
+	protected void testAttributeValue(String input, Object requiredValue) throws RecognitionException {
+		assertTrue(buildAttribute(input).getValue().equals(requiredValue));
 	}
 	
 	protected TreeNode buildNode(String input) throws RecognitionException {		
@@ -52,10 +56,5 @@ public class NodeBuilderTestBase {
 		parser.setTreeAdaptor(new RichTeaTreeAdaptor());
 		
 		return parser;
-	} 
-	
-	protected void testAttribute(String input, Object requiredValue) throws RecognitionException
-	{
-		assertTrue(buildAttribute(input).getValue().equals(requiredValue));
 	}
 }
