@@ -14,6 +14,14 @@ import richTea.core.attribute.VariableAttribute;
 public class AttributeTests extends NodeBuilderTestBase {
 	
 	@Test
+	public void testAttributeName() throws RecognitionException
+	{
+		Attribute attribute = buildAttribute("attributeName=1");
+		
+		assertTrue(attribute.getName().equals("attributeName"));
+	}
+	
+	@Test
 	public void testCreateNumberAttribute() throws RecognitionException {
 		 Attribute attribute = buildAttribute("x=1");
 		   
@@ -29,16 +37,14 @@ public class AttributeTests extends NodeBuilderTestBase {
 	
 	@Test
 	public void testCreateBooleanAttribute() throws RecognitionException {
-		 Attribute attribute = buildAttribute("x=true");
-		   
-		 assertTrue(attribute.getValue().equals(true));
+		testAttribute("x=true", true);
+		testAttribute("x=false", false);
 	}
 	
 	@Test
 	public void testCreateTernaryAttribute() throws RecognitionException {
-		Attribute attribute = buildAttribute("x=true ? false : true");
-		
-		assertTrue(attribute.getValue().equals(false));
+		testAttribute("x=true ? false : true", false);
+		testAttribute("x=false ? false : true", true);
 	}
 	
 	@Test

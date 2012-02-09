@@ -11,29 +11,53 @@ public class MathAttributeTests extends NodeBuilderTestBase {
 	
 	@Test
 	public void testAddition() throws RecognitionException {
-		Attribute attribute = buildAttribute("99 + 1");
-		
-		assertTrue(attribute.getValue().equals(100.0));
+		testAttribute("99 + 1", 100.0);
 	}
 	
 	@Test
 	public void testSubtraction() throws RecognitionException {
-		Attribute attribute = buildAttribute("99 - 1");
-		
-		assertTrue(attribute.getValue().equals(98.0));
+		testAttribute("99 - 1", 98.0);
 	}
 	
 	@Test
 	public void testMultiplcation() throws RecognitionException {
-		Attribute attribute = buildAttribute("12 * 12");
-		
-		assertTrue(attribute.getValue().equals(144.0));
+		testAttribute("12 * 12", 144.0);
 	}
 	
 	@Test
 	public void testDivision() throws RecognitionException {
-		Attribute attribute = buildAttribute("50 / 2");
+		testAttribute("50 / 2", 25.0);
+	}
+	
+	@Test
+	public void testPlusEquals() throws RecognitionException {
+		Attribute attribute = buildAttribute("0 += 2");
 		
+		assertTrue(attribute.getValue().equals(2.0));
+		assertTrue(attribute.getValue().equals(4.0));
+	}
+	
+	@Test
+	public void testMinusEquals() throws RecognitionException {
+		Attribute attribute = buildAttribute("0 -= 2");
+		
+		assertTrue(attribute.getValue().equals(-2.0));
+		assertTrue(attribute.getValue().equals(-4.0));
+	}
+	
+	@Test
+	public void testMultiplyEquals() throws RecognitionException {
+		Attribute attribute = buildAttribute("5 *= 2");
+		
+		assertTrue(attribute.getValue().equals(10.0));
+		assertTrue(attribute.getValue().equals(20.0));
+	}
+	
+	@Test
+	public void testDivideEquals() throws RecognitionException {
+		Attribute attribute = buildAttribute("100 /= 2");
+		
+		assertTrue(attribute.getValue().equals(50.0));
 		assertTrue(attribute.getValue().equals(25.0));
 	}
 

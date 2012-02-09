@@ -6,6 +6,8 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.apache.log4j.BasicConfigurator;
 
+import static org.junit.Assert.assertTrue;
+
 import richTea.antlr.RichTeaLexer;
 import richTea.antlr.RichTeaParser;
 import richTea.antlr.RichTeaTreeAdaptor;
@@ -51,5 +53,9 @@ public class NodeBuilderTestBase {
 		
 		return parser;
 	} 
-
+	
+	protected void testAttribute(String input, Object requiredValue) throws RecognitionException
+	{
+		assertTrue(buildAttribute(input).getValue().equals(requiredValue));
+	}
 }
