@@ -1,6 +1,5 @@
 package richTea.impl.loop;
 
-import richTea.core.attribute.NumberAttribute;
 import richTea.core.execution.AbstractFunction;
 
 public class For extends AbstractFunction {
@@ -11,7 +10,7 @@ public class For extends AbstractFunction {
 		String as = as();
 		
 		for(int i = 0; i < count; i++) {
-			context.getCurrentNode().setAttribute(new NumberAttribute(as, i));		
+			context.setValue(as, i);	
 			context.executeBranch("do");
 		}
 	}

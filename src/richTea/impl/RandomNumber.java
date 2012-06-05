@@ -5,7 +5,7 @@ import richTea.core.execution.AbstractFunction;
 public class RandomNumber extends AbstractFunction {
 
 	@Override
-	protected void run() throws Exception {
+	protected void run() throws IllegalArgumentException {
 		double minimum = getMinimum();
 		double maximum = getMaximum();
 		

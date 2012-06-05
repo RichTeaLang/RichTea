@@ -1,6 +1,5 @@
 package richTea.impl.loop;
 
-import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.execution.AbstractFunction;
 
 public class ForEach extends AbstractFunction {
@@ -11,8 +10,7 @@ public class ForEach extends AbstractFunction {
 		String as = as();
 		
 		for(Object element : inList) {
-			context.getCurrentNode().setAttribute(new PrimativeAttribute(as, element));
-			
+			context.setValue(as, element);			
 			context.executeBranch("do");
 		}
 	}

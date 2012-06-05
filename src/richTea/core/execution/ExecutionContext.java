@@ -2,6 +2,7 @@ package richTea.core.execution;
 
 import java.util.Stack;
 
+import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 import richTea.core.resolver.AbstractResolver;
@@ -45,18 +46,17 @@ public class ExecutionContext extends AbstractResolver {
 	public boolean executeBranch(String branchName) {
 		boolean branchExecuted = false;
 		
-		Branch branch = getCurrentNode().getBranch(branchName);
+		TreeNode node = getCurrentNode();
+		Branch branch = node.getBranch(branchName);
 		
-		if(branch != null) {
-			TreeNode previousContext = getCurrentNode();
-			
-			for(TreeNode node : branch.getChildren()) {
-				execute(node);
+		if(branch != null) {			
+			for(TreeNode child : branch.getChildren()) {
+				execute(child);
 			}
 			
 			branchExecuted = true;
 			
-			resolver.setContext(previousContext);
+			resolver.setContext(node);
 		}
 
 		return branchExecuted;
@@ -66,10 +66,6 @@ public class ExecutionContext extends AbstractResolver {
 		return returnValue;
 	}
 	
-	public void returnValue() {
-		returnValue(null);
-	}
-	
 	public void returnValue(Object returnValue) {
 		this.returnValue = returnValue;
 	}
@@ -77,5 +73,9 @@ public class ExecutionContext extends AbstractResolver {
 	@Override
 	public Object getValue(String key) {
 		return resolver.getValue(key);
+	}
+	
+	public void setValue(String key, Object value) {
+		getCurrentNode().setAttribute(new PrimativeAttribute(key, value));
 	}
 }

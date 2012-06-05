@@ -30,9 +30,9 @@ public abstract class AbstractResolver implements Resolver {
 
 	@Override
 	public boolean getBooleanOrDefault(String key, boolean defaultValue) {
-		Object value = getValue(key);
+		String value = getString(key);
 		
-		return value != null ? Boolean.valueOf(String.valueOf(value)) : defaultValue;
+		return value != null ? Boolean.valueOf(value) : defaultValue;
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public abstract class AbstractResolver implements Resolver {
 
 	@Override
 	public double getNumberOrDefault(String key, double defaultValue) {
-		Object value = getValue(key);
+		String value = getString(key);
 		
-		return value != null ? Double.valueOf(String.valueOf(value)) : defaultValue;
+		return value != null ? Double.valueOf(value) : defaultValue;
 	}
 }
