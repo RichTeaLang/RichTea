@@ -13,6 +13,7 @@ import richTea.core.attribute.ArrayAttribute;
 import richTea.core.attribute.AssignmentExpression;
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.BooleanAttribute;
+import richTea.core.attribute.ExecutableFunctionAttribute;
 import richTea.core.attribute.FunctionAttribute;
 import richTea.core.attribute.TernaryExpressionAttribute;
 import richTea.core.attribute.VariableAttribute;
@@ -69,6 +70,9 @@ public class RichTeaAttributeFactory {
 			case RichTeaParser.FUNCTION :
 				attribute = createFunctionAttribute(name, (NodeData) value);
 				break;
+			case RichTeaParser.EXECUTABLE_FUNCTION_ATTRIBUTE :
+				attribute = createExecutableFunctionAttribute(name, value);
+				break;
 			case RichTeaParser.PLUS :
 				attribute = createPlusAttribute(name, value);
 				break;
@@ -87,7 +91,6 @@ public class RichTeaAttributeFactory {
 			case RichTeaParser.MINUS :
 				attribute = createMinusAttribute(name, value);
 				break;
-			//case RichTeaParser.
 			case RichTeaParser.MULTIPLY :
 				attribute = createMultiplyAttribute(name, value);
 				break;
@@ -165,9 +168,15 @@ public class RichTeaAttributeFactory {
 	}
 		
 	protected Attribute createFunctionAttribute(String name, NodeData nodeData) {
-		TreeNode function = nodeFactory.create(nodeData);
+		TreeNode functionNode = nodeFactory.create(nodeData);
 		
-		return new FunctionAttribute(name, function);
+		return new FunctionAttribute(name, functionNode);
+	}
+	
+	protected Attribute createExecutableFunctionAttribute(String name, Tree value) {
+		FunctionAttribute attribute = (FunctionAttribute) createFunctionAttribute(name, (NodeData) value.getChild(0));
+		
+		return new ExecutableFunctionAttribute(name, attribute);
 	}
 	
 	protected ExpressionAttribute createPlusAttribute(String name, Tree value) {

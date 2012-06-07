@@ -1,6 +1,12 @@
 Bindings(#bindings {
 	Function(name:"Scope" functionClass:"richTea.impl.Scope" implicitAttributeName:"if" implicitBranchName:"do")
 	
+	Function(name:"Call" functionClass:"richTea.impl.Call" implicitAttributeName:"function" 
+		#attributes {
+			Attribute(name:"function");
+		}
+	)
+	
 	Function(name:"Print" functionClass:"richTea.impl.Print" implicitAttributeName:"message" 
 		#attributes {
 			Attribute(name:"message");

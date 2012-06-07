@@ -6,17 +6,19 @@ public class Print extends AbstractFunction {
 
 	@Override
 	protected void run() {
-		Object message = getMessage();
-
+		String message = getMessage().toString();
+		
 		if(prependNewLine()) {
-			System.out.println();
+			message = "\n" + message;
+		}
+		
+		if(appendNewLine()) {
+			message += "\n";
 		}
 		
 		System.out.print(message);
 		
-		if(appendNewLine()) {
-			System.out.println();
-		}
+		context.returnValue(message);
 	}
 	
 	protected Object getMessage() {

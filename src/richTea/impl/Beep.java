@@ -10,5 +10,4 @@ public class Beep extends AbstractFunction {
 	protected void run() {
 		Toolkit.getDefaultToolkit().beep();
 	}
-
 }

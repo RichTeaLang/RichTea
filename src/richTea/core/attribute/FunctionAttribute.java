@@ -1,31 +1,30 @@
 package richTea.core.attribute;
 
-import richTea.core.execution.ExecutionContext;
 import richTea.core.node.TreeNode;
 
 public class FunctionAttribute extends AbstractAttribute {
 
-	private TreeNode function;
+	private TreeNode functionNode;
 	
-	public FunctionAttribute(String name, TreeNode function) {
+	public FunctionAttribute(String name, TreeNode functionNode) {
 		super(name);
 		
-		this.function = function;
+		this.functionNode = functionNode;
 	}
 	
-	protected TreeNode getFunction() {
-		return function;
+	public TreeNode getFunctionNode() {
+		return functionNode;
 	}
 	
 	@Override
 	public void setOwner(TreeNode owner) {
 		super.setOwner(owner);
 		
-		getFunction().setParent(owner);
+		getFunctionNode().setParent(owner);
 	}
 	
 	@Override
 	public Object getValue() {		
-		return new ExecutionContext().execute(getFunction());
+		return getFunctionNode();
 	}
 }

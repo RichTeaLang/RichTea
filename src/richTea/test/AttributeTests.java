@@ -8,6 +8,7 @@ import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
 import richTea.core.attribute.Attribute;
+import richTea.core.attribute.ExecutableFunctionAttribute;
 import richTea.core.attribute.FunctionAttribute;
 import richTea.core.attribute.VariableAttribute;
 
@@ -64,5 +65,13 @@ public class AttributeTests extends RichTeaTestBase {
 		Attribute attribute = buildAttribute("x=Scope()");
 				
 		assertTrue(attribute instanceof FunctionAttribute);
+	}
+	
+	@Test
+	public void testExecutableFunctionAttribute() throws RecognitionException
+	{
+		Attribute attribute = buildAttribute("x=@Scope()");
+		
+		assertTrue(attribute instanceof ExecutableFunctionAttribute);
 	}
 }

@@ -1,16 +1,16 @@
 grammar RichTea;
 
 options	{ 	output=AST;
-			k=2; // Needed to correctly match implicitAttributes in the attribute_list rule
-			ASTLabelType=Tree;
-			language=Java;
-			backtrack=true; }
+		k=2; // Needed to correctly match implicitAttributes in the attribute_list rule
+		ASTLabelType=Tree;
+		language=Java;
+		backtrack=true; }
 						
 tokens {	FUNCTION; 
-			CHILDREN; ATTRIBUTES;
-			ATTRIBUTE; NAME; VALUE;
-			BRANCHES; BRANCH;
-			ARRAY; VARIABLE; TERNARY_OPERATOR; NEGATE;	}
+		CHILDREN; ATTRIBUTES;
+		ATTRIBUTE; NAME; VALUE;
+		BRANCHES; BRANCH;
+		ARRAY; VARIABLE; EXECUTABLE_FUNCTION_ATTRIBUTE; TERNARY_OPERATOR; NEGATE;	}
 			
 @header {package richTea.antlr;}
 @lexer::header {package richTea.antlr;}
@@ -40,13 +40,13 @@ attribute_list
 	;
 	
 attribute
-	:	ID (COLON | ASSIGN)! datatype	
-			->	^(NAME ID) ^(VALUE datatype)
+	:	ID (COLON | ASSIGN)! expression	
+			->	^(NAME ID) ^(VALUE expression)
 	;
 
 implicitAttribute
-	:	datatype
-			->	^(NAME ID["implicitAttribute"]) ^(VALUE datatype)
+	:	expression
+			->	^(NAME ID["implicitAttribute"]) ^(VALUE expression)
 	;	
 	
 branch_list
@@ -62,17 +62,6 @@ branch
 implicitBranch 
 	:	HASH? OPEN_BRACE function_scope* CLOSE_BRACE
 			->	^(NAME ID["implicitBranch"]) ^(CHILDREN function_scope*)
-	;
-
-datatype
-	:	expression
-	|	function
-	| 	array
-	;
-
-array
-	:	OPEN_BOX (datatype (COMMA datatype)* )? CLOSE_BOX
-			->	^(ARRAY datatype*)
 	;
 	
 /*	EXPRESSION EVALUATION	*/
@@ -117,21 +106,34 @@ unary_expression
 	;
 	
 primary_expression
-	:	expression_value
+	:	data_type
 	|	OPEN_PAREN! logical_expression CLOSE_PAREN!
 	;
-
-expression_value
+	
+data_type 
 	:	NUMBER
 	|	BOOLEAN
 	|	STRING
 	| 	variable
+	|	array
 	|	function
+	|	executable_function_attribute
 	;
 	
 variable
-	:	(ID (PERIOD ID)* ) 
-			-> ^(VARIABLE ^(ID)+)
+	:	(ID (PERIOD ID)* )
+			->	^(VARIABLE ^(ID)+)
+	;
+	
+
+array
+	:	OPEN_BOX (expression (COMMA expression)* )? CLOSE_BOX
+			->	^(ARRAY expression*)
+	;
+	
+executable_function_attribute
+	: 	AT function
+			->	^(EXECUTABLE_FUNCTION_ATTRIBUTE function)
 	;
 
 /*	TOKENS	*/
@@ -164,6 +166,7 @@ WHITESPACE
 COMMA	:	','	;
 PERIOD	:	'.'	;
 HASH	:	'#'	;
+AT	:	'@'	;
 
 PLUS_EQUALS		:	PLUS ASSIGN;
 MULTIPLY_EQUALS	:	MULTIPLY ASSIGN;
@@ -179,21 +182,21 @@ POWER	:	'^'	;
 
 OR	:	'||'	;
 AND	:	'&&'	;
-GT	:	'>'		;
-GTEQ:	'>='	;
-LT	:	'<'		;
-LTEQ:	'<='	;
+GT	:	'>'	;
+GTEQ	:	'>='	;
+LT	:	'<'	;
+LTEQ	:	'<='	;
 EQ	:	'=='	;
 NEQ	:	'!='	;
-NOT	:	'!'		;
+NOT	:	'!'	;
 
-ASSIGN		:	'=' ;
+ASSIGN		:	'=' 	;
 COLON		:	':'	;
 SEMI_COLON	: 	';'	;
-QUESTION_MARK	:	'?';
+QUESTION_MARK	:	'?'	;
 
-OPEN_PAREN 	:	'(' ;
-CLOSE_PAREN :	')' ;
+OPEN_PAREN 	:	'(' 	;
+CLOSE_PAREN 	:	')' 	;
 
 OPEN_BRACE	:	'{'	;
 CLOSE_BRACE	:	'}'	;
