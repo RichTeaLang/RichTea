@@ -83,16 +83,35 @@
 	})
 	
 	Print("");
+	
+	(someFunction:({	
+		Print("Defined function called with input of " + input appendNewLine:false);
+		
+		If(input > 50 {
+			Return(input * 2)
+		} else {
+			Return(input / 2)
+		})	
+		
+	}) {
+		Print("Define new functions");
+		Print("... function returned: " + @Call(someFunction input:49));
+		Print("... function returned: " + @Call(someFunction input:51));
+	})
+	
+	Print("");
 
 	(string:"Java Method Invocation" {
 		Print(string);
 		Print(" - " + string.toUpperCase + " (String.toUpperCase)")
 		Print(" - " + string.toLowerCase + " (String.toLowerCase)")
 	})
+	
+	Print("");
 
 	Print("Random numbers: " + (@RandomNumber(minimum:2 maximum:4) * @RandomNumber(minimum:2 maximum:4)))
 	
 	Print("Program Completed in: " + (@GetSystemTime() - timeStarted) + "ms");
 	
-	OpenWebpage("http://www.richwalton.co.uk/wiki")
+	//OpenWebpage("http://www.richwalton.co.uk/wiki")
 })

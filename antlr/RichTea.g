@@ -4,7 +4,7 @@ options	{ 	output=AST;
 		k=2; // Needed to correctly match implicitAttributes in the attribute_list rule
 		ASTLabelType=Tree;
 		language=Java;
-		backtrack=true; }
+		backtrack=true;	}
 						
 tokens {	FUNCTION; 
 		CHILDREN; ATTRIBUTES;
@@ -16,18 +16,14 @@ tokens {	FUNCTION;
 @lexer::header {package richTea.antlr;}
 
 program
-	:	function_scope
-	;
-		
-function_scope
-	:	function
-	| 	OPEN_PAREN function_data CLOSE_PAREN SEMI_COLON?
-			->	^(FUNCTION ^(NAME ID["scope"]) function_data)
+	: 	function
 	;
 	
 function
-	:	ID (OPEN_PAREN function_data? CLOSE_PAREN) SEMI_COLON?
+	:	ID OPEN_PAREN function_data? CLOSE_PAREN SEMI_COLON?
 			-> ^(FUNCTION ^(NAME ID) function_data?)
+	|	OPEN_PAREN function_data? CLOSE_PAREN SEMI_COLON?
+			-> ^(FUNCTION ^(NAME ID["scope"]) function_data?)
 	;
 
 function_data
@@ -55,13 +51,13 @@ branch_list
 	;
 	
 branch 
-	:	HASH? (name=ID | name=STRING) OPEN_BRACE function_scope* CLOSE_BRACE
-			->	^(NAME $name) ^(CHILDREN function_scope*)
+	:	HASH? (name=ID | name=STRING) OPEN_BRACE function* CLOSE_BRACE
+			->	^(NAME $name) ^(CHILDREN function*)
 	;
 
 implicitBranch 
-	:	HASH? OPEN_BRACE function_scope* CLOSE_BRACE
-			->	^(NAME ID["implicitBranch"]) ^(CHILDREN function_scope*)
+	:	HASH? OPEN_BRACE function* CLOSE_BRACE
+			->	^(NAME ID["implicitBranch"]) ^(CHILDREN function*)
 	;
 	
 /*	EXPRESSION EVALUATION	*/
@@ -106,8 +102,8 @@ unary_expression
 	;
 	
 primary_expression
-	:	data_type
-	|	OPEN_PAREN! logical_expression CLOSE_PAREN!
+	:	OPEN_PAREN! logical_expression CLOSE_PAREN!
+	|	data_type
 	;
 	
 data_type 
@@ -143,21 +139,21 @@ NUMBER
  	;
  	
 STRING
-    :	'"' ( ESC_SEQ | ~('\\'|'"') )* '"'
-    ;
+    	:	'"' ( ESC_SEQ | ~('\\'|'"') )* '"'
+   	;
 
 BOOLEAN
  	:	'true' 
  	|	'false'
 	;
 
-ID  :	(LETTER | '_') (LETTER | INTEGER | '_')*
-    ;
+ID  	:	(LETTER | '_') (LETTER | INTEGER | '_')*
+    	;
 
 COMMENT
 	:	'//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
-    |	'/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;}
-    ;
+  	|	'/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;}
+   	;
 
 WHITESPACE
 	:	('\r' | '\n' | '\r\n' | ' ' | '\t' ) {$channel=HIDDEN;} 
@@ -168,7 +164,7 @@ PERIOD	:	'.'	;
 HASH	:	'#'	;
 AT	:	'@'	;
 
-PLUS_EQUALS		:	PLUS ASSIGN;
+PLUS_EQUALS	:	PLUS ASSIGN;
 MULTIPLY_EQUALS	:	MULTIPLY ASSIGN;
 MINUS_EQUALS	:	MINUS ASSIGN;
 DIVIDE_EQUALS	:	DIVIDE ASSIGN;
