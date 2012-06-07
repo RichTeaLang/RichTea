@@ -166,6 +166,6 @@ public class RichTeaNodeFactory {
 	}
 	
 	protected void setFunctionOnNode(TreeNode node, FunctionBinding binding) {
-		node.setFunction(binding.getFunctionImplementation());
+		node.setFunction(binding.createFunctionImplementation());
 	}
 }
