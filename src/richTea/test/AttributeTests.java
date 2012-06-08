@@ -8,9 +8,9 @@ import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
 import richTea.core.attribute.Attribute;
-import richTea.core.attribute.ExecutableFunctionAttribute;
-import richTea.core.attribute.FunctionAttribute;
 import richTea.core.attribute.VariableAttribute;
+import richTea.core.attribute.function.ExecutableFunctionAttribute;
+import richTea.core.attribute.function.FunctionAttribute;
 
 public class AttributeTests extends RichTeaTestBase {
 	

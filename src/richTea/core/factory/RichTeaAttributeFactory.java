@@ -13,13 +13,10 @@ import richTea.core.attribute.ArrayAttribute;
 import richTea.core.attribute.AssignmentExpression;
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.BooleanAttribute;
-import richTea.core.attribute.ExecutableFunctionAttribute;
-import richTea.core.attribute.FunctionAttribute;
+import richTea.core.attribute.NumberAttribute;
+import richTea.core.attribute.StringAttribute;
 import richTea.core.attribute.TernaryExpressionAttribute;
 import richTea.core.attribute.VariableAttribute;
-import richTea.core.attribute.NumberAttribute;
-import richTea.core.attribute.PrimativeAttribute;
-import richTea.core.attribute.StringAttribute;
 import richTea.core.attribute.bool.AndAttribute;
 import richTea.core.attribute.bool.EqualsAttribute;
 import richTea.core.attribute.bool.GreaterThanAttribute;
@@ -30,6 +27,8 @@ import richTea.core.attribute.bool.NotAttribute;
 import richTea.core.attribute.bool.NotEqualsAttribute;
 import richTea.core.attribute.bool.OrAttribute;
 import richTea.core.attribute.expression.ExpressionAttribute;
+import richTea.core.attribute.function.ExecutableFunctionAttribute;
+import richTea.core.attribute.function.FunctionAttribute;
 import richTea.core.attribute.math.DivideAttribute;
 import richTea.core.attribute.math.MinusAttribute;
 import richTea.core.attribute.math.MultiplyAttribute;
@@ -128,9 +127,7 @@ public class RichTeaAttributeFactory {
 				attribute = createTernaryExpressionAttribute(name, value);
 				break;
 			default :
-				attribute = new PrimativeAttribute(name, value.getText());
-				
-				System.out.println(value.toStringTree());
+				throw new IllegalArgumentException("Unknown attribute type");
 		}
 		
 		return attribute;

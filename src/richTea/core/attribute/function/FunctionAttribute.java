@@ -1,5 +1,6 @@
-package richTea.core.attribute;
+package richTea.core.attribute.function;
 
+import richTea.core.attribute.AbstractAttribute;
 import richTea.core.node.TreeNode;
 
 public class FunctionAttribute extends AbstractAttribute {
