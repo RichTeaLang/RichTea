@@ -1,4 +1,4 @@
-package richTea.impl;
+package richTea.impl.functional;
 
 import richTea.core.attribute.Attribute;
 import richTea.core.execution.AbstractFunction;
