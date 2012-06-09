@@ -40,4 +40,9 @@ public abstract class AbstractAttribute implements Attribute {
 	public Object modify(AttributeModifier modifier) {
 		return null;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("[%s(%s)] -> %s", getClass().getSimpleName(), getName(), getValue());
+	}
 }

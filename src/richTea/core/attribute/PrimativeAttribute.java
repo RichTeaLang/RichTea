@@ -22,9 +22,4 @@ public class PrimativeAttribute extends AbstractAttribute {
 		
 		return getValue();
 	}
-	
-	@Override
-	public String toString() {
-		return String.format("%s -> %s", getName(), getValue());
-	}
 }
