@@ -6,6 +6,6 @@ public class GetSystemTime extends AbstractFunction {
 
 	@Override
 	protected void run() {
-		context.returnValue(System.currentTimeMillis());
+		context.setLastReturnValue(System.currentTimeMillis());
 	}
 }

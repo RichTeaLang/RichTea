@@ -6,7 +6,7 @@ public class Return extends AbstractFunction {
 
 	@Override
 	protected void run() throws Exception {
-		context.returnValue(getReturnValue());
+		context.doReturn(getReturnValue());
 	}
 	
 	protected Object getReturnValue() {

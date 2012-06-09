@@ -15,7 +15,7 @@ public class Set extends AbstractFunction {
 			
 			attribute.modify(new SetModifier(value));
 			
-			context.returnValue(value);
+			context.setLastReturnValue(value);
 		}
 	}
 	

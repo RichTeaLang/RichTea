@@ -6,7 +6,7 @@ public class Print extends AbstractFunction {
 
 	@Override
 	protected void run() {
-		String message = getMessage().toString();
+		String message = getMessage();
 		
 		if(prependNewLine()) {
 			message = "\n" + message;
@@ -18,11 +18,11 @@ public class Print extends AbstractFunction {
 		
 		System.out.print(message);
 		
-		context.returnValue(message);
+		context.setLastReturnValue(message);
 	}
 	
-	protected Object getMessage() {
-		return context.getValue("message");
+	protected String getMessage() {
+		return context.getString("message");
 	}
 	
 	protected boolean prependNewLine() {

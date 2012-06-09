@@ -12,7 +12,7 @@ public class RandomNumber extends AbstractFunction {
 		if(minimum < maximum) {
 			double randomNumberInRange = minimum + (int) (Math.random() * ((maximum - minimum) + 1));
 
-			context.returnValue(randomNumberInRange);
+			context.setLastReturnValue(randomNumberInRange);
 		} else {
 			throw new IllegalArgumentException("Minimum value must be smaller than the maximum");
 		}

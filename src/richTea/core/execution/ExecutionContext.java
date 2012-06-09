@@ -1,6 +1,7 @@
 package richTea.core.execution;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.node.Branch;
@@ -10,18 +11,18 @@ import richTea.core.resolver.BasicNodeResolver;
 
 public class ExecutionContext extends AbstractResolver {
 	
-	private Stack<TreeNode> executionStack;
+	private Deque<TreeNode> executionStack;
 	
 	private BasicNodeResolver<TreeNode> resolver;
 	
 	private Object returnValue;
 	
 	public ExecutionContext() {
-		executionStack = new Stack<TreeNode>();
+		executionStack = new ArrayDeque<TreeNode>();
 		resolver = new BasicNodeResolver<TreeNode>();
 	}
 	
-	public Stack<TreeNode> getExecutionStack() {
+	public Deque<TreeNode> getExecutionStack() {
 		return executionStack;
 	}
 	
@@ -29,18 +30,15 @@ public class ExecutionContext extends AbstractResolver {
 		return executionStack.peek();
 	}
 	
-	public Object execute(TreeNode node) {		
-		getExecutionStack().push(node);
+	public Object execute(TreeNode node) {
+		try {
+			executeFunction(node);
+		} catch(ReturnException e) {
+			/* If this node contains a Return function we will have to catch the return exception
+			 * ourselves.  Usually a "Scope" function would deal with a return exception */
+		}
 		
-		resolver.setContext(node);
-		
-		node.getFunction().execute(this);
-		
-		getExecutionStack().pop();
-		
-		resolver.setContext(null);
-		
-		return getReturnValue();
+		return getLastReturnValue();
 	}
 	
 	public boolean executeBranch(String branchName) {
@@ -49,9 +47,9 @@ public class ExecutionContext extends AbstractResolver {
 		TreeNode node = getCurrentNode();
 		Branch branch = node.getBranch(branchName);
 		
-		if(branch != null) {			
+		if(branch != null) {	
 			for(TreeNode child : branch.getChildren()) {
-				execute(child);
+				executeFunction(child);
 			}
 			
 			branchExecuted = true;
@@ -62,12 +60,30 @@ public class ExecutionContext extends AbstractResolver {
 		return branchExecuted;
 	}
 	
-	public Object getReturnValue() {
+	protected void executeFunction(TreeNode node) {		
+		getExecutionStack().push(node);
+		
+		resolver.setContext(node);
+		
+		node.getFunction().execute(this);
+		
+		getExecutionStack().pop();
+		
+		resolver.setContext(null);
+	}
+	
+	public Object getLastReturnValue() {
 		return returnValue;
 	}
 	
-	public void returnValue(Object returnValue) {
+	public void setLastReturnValue(Object returnValue) {
 		this.returnValue = returnValue;
+	}
+	
+	public void doReturn(Object returnValue) {
+		setLastReturnValue(returnValue);
+		
+		throw new ReturnException(getExecutionStack());
 	}
 
 	@Override

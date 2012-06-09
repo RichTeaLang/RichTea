@@ -13,12 +13,16 @@ public abstract class AbstractFunction implements RichTeaFunction {
 	public void execute(ExecutionContext context) {
 		this.context = context;
 		
+		
 		if(shouldExecute()) {
 			try {
 				run();
-			}catch(Exception exception) {
-				log.error("Error executing function", exception);
+			}catch(RuntimeException runtimeException) {
+				throw runtimeException;
+			}catch(Exception checkedExceception) {
+				log.error("Error executing function", checkedExceception);
 			}
+			
 		}
 		
 		context = null;

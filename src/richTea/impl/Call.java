@@ -8,7 +8,7 @@ import richTea.core.node.TreeNode;
 public class Call extends AbstractFunction {
 
 	@Override
-	protected void run() throws Exception {
+	protected void run() {
 		Object functionValue = context.getValue("function");
 		
 		if(functionValue instanceof TreeNode)
@@ -24,7 +24,7 @@ public class Call extends AbstractFunction {
 				functionNode.setAttribute(contextAttribute);
 			}
 			
-			context.returnValue(new ExecutionContext().execute(functionNode));
+			context.setLastReturnValue(new ExecutionContext().execute(functionNode));
 			
 			for(Attribute attribute : originalAttributes) {				
 				functionNode.setAttribute(attribute);

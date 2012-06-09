@@ -11,7 +11,7 @@ public class GetArrayData extends AbstractFunction {
 		List<Object> array = getArray();
 		
 		if(array != null) {
-			context.returnValue(array.get(getIndex()));
+			context.setLastReturnValue(array.get(getIndex()));
 		}
 	}
 	
