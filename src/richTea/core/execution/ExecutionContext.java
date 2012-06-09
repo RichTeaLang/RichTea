@@ -79,12 +79,6 @@ public class ExecutionContext extends AbstractResolver {
 	public void setLastReturnValue(Object returnValue) {
 		this.returnValue = returnValue;
 	}
-	
-	public void doReturn(Object returnValue) {
-		setLastReturnValue(returnValue);
-		
-		throw new ReturnException(getExecutionStack());
-	}
 
 	@Override
 	public Object getValue(String key) {
