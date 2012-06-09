@@ -55,6 +55,13 @@ Bindings(#bindings {
 		}
 	)
 	
+	Function(name:"ForEachAttribute" functionClass:"richTea.impl.loop.ForEachAttribute" implicitAttributeName:"as" implicitBranchName:"do"
+		#attributes {
+			Attribute(name:"in");
+			Attribute(name:"as" defaultValue:"i");
+		}
+	)
+	
 	Function(name:"While" functionClass:"richTea.impl.loop.While" implicitAttributeName:"condition" implicitBranchName:"do" 
 		#attributes {
 			Attribute(name:"condition")

@@ -6,7 +6,7 @@ public class ForEach extends AbstractFunction {
 	
 	@Override
 	protected void run() {
-		Iterable<Object> inList = inList();
+		Iterable<?> inList = inList();
 		String as = as();
 		
 		for(Object element : inList) {
@@ -15,9 +15,8 @@ public class ForEach extends AbstractFunction {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	protected Iterable<Object> inList() {
-		return (Iterable<Object>) context.getValue("in");
+	protected Iterable<?> inList() {
+		return (Iterable<?>) context.getValue("in");
 	}
 	
 	protected String as() {
