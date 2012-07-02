@@ -10,5 +10,5 @@ public interface Attribute {
 		
 	public Object getValue();
 	public Object getValue(ExecutionContext context);
-	public Object modify(AttributeModifier modifier);
+	public Object modify(ExecutionContext context, AttributeModifier modifier);
 }

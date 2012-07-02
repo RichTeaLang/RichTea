@@ -2,6 +2,7 @@ package richTea.core.attribute.function;
 
 import richTea.core.attribute.AbstractAttribute;
 import richTea.core.execution.ExecutionContext;
+import richTea.core.node.TreeNode;
 
 public class ExecutableFunctionAttribute extends AbstractAttribute {
 
@@ -18,7 +19,16 @@ public class ExecutableFunctionAttribute extends AbstractAttribute {
 	}
 	
 	@Override
-	public Object getValue(ExecutionContext context) {		
-		return context.execute(getFunctionAttribute().getFunctionNode());
+	public Object getValue(ExecutionContext context) {
+		
+		TreeNode functionNode = getFunctionAttribute().getFunctionNode();
+		
+		functionNode.setParent(context.getCurrentNode());
+		
+		Object returnValue = context.execute(functionNode);
+		
+		functionNode.setParent(null);
+		
+		return returnValue;
 	}
 }

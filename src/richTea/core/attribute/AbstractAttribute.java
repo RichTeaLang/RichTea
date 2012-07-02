@@ -30,7 +30,7 @@ public abstract class AbstractAttribute implements Attribute {
 	public abstract Object getValue(ExecutionContext context);
 
 	@Override
-	public Object modify(AttributeModifier modifier) {
+	public Object modify(ExecutionContext context, AttributeModifier modifier) {
 		return null;
 	}
 	

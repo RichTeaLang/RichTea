@@ -20,7 +20,7 @@ public class NotAttribute extends AbstractAttribute {
 	
 	@Override
 	public Boolean getValue(ExecutionContext context) {
-		Object value = getInitialValue().getValue(null);
+		Object value = getInitialValue().getValue(context);
 		
 		return !Boolean.parseBoolean(value.toString());
 	}

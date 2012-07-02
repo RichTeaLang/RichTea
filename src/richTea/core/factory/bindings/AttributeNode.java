@@ -5,11 +5,8 @@ import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.attribute.modifier.AttributeModifier;
 import richTea.core.execution.ExecutionContext;
 import richTea.core.node.DataNode;
-import richTea.core.node.TreeNode;
 
 public class AttributeNode extends DataNode implements Attribute {
-	
-	private TreeNode owner;
 	
 	public String getName() {
 		return resolver.getString("name");
@@ -28,17 +25,9 @@ public class AttributeNode extends DataNode implements Attribute {
 	}
 	
 	@Override
-	public Object modify(AttributeModifier modifier) {
+	public Object modify(ExecutionContext context, AttributeModifier modifier) {
 		Attribute attribute = getAttribute("defaultValue");
 		
-		return attribute != null ? attribute.modify(modifier) : null;
-	}
-	
-	public TreeNode getOwner() {
-		return owner;
-	}
-	
-	public void setOwner(TreeNode owner) {
-		this.owner = owner;
+		return attribute != null ? attribute.modify(context, modifier) : null;
 	}
 }

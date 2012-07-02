@@ -2,6 +2,7 @@ package richTea.core.attribute.bool;
 
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.modifier.AttributeModifier;
+import richTea.core.execution.ExecutionContext;
 
 public class AndAttribute extends AbstractBooleanExpressionAttribute {
 
@@ -15,10 +16,10 @@ public class AndAttribute extends AbstractBooleanExpressionAttribute {
 	}
 	
 	@Override
-	public Object modify(AttributeModifier modifier) {
-		getLeftOperand().modify(modifier);
-		getRightOperand().modify(modifier);
+	public Object modify(ExecutionContext context, AttributeModifier modifier) {
+		getLeftOperand().modify(context, modifier);
+		getRightOperand().modify(context, modifier);
 		
-		return getValue(null);
+		return getValue(context);
 	}
 }

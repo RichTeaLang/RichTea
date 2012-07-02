@@ -34,11 +34,11 @@ public class ArrayAttribute extends AbstractAttribute {
 	}
 	
 	@Override	
-	public Object modify(AttributeModifier modifier) {
+	public Object modify(ExecutionContext context, AttributeModifier modifier) {
 		for(Attribute attribute : getAttributes()) {
-			attribute.modify(modifier);
+			attribute.modify(context, modifier);
 		}
 		
-		return getValue(null);
+		return getValue(context);
 	}
 }

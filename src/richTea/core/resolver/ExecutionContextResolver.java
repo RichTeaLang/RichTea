@@ -14,7 +14,7 @@ public class ExecutionContextResolver<T extends BasicNode> extends BasicNodeReso
 	
 	@Override
 	public Object getValue(String key) {
-		Attribute attribute = getContext().getAttribute(key);
+		Attribute attribute = context.getCurrentNode().getAttribute(key);
 		
 		return attribute != null ? attribute.getValue(context) : null;
 	}

@@ -41,13 +41,13 @@ public class VariableAttribute extends PrimativeAttribute {
 		return value;
 	}
 	
-	protected Attribute getAttribute() {
+	protected Attribute getAttribute(ExecutionContext context) {
 		@SuppressWarnings("unchecked")
 		List<String> lookupPath = (List<String>) super.getValue(null);
 		
 		int lookupPathLength = lookupPath.size();
 	
-		Attribute value = this;;
+		Attribute value = this;
 		
 		if(lookupPathLength > 0) {
 			String nextElement = null;
@@ -56,7 +56,7 @@ public class VariableAttribute extends PrimativeAttribute {
 				nextElement = lookupPath.get(i);
 				
 				if(value != null) {
-					//value = ResolverUtils.resolveAttribute((TreeNode) value.getOwner(), nextElement);
+					value = ResolverUtils.resolveAttribute(context.getCurrentNode(), nextElement);
 				}else {
 					value = null; // Couldn't resolve the entire path so value == null
 					break;
@@ -68,11 +68,9 @@ public class VariableAttribute extends PrimativeAttribute {
 	}
 	
 	@Override
-	public Object modify(AttributeModifier modifier) {
-	//	Attribute attribute = getAttribute();
+	public Object modify(ExecutionContext context, AttributeModifier modifier) {
+		Attribute attribute = getAttribute(context);
 		
-	//	return attribute.modify(modifier);
-		
-		return null;
+		return attribute.modify(context, modifier);
 	}
 }

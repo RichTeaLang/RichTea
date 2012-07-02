@@ -68,8 +68,6 @@ public class ExecutionContext extends AbstractResolver {
 		
 		try {
 			node.getFunction().execute(this);
-		} catch(RuntimeException e) {
-			throw e;
 		} finally {
 			getExecutionStack().pop();
 			

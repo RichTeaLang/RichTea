@@ -13,7 +13,7 @@ public class Set extends AbstractFunction {
 		if(attribute != null) {
 			Object value = getAttributeValue();
 			
-			attribute.modify(new SetModifier(value));
+			attribute.modify(context, new SetModifier(value));
 			
 			context.setLastReturnValue(value);
 		}

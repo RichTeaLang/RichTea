@@ -24,7 +24,7 @@ public class AssignmentExpression extends AbstractAttribute {
 		
 		Object value = expression.getValue(context);
 		
-		expression.getLeftOperand().modify(new SetModifier(value));
+		expression.getLeftOperand().modify(context, new SetModifier(value));
 		
 		return value;
 	}
