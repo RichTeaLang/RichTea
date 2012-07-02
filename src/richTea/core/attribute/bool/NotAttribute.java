@@ -2,7 +2,7 @@ package richTea.core.attribute.bool;
 
 import richTea.core.attribute.AbstractAttribute;
 import richTea.core.attribute.Attribute;
-import richTea.core.node.TreeNode;
+import richTea.core.execution.ExecutionContext;
 
 public class NotAttribute extends AbstractAttribute {
 
@@ -19,15 +19,8 @@ public class NotAttribute extends AbstractAttribute {
 	}
 	
 	@Override
-	public void setOwner(TreeNode owner) {
-		super.setOwner(owner);
-		
-		getInitialValue().setOwner(owner);
-	}
-	
-	@Override
-	public Boolean getValue() {
-		Object value = getInitialValue().getValue();
+	public Boolean getValue(ExecutionContext context) {
+		Object value = getInitialValue().getValue(null);
 		
 		return !Boolean.parseBoolean(value.toString());
 	}

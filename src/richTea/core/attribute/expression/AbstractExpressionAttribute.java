@@ -2,7 +2,7 @@ package richTea.core.attribute.expression;
 
 import richTea.core.attribute.AbstractAttribute;
 import richTea.core.attribute.Attribute;
-import richTea.core.node.TreeNode;
+import richTea.core.execution.ExecutionContext;
 
 public abstract class AbstractExpressionAttribute extends AbstractAttribute implements ExpressionAttribute {
 
@@ -23,16 +23,10 @@ public abstract class AbstractExpressionAttribute extends AbstractAttribute impl
 	public Attribute getRightOperand() {
 		return rightOperand;
 	}
-	
-	@Override 
-	public void setOwner(TreeNode owner) {
-		getLeftOperand().setOwner(owner);
-		getRightOperand().setOwner(owner);
-	}
 
-	public Object getValue() {
-		Object value1 = getLeftOperand().getValue();
-		Object value2 = getRightOperand().getValue();
+	public Object getValue(ExecutionContext context) {
+		Object value1 = getLeftOperand().getValue(context);
+		Object value2 = getRightOperand().getValue(context);
 		
 		return getValue(value1, value2);
 	}

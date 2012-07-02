@@ -3,6 +3,7 @@ package richTea.core.factory.bindings;
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.attribute.modifier.AttributeModifier;
+import richTea.core.execution.ExecutionContext;
 import richTea.core.node.DataNode;
 import richTea.core.node.TreeNode;
 
@@ -19,6 +20,10 @@ public class AttributeNode extends DataNode implements Attribute {
 	}
 	
 	public Object getValue() {
+		return getValue(new ExecutionContext());
+	}
+	
+	public Object getValue(ExecutionContext context) {
 		return resolver.getValue("defaultValue");
 	}
 	

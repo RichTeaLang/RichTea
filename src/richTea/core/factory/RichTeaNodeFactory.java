@@ -110,7 +110,6 @@ public class RichTeaNodeFactory {
 					}
 					
 					if(!isImplicitAttribute) {
-						attribute.setOwner(node);
 						node.setAttribute(attribute);
 					}
 				}

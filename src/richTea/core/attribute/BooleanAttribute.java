@@ -1,5 +1,7 @@
 package richTea.core.attribute;
 
+import richTea.core.execution.ExecutionContext;
+
 public class BooleanAttribute extends PrimativeAttribute {
 
 	public BooleanAttribute(String name, Boolean value) {
@@ -7,7 +9,7 @@ public class BooleanAttribute extends PrimativeAttribute {
 	}
 	
 	@Override 
-	public Boolean getValue() {
-		return (Boolean) super.getValue();
+	public Boolean getValue(ExecutionContext context) {
+		return (Boolean) super.getValue(context);
 	}
 }

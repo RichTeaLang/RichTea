@@ -18,6 +18,6 @@ public class AttributeResolver<T extends AttributeSet> extends AbstractResolver 
 	public Object getValue(String attributeName) {
 		Attribute attribute = getContext().getAttribute(attributeName);
 		
-		return attribute != null ? attribute.getValue() : null;
+		return attribute != null ? attribute.getValue(null) : null;
 	}
 }

@@ -13,6 +13,7 @@ import richTea.core.attribute.ArrayAttribute;
 import richTea.core.attribute.AssignmentExpression;
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.BooleanAttribute;
+import richTea.core.attribute.LastReturnedValueAttribute;
 import richTea.core.attribute.NumberAttribute;
 import richTea.core.attribute.StringAttribute;
 import richTea.core.attribute.TernaryExpressionAttribute;
@@ -125,6 +126,9 @@ public class RichTeaAttributeFactory {
 				break;
 			case RichTeaParser.TERNARY_OPERATOR :
 				attribute = createTernaryExpressionAttribute(name, value);
+				break;
+			case RichTeaParser.LAST_RETURNED_VALUE :
+				attribute = createLastReturnedValueAttribute(name);
 				break;
 			default :
 				throw new IllegalArgumentException("Unknown attribute type");
@@ -262,6 +266,10 @@ public class RichTeaAttributeFactory {
 		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new TernaryExpressionAttribute(name, operands[0], operands[1], operands[2]);
+	}
+	
+	protected Attribute createLastReturnedValueAttribute(String name) {
+		return new LastReturnedValueAttribute(name);
 	}
 	
 	protected Attribute[] getAttributeOperands(String elementPrefix, Tree elements) {

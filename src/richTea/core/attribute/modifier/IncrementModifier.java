@@ -11,7 +11,7 @@ public class IncrementModifier implements AttributeModifier {
 	}
 	
 	public Object modify(Attribute attribute) {
-		double value = Double.parseDouble(attribute.getValue().toString());
+		double value = Double.parseDouble(attribute.getValue(null).toString());
 		
 		return value + byAmount;
 	}

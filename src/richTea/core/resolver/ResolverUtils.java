@@ -16,7 +16,7 @@ public class ResolverUtils {
 		if(context instanceof TreeNode) {
 			Attribute attribute = resolveAttribute((TreeNode) context, key);
 			
-			value = attribute != null ? attribute.getValue() : null;
+			value = attribute != null ? attribute.getValue(null) : null;
 		}
 		
 		if(value == null) {

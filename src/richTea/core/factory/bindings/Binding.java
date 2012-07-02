@@ -55,7 +55,7 @@ public class Binding extends DataNode {
 	public Object getDefaultAttributeValue(String attributeName) {
 		Attribute attribute = getDefaultAttributes().getAttribute(attributeName);
 		
-		return attribute != null ? attribute.getValue() : null;
+		return attribute != null ? attribute.getValue(null) : null;
 	}
 	
 	public AttributeSet getDefaultAttributes() { 

@@ -10,7 +10,7 @@ tokens {	FUNCTION;
 		CHILDREN; ATTRIBUTES;
 		ATTRIBUTE; NAME; VALUE;
 		BRANCHES; BRANCH;
-		ARRAY; VARIABLE; EXECUTABLE_FUNCTION_ATTRIBUTE; TERNARY_OPERATOR; NEGATE;	}
+		ARRAY; LAST_RETURNED_VALUE; VARIABLE; EXECUTABLE_FUNCTION_ATTRIBUTE; TERNARY_OPERATOR; NEGATE;	}
 			
 @header {package richTea.antlr;}
 @lexer::header {package richTea.antlr;}
@@ -31,7 +31,7 @@ function_data
 	;
 	
 attribute_list
-	:	attributes+=implicitAttribute? (COMMA? attributes+=attribute)*
+	:	attributes+=implicit_attribute? (COMMA? attributes+=attribute)*
 			-> ^(ATTRIBUTES ^(ATTRIBUTE $attributes)*)
 	;
 	
@@ -40,7 +40,7 @@ attribute
 			->	^(NAME ID) ^(VALUE expression)
 	;
 
-implicitAttribute
+implicit_attribute
 	:	expression
 			->	^(NAME ID["implicitAttribute"]) ^(VALUE expression)
 	;	
@@ -110,10 +110,16 @@ data_type
 	:	NUMBER
 	|	BOOLEAN
 	|	STRING
+	|	last_returned_value
 	| 	variable
 	|	array
 	|	function
 	|	executable_function_attribute
+	;
+	
+last_returned_value
+	:	UNDERSCORE
+			->	LAST_RETURNED_VALUE
 	;
 	
 variable
@@ -147,7 +153,7 @@ BOOLEAN
  	|	'false'
 	;
 
-ID  	:	(LETTER | '_') (LETTER | INTEGER | '_')*
+ID  	:	UNDERSCORE? LETTER (LETTER | INTEGER | UNDERSCORE)*
     	;
 
 COMMENT
@@ -163,6 +169,7 @@ COMMA	:	','	;
 PERIOD	:	'.'	;
 HASH	:	'#'	;
 AT	:	'@'	;
+UNDERSCORE	:	'_';
 
 PLUS_EQUALS	:	PLUS ASSIGN;
 MULTIPLY_EQUALS	:	MULTIPLY ASSIGN;

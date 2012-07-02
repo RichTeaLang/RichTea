@@ -19,6 +19,6 @@ public class AndAttribute extends AbstractBooleanExpressionAttribute {
 		getLeftOperand().modify(modifier);
 		getRightOperand().modify(modifier);
 		
-		return getValue();
+		return getValue(null);
 	}
 }

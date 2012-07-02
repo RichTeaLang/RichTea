@@ -7,19 +7,19 @@ import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 import richTea.core.resolver.AbstractResolver;
-import richTea.core.resolver.BasicNodeResolver;
+import richTea.core.resolver.ExecutionContextResolver;
 
 public class ExecutionContext extends AbstractResolver {
 	
 	private Deque<TreeNode> executionStack;
 	
-	private BasicNodeResolver<TreeNode> resolver;
+	private ExecutionContextResolver<TreeNode> resolver;
 	
 	private Object returnValue;
 	
 	public ExecutionContext() {
 		executionStack = new ArrayDeque<TreeNode>();
-		resolver = new BasicNodeResolver<TreeNode>();
+		resolver = new ExecutionContextResolver<TreeNode>(this);
 	}
 	
 	public Deque<TreeNode> getExecutionStack() {
@@ -48,6 +48,7 @@ public class ExecutionContext extends AbstractResolver {
 		Branch branch = node.getBranch(branchName);
 		
 		if(branch != null) {	
+			
 			for(TreeNode child : branch.getChildren()) {
 				executeFunction(child);
 			}
@@ -65,11 +66,15 @@ public class ExecutionContext extends AbstractResolver {
 		
 		resolver.setContext(node);
 		
-		node.getFunction().execute(this);
-		
-		getExecutionStack().pop();
-		
-		resolver.setContext(null);
+		try {
+			node.getFunction().execute(this);
+		} catch(RuntimeException e) {
+			throw e;
+		} finally {
+			getExecutionStack().pop();
+			
+			resolver.setContext(null);
+		}
 	}
 	
 	public Object getLastReturnValue() {

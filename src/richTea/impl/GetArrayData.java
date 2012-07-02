@@ -8,16 +8,15 @@ public class GetArrayData extends AbstractFunction {
 
 	@Override
 	protected void run() {
-		List<Object> array = getArray();
+		List<?> array = getArray();
 		
 		if(array != null) {
 			context.setLastReturnValue(array.get(getIndex()));
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	protected List<Object> getArray() {
-		return (List<Object>) context.getValue("array");
+	protected List<?> getArray() {
+		return (List<?>) context.getValue("array");
 	}
 	
 	protected int getIndex() {

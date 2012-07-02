@@ -12,6 +12,14 @@ Bindings(#bindings {
 			Attribute(name:"value")
 		}
 	)
+
+	Function(name:"Map" functionClass:"richTea.impl.functional.Map" implicitAttributeName:"input" implicitBranchName:"mapFunction"
+		#attributes {
+			Attribute(name:"input")
+			Branch(name:"mapFunction");
+		}
+	)
+
 	
 	Function(name:"Print" functionClass:"richTea.impl.Print" implicitAttributeName:"message" 
 		#attributes {

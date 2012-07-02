@@ -2,7 +2,7 @@ package richTea.core.attribute;
 
 import richTea.core.attribute.expression.ExpressionAttribute;
 import richTea.core.attribute.modifier.SetModifier;
-import richTea.core.node.TreeNode;
+import richTea.core.execution.ExecutionContext;
 
 public class AssignmentExpression extends AbstractAttribute {
 
@@ -18,18 +18,11 @@ public class AssignmentExpression extends AbstractAttribute {
 		return expression;
 	}
 	
-	@Override
-	public void setOwner(TreeNode owner) {
-		super.setOwner(owner);
-		
-		getExpression().setOwner(owner);
-	}
-	
 	@Override 
-	public Object getValue() {
+	public Object getValue(ExecutionContext context) {
 		ExpressionAttribute expression = getExpression();
 		
-		Object value = expression.getValue();
+		Object value = expression.getValue(context);
 		
 		expression.getLeftOperand().modify(new SetModifier(value));
 		

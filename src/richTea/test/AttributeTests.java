@@ -47,7 +47,7 @@ public class AttributeTests extends RichTeaTestBase {
 	public void testListAttribute() throws RecognitionException {
 		Attribute attribute = buildAttribute("x=[1,2,3,4]");
 		
-		Object value = attribute.getValue();
+		Object value = attribute.getValue(null);
 		
 		assertTrue(value instanceof List<?>);
 		assertTrue(((List<?>) value).size() == 4);

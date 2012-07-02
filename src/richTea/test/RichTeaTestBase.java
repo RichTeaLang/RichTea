@@ -39,7 +39,7 @@ public class RichTeaTestBase {
 	}
 	
 	protected void testAttributeValue(String input, Object requiredValue) throws RecognitionException {
-		assertTrue(buildAttribute(input).getValue().equals(requiredValue));
+		assertTrue(buildAttribute(input).getValue(null).equals(requiredValue));
 	}
 	
 	protected TreeNode buildNode(String input) throws RecognitionException {		

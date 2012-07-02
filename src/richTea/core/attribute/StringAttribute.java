@@ -1,5 +1,7 @@
 package richTea.core.attribute;
 
+import richTea.core.execution.ExecutionContext;
+
 public class StringAttribute extends PrimativeAttribute {
 
 	public StringAttribute(String name, String value) {
@@ -7,7 +9,7 @@ public class StringAttribute extends PrimativeAttribute {
 	}
 	
 	@Override
-	public String getValue() {
-		return (String) super.getValue();
+	public String getValue(ExecutionContext context) {
+		return (String) super.getValue(context);
 	}
 }

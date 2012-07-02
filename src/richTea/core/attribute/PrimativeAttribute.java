@@ -1,6 +1,7 @@
 package richTea.core.attribute;
 
 import richTea.core.attribute.modifier.AttributeModifier;
+import richTea.core.execution.ExecutionContext;
 
 public class PrimativeAttribute extends AbstractAttribute {
 	
@@ -12,7 +13,7 @@ public class PrimativeAttribute extends AbstractAttribute {
 		this.value = value;
 	}
 	
-	public Object getValue() {
+	public Object getValue(ExecutionContext context) {
 		return value;
 	}
 	
@@ -20,6 +21,6 @@ public class PrimativeAttribute extends AbstractAttribute {
 	public Object modify(AttributeModifier modifier) {
 		this.value = modifier.modify(this);
 		
-		return getValue();
+		return getValue(null);
 	}
 }
