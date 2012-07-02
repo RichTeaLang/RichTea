@@ -22,16 +22,8 @@ public abstract class AbstractAttribute implements Attribute {
 	}
 	
 	@Override
-	public Object getValue() {
-		return getValue(new ExecutionContext());
-	}
-		
-	@Override
-	public abstract Object getValue(ExecutionContext context);
-
-	@Override
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
-		return null;
+		return modifier.modify(this);
 	}
 	
 	@Override
