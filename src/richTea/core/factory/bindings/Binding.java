@@ -71,8 +71,8 @@ public class Binding extends DataNode {
 	}
 	
 	@Override
-	public void addBranch(Branch branch) {
-		super.addBranch(branch);
+	public void setBranch(Branch branch) {
+		super.setBranch(branch);
 		
 		if(branch.getName().equalsIgnoreCase("attributes")) {
 			for(TreeNode child : branch.getChildren()) {

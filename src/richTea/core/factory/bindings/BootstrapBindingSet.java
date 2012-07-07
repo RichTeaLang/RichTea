@@ -14,6 +14,6 @@ public class BootstrapBindingSet extends BindingSet {
 		bindings.addChild(new BootstrapBinding("Attribute", AttributeNode.class.getName()));
 		bindings.addChild(new BootstrapBinding("Scope", TreeNode.class.getName()));
 		
-		addBranch(bindings);
+		setBranch(bindings);
 	}
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import richTea.core.attribute.modifier.AttributeModifier;
 import richTea.core.execution.ExecutionContext;
-import richTea.core.resolver.ResolverUtils;
+import richTea.core.execution.Scope;
 
 public class VariableAttribute extends PrimativeAttribute {
 	
@@ -14,57 +14,29 @@ public class VariableAttribute extends PrimativeAttribute {
 		
 	@Override
 	public Object getValue(ExecutionContext context) {
-		@SuppressWarnings("unchecked")
-		List<String> lookupPath = (List<String>) super.getValue(context);
+		Attribute attribute = getAttribute(context);
 		
-		int lookupPathLength = lookupPath.size();
-	
-		Object value = null;
-		
-		if(lookupPathLength > 0) {
-			String nextElement = null;
-			
-			value = context.getCurrentNode(); // "this" (implicit starting point)
-			
-			for(int i = 0; i < lookupPathLength; i++) {
-				nextElement = lookupPath.get(i);
-				
-				if(value != null) {
-					value = ResolverUtils.resolveValue(value, nextElement);
-				}else {
-					value = null; // Couldn't resolve the entire path so value == null
-					break;
-				}
-			}
-		}
-		
-		return value;
+		return attribute != null ? attribute.getValue(context) : null;
 	}
 	
 	protected Attribute getAttribute(ExecutionContext context) {
 		@SuppressWarnings("unchecked")
-		List<String> lookupPath = (List<String>) super.getValue(null);
+		List<String> lookupPath = (List<String>) super.getValue(context);
 		
-		int lookupPathLength = lookupPath.size();
-	
-		Attribute value = this;
+		Scope scope = context.getCurrentScope();
+		Attribute attribute = null;
 		
-		if(lookupPathLength > 0) {
-			String nextElement = null;
+		while(scope != null) {
+			attribute = scope.getAttribute(lookupPath.get(0));
 			
-			for(int i = 0; i < lookupPathLength; i++) {
-				nextElement = lookupPath.get(i);
-				
-				if(value != null) {
-					value = ResolverUtils.resolveAttribute(context.getCurrentNode(), nextElement);
-				}else {
-					value = null; // Couldn't resolve the entire path so value == null
-					break;
-				}
+			if(attribute != null && attribute != this) {
+				break;
+			}else {
+				scope = scope.getParent();
 			}
 		}
 		
-		return value;
+		return attribute;
 	}
 	
 	@Override

@@ -23,7 +23,7 @@ public class TreeNode extends FunctionNode {
 		this.parent = parent;
 	}
 	
-	public void addBranch(Branch branch) {			
+	public void setBranch(Branch branch) {			
 		branches.put(branch.getName().toLowerCase(), branch);
 		branch.setParent(this);
 	}

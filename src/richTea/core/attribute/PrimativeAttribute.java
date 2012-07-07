@@ -19,8 +19,6 @@ public class PrimativeAttribute extends AbstractAttribute {
 	
 	@Override
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
-		this.value = super.modify(context, modifier);
-		
-		return getValue(context);
+		return value = super.modify(context, modifier);
 	}
 }

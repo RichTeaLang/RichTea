@@ -10,7 +10,7 @@ public class Return extends AbstractFunction {
 		context.setLastReturnValue(getReturnValue());
 		
 		// This runtime exception should be handled by a Scope function causing execution to jump outside of that scope
-		throw new ReturnException(context.getExecutionStack());
+		throw new ReturnException(context.getCurrentScope());
 	}
 	
 	protected Object getReturnValue() {

@@ -3,31 +3,32 @@ package richTea.core.execution;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import richTea.core.attribute.Attribute;
 import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 import richTea.core.resolver.AbstractResolver;
-import richTea.core.resolver.ExecutionContextResolver;
 
 public class ExecutionContext extends AbstractResolver {
 	
-	private Deque<TreeNode> executionStack;
-	
-	private ExecutionContextResolver<TreeNode> resolver;
+	private Deque<Scope> scopes;
 	
 	private Object returnValue;
 	
 	public ExecutionContext() {
-		executionStack = new ArrayDeque<TreeNode>();
-		resolver = new ExecutionContextResolver<TreeNode>(this);
+		scopes = new ArrayDeque<Scope>();
 	}
 	
-	public Deque<TreeNode> getExecutionStack() {
-		return executionStack;
+	public Deque<Scope> getScopes() {
+		return scopes;
+	}
+	
+	public Scope getCurrentScope() {
+		return getScopes().peek();
 	}
 	
 	public TreeNode getCurrentNode() {
-		return executionStack.peek();
+		return getCurrentScope().getOwner();
 	}
 	
 	public Object execute(TreeNode node) {
@@ -54,27 +55,19 @@ public class ExecutionContext extends AbstractResolver {
 			}
 			
 			branchExecuted = true;
-			
-			resolver.setContext(node);
 		}
 
 		return branchExecuted;
 	}
 	
 	protected void executeFunction(TreeNode node) {		
-		getExecutionStack().push(node);
+		scopes.push(new Scope(node, scopes.peek()));
 		
-		resolver.setContext(node);
-		
-		try {
-			node.getFunction().execute(this);
-		} finally {
-			getExecutionStack().pop();
-			
-			resolver.setContext(null);
-		}
+		node.getFunction().execute(this);
+
+		scopes.pop();
 	}
-	
+
 	public Object getLastReturnValue() {
 		return returnValue;
 	}
@@ -84,11 +77,13 @@ public class ExecutionContext extends AbstractResolver {
 	}
 
 	@Override
-	public Object getValue(String key) {
-		return resolver.getValue(key);
+	public Object getValue(String attributeName) {	
+		Attribute attribute = scopes.peek().getAttribute(attributeName);
+		
+		return attribute != null ? attribute.getValue(this) : null;
 	}
-	
-	public void setValue(String key, Object value) {
-		getCurrentNode().setAttribute(new PrimativeAttribute(key, value));
+
+	public void setValue(String attributeName, Object value) {
+		scopes.peek().setAttribute(new PrimativeAttribute(attributeName, value));
 	}
 }

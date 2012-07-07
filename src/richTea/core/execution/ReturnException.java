@@ -1,20 +1,16 @@
 package richTea.core.execution;
 
-import java.util.Deque;
-
-import richTea.core.node.TreeNode;
-
 public class ReturnException extends RuntimeException {
 
 	private static final long serialVersionUID = 8628072971422883351L;
 	
-	private Deque<TreeNode> executionStack;
+	private Scope scope;
 	
-	public ReturnException(Deque<TreeNode> executionStack) {
-		this.executionStack = executionStack;
+	public ReturnException(Scope scope) {
+		this.scope = scope;
 	}
 	
-	public Deque<TreeNode> getExecutionStack() {
-		return executionStack;
+	public Scope getScope() {
+		return scope;
 	}
 }

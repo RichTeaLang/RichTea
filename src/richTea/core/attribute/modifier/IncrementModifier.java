@@ -1,7 +1,5 @@
 package richTea.core.attribute.modifier;
 
-import richTea.core.attribute.Attribute;
-
 public class IncrementModifier implements AttributeModifier {
 	
 	private double byAmount;
@@ -10,8 +8,8 @@ public class IncrementModifier implements AttributeModifier {
 		this.byAmount = byAmount;
 	}
 	
-	public Object modify(Attribute attribute) {
-		double value = Double.parseDouble(attribute.getValue(null).toString());
+	public Object modify(Object attributeValue) {
+		double value = Double.parseDouble(attributeValue.toString());
 		
 		return value + byAmount;
 	}

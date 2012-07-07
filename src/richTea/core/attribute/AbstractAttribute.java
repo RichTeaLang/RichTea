@@ -23,11 +23,11 @@ public abstract class AbstractAttribute implements Attribute {
 	
 	@Override
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
-		return modifier.modify(this);
+		return modifier.modify(getValue(context));
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("[%s(%s)] -> %s", getClass().getSimpleName(), getName(), getValue(null));
+		return String.format("%s(%s)", getClass().getSimpleName(), getName());
 	}
 }

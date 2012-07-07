@@ -156,7 +156,7 @@ public class RichTeaNodeFactory {
 				}
 			}
 			
-			node.addBranch(branch);
+			node.setBranch(branch);
 		}
 	}
 	

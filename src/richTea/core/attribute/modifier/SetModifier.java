@@ -1,7 +1,5 @@
 package richTea.core.attribute.modifier;
 
-import richTea.core.attribute.Attribute;
-
 public class SetModifier implements AttributeModifier {
 	
 	private Object value;
@@ -11,7 +9,7 @@ public class SetModifier implements AttributeModifier {
 	}
 	
 	@Override
-	public Object modify(Attribute attribute) {
+	public Object modify(Object attributeValue) {
 		return value;
 	}
 }
