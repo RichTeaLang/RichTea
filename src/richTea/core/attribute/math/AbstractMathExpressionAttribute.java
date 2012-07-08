@@ -13,8 +13,8 @@ public abstract class AbstractMathExpressionAttribute extends AbstractExpression
 	protected Object getValue(Object value1, Object value2) {		
 		try {
 			// Try to convert to numbers
-			double doubleValue1 = Double.parseDouble(value1.toString());
-			double doubleValue2 = Double.parseDouble(value2.toString());
+			double doubleValue1 = Double.parseDouble(String.valueOf(value1));
+			double doubleValue2 = Double.parseDouble(String.valueOf(value2));
 			
 			return getValue(doubleValue1, doubleValue2);
 		}catch(NumberFormatException e) {
