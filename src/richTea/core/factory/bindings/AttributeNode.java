@@ -15,11 +15,7 @@ public class AttributeNode extends DataNode implements Attribute {
 	public void setName(String name) {
 		setAttribute(new PrimativeAttribute("name", name));
 	}
-	
-	public Object getValue() {
-		return getValue(new ExecutionContext());
-	}
-	
+		
 	public Object getValue(ExecutionContext context) {
 		return resolver.getValue("defaultValue");
 	}
