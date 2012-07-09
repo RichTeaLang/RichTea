@@ -2,6 +2,7 @@ package richTea.core.execution;
 
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.AttributeSet;
+import richTea.core.factory.bindings.Binding;
 import richTea.core.node.TreeNode;
 
 public class VariableScope extends AttributeSet {
@@ -32,6 +33,12 @@ public class VariableScope extends AttributeSet {
 		
 		if(attribute == null) {
 			attribute = owner.getAttribute(attributeName);
+			
+			if(attribute == null) {
+				Binding binding = owner.getBinding();
+				
+				if(binding != null) attribute = binding.getDefaultAttributes().getAttribute(attributeName);
+			}
 		}
 		
 		return attribute;
