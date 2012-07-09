@@ -23,11 +23,13 @@ Bindings(#bindings {
 	
 	Function(name:"Print" functionClass:"richTea.impl.Print" implicitAttributeName:"message" 
 		#attributes {
-			Attribute(name:"message");
+			Attribute(name:"message" defaultValue:"Horse");
 			Attribute(name:"prependNewLine" defaultValue:false);
 			Attribute(name:"appendNewLine" defaultValue:true);
 		}
 	)
+	
+	Function(name:"PrintStack" functionClass:"richTea.impl.debug.PrintStack")
 	
 	Function(name:"GetTextInput" functionClass:"richTea.impl.io.GetTextInput")
 	
@@ -73,6 +75,13 @@ Bindings(#bindings {
 	Function(name:"While" functionClass:"richTea.impl.loop.While" implicitAttributeName:"condition" implicitBranchName:"do" 
 		#attributes {
 			Attribute(name:"condition")
+		}
+	)
+	
+	Function(name:"Let" functionClass:"richTea.impl.Let" implicitAttributeName:"var" 
+		#attributes {
+			Attribute(name:"variableName");
+			Attribute(name:"be");
 		}
 	)
 	
