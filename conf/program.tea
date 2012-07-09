@@ -1,8 +1,8 @@
 /**
  * Sample RichTea program
  */
-(name:"Code Snippets" version:0.1 timeStarted:0 {
-	Set(timeStarted to:@GetSystemTime())
+(name:"Code Snippets" version:0.1 {
+	Let("timeStarted" be:@GetSystemTime())
 	
 	Print(name + " (Version: " + version + ")");
 
@@ -77,10 +77,9 @@
 
 	Print("");
 	
-	(someFunction:Print("First class functions" appendNewLine:false) {
-		Call(someFunction)
-		Call(someFunction message:"... with argument overrides" appendNewLine:true)
-	})
+	Let("someFunction" be:Print("First class functions" appendNewLine:false));
+	
+	someFunction();
 	
 	Print("");
 	
@@ -95,8 +94,8 @@
 		
 	}) {
 		Print("Define new functions");
-		Print("... function returned: " + @Call(someFunction input:49));
-		Print("... function returned: " + @Call(someFunction input:51));
+		Print("... function returned: " + @someFunction(input:49))
+		Print("... function returned: " + @someFunction(input:51));
 	})
 	
 	Print("");
@@ -114,7 +113,7 @@
 	Print("");
 
 	Print("Random numbers: " + (@RandomNumber(minimum:2 maximum:4) * @RandomNumber(minimum:2 maximum:4)))
-	
+
 	Print("Program Completed in: " + (@GetSystemTime() - timeStarted) + "ms");
 	
 	OpenWebpage("http://www.richwalton.co.uk/wiki")
