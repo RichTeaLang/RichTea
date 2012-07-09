@@ -18,7 +18,11 @@ public class Map extends AbstractFunction {
 			
 			try {
 				context.executeBranch("mapFunction");
-			} catch(ReturnException e) {}
+			} catch(ReturnException e) {
+				while(context.getCurrentNode().getFunction() != this) {
+					context.popScope();
+				}
+			}
 			
 			
 			mappedValues.add(context.getLastReturnValue());

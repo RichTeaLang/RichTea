@@ -4,16 +4,16 @@ import richTea.core.attribute.Attribute;
 import richTea.core.attribute.AttributeSet;
 import richTea.core.node.TreeNode;
 
-public class Scope extends AttributeSet {
+public class VariableScope extends AttributeSet {
 
 	private TreeNode owner;
-	private Scope parent;
+	private VariableScope parent;
 	
-	public Scope(TreeNode owner) {
+	public VariableScope(TreeNode owner) {
 		this(owner, null);
 	}
 	
-	public Scope(TreeNode owner, Scope parent) {
+	public VariableScope(TreeNode owner, VariableScope parent) {
 		this.owner = owner;
 		this.parent = parent;
 	}
@@ -22,7 +22,7 @@ public class Scope extends AttributeSet {
 		return owner;
 	}
 	
-	public Scope getParent() {
+	public VariableScope getParent() {
 		return parent;
 	}
 	

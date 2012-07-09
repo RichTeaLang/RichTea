@@ -4,7 +4,7 @@ import java.util.List;
 
 import richTea.core.attribute.modifier.AttributeModifier;
 import richTea.core.execution.ExecutionContext;
-import richTea.core.execution.Scope;
+import richTea.core.execution.VariableScope;
 
 public class VariableAttribute extends PrimativeAttribute {
 	
@@ -23,7 +23,7 @@ public class VariableAttribute extends PrimativeAttribute {
 		@SuppressWarnings("unchecked")
 		List<String> lookupPath = (List<String>) super.getValue(context);
 		
-		Scope scope = context.getCurrentScope();
+		VariableScope scope = context.getCurrentScope();
 		Attribute attribute = null;
 		
 		while(scope != null) {

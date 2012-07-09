@@ -11,26 +11,14 @@ import richTea.core.resolver.AbstractResolver;
 
 public class ExecutionContext extends AbstractResolver {
 	
-	private Deque<Scope> scopes;
+	private Deque<VariableScope> scopes;
 	
 	private Object returnValue;
 	
 	public ExecutionContext() {
-		scopes = new ArrayDeque<Scope>();
+		scopes = new ArrayDeque<VariableScope>();
 	}
-	
-	public Deque<Scope> getScopes() {
-		return scopes;
-	}
-	
-	public Scope getCurrentScope() {
-		return getScopes().peek();
-	}
-	
-	public TreeNode getCurrentNode() {
-		return getCurrentScope().getOwner();
-	}
-	
+		
 	public Object execute(TreeNode node) {
 		try {
 			executeFunction(node);
@@ -48,7 +36,7 @@ public class ExecutionContext extends AbstractResolver {
 		TreeNode node = getCurrentNode();
 		Branch branch = node.getBranch(branchName);
 		
-		if(branch != null) {	
+		if(branch != null) {
 			
 			for(TreeNode child : branch.getChildren()) {
 				executeFunction(child);
@@ -60,12 +48,44 @@ public class ExecutionContext extends AbstractResolver {
 		return branchExecuted;
 	}
 	
-	protected void executeFunction(TreeNode node) {		
-		scopes.push(new Scope(node, scopes.peek()));
+	protected void executeFunction(TreeNode node) {	
+		pushScope(new VariableScope(node, getCurrentScope()));
 		
 		node.getFunction().execute(this);
 
-		scopes.pop();
+		popScope();
+	}
+	
+	public VariableScope createScope(Attribute... attributes) {
+		VariableScope scope = new VariableScope(getCurrentNode(), getCurrentScope());
+		
+		for(Attribute attribute : attributes) {
+			scope.setAttribute(attribute);
+		}
+		
+		return scope;
+	}
+
+	public void pushScope(VariableScope scope) {
+	//	System.out.println("[PUSH] " + scope.getOwner().getFunction().getClass().getSimpleName());
+		
+		scopes.push(scope);
+	}
+	
+	public VariableScope popScope() {
+		VariableScope popped = scopes.pop();
+		
+	//	System.out.println("[POP] " + popped.getOwner().getFunction().getClass().getSimpleName());
+		
+		return popped;
+	}
+	
+	public VariableScope getCurrentScope() {
+		return scopes.peek();
+	}
+	
+	public TreeNode getCurrentNode() {
+		return getCurrentScope().getOwner();
 	}
 
 	public Object getLastReturnValue() {
@@ -78,12 +98,12 @@ public class ExecutionContext extends AbstractResolver {
 
 	@Override
 	public Object getValue(String attributeName) {	
-		Attribute attribute = scopes.peek().getAttribute(attributeName);
+		Attribute attribute = getCurrentScope().getAttribute(attributeName);
 		
 		return attribute != null ? attribute.getValue(this) : null;
 	}
 
 	public void setValue(String attributeName, Object value) {
-		scopes.peek().setAttribute(new PrimativeAttribute(attributeName, value));
+		getCurrentScope().setAttribute(new PrimativeAttribute(attributeName, value));
 	}
 }

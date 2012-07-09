@@ -1,8 +1,8 @@
 package richTea.impl.functional;
 
 import richTea.core.attribute.Attribute;
+import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.execution.AbstractFunction;
-import richTea.core.execution.ExecutionContext;
 import richTea.core.node.TreeNode;
 
 public class Call extends AbstractFunction {
@@ -12,23 +12,21 @@ public class Call extends AbstractFunction {
 		Object functionValue = context.getValue("function");
 		
 		if(functionValue instanceof TreeNode)
-		{
-			TreeNode functionNode = (TreeNode) functionValue;
-			TreeNode currentNode = context.getCurrentNode();
+		{			
+			Attribute[] callAttributes = context.getCurrentNode().getAttributes();
+			Attribute[] callAttributeValues = new Attribute[callAttributes.length];
 			
-			Attribute[] originalAttributes = functionNode.getAttributes();
-			
-			for(Attribute contextAttribute : currentNode.getAttributes()) {
-				if(contextAttribute.getName().equals("function")) continue;
+			for(int i = 0; i < callAttributes.length; i++) {
+				Attribute attribute = callAttributes[i];
 				
-				functionNode.setAttribute(contextAttribute);
+				callAttributeValues[i] = new PrimativeAttribute(attribute.getName(), attribute.getValue(context));
 			}
-			
-			context.setLastReturnValue(new ExecutionContext().execute(functionNode));
-			
-			for(Attribute attribute : originalAttributes) {				
-				functionNode.setAttribute(attribute);
-			}
+			                                                              
+			context.pushScope(context.createScope(callAttributeValues));			
+			context.execute((TreeNode) functionValue);
+			context.popScope();
+		} else {
+			throw new IllegalArgumentException("Invalid function specified");
 		}
 	}
 }
