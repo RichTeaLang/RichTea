@@ -8,12 +8,12 @@ import richTea.antlr.tree.AttributeData;
 import richTea.antlr.tree.BranchData;
 import richTea.antlr.tree.NodeData;
 import richTea.core.attribute.Attribute;
-import richTea.core.execution.EmptyFunction;
 import richTea.core.factory.bindings.Binding;
 import richTea.core.factory.bindings.BindingSet;
-import richTea.core.factory.bindings.FunctionBinding;
+import richTea.core.factory.bindings.BootstrapBinding;
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
+import richTea.impl.functional.FunctionCall;
 
 public class RichTeaNodeFactory {
 	
@@ -38,40 +38,37 @@ public class RichTeaNodeFactory {
 		
 		Binding binding = getNodeBinding(nodeData);
 		
-		if(binding != null) {
-			try {
-				Class<? extends TreeNode> nodeClass = getNodeClass(binding);
+		if(binding == null) binding = createFunctionCallBinding(nodeData);
 
-				node = instanciateNodeFromClass(nodeClass);
-				
-				setBindingOnNode(node, binding);
-				
-				buildAttributes(node, nodeData);
-				
-				buildBranches(node, nodeData);
-				
-				if(binding instanceof FunctionBinding) {
-					setFunctionOnNode(node, (FunctionBinding) binding);
-				}else {
-					setFunctionOnNode(node, binding);
-				}
-				
-				node.initialize();
-			}catch(InstantiationException exception) {
-				log.error(String.format("Unable to create instance of %s", binding.getNodeClassName()), exception);
-			}catch(IllegalAccessException exception) {
-				log.error(String.format("Unable to access constructor for %s", binding.getNodeClassName()), exception);
-			}
-		}else {
-			log.error(String.format("No node binding found for %s", nodeData.getName()));
+		try {
+			Class<? extends TreeNode> nodeClass = getNodeClass(binding);
+
+			node = instanciateNodeFromClass(nodeClass);
+			
+			setBindingOnNode(node, binding);
+			
+			buildAttributes(node, nodeData);
+			
+			buildBranches(node, nodeData);
+
+			setFunctionOnNode(node, binding);
+			
+			node.initialize();
+		}catch(InstantiationException exception) {
+			log.error(String.format("Unable to create instance of %s", binding.getNodeClassName()), exception);
+		}catch(IllegalAccessException exception) {
+			log.error(String.format("Unable to access constructor for %s", binding.getNodeClassName()), exception);
 		}
 		
 		return node;
 	}
 	
-	
 	protected Binding getNodeBinding(NodeData nodeData) {
 		return getBindings().getBinding(nodeData.getName());
+	}
+	
+	protected Binding createFunctionCallBinding(NodeData nodeData) {
+		return new BootstrapBinding(nodeData.getName(), TreeNode.class, FunctionCall.class);
 	}
 	
 	protected Class<? extends TreeNode> getNodeClass(Binding binding) {
@@ -161,10 +158,6 @@ public class RichTeaNodeFactory {
 	}
 	
 	protected void setFunctionOnNode(TreeNode node, Binding binding) {
-		node.setFunction(new EmptyFunction());
-	}
-	
-	protected void setFunctionOnNode(TreeNode node, FunctionBinding binding) {
 		node.setFunction(binding.createFunctionImplementation());
 	}
 }

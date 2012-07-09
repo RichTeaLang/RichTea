@@ -9,9 +9,9 @@ public class Call extends AbstractFunction {
 
 	@Override
 	protected void run() {
-		Object functionValue = context.getValue("function");
+		TreeNode functionNode = getFunctionNode();
 		
-		if(functionValue instanceof TreeNode)
+		if(functionNode != null)
 		{			
 			Attribute[] callAttributes = context.getCurrentNode().getAttributes();
 			Attribute[] callAttributeValues = new Attribute[callAttributes.length];
@@ -23,10 +23,16 @@ public class Call extends AbstractFunction {
 			}
 			                                                              
 			context.pushScope(context.createScope(callAttributeValues));			
-			context.execute((TreeNode) functionValue);
+			context.execute(functionNode);
 			context.popScope();
 		} else {
 			throw new IllegalArgumentException("Invalid function specified");
 		}
+	}
+	
+	protected TreeNode getFunctionNode() {
+		Object functionNode = context.getValue("function");
+		
+		return functionNode instanceof TreeNode ? (TreeNode) functionNode : null;
 	}
 }

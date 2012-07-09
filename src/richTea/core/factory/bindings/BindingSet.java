@@ -15,7 +15,7 @@ public class BindingSet extends TreeNode {
 	}
 	
 	public void registerBinding(Binding binding) {
-		bindings.put(binding.getBindingName().toLowerCase(), binding);
+		bindings.put(binding.getName().toLowerCase(), binding);
 	}
 	
 	public Binding getBinding(String bindingName) {
