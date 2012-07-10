@@ -4,46 +4,47 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import richTea.core.attribute.Attribute;
-import richTea.core.node.TreeNode;
+import richTea.core.execution.ExecutionContext;
+import richTea.core.execution.VariableScope;
 
 public class ResolverUtils {
 	
 	private ResolverUtils() {}
 	
-	public static Object resolveValue(Object context, String key) {
+	public static Object resolveValue(ExecutionContext context, Object lookupContext, String key) {
 		Object value = null;
 		
-		if(context instanceof TreeNode) {
-			Attribute attribute = resolveAttribute((TreeNode) context, key);
+		if(lookupContext instanceof VariableScope) {
+			Attribute attribute = resolveAttribute((VariableScope) lookupContext, key);
 			
-			value = attribute != null ? attribute.getValue(null) : null;
+			value = attribute != null ? attribute.getValue(context) : null;
 		}
 		
 		if(value == null) {
-			value = resolveByMethod(context, key);
+			value = resolveByMethod(lookupContext, key);
 			
 			if(value == null) {
-				value = resolveByField(context, key);
+				value = resolveByField(lookupContext, key);
 			}
 		}
 		
 		return value;
 	}
 	
-	public static Attribute resolveAttribute(TreeNode context, String key) {
-		Attribute value = null;
+	public static Attribute resolveAttribute(VariableScope scope, String key) {
+		Attribute attribute = null;
 		
-		while(context != null) {
-			value = context.getAttribute(key);
+		while(scope != null) {
+			attribute = scope.getAttribute(key);
 			
-			if(value == null) {
-				context = context.getParent();
-			}else {
+			if(attribute == null) {
+				scope = scope.getParent();
+			} else {
 				break;
 			}
 		}
 		
-		return value;
+		return attribute;
 	}
 	
 	public static Object resolveByMethod(Object context, String methodName) {
