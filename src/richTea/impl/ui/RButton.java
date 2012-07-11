@@ -17,7 +17,6 @@ public class RButton extends AbstractFunction {
 		button.addMouseListener(new RMouseListener(context));
 		
 		frame.add(button);
-		frame.validate();
 	}
 	
 	protected JFrame getFrame() {

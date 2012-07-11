@@ -2,13 +2,25 @@
 
 	Let("clickableButton" be:Button(text:text mouseClicked { clickFunction() }))
 	
+	Let(
+		"myMenuBar" 
+		be:MenuBar(
+			#content {
+				MenuItem(text:"File");
+				MenuItem(text:"Edit");
+				MenuItem(text:"Help");
+			}
+		)
+	)
+	
 	
 	Frame(
 		title:"Hello world" 
+		JMenuBar:@myMenuBar()
+		layout:@FlowLayout()
+		visible:true
 		
 		content {
-	
-			FlowLayout();
 
 			Button(
 				text:"Click me" 
