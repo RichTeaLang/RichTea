@@ -128,4 +128,14 @@ Bindings(#bindings {
 			Attribute(name:"maximum" defaultValue:1);
 		}
 	)
+	
+	Function(name:"SystemExit" functionClass:"richTea.impl.SystemExit" implicitAttributeName:"code"
+		#attributes {
+			Attribute(name:"code" defaultValue:0-1)
+		}
+	)
+	
+	Function(name:"Frame" functionClass:"richTea.impl.ui.RFrame")
+	Function(name:"Button" functionClass:"richTea.impl.ui.RButton")
+	Function(name:"FlowLayout" functionClass:"richTea.impl.ui.RFlowLayout")
 })
