@@ -1,0 +1,36 @@
+({
+
+	Let("clickableButton" be:Button(text:text mouseClicked { clickFunction() }))
+	
+	
+	Frame(
+		title:"Hello world" 
+		
+		content {
+	
+			FlowLayout();
+
+			Button(
+				text:"Click me" 
+				
+				mouseClicked {
+					Print("I've been clicked");
+				}
+			)
+			
+			clickableButton(text:"Mad" clickFunction:Print("Test madness"))
+			
+			Button(
+				text:"Close" 
+			
+				mouseClicked {
+					SystemExit();
+				}
+			)
+		}
+		
+		windowIconified {
+			Print("Iconified");
+		}
+	)
+})

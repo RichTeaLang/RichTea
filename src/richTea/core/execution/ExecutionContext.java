@@ -18,6 +18,12 @@ public class ExecutionContext extends AbstractResolver {
 	public ExecutionContext() {
 		scopes = new ArrayDeque<VariableScope>();
 	}
+	
+	public ExecutionContext(VariableScope initialScope) {
+		this();
+		
+		pushScope(initialScope);
+	}
 		
 	public Object execute(TreeNode node) {
 		try {
@@ -66,18 +72,18 @@ public class ExecutionContext extends AbstractResolver {
 		return scope;
 	}
 
-	public void pushScope(VariableScope scope) {
-	//	System.out.println("[PUSH] " + scope.getOwner().getFunction().getClass().getSimpleName());
-		
+	public void pushScope(VariableScope scope) {		
 		scopes.push(scope);
 	}
 	
 	public VariableScope popScope() {
-		VariableScope popped = scopes.pop();
-		
-	//	System.out.println("[POP] " + popped.getOwner().getFunction().getClass().getSimpleName());
-		
-		return popped;
+		return scopes.pop();
+	}
+	
+	public void unRollScopeTo(RichTeaFunction function) {
+		while(getCurrentNode().getFunction() != function) {
+			popScope();
+		}
 	}
 	
 	public VariableScope getCurrentScope() {
