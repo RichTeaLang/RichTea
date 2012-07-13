@@ -28,6 +28,8 @@ public class RFrame extends AbstractFunction {
 		}
 		
 		frame.validate();
+		
+		context.setLastReturnValue(frame);
 	}
 	
 	protected String getTitle() {
