@@ -1,41 +1,37 @@
 package richTea.core.attribute;
 
-import java.util.List;
-
 import richTea.core.attribute.modifier.AttributeModifier;
+import richTea.core.attribute.variable.LookupChainRoot;
+import richTea.core.attribute.variable.PropertyLookup;
 import richTea.core.execution.ExecutionContext;
-import richTea.core.resolver.ResolverUtils;
 
-public class VariableAttribute extends PrimativeAttribute {
+public class VariableAttribute extends AbstractAttribute {
 	
-	public VariableAttribute(String name, List<String> lookupPath) {
-		super(name, lookupPath);
+	private Attribute lookupChain;
+	
+	public VariableAttribute(String property) {
+		this(property, new PropertyLookup(new StringAttribute("property", property), new LookupChainRoot("root")));
+	}
+	
+	public VariableAttribute(String name, Attribute lookupChain) {
+		super(name);
+		
+		this.lookupChain = lookupChain;
+	}
+	
+	public Attribute getLookupChain() {
+		return lookupChain;
 	}
 		
 	@Override
 	public Object getValue(ExecutionContext context) {
-		Object value = getAttribute(context).getValue(context);
+		Object value = getLookupChain().getValue(context);
 		
 		return value;
 	}
 	
-	protected Attribute getAttribute(ExecutionContext context) {
-		@SuppressWarnings("unchecked")
-		List<String> lookupPath = (List<String>) super.getValue(context);
-		
-		Attribute attribute = ResolverUtils.resolveAttributeFromScope(context.getCurrentScope(), lookupPath.get(0));
-		
-		for(int i = 1; i < lookupPath.size(); i++) {
-			attribute = ResolverUtils.resolve(attribute.getValue(context), lookupPath.get(i));
-		}
-		
-		return attribute;
-	}
-	
 	@Override
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
-		Attribute attribute = getAttribute(context);
-		
-		return attribute.modify(context, modifier);
+		return getLookupChain().modify(context, modifier);
 	}
 }

@@ -1,8 +1,6 @@
 package richTea.core.factory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.antlr.runtime.tree.Tree;
 
@@ -34,6 +32,9 @@ import richTea.core.attribute.math.DivideAttribute;
 import richTea.core.attribute.math.MinusAttribute;
 import richTea.core.attribute.math.MultiplyAttribute;
 import richTea.core.attribute.math.PlusAttribute;
+import richTea.core.attribute.variable.NativeMethodCall;
+import richTea.core.attribute.variable.PropertyLookup;
+import richTea.core.attribute.variable.LookupChainRoot;
 import richTea.core.node.TreeNode;
 
 public class RichTeaAttributeFactory {
@@ -152,14 +153,37 @@ public class RichTeaAttributeFactory {
 		return new BooleanAttribute(name, Boolean.parseBoolean(value.getText()));
 	}
 	
-	protected Attribute createVariableAttribute(String name, Tree value) {		
-		List<String> lookupPath = new ArrayList<String>();
+	protected Attribute createVariableAttribute(String name, Tree value) {				
+		Attribute lookupChain = new LookupChainRoot(name);
 		
 		for(int i = 0; i < value.getChildCount(); i++) {
-			lookupPath.add(value.getChild(i).getText());
+			Tree lookupElement = value.getChild(i);
+			
+			switch(lookupElement.getType()) {
+				case RichTeaParser.VARIABLE :
+					lookupChain = create(name, lookupElement);
+					break;
+				case RichTeaParser.PROPERTY_LOOKUP :
+					lookupChain = createPropertyLookupAttribute(name, lookupElement, lookupChain);
+					break;
+				case RichTeaParser.NATIVE_METHOD_CALL :
+					lookupChain = createNativeMethodCallAttribute(lookupElement, lookupChain);
+					break;
+			}
 		}
 		
-		return new VariableAttribute(name, lookupPath);
+		return new VariableAttribute(name, lookupChain);
+	}
+	
+	protected Attribute createPropertyLookupAttribute(String name, Tree value, Attribute lookupChain) {
+		return new PropertyLookup(create(name, value.getChild(0)), lookupChain);
+	}
+	
+	protected Attribute createNativeMethodCallAttribute(Tree value, Attribute lookupChain) {
+		String methodName = value.getChild(0).getChild(0).getText();
+		Attribute[] methodArguments = getAttributeOperands("", value.getChild(1));
+	
+		return new NativeMethodCall(methodName, methodArguments, lookupChain);
 	}
 	
 	protected Attribute createArrayAttribute(String name, Tree value) {		
