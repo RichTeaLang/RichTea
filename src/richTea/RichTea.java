@@ -29,6 +29,9 @@ public class RichTea {
 	protected Logger log;
 	
 	public RichTea(String programFile) {
+		// Disable commons logging (Used by the BeanUtils lib)
+		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+		 
 		BasicConfigurator.configure();
 		log = Logger.getLogger(getClass());
 		try {
