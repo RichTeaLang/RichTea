@@ -10,7 +10,11 @@ tokens {	FUNCTION;
 		CHILDREN; ATTRIBUTES;
 		ATTRIBUTE; NAME; VALUE;
 		BRANCHES; BRANCH;
-		ARRAY; LAST_RETURNED_VALUE; VARIABLE; EXECUTABLE_FUNCTION_ATTRIBUTE; TERNARY_OPERATOR; NEGATE;	}
+		ARRAY; VARIABLE;
+		PROPERTY_LOOKUP; NATIVE_METHOD_CALL; 
+		LAST_RETURNED_VALUE; 
+		EXECUTABLE_FUNCTION_ATTRIBUTE; 
+		TERNARY_OPERATOR; NEGATE;	}
 			
 @header {package richTea.antlr;}
 @lexer::header {package richTea.antlr;}
@@ -50,7 +54,7 @@ branch_list
 			-> ^(BRANCHES ^(BRANCH $branches)*)
 	;
 	
-branch 
+branch
 	:	HASH? (name=ID | name=STRING) OPEN_BRACE function* CLOSE_BRACE
 			->	^(NAME $name) ^(CHILDREN function*)
 	;
@@ -121,16 +125,33 @@ last_returned_value
 	:	UNDERSCORE
 			->	LAST_RETURNED_VALUE
 	;
-	
+		
 variable
-	:	(ID (PERIOD ID)* )
-			->	^(VARIABLE ^(ID)+)
+	:	elements+=lookup_chain_root (PERIOD elements+=lookup_chain_element)*
+			->	^(VARIABLE $elements+)
+	;
+
+lookup_chain_root
+	:	ID
+			->	^(PROPERTY_LOOKUP STRING['"' + $ID.text + '"'])
+	|	OPEN_BRACE expression CLOSE_BRACE
+			->	^(PROPERTY_LOOKUP expression)
 	;
 	
-
+lookup_chain_element
+	:	lookup_chain_root
+	|	ID OPEN_PAREN expression_list? CLOSE_PAREN
+			->	^(NATIVE_METHOD_CALL ^(NAME ID) ^(ATTRIBUTES expression_list?))
+	;
+	
 array
-	:	OPEN_BOX (expression (COMMA expression)* )? CLOSE_BOX
-			->	^(ARRAY expression*)
+	:	OPEN_BOX expression_list? CLOSE_BOX
+			->	^(ARRAY expression_list?)
+	;
+
+expression_list
+	:	(expression (COMMA expression)* )
+			->	expression*
 	;
 	
 executable_function_attribute
