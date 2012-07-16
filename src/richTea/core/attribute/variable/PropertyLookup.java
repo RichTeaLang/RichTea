@@ -3,6 +3,7 @@ package richTea.core.attribute.variable;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import richTea.core.attribute.Attribute;
+import richTea.core.attribute.AttributeSet;
 import richTea.core.attribute.modifier.AttributeModifier;
 import richTea.core.execution.ExecutionContext;
 import richTea.core.execution.VariableScope;
@@ -34,6 +35,12 @@ public class PropertyLookup extends LookupChainElement {
 		
 		if(propertyHolder instanceof VariableScope) {
 			Attribute attribute = resolveAttributeFromScope((VariableScope) propertyHolder, propertyName);
+			
+			value = attribute != null ? attribute.getValue(context) : null;
+		}
+		
+		if(value == null && propertyHolder instanceof AttributeSet) {
+			Attribute attribute = ((AttributeSet) propertyHolder).getAttribute(propertyName);
 			
 			value = attribute != null ? attribute.getValue(context) : null;
 		}

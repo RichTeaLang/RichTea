@@ -11,6 +11,6 @@ public class LookupChainRoot extends AbstractAttribute {
 
 	@Override
 	public Object getValue(ExecutionContext context) {
-		return context.getCurrentScope().getParent();
+		return context.getCurrentScope();
 	}
 }

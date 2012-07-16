@@ -41,14 +41,31 @@ public class NativeMethodCall extends LookupChainElement {
 			argumentValues[i] = value;
 			argumentTypes[i] = value.getClass();
 		}
-
-		try {
-			Method method = object.getClass().getMethod(getMethodName(), argumentTypes);
 			
-			return method.invoke(object, argumentValues);
-		} catch (Exception e) {
-			throw new IllegalArgumentException(String.format("Cannot invoke method %s: %s", getMethodName(), e.getMessage()), e);
+		methodFinder:
+		for(Method method : object.getClass().getMethods()) {
+			
+			if(!method.getName().equals(methodName)) continue methodFinder;
+			
+			Class<?>[] params = method.getParameterTypes();
+			
+			if(params.length != arguments.length) continue methodFinder;
+			
+			for(int i = 0; i < params.length; i++) {
+				if(!params[i].isAssignableFrom(argumentTypes[i])) {
+					continue methodFinder;
+				}
+			}
+			
+			try {
+				return method.invoke(object, argumentValues);
+			} catch (Exception e) {
+				throw new IllegalArgumentException(String.format("Cannot invoke method %s: %s", getMethodName(), e.getMessage()), e);
+			}
 		}
+		
+		return null;
+		
 	}
 
 	@Override
