@@ -134,14 +134,14 @@ variable
 lookup_chain_root
 	:	ID
 			->	^(PROPERTY_LOOKUP STRING['"' + $ID.text + '"'])
-	|	OPEN_BRACE expression CLOSE_BRACE
-			->	^(PROPERTY_LOOKUP expression)
 	;
 	
 lookup_chain_element
 	:	lookup_chain_root
 	|	ID OPEN_PAREN expression_list? CLOSE_PAREN
 			->	^(NATIVE_METHOD_CALL ^(NAME ID) ^(ATTRIBUTES expression_list?))
+	|	OPEN_BRACE expression CLOSE_BRACE
+			->	^(PROPERTY_LOOKUP expression)
 	;
 	
 array

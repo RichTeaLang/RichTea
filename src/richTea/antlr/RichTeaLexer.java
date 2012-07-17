@@ -1,4 +1,4 @@
-// $ANTLR 3.4 D:\\Programming\\RichTea\\antlr\\RichTea.g 2012-07-16 00:49:19
+// $ANTLR 3.4 C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g 2012-07-17 14:41:49
 package richTea.antlr;
 
 import org.antlr.runtime.*;
@@ -83,19 +83,19 @@ public class RichTeaLexer extends Lexer {
     public RichTeaLexer(CharStream input, RecognizerSharedState state) {
         super(input,state);
     }
-    public String getGrammarFileName() { return "D:\\Programming\\RichTea\\antlr\\RichTea.g"; }
+    public String getGrammarFileName() { return "C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g"; }
 
     // $ANTLR start "NUMBER"
     public final void mNUMBER() throws RecognitionException {
         try {
             int _type = NUMBER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:165:3: ( INTEGER | FLOAT )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:165:3: ( INTEGER | FLOAT )
             int alt1=2;
             alt1 = dfa1.predict(input);
             switch (alt1) {
                 case 1 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:165:5: INTEGER
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:165:5: INTEGER
                     {
                     mINTEGER(); 
 
@@ -103,7 +103,7 @@ public class RichTeaLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:165:15: FLOAT
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:165:15: FLOAT
                     {
                     mFLOAT(); 
 
@@ -126,12 +126,12 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:169:6: ( '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:169:8: '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:169:6: ( '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:169:8: '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"'
             {
             match('\"'); 
 
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:169:12: ( ESC_SEQ |~ ( '\\\\' | '\"' ) )*
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:169:12: ( ESC_SEQ |~ ( '\\\\' | '\"' ) )*
             loop2:
             do {
                 int alt2=3;
@@ -147,7 +147,7 @@ public class RichTeaLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // D:\\Programming\\RichTea\\antlr\\RichTea.g:169:14: ESC_SEQ
+            	    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:169:14: ESC_SEQ
             	    {
             	    mESC_SEQ(); 
 
@@ -155,7 +155,7 @@ public class RichTeaLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // D:\\Programming\\RichTea\\antlr\\RichTea.g:169:24: ~ ( '\\\\' | '\"' )
+            	    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:169:24: ~ ( '\\\\' | '\"' )
             	    {
             	    if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '!')||(input.LA(1) >= '#' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
             	        input.consume();
@@ -194,7 +194,7 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:173:3: ( 'true' | 'false' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:173:3: ( 'true' | 'false' )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -213,7 +213,7 @@ public class RichTeaLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:173:5: 'true'
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:173:5: 'true'
                     {
                     match("true"); 
 
@@ -222,7 +222,7 @@ public class RichTeaLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:174:5: 'false'
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:174:5: 'false'
                     {
                     match("false"); 
 
@@ -246,10 +246,10 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:177:6: ( ( UNDERSCORE )? LETTER ( LETTER | INTEGER | UNDERSCORE )* )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:177:8: ( UNDERSCORE )? LETTER ( LETTER | INTEGER | UNDERSCORE )*
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:177:6: ( ( UNDERSCORE )? LETTER ( LETTER | INTEGER | UNDERSCORE )* )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:177:8: ( UNDERSCORE )? LETTER ( LETTER | INTEGER | UNDERSCORE )*
             {
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:177:8: ( UNDERSCORE )?
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:177:8: ( UNDERSCORE )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -258,7 +258,7 @@ public class RichTeaLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:
                     {
                     if ( input.LA(1)=='_' ) {
                         input.consume();
@@ -279,7 +279,7 @@ public class RichTeaLexer extends Lexer {
             mLETTER(); 
 
 
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:177:27: ( LETTER | INTEGER | UNDERSCORE )*
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:177:27: ( LETTER | INTEGER | UNDERSCORE )*
             loop5:
             do {
                 int alt5=4;
@@ -364,7 +364,7 @@ public class RichTeaLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // D:\\Programming\\RichTea\\antlr\\RichTea.g:177:28: LETTER
+            	    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:177:28: LETTER
             	    {
             	    mLETTER(); 
 
@@ -372,7 +372,7 @@ public class RichTeaLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // D:\\Programming\\RichTea\\antlr\\RichTea.g:177:37: INTEGER
+            	    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:177:37: INTEGER
             	    {
             	    mINTEGER(); 
 
@@ -380,7 +380,7 @@ public class RichTeaLexer extends Lexer {
             	    }
             	    break;
             	case 3 :
-            	    // D:\\Programming\\RichTea\\antlr\\RichTea.g:177:47: UNDERSCORE
+            	    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:177:47: UNDERSCORE
             	    {
             	    mUNDERSCORE(); 
 
@@ -410,7 +410,7 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:181:2: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' | '/*' ( options {greedy=false; } : . )* '*/' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:181:2: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' | '/*' ( options {greedy=false; } : . )* '*/' )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -440,13 +440,13 @@ public class RichTeaLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:181:4: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:181:4: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
                     {
                     match("//"); 
 
 
 
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:181:9: (~ ( '\\n' | '\\r' ) )*
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:181:9: (~ ( '\\n' | '\\r' ) )*
                     loop6:
                     do {
                         int alt6=2;
@@ -459,7 +459,7 @@ public class RichTeaLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // D:\\Programming\\RichTea\\antlr\\RichTea.g:
+                    	    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:
                     	    {
                     	    if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t')||(input.LA(1) >= '\u000B' && input.LA(1) <= '\f')||(input.LA(1) >= '\u000E' && input.LA(1) <= '\uFFFF') ) {
                     	        input.consume();
@@ -480,7 +480,7 @@ public class RichTeaLexer extends Lexer {
                     } while (true);
 
 
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:181:23: ( '\\r' )?
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:181:23: ( '\\r' )?
                     int alt7=2;
                     int LA7_0 = input.LA(1);
 
@@ -489,7 +489,7 @@ public class RichTeaLexer extends Lexer {
                     }
                     switch (alt7) {
                         case 1 :
-                            // D:\\Programming\\RichTea\\antlr\\RichTea.g:181:23: '\\r'
+                            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:181:23: '\\r'
                             {
                             match('\r'); 
 
@@ -506,13 +506,13 @@ public class RichTeaLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:182:6: '/*' ( options {greedy=false; } : . )* '*/'
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:182:6: '/*' ( options {greedy=false; } : . )* '*/'
                     {
                     match("/*"); 
 
 
 
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:182:11: ( options {greedy=false; } : . )*
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:182:11: ( options {greedy=false; } : . )*
                     loop8:
                     do {
                         int alt8=2;
@@ -537,7 +537,7 @@ public class RichTeaLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // D:\\Programming\\RichTea\\antlr\\RichTea.g:182:39: .
+                    	    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:182:39: .
                     	    {
                     	    matchAny(); 
 
@@ -574,10 +574,10 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = WHITESPACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:186:2: ( ( '\\r' | '\\n' | '\\r\\n' | ' ' | '\\t' ) )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:186:4: ( '\\r' | '\\n' | '\\r\\n' | ' ' | '\\t' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:186:2: ( ( '\\r' | '\\n' | '\\r\\n' | ' ' | '\\t' ) )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:186:4: ( '\\r' | '\\n' | '\\r\\n' | ' ' | '\\t' )
             {
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:186:4: ( '\\r' | '\\n' | '\\r\\n' | ' ' | '\\t' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:186:4: ( '\\r' | '\\n' | '\\r\\n' | ' ' | '\\t' )
             int alt10=5;
             switch ( input.LA(1) ) {
             case '\r':
@@ -617,21 +617,21 @@ public class RichTeaLexer extends Lexer {
 
             switch (alt10) {
                 case 1 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:186:5: '\\r'
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:186:5: '\\r'
                     {
                     match('\r'); 
 
                     }
                     break;
                 case 2 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:186:12: '\\n'
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:186:12: '\\n'
                     {
                     match('\n'); 
 
                     }
                     break;
                 case 3 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:186:19: '\\r\\n'
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:186:19: '\\r\\n'
                     {
                     match("\r\n"); 
 
@@ -640,14 +640,14 @@ public class RichTeaLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:186:28: ' '
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:186:28: ' '
                     {
                     match(' '); 
 
                     }
                     break;
                 case 5 :
-                    // D:\\Programming\\RichTea\\antlr\\RichTea.g:186:34: '\\t'
+                    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:186:34: '\\t'
                     {
                     match('\t'); 
 
@@ -675,8 +675,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = COMMA;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:189:7: ( ',' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:189:9: ','
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:189:7: ( ',' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:189:9: ','
             {
             match(','); 
 
@@ -696,8 +696,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = PERIOD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:190:8: ( '.' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:190:10: '.'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:190:8: ( '.' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:190:10: '.'
             {
             match('.'); 
 
@@ -717,8 +717,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = HASH;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:191:6: ( '#' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:191:8: '#'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:191:6: ( '#' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:191:8: '#'
             {
             match('#'); 
 
@@ -738,8 +738,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = AT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:192:4: ( '@' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:192:6: '@'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:192:4: ( '@' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:192:6: '@'
             {
             match('@'); 
 
@@ -759,8 +759,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = UNDERSCORE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:193:12: ( '_' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:193:14: '_'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:193:12: ( '_' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:193:14: '_'
             {
             match('_'); 
 
@@ -780,8 +780,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = PLUS_EQUALS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:195:13: ( PLUS ASSIGN )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:195:15: PLUS ASSIGN
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:195:13: ( PLUS ASSIGN )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:195:15: PLUS ASSIGN
             {
             mPLUS(); 
 
@@ -805,8 +805,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = MULTIPLY_EQUALS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:196:17: ( MULTIPLY ASSIGN )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:196:19: MULTIPLY ASSIGN
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:196:17: ( MULTIPLY ASSIGN )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:196:19: MULTIPLY ASSIGN
             {
             mMULTIPLY(); 
 
@@ -830,8 +830,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = MINUS_EQUALS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:197:14: ( MINUS ASSIGN )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:197:16: MINUS ASSIGN
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:197:14: ( MINUS ASSIGN )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:197:16: MINUS ASSIGN
             {
             mMINUS(); 
 
@@ -855,8 +855,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = DIVIDE_EQUALS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:198:15: ( DIVIDE ASSIGN )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:198:17: DIVIDE ASSIGN
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:198:15: ( DIVIDE ASSIGN )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:198:17: DIVIDE ASSIGN
             {
             mDIVIDE(); 
 
@@ -880,8 +880,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = PLUS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:200:6: ( '+' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:200:8: '+'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:200:6: ( '+' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:200:8: '+'
             {
             match('+'); 
 
@@ -901,8 +901,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = MINUS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:201:7: ( '-' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:201:9: '-'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:201:7: ( '-' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:201:9: '-'
             {
             match('-'); 
 
@@ -922,8 +922,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = MULTIPLY;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:202:9: ( '*' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:202:11: '*'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:202:9: ( '*' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:202:11: '*'
             {
             match('*'); 
 
@@ -943,8 +943,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = DIVIDE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:203:8: ( '/' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:203:10: '/'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:203:8: ( '/' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:203:10: '/'
             {
             match('/'); 
 
@@ -964,8 +964,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = MODULUS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:204:9: ( '%' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:204:11: '%'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:204:9: ( '%' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:204:11: '%'
             {
             match('%'); 
 
@@ -985,8 +985,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = POWER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:205:7: ( '^' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:205:9: '^'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:205:7: ( '^' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:205:9: '^'
             {
             match('^'); 
 
@@ -1006,8 +1006,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = OR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:207:4: ( '||' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:207:6: '||'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:207:4: ( '||' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:207:6: '||'
             {
             match("||"); 
 
@@ -1029,8 +1029,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = AND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:208:5: ( '&&' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:208:7: '&&'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:208:5: ( '&&' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:208:7: '&&'
             {
             match("&&"); 
 
@@ -1052,8 +1052,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = GT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:209:4: ( '>' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:209:6: '>'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:209:4: ( '>' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:209:6: '>'
             {
             match('>'); 
 
@@ -1073,8 +1073,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = GTEQ;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:210:6: ( '>=' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:210:8: '>='
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:210:6: ( '>=' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:210:8: '>='
             {
             match(">="); 
 
@@ -1096,8 +1096,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = LT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:211:4: ( '<' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:211:6: '<'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:211:4: ( '<' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:211:6: '<'
             {
             match('<'); 
 
@@ -1117,8 +1117,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = LTEQ;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:212:6: ( '<=' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:212:8: '<='
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:212:6: ( '<=' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:212:8: '<='
             {
             match("<="); 
 
@@ -1140,8 +1140,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = EQ;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:213:4: ( '==' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:213:6: '=='
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:213:4: ( '==' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:213:6: '=='
             {
             match("=="); 
 
@@ -1163,8 +1163,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = NEQ;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:214:5: ( '!=' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:214:7: '!='
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:214:5: ( '!=' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:214:7: '!='
             {
             match("!="); 
 
@@ -1186,8 +1186,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = NOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:215:5: ( '!' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:215:7: '!'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:215:5: ( '!' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:215:7: '!'
             {
             match('!'); 
 
@@ -1207,8 +1207,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = ASSIGN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:217:9: ( '=' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:217:11: '='
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:217:9: ( '=' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:217:11: '='
             {
             match('='); 
 
@@ -1228,8 +1228,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = COLON;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:218:8: ( ':' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:218:10: ':'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:218:8: ( ':' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:218:10: ':'
             {
             match(':'); 
 
@@ -1249,8 +1249,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = SEMI_COLON;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:219:12: ( ';' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:219:15: ';'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:219:12: ( ';' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:219:15: ';'
             {
             match(';'); 
 
@@ -1270,8 +1270,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = QUESTION_MARK;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:220:15: ( '?' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:220:17: '?'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:220:15: ( '?' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:220:17: '?'
             {
             match('?'); 
 
@@ -1291,8 +1291,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = OPEN_PAREN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:222:13: ( '(' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:222:15: '('
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:222:13: ( '(' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:222:15: '('
             {
             match('('); 
 
@@ -1312,8 +1312,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = CLOSE_PAREN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:223:14: ( ')' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:223:16: ')'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:223:14: ( ')' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:223:16: ')'
             {
             match(')'); 
 
@@ -1333,8 +1333,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = OPEN_BRACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:225:12: ( '{' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:225:14: '{'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:225:12: ( '{' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:225:14: '{'
             {
             match('{'); 
 
@@ -1354,8 +1354,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = CLOSE_BRACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:226:13: ( '}' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:226:15: '}'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:226:13: ( '}' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:226:15: '}'
             {
             match('}'); 
 
@@ -1375,8 +1375,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = OPEN_BOX;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:228:10: ( '[' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:228:12: '['
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:228:10: ( '[' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:228:12: '['
             {
             match('['); 
 
@@ -1396,8 +1396,8 @@ public class RichTeaLexer extends Lexer {
         try {
             int _type = CLOSE_BOX;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:229:11: ( ']' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:229:13: ']'
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:229:11: ( ']' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:229:13: ']'
             {
             match(']'); 
 
@@ -1415,10 +1415,10 @@ public class RichTeaLexer extends Lexer {
     // $ANTLR start "INTEGER"
     public final void mINTEGER() throws RecognitionException {
         try {
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:236:2: ( ( '0' .. '9' )+ )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:236:4: ( '0' .. '9' )+
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:236:2: ( ( '0' .. '9' )+ )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:236:4: ( '0' .. '9' )+
             {
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:236:4: ( '0' .. '9' )+
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:236:4: ( '0' .. '9' )+
             int cnt11=0;
             loop11:
             do {
@@ -1432,7 +1432,7 @@ public class RichTeaLexer extends Lexer {
 
                 switch (alt11) {
             	case 1 :
-            	    // D:\\Programming\\RichTea\\antlr\\RichTea.g:
+            	    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:
             	    {
             	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
             	        input.consume();
@@ -1470,10 +1470,10 @@ public class RichTeaLexer extends Lexer {
     // $ANTLR start "FLOAT"
     public final void mFLOAT() throws RecognitionException {
         try {
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:241:2: ( ( INTEGER )+ '.' ( INTEGER )* )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:241:4: ( INTEGER )+ '.' ( INTEGER )*
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:241:2: ( ( INTEGER )+ '.' ( INTEGER )* )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:241:4: ( INTEGER )+ '.' ( INTEGER )*
             {
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:241:4: ( INTEGER )+
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:241:4: ( INTEGER )+
             int cnt12=0;
             loop12:
             do {
@@ -1487,7 +1487,7 @@ public class RichTeaLexer extends Lexer {
 
                 switch (alt12) {
             	case 1 :
-            	    // D:\\Programming\\RichTea\\antlr\\RichTea.g:241:4: INTEGER
+            	    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:241:4: INTEGER
             	    {
             	    mINTEGER(); 
 
@@ -1507,7 +1507,7 @@ public class RichTeaLexer extends Lexer {
 
             match('.'); 
 
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:241:17: ( INTEGER )*
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:241:17: ( INTEGER )*
             loop13:
             do {
                 int alt13=2;
@@ -1520,7 +1520,7 @@ public class RichTeaLexer extends Lexer {
 
                 switch (alt13) {
             	case 1 :
-            	    // D:\\Programming\\RichTea\\antlr\\RichTea.g:241:17: INTEGER
+            	    // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:241:17: INTEGER
             	    {
             	    mINTEGER(); 
 
@@ -1547,8 +1547,8 @@ public class RichTeaLexer extends Lexer {
     // $ANTLR start "LETTER"
     public final void mLETTER() throws RecognitionException {
         try {
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:246:2: ( 'a' .. 'z' | 'A' .. 'Z' )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:246:2: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:
             {
             if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
                 input.consume();
@@ -1573,8 +1573,8 @@ public class RichTeaLexer extends Lexer {
     // $ANTLR start "ESC_SEQ"
     public final void mESC_SEQ() throws RecognitionException {
         try {
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:252:2: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) )
-            // D:\\Programming\\RichTea\\antlr\\RichTea.g:252:4: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:252:2: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) )
+            // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:252:4: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
             {
             match('\\'); 
 
@@ -1599,7 +1599,7 @@ public class RichTeaLexer extends Lexer {
     // $ANTLR end "ESC_SEQ"
 
     public void mTokens() throws RecognitionException {
-        // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:8: ( NUMBER | STRING | BOOLEAN | ID | COMMENT | WHITESPACE | COMMA | PERIOD | HASH | AT | UNDERSCORE | PLUS_EQUALS | MULTIPLY_EQUALS | MINUS_EQUALS | DIVIDE_EQUALS | PLUS | MINUS | MULTIPLY | DIVIDE | MODULUS | POWER | OR | AND | GT | GTEQ | LT | LTEQ | EQ | NEQ | NOT | ASSIGN | COLON | SEMI_COLON | QUESTION_MARK | OPEN_PAREN | CLOSE_PAREN | OPEN_BRACE | CLOSE_BRACE | OPEN_BOX | CLOSE_BOX )
+        // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:8: ( NUMBER | STRING | BOOLEAN | ID | COMMENT | WHITESPACE | COMMA | PERIOD | HASH | AT | UNDERSCORE | PLUS_EQUALS | MULTIPLY_EQUALS | MINUS_EQUALS | DIVIDE_EQUALS | PLUS | MINUS | MULTIPLY | DIVIDE | MODULUS | POWER | OR | AND | GT | GTEQ | LT | LTEQ | EQ | NEQ | NOT | ASSIGN | COLON | SEMI_COLON | QUESTION_MARK | OPEN_PAREN | CLOSE_PAREN | OPEN_BRACE | CLOSE_BRACE | OPEN_BOX | CLOSE_BOX )
         int alt14=40;
         switch ( input.LA(1) ) {
         case '0':
@@ -1967,7 +1967,7 @@ public class RichTeaLexer extends Lexer {
 
         switch (alt14) {
             case 1 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:10: NUMBER
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:10: NUMBER
                 {
                 mNUMBER(); 
 
@@ -1975,7 +1975,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 2 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:17: STRING
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:17: STRING
                 {
                 mSTRING(); 
 
@@ -1983,7 +1983,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 3 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:24: BOOLEAN
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:24: BOOLEAN
                 {
                 mBOOLEAN(); 
 
@@ -1991,7 +1991,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 4 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:32: ID
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:32: ID
                 {
                 mID(); 
 
@@ -1999,7 +1999,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 5 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:35: COMMENT
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:35: COMMENT
                 {
                 mCOMMENT(); 
 
@@ -2007,7 +2007,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 6 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:43: WHITESPACE
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:43: WHITESPACE
                 {
                 mWHITESPACE(); 
 
@@ -2015,7 +2015,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 7 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:54: COMMA
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:54: COMMA
                 {
                 mCOMMA(); 
 
@@ -2023,7 +2023,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 8 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:60: PERIOD
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:60: PERIOD
                 {
                 mPERIOD(); 
 
@@ -2031,7 +2031,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 9 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:67: HASH
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:67: HASH
                 {
                 mHASH(); 
 
@@ -2039,7 +2039,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 10 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:72: AT
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:72: AT
                 {
                 mAT(); 
 
@@ -2047,7 +2047,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 11 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:75: UNDERSCORE
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:75: UNDERSCORE
                 {
                 mUNDERSCORE(); 
 
@@ -2055,7 +2055,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 12 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:86: PLUS_EQUALS
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:86: PLUS_EQUALS
                 {
                 mPLUS_EQUALS(); 
 
@@ -2063,7 +2063,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 13 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:98: MULTIPLY_EQUALS
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:98: MULTIPLY_EQUALS
                 {
                 mMULTIPLY_EQUALS(); 
 
@@ -2071,7 +2071,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 14 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:114: MINUS_EQUALS
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:114: MINUS_EQUALS
                 {
                 mMINUS_EQUALS(); 
 
@@ -2079,7 +2079,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 15 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:127: DIVIDE_EQUALS
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:127: DIVIDE_EQUALS
                 {
                 mDIVIDE_EQUALS(); 
 
@@ -2087,7 +2087,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 16 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:141: PLUS
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:141: PLUS
                 {
                 mPLUS(); 
 
@@ -2095,7 +2095,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 17 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:146: MINUS
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:146: MINUS
                 {
                 mMINUS(); 
 
@@ -2103,7 +2103,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 18 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:152: MULTIPLY
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:152: MULTIPLY
                 {
                 mMULTIPLY(); 
 
@@ -2111,7 +2111,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 19 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:161: DIVIDE
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:161: DIVIDE
                 {
                 mDIVIDE(); 
 
@@ -2119,7 +2119,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 20 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:168: MODULUS
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:168: MODULUS
                 {
                 mMODULUS(); 
 
@@ -2127,7 +2127,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 21 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:176: POWER
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:176: POWER
                 {
                 mPOWER(); 
 
@@ -2135,7 +2135,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 22 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:182: OR
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:182: OR
                 {
                 mOR(); 
 
@@ -2143,7 +2143,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 23 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:185: AND
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:185: AND
                 {
                 mAND(); 
 
@@ -2151,7 +2151,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 24 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:189: GT
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:189: GT
                 {
                 mGT(); 
 
@@ -2159,7 +2159,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 25 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:192: GTEQ
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:192: GTEQ
                 {
                 mGTEQ(); 
 
@@ -2167,7 +2167,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 26 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:197: LT
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:197: LT
                 {
                 mLT(); 
 
@@ -2175,7 +2175,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 27 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:200: LTEQ
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:200: LTEQ
                 {
                 mLTEQ(); 
 
@@ -2183,7 +2183,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 28 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:205: EQ
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:205: EQ
                 {
                 mEQ(); 
 
@@ -2191,7 +2191,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 29 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:208: NEQ
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:208: NEQ
                 {
                 mNEQ(); 
 
@@ -2199,7 +2199,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 30 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:212: NOT
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:212: NOT
                 {
                 mNOT(); 
 
@@ -2207,7 +2207,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 31 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:216: ASSIGN
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:216: ASSIGN
                 {
                 mASSIGN(); 
 
@@ -2215,7 +2215,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 32 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:223: COLON
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:223: COLON
                 {
                 mCOLON(); 
 
@@ -2223,7 +2223,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 33 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:229: SEMI_COLON
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:229: SEMI_COLON
                 {
                 mSEMI_COLON(); 
 
@@ -2231,7 +2231,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 34 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:240: QUESTION_MARK
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:240: QUESTION_MARK
                 {
                 mQUESTION_MARK(); 
 
@@ -2239,7 +2239,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 35 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:254: OPEN_PAREN
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:254: OPEN_PAREN
                 {
                 mOPEN_PAREN(); 
 
@@ -2247,7 +2247,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 36 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:265: CLOSE_PAREN
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:265: CLOSE_PAREN
                 {
                 mCLOSE_PAREN(); 
 
@@ -2255,7 +2255,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 37 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:277: OPEN_BRACE
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:277: OPEN_BRACE
                 {
                 mOPEN_BRACE(); 
 
@@ -2263,7 +2263,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 38 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:288: CLOSE_BRACE
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:288: CLOSE_BRACE
                 {
                 mCLOSE_BRACE(); 
 
@@ -2271,7 +2271,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 39 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:300: OPEN_BOX
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:300: OPEN_BOX
                 {
                 mOPEN_BOX(); 
 
@@ -2279,7 +2279,7 @@ public class RichTeaLexer extends Lexer {
                 }
                 break;
             case 40 :
-                // D:\\Programming\\RichTea\\antlr\\RichTea.g:1:309: CLOSE_BOX
+                // C:\\Users\\richard.walton\\Documents\\Other\\RichTea\\antlr\\RichTea.g:1:309: CLOSE_BOX
                 {
                 mCLOSE_BOX(); 
 
