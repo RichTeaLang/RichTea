@@ -1,7 +1,5 @@
 package richTea.core.attribute.variable;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.AttributeSet;
 import richTea.core.attribute.modifier.AttributeModifier;
@@ -28,70 +26,28 @@ public class PropertyLookup extends LookupChainElement {
 	
 	@Override
 	public Object getValue(ExecutionContext context) {
-		Object value = null;
-		
-		String propertyName = getPropertyName(context);
-		Object propertyHolder = getPropertyHolder(context);
-		
-		if(propertyHolder instanceof VariableScope) {
-			Attribute attribute = resolveAttributeFromScope((VariableScope) propertyHolder, propertyName);
-			
-			value = attribute != null ? attribute.getValue(context) : null;
-		}
-		
-		if(value == null && propertyHolder instanceof AttributeSet) {
-			Attribute attribute = ((AttributeSet) propertyHolder).getAttribute(propertyName);
-			
-			value = attribute != null ? attribute.getValue(context) : null;
-		}
-		
-		if(value == null) {
-			try {
-				value = PropertyUtils.getSimpleProperty(propertyHolder, propertyName);
-			} catch (Exception e) {
-				throw new IllegalArgumentException("Unable to get value: " + e.getMessage(), e);
-			}
-		}
-		
-		return value;
+		return resolveAttribute(context).getValue(context);		
 	}
 	
 	@Override
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
-		String propertyName = getPropertyName(context);
-		Object propertyHolder = getPropertyHolder(context);
-		
-		if(propertyHolder instanceof VariableScope) {
-			Attribute attribute = resolveAttributeFromScope((VariableScope) propertyHolder, propertyName);
-			
-			if(attribute != null) {
-				return attribute.modify(context, modifier);
-			}
-		}
-		
-		Object value = modifier.modify(getValue(context));
-		
-		try {
-			PropertyUtils.setSimpleProperty(propertyHolder, propertyName, value);
-			
-			return value;
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Unable to get value", e);
-		}
+		return resolveAttribute(context).modify(context, modifier);
 	}
 	
-	public Attribute resolveAttributeFromScope(VariableScope scope, String key) {
+	private Attribute resolveAttribute(ExecutionContext context) {
 		Attribute attribute = null;
 		
-		while(scope != null) {
-			attribute = scope.getAttribute(key);
+		String attributeName = getPropertyName(context);
+		Object attributeSource = getPropertyHolder(context);
+		
+		if(attributeSource instanceof AttributeSet) {
+			AttributeSet attributeSet = (AttributeSet) attributeSource;
 			
-			if(attribute == null) {
-				scope = scope.getParent();
-			} else {
-				break;
-			}
+			if(attributeSet instanceof VariableScope) attribute = ((VariableScope) attributeSet).resolveAttribute(attributeName);
+			else attribute =  attributeSet.getAttribute(attributeName);
 		}
+		
+		if(attribute == null) attribute = new BeanLookup(attributeName, attributeSource);
 		
 		return attribute;
 	}

@@ -47,6 +47,23 @@ public class VariableScope extends AttributeSet {
 		return attribute;
 	}
 	
+	public Attribute resolveAttribute(String attributeName) {
+		VariableScope scope = this;
+		Attribute attribute = null;
+		
+		while(scope != null) {
+			attribute = scope.getAttribute(attributeName);
+			
+			if(attribute == null) {
+				scope = scope.getParent();
+			} else {
+				break;
+			}
+		}
+		
+		return attribute;
+	}
+	
 	@Override
 	public boolean hasAttribute(String attributeName) {
 		return super.hasAttribute(attributeName) || getOwner().hasAttribute(attributeName);
