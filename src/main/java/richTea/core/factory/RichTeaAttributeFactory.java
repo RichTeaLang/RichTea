@@ -30,6 +30,7 @@ import richTea.core.attribute.function.ExecutableFunctionAttribute;
 import richTea.core.attribute.function.FunctionAttribute;
 import richTea.core.attribute.math.DivideAttribute;
 import richTea.core.attribute.math.MinusAttribute;
+import richTea.core.attribute.math.ModulusAttribute;
 import richTea.core.attribute.math.MultiplyAttribute;
 import richTea.core.attribute.math.PlusAttribute;
 import richTea.core.attribute.variable.NativeMethodCall;
@@ -97,6 +98,9 @@ public class RichTeaAttributeFactory {
 				break;
 			case RichTeaParser.DIVIDE :
 				attribute = createDivideAttribute(name, value);
+				break;
+			case RichTeaParser.MODULUS :
+				attribute = createModulusAttribute(name, value);
 				break;
 			case RichTeaParser.EQ :
 				attribute = createEqualsAttribute(name, value);
@@ -226,6 +230,12 @@ public class RichTeaAttributeFactory {
 		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new DivideAttribute(name, operands[0], operands[1]);
+	}
+	
+	protected ExpressionAttribute createModulusAttribute(String name, Tree value) {
+		Attribute[] operands = getAttributeOperands(name, value);
+		
+		return new ModulusAttribute(name, operands[0], operands[1]);
 	}
 	
 	protected Attribute createAssignmentAttribute(String name, ExpressionAttribute value) {

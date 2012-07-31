@@ -8,7 +8,7 @@ import org.junit.Test;
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 
-public class BranchTests extends RichTeaTestBase {
+public class TestBranches extends RichTeaTestBase {
 	
 	@Test
 	public void testNoBranch() throws RecognitionException {
@@ -17,12 +17,12 @@ public class BranchTests extends RichTeaTestBase {
 		assertTrue(node.getBranches().length == 0);
 	}
 	
-	@Test
-	public void testImplicitBranch() throws RecognitionException {
-		TreeNode node = buildNode("(#{})");
-		
-		assertTrue(node.getBranches().length == 1);
-	}
+//	@Test
+//	public void testImplicitBranch() throws RecognitionException {
+//		TreeNode node = buildNode("(#{})");
+//		
+//		assertTrue(node.getBranches().length == 1);
+//	}
 	
 	@Test
 	public void testExplicitBranch() throws RecognitionException {
@@ -31,12 +31,12 @@ public class BranchTests extends RichTeaTestBase {
 		assertTrue(node.getBranches().length == 1);
 	}
 	
-	@Test
-	public void testMixedBranches() throws RecognitionException {
-		TreeNode node = buildNode("( #{} #branch {} )");
-		
-		assertTrue(node.getBranches().length == 2);
-	}
+//	@Test
+//	public void testMixedBranches() throws RecognitionException {
+//		TreeNode node = buildNode("( #{} #branch {} )");
+//		
+//		assertTrue(node.getBranches().length == 2);
+//	}
 	
 	@Test
 	public void testDuplicateBranches() throws RecognitionException {

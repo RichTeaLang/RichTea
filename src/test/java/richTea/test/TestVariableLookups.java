@@ -9,7 +9,7 @@ import richTea.core.attribute.Attribute;
 import richTea.core.execution.ExecutionContext;
 import richTea.core.execution.VariableScope;
 
-public class VariableLookupTests extends RichTeaTestBase {
+public class TestVariableLookups extends RichTeaTestBase {
 	
 	@Test
 	public void testSimpleLookup() throws RecognitionException {
