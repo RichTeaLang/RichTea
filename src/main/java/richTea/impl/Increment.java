@@ -10,11 +10,9 @@ public class Increment extends AbstractFunction {
 	protected void run() {
 		Attribute attribute = getAttribute();
 		
-		if(attribute != null) {
-			Object newValue = attribute.modify(context, new IncrementModifier(getBy().doubleValue()));
+		Object newValue = attribute.modify(context, new IncrementModifier(getBy().doubleValue()));
 			
-			context.setLastReturnValue(newValue);
-		}
+		context.setLastReturnValue(newValue);
 	}
 	
 	protected Attribute getAttribute() {
