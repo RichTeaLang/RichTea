@@ -13,37 +13,36 @@ public class RWindowListener extends EventHandler implements WindowListener {
 	
 	@Override
 	public void windowActivated(WindowEvent e) {
-		getExeutionContext().executeBranch("windowActivated");
+		dispatchEvent("windowActivated", e);
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		getExeutionContext().executeBranch("windowClosed");
+		dispatchEvent("windowClosed", e);
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		getExeutionContext().executeBranch("windowClosing");
+		dispatchEvent("windowClosing", e);
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		getExeutionContext().executeBranch("windowDeactivated");
+		dispatchEvent("windowDeactivated", e);
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		getExeutionContext().executeBranch("windowDeiconified");
+		dispatchEvent("windowDeiconified", e);
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		getExeutionContext().executeBranch("windowIconified");
+		dispatchEvent("windowIconified", e);
 	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		getExeutionContext().executeBranch("windowOpened");
+		dispatchEvent("windowOpened", e);
 	}
-
 }

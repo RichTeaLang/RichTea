@@ -36,6 +36,16 @@ public class ExecutionContext extends AbstractResolver {
 		return getLastReturnValue();
 	}
 	
+	public boolean executeBranch(String branchName, Attribute... attributes) {
+		pushScope(createScope(attributes));
+		
+		boolean executed = executeBranch(branchName);
+		
+		popScope();
+		
+		return executed;
+	}
+	
 	public boolean executeBranch(String branchName) {
 		boolean branchExecuted = false;
 		

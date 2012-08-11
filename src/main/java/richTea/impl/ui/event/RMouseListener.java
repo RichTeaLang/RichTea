@@ -13,26 +13,26 @@ public class RMouseListener extends EventHandler implements MouseListener {
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		getExeutionContext().executeBranch("mouseReleased");
+		dispatchEvent("mouseReleased", e);
 	}
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		getExeutionContext().executeBranch("mousePressed");
+		dispatchEvent("mousePressed", e);
 	}
 	
 	@Override
 	public void mouseExited(MouseEvent e) {
-		getExeutionContext().executeBranch("mouseExit");
+		dispatchEvent("mouseExited", e);
 	}
 	
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		getExeutionContext().executeBranch("mouseEntered");
+		dispatchEvent("mouseEntered", e);
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		getExeutionContext().executeBranch("mouseClicked");
+		dispatchEvent("mouseClicked", e);
 	}
 }
