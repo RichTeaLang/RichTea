@@ -1,5 +1,6 @@
 package richTea.core.attribute.variable;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import richTea.core.attribute.AbstractAttribute;
@@ -34,7 +35,7 @@ public class BeanLookup extends AbstractAttribute {
 		Object value = modifier.modify(modifier);
 		
 		try {
-			PropertyUtils.setProperty(getBean(), getName(), value);
+			BeanUtils.setProperty(getBean(), getName(), value);
 			
 			return value;
 		} catch (Exception e) {
