@@ -11,7 +11,12 @@ public class Let extends AbstractFunction {
 		VariableScope scope = context.getCurrentScope().getParent();
 		
 		if(scope != null) {
-			scope.setAttribute(new PrimativeAttribute(getVariableName(), getVariableValue()));
+			String variableName = getVariableName();
+			Object value = getVariableValue();
+			
+			scope.setAttribute(new PrimativeAttribute(variableName, value));
+			
+			context.setLastReturnValue(value);
 		} else {
 			throw new IllegalArgumentException("No scope to create variable");
 		}
