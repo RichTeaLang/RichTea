@@ -146,13 +146,24 @@ Bindings(#bindings {
 		}
 	)
 	
-	Function(name:"FlowLayout" functionClass:"richTea.impl.ui.RFlowLayout")
+	Function(name:"RadioButton" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JRadioButton")
+		}
+	)
+	
+	Function(name:"FlowLayout" functionClass:"richTea.impl.CreateBean"
+		#attributes {
+			Attribute(name:"class" defaultValue:"java.awt.FlowLayout")
+		}
+	)
 	
 	Function(name:"MenuBar" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitBranchName:"content"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JMenuBar")
 		}
 	)
+	
 	Function(name:"MenuItem" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text" implicitBranchName:"content"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JMenu")

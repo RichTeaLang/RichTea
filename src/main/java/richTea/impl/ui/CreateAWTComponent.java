@@ -24,7 +24,7 @@ public class CreateAWTComponent extends CreateBean {
 		component.addFocusListener(new RFocusListener(context));
 		component.addMouseMotionListener(new RMouseMotionListener(context));
 		
-		super.mapBeanAttributes(bean, attributes);
+		super.mapBeanAttributes(component, attributes);
 	}
 	
 	protected void addContent(Container root) {

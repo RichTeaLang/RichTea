@@ -3,6 +3,7 @@ package richTea.impl.ui.event;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+import richTea.core.execution.EventHandler;
 import richTea.core.execution.ExecutionContext;
 
 public class RFocusListener extends EventHandler implements FocusListener {
