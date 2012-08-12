@@ -19,7 +19,6 @@ Bindings(#bindings {
 			Branch(name:"mapFunction");
 		}
 	)
-
 	
 	Function(name:"Print" functionClass:"richTea.impl.Print" implicitAttributeName:"message" 
 		#attributes {
@@ -135,11 +134,36 @@ Bindings(#bindings {
 		}
 	)
 	
-	Function(name:"Frame" functionClass:"richTea.impl.ui.RFrame")
-	Function(name:"Button" functionClass:"richTea.impl.ui.RButton")
+	Function(name:"Frame" functionClass:"richTea.impl.ui.RFrame" implicitAttributeName:"title" implicitBranchName:"content"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JFrame")
+		}
+	)
+	
+	Function(name:"Button" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JButton")
+		}
+	)
+	
 	Function(name:"FlowLayout" functionClass:"richTea.impl.ui.RFlowLayout")
-	Function(name:"MenuBar" functionClass:"richTea.impl.ui.RMenuBar")
-	Function(name:"MenuItem" functionClass:"richTea.impl.ui.RMenuItem")
+	
+	Function(name:"MenuBar" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitBranchName:"content"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JMenuBar")
+		}
+	)
+	Function(name:"MenuItem" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text" implicitBranchName:"content"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JMenu")
+		}
+	)
+	
+	Function(name:"TextField" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JTextField")
+		}
+	)
 	
 	Function(name:"CreateBean" functionClass:"richTea.impl.CreateBean" implicitAttributeName:"class"
 		#attributes {

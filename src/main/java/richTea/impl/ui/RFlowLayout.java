@@ -2,12 +2,11 @@ package richTea.impl.ui;
 
 import java.awt.FlowLayout;
 
-import richTea.core.execution.AbstractFunction;
+import richTea.impl.CreateBean;
 
-public class RFlowLayout extends AbstractFunction {
+public class RFlowLayout extends CreateBean {
 
-	@Override
-	protected void run() throws Exception {	
-		context.setLastReturnValue(new FlowLayout());
+	protected Class<?> getBeanClass() throws ClassNotFoundException {
+		return FlowLayout.class;
 	}
 }

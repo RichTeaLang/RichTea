@@ -2,38 +2,20 @@ package richTea.impl.ui;
 
 import javax.swing.JFrame;
 
-import org.apache.commons.beanutils.BeanMap;
-
 import richTea.core.attribute.Attribute;
-import richTea.core.execution.AbstractFunction;
 import richTea.impl.ui.event.RWindowListener;
 
-public class RFrame extends AbstractFunction {
+public class RFrame extends CreateAWTComponent {
 
 	@Override
-	protected void run() throws Exception {
-		JFrame frame = new JFrame();
+	protected void mapBeanAttributes(Object bean, Attribute[] attributes) {
+		JFrame frame = (JFrame) bean;
 		
 		frame.setSize(getWidth(), getHeight());
-		
 		frame.addWindowListener(new RWindowListener(context));
-		
-		context.setLastReturnValue(frame);
-		context.executeBranch("content");
-
-		BeanMap beanMap = new BeanMap(frame);
-		
-		for(Attribute attribute : context.getCurrentNode().getAttributes()) {
-			beanMap.put(attribute.getName(), attribute.getValue(context));
-		}
-		
 		frame.validate();
 		
-		context.setLastReturnValue(frame);
-	}
-	
-	protected String getTitle() {
-		return context.getString("title");
+		super.mapBeanAttributes(frame, attributes);
 	}
 	
 	protected int getWidth() {
@@ -43,5 +25,4 @@ public class RFrame extends AbstractFunction {
 	protected int getHeight() {
 		return (int) context.getNumberOrDefault("height", 800);
 	}
-
 }
