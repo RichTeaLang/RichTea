@@ -3,10 +3,10 @@ package richTea.impl.ui.event;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import richTea.core.execution.EventHandler;
+import richTea.core.execution.EventDispatcher;
 import richTea.core.execution.ExecutionContext;
 
-public class RKeyListener extends EventHandler implements KeyListener {
+public class RKeyListener extends EventDispatcher implements KeyListener {
 
 	public RKeyListener(ExecutionContext context) {
 		super(context);

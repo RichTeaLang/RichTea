@@ -140,6 +140,12 @@ Bindings(#bindings {
 		}
 	)
 	
+	Function(name:"Label" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JLabel")
+		}
+	)
+	
 	Function(name:"Button" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JButton")
@@ -164,9 +170,15 @@ Bindings(#bindings {
 		}
 	)
 	
-	Function(name:"MenuItem" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text" implicitBranchName:"content"
+	Function(name:"Menu" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text" implicitBranchName:"content"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JMenu")
+		}
+	)
+	
+	Function(name:"MenuItem" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JMenuItem")
 		}
 	)
 	

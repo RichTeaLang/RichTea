@@ -3,10 +3,10 @@ package richTea.impl.ui.event;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-import richTea.core.execution.EventHandler;
+import richTea.core.execution.EventDispatcher;
 import richTea.core.execution.ExecutionContext;
 
-public class RMouseMotionListener extends EventHandler implements MouseMotionListener {
+public class RMouseMotionListener extends EventDispatcher implements MouseMotionListener {
 
 	public RMouseMotionListener(ExecutionContext context) {
 		super(context);

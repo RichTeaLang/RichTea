@@ -3,10 +3,10 @@ package richTea.impl.ui.event;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import richTea.core.execution.EventHandler;
+import richTea.core.execution.EventDispatcher;
 import richTea.core.execution.ExecutionContext;
 
-public class RWindowListener extends EventHandler implements WindowListener {
+public class RWindowListener extends EventDispatcher implements WindowListener {
 
 	public RWindowListener(ExecutionContext context) {
 		super(context);

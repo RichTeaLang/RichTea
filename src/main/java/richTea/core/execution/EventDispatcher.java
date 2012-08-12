@@ -2,13 +2,13 @@ package richTea.core.execution;
 
 import richTea.core.attribute.PrimativeAttribute;
 
-public class EventHandler {
+public class EventDispatcher {
 
 	public static final String EVENT_ATTRIBUTE_NAME = "event";
 	
 	private ExecutionContext context;
 	
-	public EventHandler(ExecutionContext context) {
+	public EventDispatcher(ExecutionContext context) {
 		this.context = new ExecutionContext(context.getCurrentScope());
 	}
 	
