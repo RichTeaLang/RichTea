@@ -13,9 +13,10 @@ public class RFrame extends CreateAWTComponent {
 		
 		frame.setSize(getWidth(), getHeight());
 		frame.addWindowListener(new RWindowListener(context));
-		frame.validate();
 		
 		super.mapBeanAttributes(frame, attributes);
+		
+		frame.validate();
 	}
 	
 	protected int getWidth() {
