@@ -1,48 +1,31 @@
-({
-
-	Let("clickableButton" be:Button(text:text mouseClicked { clickFunction() }))
+({	
 	
-	Let(
-		"myMenuBar" 
-		be:MenuBar(
-			#content {
-				MenuItem(text:"File");
-				MenuItem(text:"Edit");
-				MenuItem(text:"Help");
-			}
-		)
+	MenuBar(id:"menuBar" {
+		Menu("File" {
+				MenuItem("Exit" mouseReleased { SystemExit() })
+			})
+		}
 	)
 	
-	
 	Frame(
-		title:"Hello world" 
-		JMenuBar:@myMenuBar()
+		title:"Rich Tea Sample UI"
+		width:400
+		height:200
+		JMenuBar:menuBar
 		layout:@FlowLayout()
-		visible:true
+		visible:true 
 		
 		content {
-
-			Button(
-				text:"Click me" 
-				
-				mouseClicked {
-					Print("I've been clicked");
-				}
-			)
-			
-			clickableButton(text:"Mad" clickFunction:Print("Test madness"))
-			
-			Button(
-				text:"Close" 
-			
-				mouseClicked {
-					SystemExit();
-				}
-			)
+			Label("Mouse Position")
+			TextField(id:"mousePosition" columns:25 editable:false)
 		}
 		
-		windowIconified {
-			Print("Iconified");
+		mouseMoved { 
+			Set(mousePosition.text to:event.x + "," + event.y) 
+		}
+		
+		windowClosing { 
+			SystemExit() 
 		}
 	)
 })
