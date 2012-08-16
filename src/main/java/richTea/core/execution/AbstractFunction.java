@@ -22,7 +22,7 @@ public abstract class AbstractFunction implements RichTeaFunction {
 				String id = context.getString("id");
 				
 				if(id != null) {
-					VariableScope scope = context.getCurrentScope().getParent();
+					VariableScope scope = context.getCurrentScope().getRoot();
 					
 					if(scope != null) {
 						scope.setAttribute(new PrimativeAttribute(id, context.getLastReturnValue()));

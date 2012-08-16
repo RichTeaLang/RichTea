@@ -30,6 +30,10 @@ public class VariableScope extends AttributeSet {
 		return parent;
 	}
 	
+	public VariableScope getRoot() {
+		return getParent() != null ? getParent().getRoot() : this;
+	}
+	
 	@Override
 	public Attribute getAttribute(String attributeName) {
 		Attribute attribute = super.getAttribute(attributeName);
