@@ -11,6 +11,7 @@ public class RFrame extends CreateAWTComponent {
 	protected void mapBeanAttributes(Object bean, Attribute[] attributes) {
 		JFrame frame = (JFrame) bean;
 		
+		frame.setLayout(null);
 		frame.addWindowListener(new RWindowListener(context));
 		
 		super.mapBeanAttributes(frame, attributes);
