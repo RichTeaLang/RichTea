@@ -140,21 +140,33 @@ Bindings(#bindings {
 		}
 	)
 	
+	Function(name:"Panel" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitBranchName:"content"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JPanel")
+		}
+	)
+	
 	Function(name:"Label" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JLabel")
 		}
 	)
 	
-	Function(name:"Button" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
+	Function(name:"Button" functionClass:"richTea.impl.ui.RCreateAbstractButton" implicitAttributeName:"text"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JButton")
 		}
 	)
 	
-	Function(name:"RadioButton" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
+	Function(name:"RadioButton" functionClass:"richTea.impl.ui.RCreateAbstractButton" implicitAttributeName:"text"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JRadioButton")
+		}
+	)
+	
+	Function(name:"ComboBox" functionClass:"richTea.impl.ui.RComboBox" implicitAttributeName:"data"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JComboBox")
 		}
 	)
 	
@@ -164,27 +176,45 @@ Bindings(#bindings {
 		}
 	)
 	
+	Function(name:"BorderLayout" functionClass:"richTea.impl.CreateBean"
+		#attributes {
+			Attribute(name:"class" defaultValue:"java.awt.BorderLayout")
+		}
+	)
+	
 	Function(name:"MenuBar" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitBranchName:"content"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JMenuBar")
 		}
 	)
 	
-	Function(name:"Menu" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text" implicitBranchName:"content"
+	Function(name:"Menu" functionClass:"richTea.impl.ui.RCreateAbstractButton" implicitAttributeName:"text" implicitBranchName:"content"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JMenu")
 		}
 	)
 	
-	Function(name:"MenuItem" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
+	Function(name:"MenuItem" functionClass:"richTea.impl.ui.RCreateAbstractButton" implicitAttributeName:"text"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JMenuItem")
+		}
+	)
+	
+	Function(name:"MenuItemRadioButton" functionClass:"richTea.impl.ui.RCreateAbstractButton" implicitAttributeName:"text"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JRadioButtonMenuItem")
 		}
 	)
 	
 	Function(name:"TextField" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JTextField")
+		}
+	)
+	
+	Function(name:"TabbedPane" functionClass:"richTea.impl.ui.RTabbedPane" implicitBranchName:"content"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JTabbedPane")
 		}
 	)
 	

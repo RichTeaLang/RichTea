@@ -2,26 +2,55 @@
 	
 	MenuBar(id:"menuBar" {
 		Menu("File" {
-				MenuItem("Exit" mouseReleased { SystemExit() })
-			})
-		}
-	)
+			MenuItem("Exit" mouseReleased { SystemExit() })
+		})
+		
+		Menu("View" {
+			MenuItemRadioButton("Tab 1" 
+								buttonGroup:"menuGroup" 
+								selected:true 
+								mouseReleased { Set(tabbedPane.selectedIndex to:0) })
+								
+			MenuItemRadioButton("Tab 2"
+								buttonGroup:"menuGroup" 
+								mouseReleased { Set(tabbedPane.selectedIndex to:1) })
+		})
+	})
 	
 	Frame(
 		title:"Rich Tea Sample UI"
-		width:400
-		height:200
+		width:600
+		height:300
 		JMenuBar:menuBar
-		layout:@FlowLayout()
 		visible:true 
 		
 		content {
-			Label("Mouse Position")
-			TextField(id:"mousePosition" columns:25 editable:false)
-		}
-		
-		mouseMoved { 
-			Set(mousePosition.text to:event.x + "," + event.y) 
+			TabbedPane(id:"tabbedPane" x:100 y:25 width:400 height:200 {
+				Panel(height:500
+					name:"UI Examples" 
+					layout:@FlowLayout() 
+					
+					content {
+						ComboBox([0,1] width:200 itemSelected {
+							Set(tabbedPane.selectedIndex to:event.item);
+						})
+					}
+				)	
+				
+				Panel(
+					name:"Example event logging" 
+					width:200 height:200
+					
+					content {
+						Label("Mouse Position")
+						TextField(id:"mousePosition" columns:25 editable:false)
+					}
+				
+					mouseMoved { 
+						Set(mousePosition.text to:event.x + "," + event.y) 
+					}
+				);
+			})
 		}
 		
 		windowClosing { 
