@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.ItemSelectable;
+import java.awt.Rectangle;
 
 import richTea.core.attribute.Attribute;
 import richTea.core.node.Branch;
@@ -26,7 +27,9 @@ public class CreateAWTComponent extends CreateBean {
 		Container component = (Container) bean;
 		
 		addContent(component, "content");
-
+		
+		component.setBounds(getBounds(component));
+		
 		component.addComponentListener(new RComponentListener(context));
 		component.addContainerListener(new RContainerListener(context));
 		component.addFocusListener(new RFocusListener(context));
@@ -41,22 +44,18 @@ public class CreateAWTComponent extends CreateBean {
 			((ItemSelectable) component).addItemListener(new RItemListener(context));
 		}
 		
-		TreeNode node = context.getCurrentNode();
-		
-		if(node.hasAttribute("width") || node.hasAttribute("height")) {
-			component.setSize(new Dimension(getWidth(), getHeight()));
-		}
-		
 		super.mapBeanAttributes(component, attributes);
 	}
 	
-	
-	protected int getWidth() {
-		return (int) context.getNumberOrDefault("width", 100);
-	}
-	
-	protected int getHeight() {
-		return (int) context.getNumberOrDefault("height", 100);
+	protected Rectangle getBounds(Component component) {
+		Dimension preferredSize = component.getPreferredSize();
+		
+		int x = (int) context.getNumberOrDefault("x", 0);
+		int y = (int) context.getNumberOrDefault("y", 0);
+		int width = (int) context.getNumberOrDefault("width", preferredSize.getWidth());
+		int height = (int) context.getNumberOrDefault("height", preferredSize.getHeight());
+		
+		return new Rectangle(x, y, width, height);
 	}
 	
 	protected void addContent(Container root, String contentBranchName) {
