@@ -115,6 +115,8 @@ Bindings(#bindings {
 		}
 	)
 	
+	Function(name:"PasteFromClipboard" functionClass:"richTea.impl.PasteFromClipboard");
+	
 	Function(name:"OpenWebpage" functionClass:"richTea.impl.OpenWebpage" implicitAttributeName:"url"
 		#attributes {
 			Attribute(name:"url")
@@ -169,6 +171,12 @@ Bindings(#bindings {
 			Attribute(name:"class" defaultValue:"javax.swing.JComboBox")
 		}
 	)
+	
+	Function(name:"Slider" functionClass:"richTea.impl.ui.CreateAWTComponent"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JSlider")
+		}
+	)		
 	
 	Function(name:"FlowLayout" functionClass:"richTea.impl.CreateBean"
 		#attributes {
