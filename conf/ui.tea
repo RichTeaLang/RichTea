@@ -59,11 +59,23 @@
 					mouseMoved { 
 						Set(mousePosition.text to:event.x + "," + event.y) 
 					})
+					
+				Panel(
+					name:"Calculator"
+					width:200 height:200
+					
+					content {
+						TextField(id:"input" columns:10 editable:true);
+						TextField(id:"output" columns:10 editable:false);
+						Button("Eval" mouseClicked {
+							Set(output.text to:@Eval(input.text));
+						})
+					})
 			})
 		}
 		
 		windowClosing { 
 			SystemExit() 
 		}
-	)	
+	)
 })
