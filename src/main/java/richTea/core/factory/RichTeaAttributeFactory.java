@@ -10,10 +10,8 @@ import richTea.antlr.tree.NodeData;
 import richTea.core.attribute.ArrayAttribute;
 import richTea.core.attribute.AssignmentExpression;
 import richTea.core.attribute.Attribute;
-import richTea.core.attribute.BooleanAttribute;
 import richTea.core.attribute.LastReturnedValueAttribute;
-import richTea.core.attribute.NumberAttribute;
-import richTea.core.attribute.StringAttribute;
+import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.attribute.TernaryExpressionAttribute;
 import richTea.core.attribute.VariableAttribute;
 import richTea.core.attribute.bool.AndAttribute;
@@ -33,9 +31,9 @@ import richTea.core.attribute.math.MinusAttribute;
 import richTea.core.attribute.math.ModulusAttribute;
 import richTea.core.attribute.math.MultiplyAttribute;
 import richTea.core.attribute.math.PlusAttribute;
+import richTea.core.attribute.variable.LookupChainRoot;
 import richTea.core.attribute.variable.NativeMethodCall;
 import richTea.core.attribute.variable.PropertyLookup;
-import richTea.core.attribute.variable.LookupChainRoot;
 import richTea.core.node.TreeNode;
 
 public class RichTeaAttributeFactory {
@@ -62,6 +60,9 @@ public class RichTeaAttributeFactory {
 				break;
 			case RichTeaParser.BOOLEAN : 
 				attribute = createBooleanAttribute(name, value);
+				break;
+			case RichTeaParser.NULL :
+				attribute = createNullAttribute(name, value);
 				break;
 			case RichTeaParser.ARRAY :
 				attribute = createArrayAttribute(name, value);
@@ -146,15 +147,19 @@ public class RichTeaAttributeFactory {
 		String stringValue = value.getText().substring(1); // Remove the leading "
 		stringValue = stringValue.substring(0, stringValue.length() - 1); // Remove the trailing "
 
-		return new StringAttribute(name, stringValue);
+		return new PrimativeAttribute(name, stringValue);
 	}
 	
 	protected Attribute createNumberAttribute(String name, Tree value) {
-		return new NumberAttribute(name, Double.parseDouble(value.getText()));
+		return new PrimativeAttribute(name, Double.parseDouble(value.getText()));
 	}
 	
 	protected Attribute createBooleanAttribute(String name, Tree value) {
-		return new BooleanAttribute(name, Boolean.parseBoolean(value.getText()));
+		return new PrimativeAttribute(name, Boolean.parseBoolean(value.getText()));
+	}
+	
+	protected Attribute createNullAttribute(String name, Tree value) {
+		return new PrimativeAttribute(name, null);
 	}
 	
 	protected Attribute createVariableAttribute(String name, Tree value) {				

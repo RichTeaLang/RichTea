@@ -9,7 +9,7 @@ import richTea.core.execution.ExecutionContext;
 public class VariableAttribute extends LookupChainElement {
 	
 	public VariableAttribute(String property) {
-		this(property, new PropertyLookup(new StringAttribute("property", property), new LookupChainRoot("root")));
+		this(property, new PropertyLookup(new PrimativeAttribute("property", property), new LookupChainRoot("root")));
 	}
 	
 	public VariableAttribute(String name, Attribute lookupChain) {

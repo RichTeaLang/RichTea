@@ -114,6 +114,7 @@ data_type
 	:	NUMBER
 	|	BOOLEAN
 	|	STRING
+	|	NULL
 	|	last_returned_value
 	| 	variable
 	|	array
@@ -172,6 +173,10 @@ STRING
 BOOLEAN
  	:	'true' 
  	|	'false'
+	;
+
+NULL
+	:	'null'
 	;
 
 ID  	:	UNDERSCORE? LETTER (LETTER | INTEGER | UNDERSCORE)*

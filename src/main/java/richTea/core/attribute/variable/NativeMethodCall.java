@@ -2,6 +2,8 @@ package richTea.core.attribute.variable;
 
 import java.lang.reflect.Method;
 
+import org.apache.commons.beanutils.MethodUtils;
+
 import richTea.core.attribute.Attribute;
 import richTea.core.attribute.modifier.AttributeModifier;
 import richTea.core.execution.ExecutionContext;
@@ -30,6 +32,7 @@ public class NativeMethodCall extends LookupChainElement {
 	public Object getValue(ExecutionContext context) {
 		Object object = getLookupChain().getValue(context);
 		
+		String methodName = getMethodName();
 		Attribute[] arguments = getMethodArguments();
 		
 		Object[] argumentValues = new Object[arguments.length];
@@ -39,37 +42,56 @@ public class NativeMethodCall extends LookupChainElement {
 			Object value = arguments[i].getValue(context);
 			
 			argumentValues[i] = value;
-			argumentTypes[i] = value.getClass();
+			argumentTypes[i] = value != null ? value.getClass() : Null.class;
 		}
-			
+		
+		Method method = MethodUtils.getMatchingAccessibleMethod(object.getClass(), methodName, argumentTypes);
+		
+		if(method == null) {
+			/* If we haven't found a method it could be because we're trying to pass null as one of the params which
+			 * the above code doesn't account for. */
+			method = findBestMatchMethod(object.getClass(), methodName, argumentTypes);
+		}
+		
+		if(method != null) {
+			try {
+				return method.invoke(object, argumentValues);
+			} catch (Exception e) {
+				throw new IllegalArgumentException(String.format("Cannot invoke method %s: %s", methodName, e.getMessage()), e);
+			}
+		} else {
+			throw new IllegalArgumentException("Unable to find method to invoke");
+		}		
+	}
+	
+	protected Method findBestMatchMethod(Class<?> clazz, String methodName, Class<?>[] argumentTypes) {
 		methodFinder:
-		for(Method method : object.getClass().getMethods()) {
+		for(Method method : clazz.getMethods()) {
 			
 			if(!method.getName().equals(methodName)) continue methodFinder;
 			
 			Class<?>[] params = method.getParameterTypes();
 			
-			if(params.length != arguments.length) continue methodFinder;
+			if(params.length != argumentTypes.length) continue methodFinder;
 			
 			for(int i = 0; i < params.length; i++) {
-				if(!params[i].isAssignableFrom(argumentTypes[i])) {
+				
+				if(!(argumentTypes[i] == Null.class || MethodUtils.isAssignmentCompatible(params[i], argumentTypes[i]))) {
 					continue methodFinder;
 				}
 			}
 			
-			try {
-				return method.invoke(object, argumentValues);
-			} catch (Exception e) {
-				throw new IllegalArgumentException(String.format("Cannot invoke method %s: %s", getMethodName(), e.getMessage()), e);
-			}
+			return method;
 		}
-		
+	
 		return null;
-		
 	}
 
 	@Override
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
 		return null; // Cannot modify a method call.
 	}
+	
+	// Class which represents a null value.
+	private class Null {}
 }

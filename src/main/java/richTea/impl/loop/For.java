@@ -1,6 +1,6 @@
 package richTea.impl.loop;
 
-import richTea.core.attribute.NumberAttribute;
+import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.execution.AbstractFunction;
 
 public class For extends AbstractFunction {
@@ -10,7 +10,7 @@ public class For extends AbstractFunction {
 		int count = getCount();
 		String as = as();
 
-		NumberAttribute index = new NumberAttribute(as, 0);
+		PrimativeAttribute index = new PrimativeAttribute(as, 0);
 		
 		context.pushScope(context.createScope(index));
 
