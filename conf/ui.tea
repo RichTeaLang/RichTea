@@ -18,6 +18,7 @@
 	})
 	
 	Frame(
+		id:"myFrame"
 		title:"Rich Tea Sample UI"
 		width:600
 		height:300
@@ -26,13 +27,17 @@
 		
 		content {
 			TabbedPane(id:"tabbedPane" x:100 y:25 width:400 height:200 {
-				Panel(height:500
+				Panel(
 					name:"UI Examples" 
 					layout:@FlowLayout() 
 					
 					content {
 						ComboBox([0,1] width:200 itemSelected {
 							Set(tabbedPane.selectedIndex to:event.item);
+						})
+						
+						Button("Centre frame" mouseClicked {
+							(myFrame.setLocationRelativeTo(null))
 						})
 					}
 				)	
@@ -56,5 +61,5 @@
 		windowClosing { 
 			SystemExit() 
 		}
-	)
+	)	
 })
