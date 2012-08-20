@@ -23,10 +23,10 @@ public class PropertyLookup extends LookupChainElement {
 	public Object getPropertyHolder(ExecutionContext context) {
 		return getLookupChain().getValue(context);
 	}
-	
+
 	@Override
-	public Object getValue(ExecutionContext context) {
-		return resolveAttribute(context).getValue(context);		
+	protected Object performLookup(ExecutionContext context, Object lookupChainValue) {
+		return resolveAttribute(context).getValue(context);
 	}
 	
 	@Override

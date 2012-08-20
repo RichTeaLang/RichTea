@@ -29,9 +29,7 @@ public class NativeMethodCall extends LookupChainElement {
 	}
 
 	@Override
-	public Object getValue(ExecutionContext context) {
-		Object object = getLookupChain().getValue(context);
-		
+	protected Object performLookup(ExecutionContext context, Object lookupChainValue) {		
 		String methodName = getMethodName();
 		Attribute[] arguments = getMethodArguments();
 		
@@ -45,17 +43,17 @@ public class NativeMethodCall extends LookupChainElement {
 			argumentTypes[i] = value != null ? value.getClass() : Null.class;
 		}
 		
-		Method method = MethodUtils.getMatchingAccessibleMethod(object.getClass(), methodName, argumentTypes);
+		Method method = MethodUtils.getMatchingAccessibleMethod(lookupChainValue.getClass(), methodName, argumentTypes);
 		
 		if(method == null) {
 			/* If we haven't found a method it could be because we're trying to pass null as one of the params which
 			 * the above code doesn't account for. */
-			method = findBestMatchMethod(object.getClass(), methodName, argumentTypes);
+			method = findBestMatchMethod(lookupChainValue.getClass(), methodName, argumentTypes);
 		}
 		
 		if(method != null) {
 			try {
-				return method.invoke(object, argumentValues);
+				return method.invoke(lookupChainValue, argumentValues);
 			} catch (Exception e) {
 				throw new IllegalArgumentException(String.format("Cannot invoke method %s: %s", methodName, e.getMessage()), e);
 			}

@@ -115,16 +115,10 @@ data_type
 	|	BOOLEAN
 	|	STRING
 	|	NULL
-	|	last_returned_value
 	| 	variable
 	|	array
 	|	function
 	|	executable_function_attribute
-	;
-	
-last_returned_value
-	:	UNDERSCORE
-			->	LAST_RETURNED_VALUE
 	;
 		
 variable
@@ -135,6 +129,8 @@ variable
 lookup_chain_root
 	:	ID
 			->	^(PROPERTY_LOOKUP STRING['"' + $ID.text + '"'])
+	|	UNDERSCORE
+			->	LAST_RETURNED_VALUE
 	;
 	
 lookup_chain_element

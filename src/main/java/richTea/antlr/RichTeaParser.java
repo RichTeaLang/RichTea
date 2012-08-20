@@ -1,4 +1,4 @@
-// $ANTLR 3.4 /home/richard/workspace/RichTea/antlr/RichTea.g 2012-08-19 10:16:12
+// $ANTLR 3.4 /home/richard/workspace/RichTea/antlr/RichTea.g 2012-08-20 22:52:46
 package richTea.antlr;
 
 import org.antlr.runtime.*;
@@ -617,12 +617,12 @@ public TreeAdaptor getTreeAdaptor() {
                     break;
                 case ID:
                     {
-                    int LA6_7 = input.LA(2);
+                    int LA6_6 = input.LA(2);
 
-                    if ( (LA6_7==EOF||LA6_7==AND||LA6_7==CLOSE_PAREN||LA6_7==COMMA||(LA6_7 >= DIVIDE && LA6_7 <= EQ)||(LA6_7 >= GT && LA6_7 <= ID)||(LA6_7 >= LT && LA6_7 <= MULTIPLY_EQUALS)||LA6_7==NEQ||(LA6_7 >= OPEN_PAREN && LA6_7 <= POWER)||LA6_7==QUESTION_MARK||LA6_7==STRING) ) {
+                    if ( (LA6_6==EOF||LA6_6==AND||LA6_6==CLOSE_PAREN||LA6_6==COMMA||(LA6_6 >= DIVIDE && LA6_6 <= EQ)||(LA6_6 >= GT && LA6_6 <= ID)||(LA6_6 >= LT && LA6_6 <= MULTIPLY_EQUALS)||LA6_6==NEQ||(LA6_6 >= OPEN_PAREN && LA6_6 <= POWER)||LA6_6==QUESTION_MARK||LA6_6==STRING) ) {
                         alt6=1;
                     }
-                    else if ( (LA6_7==OPEN_BRACE) ) {
+                    else if ( (LA6_6==OPEN_BRACE) ) {
                         int LA6_45 = input.LA(3);
 
                         if ( (synpred6_RichTea()) ) {
@@ -888,7 +888,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_expression.add(expression17.getTree());
 
             // AST REWRITE
-            // elements: expression, ID
+            // elements: ID, expression
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1390,7 +1390,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: function, name
+            // elements: name, function
             // token labels: name
             // rule labels: retval
             // token list labels: 
@@ -2861,7 +2861,7 @@ public TreeAdaptor getTreeAdaptor() {
                     }
                     }
                     break;
-                case UNDERSCORE:
+                case ID:
                     {
                     int LA27_15 = input.LA(3);
 
@@ -2881,7 +2881,7 @@ public TreeAdaptor getTreeAdaptor() {
                     }
                     }
                     break;
-                case ID:
+                case UNDERSCORE:
                     {
                     int LA27_16 = input.LA(3);
 
@@ -3078,7 +3078,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
     // $ANTLR start "data_type"
-    // /home/richard/workspace/RichTea/antlr/RichTea.g:113:1: data_type : ( NUMBER | BOOLEAN | STRING | NULL | last_returned_value | variable | array | function | executable_function_attribute );
+    // /home/richard/workspace/RichTea/antlr/RichTea.g:113:1: data_type : ( NUMBER | BOOLEAN | STRING | NULL | variable | array | function | executable_function_attribute );
     public final RichTeaParser.data_type_return data_type() throws RecognitionException {
         RichTeaParser.data_type_return retval = new RichTeaParser.data_type_return();
         retval.start = input.LT(1);
@@ -3090,15 +3090,13 @@ public TreeAdaptor getTreeAdaptor() {
         Token BOOLEAN65=null;
         Token STRING66=null;
         Token NULL67=null;
-        RichTeaParser.last_returned_value_return last_returned_value68 =null;
+        RichTeaParser.variable_return variable68 =null;
 
-        RichTeaParser.variable_return variable69 =null;
+        RichTeaParser.array_return array69 =null;
 
-        RichTeaParser.array_return array70 =null;
+        RichTeaParser.function_return function70 =null;
 
-        RichTeaParser.function_return function71 =null;
-
-        RichTeaParser.executable_function_attribute_return executable_function_attribute72 =null;
+        RichTeaParser.executable_function_attribute_return executable_function_attribute71 =null;
 
 
         Tree NUMBER64_tree=null;
@@ -3107,8 +3105,8 @@ public TreeAdaptor getTreeAdaptor() {
         Tree NULL67_tree=null;
 
         try {
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:114:2: ( NUMBER | BOOLEAN | STRING | NULL | last_returned_value | variable | array | function | executable_function_attribute )
-            int alt28=9;
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:114:2: ( NUMBER | BOOLEAN | STRING | NULL | variable | array | function | executable_function_attribute )
+            int alt28=8;
             switch ( input.LA(1) ) {
             case NUMBER:
                 {
@@ -3130,44 +3128,44 @@ public TreeAdaptor getTreeAdaptor() {
                 alt28=4;
                 }
                 break;
-            case UNDERSCORE:
-                {
-                alt28=5;
-                }
-                break;
             case ID:
                 {
-                int LA28_6 = input.LA(2);
+                int LA28_5 = input.LA(2);
 
-                if ( (LA28_6==OPEN_PAREN) ) {
-                    alt28=8;
+                if ( (LA28_5==OPEN_PAREN) ) {
+                    alt28=7;
                 }
-                else if ( (LA28_6==EOF||LA28_6==AND||(LA28_6 >= CLOSE_BOX && LA28_6 <= COMMA)||(LA28_6 >= DIVIDE && LA28_6 <= EQ)||(LA28_6 >= GT && LA28_6 <= ID)||(LA28_6 >= LT && LA28_6 <= MULTIPLY_EQUALS)||LA28_6==NEQ||LA28_6==OPEN_BRACE||(LA28_6 >= OR && LA28_6 <= POWER)||LA28_6==QUESTION_MARK||LA28_6==STRING) ) {
-                    alt28=6;
+                else if ( (LA28_5==EOF||LA28_5==AND||(LA28_5 >= CLOSE_BOX && LA28_5 <= COMMA)||(LA28_5 >= DIVIDE && LA28_5 <= EQ)||(LA28_5 >= GT && LA28_5 <= ID)||(LA28_5 >= LT && LA28_5 <= MULTIPLY_EQUALS)||LA28_5==NEQ||LA28_5==OPEN_BRACE||(LA28_5 >= OR && LA28_5 <= POWER)||LA28_5==QUESTION_MARK||LA28_5==STRING) ) {
+                    alt28=5;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return retval;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 28, 6, input);
+                        new NoViableAltException("", 28, 5, input);
 
                     throw nvae;
 
                 }
                 }
                 break;
+            case UNDERSCORE:
+                {
+                alt28=5;
+                }
+                break;
             case OPEN_BOX:
                 {
-                alt28=7;
+                alt28=6;
                 }
                 break;
             case OPEN_PAREN:
                 {
-                alt28=8;
+                alt28=7;
                 }
                 break;
             case AT:
                 {
-                alt28=9;
+                alt28=8;
                 }
                 break;
             default:
@@ -3245,77 +3243,62 @@ public TreeAdaptor getTreeAdaptor() {
                     }
                     break;
                 case 5 :
-                    // /home/richard/workspace/RichTea/antlr/RichTea.g:118:4: last_returned_value
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:118:5: variable
                     {
                     root_0 = (Tree)adaptor.nil();
 
 
-                    pushFollow(FOLLOW_last_returned_value_in_data_type809);
-                    last_returned_value68=last_returned_value();
+                    pushFollow(FOLLOW_variable_in_data_type810);
+                    variable68=variable();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, last_returned_value68.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, variable68.getTree());
 
                     }
                     break;
                 case 6 :
-                    // /home/richard/workspace/RichTea/antlr/RichTea.g:119:5: variable
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:119:4: array
                     {
                     root_0 = (Tree)adaptor.nil();
 
 
-                    pushFollow(FOLLOW_variable_in_data_type815);
-                    variable69=variable();
+                    pushFollow(FOLLOW_array_in_data_type815);
+                    array69=array();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, variable69.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, array69.getTree());
 
                     }
                     break;
                 case 7 :
-                    // /home/richard/workspace/RichTea/antlr/RichTea.g:120:4: array
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:120:4: function
                     {
                     root_0 = (Tree)adaptor.nil();
 
 
-                    pushFollow(FOLLOW_array_in_data_type820);
-                    array70=array();
+                    pushFollow(FOLLOW_function_in_data_type820);
+                    function70=function();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, array70.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, function70.getTree());
 
                     }
                     break;
                 case 8 :
-                    // /home/richard/workspace/RichTea/antlr/RichTea.g:121:4: function
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:121:4: executable_function_attribute
                     {
                     root_0 = (Tree)adaptor.nil();
 
 
-                    pushFollow(FOLLOW_function_in_data_type825);
-                    function71=function();
+                    pushFollow(FOLLOW_executable_function_attribute_in_data_type825);
+                    executable_function_attribute71=executable_function_attribute();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, function71.getTree());
-
-                    }
-                    break;
-                case 9 :
-                    // /home/richard/workspace/RichTea/antlr/RichTea.g:122:4: executable_function_attribute
-                    {
-                    root_0 = (Tree)adaptor.nil();
-
-
-                    pushFollow(FOLLOW_executable_function_attribute_in_data_type830);
-                    executable_function_attribute72=executable_function_attribute();
-
-                    state._fsp--;
-                    if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, executable_function_attribute72.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, executable_function_attribute71.getTree());
 
                     }
                     break;
@@ -3345,85 +3328,6 @@ public TreeAdaptor getTreeAdaptor() {
     // $ANTLR end "data_type"
 
 
-    public static class last_returned_value_return extends ParserRuleReturnScope {
-        Tree tree;
-        public Object getTree() { return tree; }
-    };
-
-
-    // $ANTLR start "last_returned_value"
-    // /home/richard/workspace/RichTea/antlr/RichTea.g:125:1: last_returned_value : UNDERSCORE -> LAST_RETURNED_VALUE ;
-    public final RichTeaParser.last_returned_value_return last_returned_value() throws RecognitionException {
-        RichTeaParser.last_returned_value_return retval = new RichTeaParser.last_returned_value_return();
-        retval.start = input.LT(1);
-
-
-        Tree root_0 = null;
-
-        Token UNDERSCORE73=null;
-
-        Tree UNDERSCORE73_tree=null;
-        RewriteRuleTokenStream stream_UNDERSCORE=new RewriteRuleTokenStream(adaptor,"token UNDERSCORE");
-
-        try {
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:126:2: ( UNDERSCORE -> LAST_RETURNED_VALUE )
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:126:4: UNDERSCORE
-            {
-            UNDERSCORE73=(Token)match(input,UNDERSCORE,FOLLOW_UNDERSCORE_in_last_returned_value842); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_UNDERSCORE.add(UNDERSCORE73);
-
-
-            // AST REWRITE
-            // elements: 
-            // token labels: 
-            // rule labels: retval
-            // token list labels: 
-            // rule list labels: 
-            // wildcard labels: 
-            if ( state.backtracking==0 ) {
-
-            retval.tree = root_0;
-            RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
-
-            root_0 = (Tree)adaptor.nil();
-            // 127:4: -> LAST_RETURNED_VALUE
-            {
-                adaptor.addChild(root_0, 
-                (Tree)adaptor.create(LAST_RETURNED_VALUE, "LAST_RETURNED_VALUE")
-                );
-
-            }
-
-
-            retval.tree = root_0;
-            }
-
-            }
-
-            retval.stop = input.LT(-1);
-
-
-            if ( state.backtracking==0 ) {
-
-            retval.tree = (Tree)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
-            }
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-    	retval.tree = (Tree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
-
-        }
-
-        finally {
-        	// do for sure before leaving
-        }
-        return retval;
-    }
-    // $ANTLR end "last_returned_value"
-
-
     public static class variable_return extends ParserRuleReturnScope {
         Tree tree;
         public Object getTree() { return tree; }
@@ -3431,7 +3335,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
     // $ANTLR start "variable"
-    // /home/richard/workspace/RichTea/antlr/RichTea.g:130:1: variable :elements+= lookup_chain_root ( PERIOD elements+= lookup_chain_element )* -> ^( VARIABLE ( $elements)+ ) ;
+    // /home/richard/workspace/RichTea/antlr/RichTea.g:124:1: variable :elements+= lookup_chain_root ( PERIOD elements+= lookup_chain_element )* -> ^( VARIABLE ( $elements)+ ) ;
     public final RichTeaParser.variable_return variable() throws RecognitionException {
         RichTeaParser.variable_return retval = new RichTeaParser.variable_return();
         retval.start = input.LT(1);
@@ -3439,18 +3343,18 @@ public TreeAdaptor getTreeAdaptor() {
 
         Tree root_0 = null;
 
-        Token PERIOD74=null;
+        Token PERIOD72=null;
         List list_elements=null;
         RuleReturnScope elements = null;
-        Tree PERIOD74_tree=null;
+        Tree PERIOD72_tree=null;
         RewriteRuleTokenStream stream_PERIOD=new RewriteRuleTokenStream(adaptor,"token PERIOD");
         RewriteRuleSubtreeStream stream_lookup_chain_element=new RewriteRuleSubtreeStream(adaptor,"rule lookup_chain_element");
         RewriteRuleSubtreeStream stream_lookup_chain_root=new RewriteRuleSubtreeStream(adaptor,"rule lookup_chain_root");
         try {
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:131:2: (elements+= lookup_chain_root ( PERIOD elements+= lookup_chain_element )* -> ^( VARIABLE ( $elements)+ ) )
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:131:4: elements+= lookup_chain_root ( PERIOD elements+= lookup_chain_element )*
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:125:2: (elements+= lookup_chain_root ( PERIOD elements+= lookup_chain_element )* -> ^( VARIABLE ( $elements)+ ) )
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:125:4: elements+= lookup_chain_root ( PERIOD elements+= lookup_chain_element )*
             {
-            pushFollow(FOLLOW_lookup_chain_root_in_variable864);
+            pushFollow(FOLLOW_lookup_chain_root_in_variable840);
             elements=lookup_chain_root();
 
             state._fsp--;
@@ -3460,7 +3364,7 @@ public TreeAdaptor getTreeAdaptor() {
             list_elements.add(elements.getTree());
 
 
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:131:32: ( PERIOD elements+= lookup_chain_element )*
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:125:32: ( PERIOD elements+= lookup_chain_element )*
             loop29:
             do {
                 int alt29=2;
@@ -3473,13 +3377,13 @@ public TreeAdaptor getTreeAdaptor() {
 
                 switch (alt29) {
             	case 1 :
-            	    // /home/richard/workspace/RichTea/antlr/RichTea.g:131:33: PERIOD elements+= lookup_chain_element
+            	    // /home/richard/workspace/RichTea/antlr/RichTea.g:125:33: PERIOD elements+= lookup_chain_element
             	    {
-            	    PERIOD74=(Token)match(input,PERIOD,FOLLOW_PERIOD_in_variable867); if (state.failed) return retval; 
-            	    if ( state.backtracking==0 ) stream_PERIOD.add(PERIOD74);
+            	    PERIOD72=(Token)match(input,PERIOD,FOLLOW_PERIOD_in_variable843); if (state.failed) return retval; 
+            	    if ( state.backtracking==0 ) stream_PERIOD.add(PERIOD72);
 
 
-            	    pushFollow(FOLLOW_lookup_chain_element_in_variable871);
+            	    pushFollow(FOLLOW_lookup_chain_element_in_variable847);
             	    elements=lookup_chain_element();
 
             	    state._fsp--;
@@ -3511,9 +3415,9 @@ public TreeAdaptor getTreeAdaptor() {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
             RewriteRuleSubtreeStream stream_elements=new RewriteRuleSubtreeStream(adaptor,"token elements",list_elements);
             root_0 = (Tree)adaptor.nil();
-            // 132:4: -> ^( VARIABLE ( $elements)+ )
+            // 126:4: -> ^( VARIABLE ( $elements)+ )
             {
-                // /home/richard/workspace/RichTea/antlr/RichTea.g:132:7: ^( VARIABLE ( $elements)+ )
+                // /home/richard/workspace/RichTea/antlr/RichTea.g:126:7: ^( VARIABLE ( $elements)+ )
                 {
                 Tree root_1 = (Tree)adaptor.nil();
                 root_1 = (Tree)adaptor.becomeRoot(
@@ -3571,7 +3475,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
     // $ANTLR start "lookup_chain_root"
-    // /home/richard/workspace/RichTea/antlr/RichTea.g:135:1: lookup_chain_root : ID -> ^( PROPERTY_LOOKUP STRING['\"' + $ID.text + '\"'] ) ;
+    // /home/richard/workspace/RichTea/antlr/RichTea.g:129:1: lookup_chain_root : ( ID -> ^( PROPERTY_LOOKUP STRING['\"' + $ID.text + '\"'] ) | UNDERSCORE -> LAST_RETURNED_VALUE );
     public final RichTeaParser.lookup_chain_root_return lookup_chain_root() throws RecognitionException {
         RichTeaParser.lookup_chain_root_return retval = new RichTeaParser.lookup_chain_root_return();
         retval.start = input.LT(1);
@@ -3579,56 +3483,114 @@ public TreeAdaptor getTreeAdaptor() {
 
         Tree root_0 = null;
 
-        Token ID75=null;
+        Token ID73=null;
+        Token UNDERSCORE74=null;
 
-        Tree ID75_tree=null;
+        Tree ID73_tree=null;
+        Tree UNDERSCORE74_tree=null;
+        RewriteRuleTokenStream stream_UNDERSCORE=new RewriteRuleTokenStream(adaptor,"token UNDERSCORE");
         RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 
         try {
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:136:2: ( ID -> ^( PROPERTY_LOOKUP STRING['\"' + $ID.text + '\"'] ) )
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:136:4: ID
-            {
-            ID75=(Token)match(input,ID,FOLLOW_ID_in_lookup_chain_root897); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_ID.add(ID75);
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:130:2: ( ID -> ^( PROPERTY_LOOKUP STRING['\"' + $ID.text + '\"'] ) | UNDERSCORE -> LAST_RETURNED_VALUE )
+            int alt30=2;
+            int LA30_0 = input.LA(1);
 
+            if ( (LA30_0==ID) ) {
+                alt30=1;
+            }
+            else if ( (LA30_0==UNDERSCORE) ) {
+                alt30=2;
+            }
+            else {
+                if (state.backtracking>0) {state.failed=true; return retval;}
+                NoViableAltException nvae =
+                    new NoViableAltException("", 30, 0, input);
 
-            // AST REWRITE
-            // elements: 
-            // token labels: 
-            // rule labels: retval
-            // token list labels: 
-            // rule list labels: 
-            // wildcard labels: 
-            if ( state.backtracking==0 ) {
-
-            retval.tree = root_0;
-            RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
-
-            root_0 = (Tree)adaptor.nil();
-            // 137:4: -> ^( PROPERTY_LOOKUP STRING['\"' + $ID.text + '\"'] )
-            {
-                // /home/richard/workspace/RichTea/antlr/RichTea.g:137:7: ^( PROPERTY_LOOKUP STRING['\"' + $ID.text + '\"'] )
-                {
-                Tree root_1 = (Tree)adaptor.nil();
-                root_1 = (Tree)adaptor.becomeRoot(
-                (Tree)adaptor.create(PROPERTY_LOOKUP, "PROPERTY_LOOKUP")
-                , root_1);
-
-                adaptor.addChild(root_1, 
-                (Tree)adaptor.create(STRING, '"' + (ID75!=null?ID75.getText():null) + '"')
-                );
-
-                adaptor.addChild(root_0, root_1);
-                }
+                throw nvae;
 
             }
+            switch (alt30) {
+                case 1 :
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:130:4: ID
+                    {
+                    ID73=(Token)match(input,ID,FOLLOW_ID_in_lookup_chain_root873); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_ID.add(ID73);
 
 
-            retval.tree = root_0;
+                    // AST REWRITE
+                    // elements: 
+                    // token labels: 
+                    // rule labels: retval
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
+                    if ( state.backtracking==0 ) {
+
+                    retval.tree = root_0;
+                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
+
+                    root_0 = (Tree)adaptor.nil();
+                    // 131:4: -> ^( PROPERTY_LOOKUP STRING['\"' + $ID.text + '\"'] )
+                    {
+                        // /home/richard/workspace/RichTea/antlr/RichTea.g:131:7: ^( PROPERTY_LOOKUP STRING['\"' + $ID.text + '\"'] )
+                        {
+                        Tree root_1 = (Tree)adaptor.nil();
+                        root_1 = (Tree)adaptor.becomeRoot(
+                        (Tree)adaptor.create(PROPERTY_LOOKUP, "PROPERTY_LOOKUP")
+                        , root_1);
+
+                        adaptor.addChild(root_1, 
+                        (Tree)adaptor.create(STRING, '"' + (ID73!=null?ID73.getText():null) + '"')
+                        );
+
+                        adaptor.addChild(root_0, root_1);
+                        }
+
+                    }
+
+
+                    retval.tree = root_0;
+                    }
+
+                    }
+                    break;
+                case 2 :
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:132:4: UNDERSCORE
+                    {
+                    UNDERSCORE74=(Token)match(input,UNDERSCORE,FOLLOW_UNDERSCORE_in_lookup_chain_root890); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_UNDERSCORE.add(UNDERSCORE74);
+
+
+                    // AST REWRITE
+                    // elements: 
+                    // token labels: 
+                    // rule labels: retval
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
+                    if ( state.backtracking==0 ) {
+
+                    retval.tree = root_0;
+                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
+
+                    root_0 = (Tree)adaptor.nil();
+                    // 133:4: -> LAST_RETURNED_VALUE
+                    {
+                        adaptor.addChild(root_0, 
+                        (Tree)adaptor.create(LAST_RETURNED_VALUE, "LAST_RETURNED_VALUE")
+                        );
+
+                    }
+
+
+                    retval.tree = root_0;
+                    }
+
+                    }
+                    break;
+
             }
-
-            }
-
             retval.stop = input.LT(-1);
 
 
@@ -3660,7 +3622,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
     // $ANTLR start "lookup_chain_element"
-    // /home/richard/workspace/RichTea/antlr/RichTea.g:140:1: lookup_chain_element : ( lookup_chain_root | ID OPEN_PAREN ( expression_list )? CLOSE_PAREN -> ^( NATIVE_METHOD_CALL ^( NAME ID ) ^( ATTRIBUTES ( expression_list )? ) ) | OPEN_BRACE expression CLOSE_BRACE -> ^( PROPERTY_LOOKUP expression ) );
+    // /home/richard/workspace/RichTea/antlr/RichTea.g:136:1: lookup_chain_element : ( lookup_chain_root | ID OPEN_PAREN ( expression_list )? CLOSE_PAREN -> ^( NATIVE_METHOD_CALL ^( NAME ID ) ^( ATTRIBUTES ( expression_list )? ) ) | OPEN_BRACE expression CLOSE_BRACE -> ^( PROPERTY_LOOKUP expression ) );
     public final RichTeaParser.lookup_chain_element_return lookup_chain_element() throws RecognitionException {
         RichTeaParser.lookup_chain_element_return retval = new RichTeaParser.lookup_chain_element_return();
         retval.start = input.LT(1);
@@ -3668,23 +3630,23 @@ public TreeAdaptor getTreeAdaptor() {
 
         Tree root_0 = null;
 
-        Token ID77=null;
-        Token OPEN_PAREN78=null;
-        Token CLOSE_PAREN80=null;
-        Token OPEN_BRACE81=null;
-        Token CLOSE_BRACE83=null;
-        RichTeaParser.lookup_chain_root_return lookup_chain_root76 =null;
+        Token ID76=null;
+        Token OPEN_PAREN77=null;
+        Token CLOSE_PAREN79=null;
+        Token OPEN_BRACE80=null;
+        Token CLOSE_BRACE82=null;
+        RichTeaParser.lookup_chain_root_return lookup_chain_root75 =null;
 
-        RichTeaParser.expression_list_return expression_list79 =null;
+        RichTeaParser.expression_list_return expression_list78 =null;
 
-        RichTeaParser.expression_return expression82 =null;
+        RichTeaParser.expression_return expression81 =null;
 
 
-        Tree ID77_tree=null;
-        Tree OPEN_PAREN78_tree=null;
-        Tree CLOSE_PAREN80_tree=null;
-        Tree OPEN_BRACE81_tree=null;
-        Tree CLOSE_BRACE83_tree=null;
+        Tree ID76_tree=null;
+        Tree OPEN_PAREN77_tree=null;
+        Tree CLOSE_PAREN79_tree=null;
+        Tree OPEN_BRACE80_tree=null;
+        Tree CLOSE_BRACE82_tree=null;
         RewriteRuleTokenStream stream_OPEN_PAREN=new RewriteRuleTokenStream(adaptor,"token OPEN_PAREN");
         RewriteRuleTokenStream stream_CLOSE_PAREN=new RewriteRuleTokenStream(adaptor,"token CLOSE_PAREN");
         RewriteRuleTokenStream stream_CLOSE_BRACE=new RewriteRuleTokenStream(adaptor,"token CLOSE_BRACE");
@@ -3693,83 +3655,92 @@ public TreeAdaptor getTreeAdaptor() {
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         RewriteRuleSubtreeStream stream_expression_list=new RewriteRuleSubtreeStream(adaptor,"rule expression_list");
         try {
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:141:2: ( lookup_chain_root | ID OPEN_PAREN ( expression_list )? CLOSE_PAREN -> ^( NATIVE_METHOD_CALL ^( NAME ID ) ^( ATTRIBUTES ( expression_list )? ) ) | OPEN_BRACE expression CLOSE_BRACE -> ^( PROPERTY_LOOKUP expression ) )
-            int alt31=3;
-            int LA31_0 = input.LA(1);
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:137:2: ( lookup_chain_root | ID OPEN_PAREN ( expression_list )? CLOSE_PAREN -> ^( NATIVE_METHOD_CALL ^( NAME ID ) ^( ATTRIBUTES ( expression_list )? ) ) | OPEN_BRACE expression CLOSE_BRACE -> ^( PROPERTY_LOOKUP expression ) )
+            int alt32=3;
+            switch ( input.LA(1) ) {
+            case ID:
+                {
+                int LA32_1 = input.LA(2);
 
-            if ( (LA31_0==ID) ) {
-                int LA31_1 = input.LA(2);
-
-                if ( (LA31_1==OPEN_PAREN) ) {
-                    alt31=2;
+                if ( (LA32_1==OPEN_PAREN) ) {
+                    alt32=2;
                 }
-                else if ( (LA31_1==EOF||LA31_1==AND||(LA31_1 >= CLOSE_BOX && LA31_1 <= COMMA)||(LA31_1 >= DIVIDE && LA31_1 <= EQ)||(LA31_1 >= GT && LA31_1 <= ID)||(LA31_1 >= LT && LA31_1 <= MULTIPLY_EQUALS)||LA31_1==NEQ||LA31_1==OPEN_BRACE||(LA31_1 >= OR && LA31_1 <= POWER)||LA31_1==QUESTION_MARK||LA31_1==STRING) ) {
-                    alt31=1;
+                else if ( (LA32_1==EOF||LA32_1==AND||(LA32_1 >= CLOSE_BOX && LA32_1 <= COMMA)||(LA32_1 >= DIVIDE && LA32_1 <= EQ)||(LA32_1 >= GT && LA32_1 <= ID)||(LA32_1 >= LT && LA32_1 <= MULTIPLY_EQUALS)||LA32_1==NEQ||LA32_1==OPEN_BRACE||(LA32_1 >= OR && LA32_1 <= POWER)||LA32_1==QUESTION_MARK||LA32_1==STRING) ) {
+                    alt32=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return retval;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 31, 1, input);
+                        new NoViableAltException("", 32, 1, input);
 
                     throw nvae;
 
                 }
-            }
-            else if ( (LA31_0==OPEN_BRACE) ) {
-                alt31=3;
-            }
-            else {
+                }
+                break;
+            case UNDERSCORE:
+                {
+                alt32=1;
+                }
+                break;
+            case OPEN_BRACE:
+                {
+                alt32=3;
+                }
+                break;
+            default:
                 if (state.backtracking>0) {state.failed=true; return retval;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 31, 0, input);
+                    new NoViableAltException("", 32, 0, input);
 
                 throw nvae;
 
             }
-            switch (alt31) {
+
+            switch (alt32) {
                 case 1 :
-                    // /home/richard/workspace/RichTea/antlr/RichTea.g:141:4: lookup_chain_root
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:137:4: lookup_chain_root
                     {
                     root_0 = (Tree)adaptor.nil();
 
 
-                    pushFollow(FOLLOW_lookup_chain_root_in_lookup_chain_element921);
-                    lookup_chain_root76=lookup_chain_root();
+                    pushFollow(FOLLOW_lookup_chain_root_in_lookup_chain_element909);
+                    lookup_chain_root75=lookup_chain_root();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, lookup_chain_root76.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, lookup_chain_root75.getTree());
 
                     }
                     break;
                 case 2 :
-                    // /home/richard/workspace/RichTea/antlr/RichTea.g:142:4: ID OPEN_PAREN ( expression_list )? CLOSE_PAREN
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:138:4: ID OPEN_PAREN ( expression_list )? CLOSE_PAREN
                     {
-                    ID77=(Token)match(input,ID,FOLLOW_ID_in_lookup_chain_element926); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_ID.add(ID77);
+                    ID76=(Token)match(input,ID,FOLLOW_ID_in_lookup_chain_element914); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_ID.add(ID76);
 
 
-                    OPEN_PAREN78=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_lookup_chain_element928); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_OPEN_PAREN.add(OPEN_PAREN78);
+                    OPEN_PAREN77=(Token)match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_lookup_chain_element916); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_OPEN_PAREN.add(OPEN_PAREN77);
 
 
-                    // /home/richard/workspace/RichTea/antlr/RichTea.g:142:18: ( expression_list )?
-                    int alt30=2;
-                    int LA30_0 = input.LA(1);
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:138:18: ( expression_list )?
+                    int alt31=2;
+                    int LA31_0 = input.LA(1);
 
-                    if ( (LA30_0==AT||LA30_0==BOOLEAN||LA30_0==ID||LA30_0==MINUS||(LA30_0 >= NOT && LA30_0 <= OPEN_BOX)||LA30_0==OPEN_PAREN||LA30_0==STRING||LA30_0==UNDERSCORE) ) {
-                        alt30=1;
+                    if ( (LA31_0==AT||LA31_0==BOOLEAN||LA31_0==ID||LA31_0==MINUS||(LA31_0 >= NOT && LA31_0 <= OPEN_BOX)||LA31_0==OPEN_PAREN||LA31_0==STRING||LA31_0==UNDERSCORE) ) {
+                        alt31=1;
                     }
-                    switch (alt30) {
+                    switch (alt31) {
                         case 1 :
-                            // /home/richard/workspace/RichTea/antlr/RichTea.g:142:18: expression_list
+                            // /home/richard/workspace/RichTea/antlr/RichTea.g:138:18: expression_list
                             {
-                            pushFollow(FOLLOW_expression_list_in_lookup_chain_element930);
-                            expression_list79=expression_list();
+                            pushFollow(FOLLOW_expression_list_in_lookup_chain_element918);
+                            expression_list78=expression_list();
 
                             state._fsp--;
                             if (state.failed) return retval;
-                            if ( state.backtracking==0 ) stream_expression_list.add(expression_list79.getTree());
+                            if ( state.backtracking==0 ) stream_expression_list.add(expression_list78.getTree());
 
                             }
                             break;
@@ -3777,12 +3748,12 @@ public TreeAdaptor getTreeAdaptor() {
                     }
 
 
-                    CLOSE_PAREN80=(Token)match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_lookup_chain_element933); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_CLOSE_PAREN.add(CLOSE_PAREN80);
+                    CLOSE_PAREN79=(Token)match(input,CLOSE_PAREN,FOLLOW_CLOSE_PAREN_in_lookup_chain_element921); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_CLOSE_PAREN.add(CLOSE_PAREN79);
 
 
                     // AST REWRITE
-                    // elements: ID, expression_list
+                    // elements: expression_list, ID
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3794,16 +3765,16 @@ public TreeAdaptor getTreeAdaptor() {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Tree)adaptor.nil();
-                    // 143:4: -> ^( NATIVE_METHOD_CALL ^( NAME ID ) ^( ATTRIBUTES ( expression_list )? ) )
+                    // 139:4: -> ^( NATIVE_METHOD_CALL ^( NAME ID ) ^( ATTRIBUTES ( expression_list )? ) )
                     {
-                        // /home/richard/workspace/RichTea/antlr/RichTea.g:143:7: ^( NATIVE_METHOD_CALL ^( NAME ID ) ^( ATTRIBUTES ( expression_list )? ) )
+                        // /home/richard/workspace/RichTea/antlr/RichTea.g:139:7: ^( NATIVE_METHOD_CALL ^( NAME ID ) ^( ATTRIBUTES ( expression_list )? ) )
                         {
                         Tree root_1 = (Tree)adaptor.nil();
                         root_1 = (Tree)adaptor.becomeRoot(
                         (Tree)adaptor.create(NATIVE_METHOD_CALL, "NATIVE_METHOD_CALL")
                         , root_1);
 
-                        // /home/richard/workspace/RichTea/antlr/RichTea.g:143:28: ^( NAME ID )
+                        // /home/richard/workspace/RichTea/antlr/RichTea.g:139:28: ^( NAME ID )
                         {
                         Tree root_2 = (Tree)adaptor.nil();
                         root_2 = (Tree)adaptor.becomeRoot(
@@ -3817,14 +3788,14 @@ public TreeAdaptor getTreeAdaptor() {
                         adaptor.addChild(root_1, root_2);
                         }
 
-                        // /home/richard/workspace/RichTea/antlr/RichTea.g:143:39: ^( ATTRIBUTES ( expression_list )? )
+                        // /home/richard/workspace/RichTea/antlr/RichTea.g:139:39: ^( ATTRIBUTES ( expression_list )? )
                         {
                         Tree root_2 = (Tree)adaptor.nil();
                         root_2 = (Tree)adaptor.becomeRoot(
                         (Tree)adaptor.create(ATTRIBUTES, "ATTRIBUTES")
                         , root_2);
 
-                        // /home/richard/workspace/RichTea/antlr/RichTea.g:143:52: ( expression_list )?
+                        // /home/richard/workspace/RichTea/antlr/RichTea.g:139:52: ( expression_list )?
                         if ( stream_expression_list.hasNext() ) {
                             adaptor.addChild(root_2, stream_expression_list.nextTree());
 
@@ -3846,21 +3817,21 @@ public TreeAdaptor getTreeAdaptor() {
                     }
                     break;
                 case 3 :
-                    // /home/richard/workspace/RichTea/antlr/RichTea.g:144:4: OPEN_BRACE expression CLOSE_BRACE
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:140:4: OPEN_BRACE expression CLOSE_BRACE
                     {
-                    OPEN_BRACE81=(Token)match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_lookup_chain_element960); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_OPEN_BRACE.add(OPEN_BRACE81);
+                    OPEN_BRACE80=(Token)match(input,OPEN_BRACE,FOLLOW_OPEN_BRACE_in_lookup_chain_element948); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_OPEN_BRACE.add(OPEN_BRACE80);
 
 
-                    pushFollow(FOLLOW_expression_in_lookup_chain_element962);
-                    expression82=expression();
+                    pushFollow(FOLLOW_expression_in_lookup_chain_element950);
+                    expression81=expression();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_expression.add(expression82.getTree());
+                    if ( state.backtracking==0 ) stream_expression.add(expression81.getTree());
 
-                    CLOSE_BRACE83=(Token)match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_lookup_chain_element964); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_CLOSE_BRACE.add(CLOSE_BRACE83);
+                    CLOSE_BRACE82=(Token)match(input,CLOSE_BRACE,FOLLOW_CLOSE_BRACE_in_lookup_chain_element952); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_CLOSE_BRACE.add(CLOSE_BRACE82);
 
 
                     // AST REWRITE
@@ -3876,9 +3847,9 @@ public TreeAdaptor getTreeAdaptor() {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Tree)adaptor.nil();
-                    // 145:4: -> ^( PROPERTY_LOOKUP expression )
+                    // 141:4: -> ^( PROPERTY_LOOKUP expression )
                     {
-                        // /home/richard/workspace/RichTea/antlr/RichTea.g:145:7: ^( PROPERTY_LOOKUP expression )
+                        // /home/richard/workspace/RichTea/antlr/RichTea.g:141:7: ^( PROPERTY_LOOKUP expression )
                         {
                         Tree root_1 = (Tree)adaptor.nil();
                         root_1 = (Tree)adaptor.becomeRoot(
@@ -3931,7 +3902,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
     // $ANTLR start "array"
-    // /home/richard/workspace/RichTea/antlr/RichTea.g:148:1: array : OPEN_BOX ( expression_list )? CLOSE_BOX -> ^( ARRAY ( expression_list )? ) ;
+    // /home/richard/workspace/RichTea/antlr/RichTea.g:144:1: array : OPEN_BOX ( expression_list )? CLOSE_BOX -> ^( ARRAY ( expression_list )? ) ;
     public final RichTeaParser.array_return array() throws RecognitionException {
         RichTeaParser.array_return retval = new RichTeaParser.array_return();
         retval.start = input.LT(1);
@@ -3939,41 +3910,41 @@ public TreeAdaptor getTreeAdaptor() {
 
         Tree root_0 = null;
 
-        Token OPEN_BOX84=null;
-        Token CLOSE_BOX86=null;
-        RichTeaParser.expression_list_return expression_list85 =null;
+        Token OPEN_BOX83=null;
+        Token CLOSE_BOX85=null;
+        RichTeaParser.expression_list_return expression_list84 =null;
 
 
-        Tree OPEN_BOX84_tree=null;
-        Tree CLOSE_BOX86_tree=null;
+        Tree OPEN_BOX83_tree=null;
+        Tree CLOSE_BOX85_tree=null;
         RewriteRuleTokenStream stream_CLOSE_BOX=new RewriteRuleTokenStream(adaptor,"token CLOSE_BOX");
         RewriteRuleTokenStream stream_OPEN_BOX=new RewriteRuleTokenStream(adaptor,"token OPEN_BOX");
         RewriteRuleSubtreeStream stream_expression_list=new RewriteRuleSubtreeStream(adaptor,"rule expression_list");
         try {
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:149:2: ( OPEN_BOX ( expression_list )? CLOSE_BOX -> ^( ARRAY ( expression_list )? ) )
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:149:4: OPEN_BOX ( expression_list )? CLOSE_BOX
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:145:2: ( OPEN_BOX ( expression_list )? CLOSE_BOX -> ^( ARRAY ( expression_list )? ) )
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:145:4: OPEN_BOX ( expression_list )? CLOSE_BOX
             {
-            OPEN_BOX84=(Token)match(input,OPEN_BOX,FOLLOW_OPEN_BOX_in_array987); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_OPEN_BOX.add(OPEN_BOX84);
+            OPEN_BOX83=(Token)match(input,OPEN_BOX,FOLLOW_OPEN_BOX_in_array975); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_OPEN_BOX.add(OPEN_BOX83);
 
 
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:149:13: ( expression_list )?
-            int alt32=2;
-            int LA32_0 = input.LA(1);
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:145:13: ( expression_list )?
+            int alt33=2;
+            int LA33_0 = input.LA(1);
 
-            if ( (LA32_0==AT||LA32_0==BOOLEAN||LA32_0==ID||LA32_0==MINUS||(LA32_0 >= NOT && LA32_0 <= OPEN_BOX)||LA32_0==OPEN_PAREN||LA32_0==STRING||LA32_0==UNDERSCORE) ) {
-                alt32=1;
+            if ( (LA33_0==AT||LA33_0==BOOLEAN||LA33_0==ID||LA33_0==MINUS||(LA33_0 >= NOT && LA33_0 <= OPEN_BOX)||LA33_0==OPEN_PAREN||LA33_0==STRING||LA33_0==UNDERSCORE) ) {
+                alt33=1;
             }
-            switch (alt32) {
+            switch (alt33) {
                 case 1 :
-                    // /home/richard/workspace/RichTea/antlr/RichTea.g:149:13: expression_list
+                    // /home/richard/workspace/RichTea/antlr/RichTea.g:145:13: expression_list
                     {
-                    pushFollow(FOLLOW_expression_list_in_array989);
-                    expression_list85=expression_list();
+                    pushFollow(FOLLOW_expression_list_in_array977);
+                    expression_list84=expression_list();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_expression_list.add(expression_list85.getTree());
+                    if ( state.backtracking==0 ) stream_expression_list.add(expression_list84.getTree());
 
                     }
                     break;
@@ -3981,8 +3952,8 @@ public TreeAdaptor getTreeAdaptor() {
             }
 
 
-            CLOSE_BOX86=(Token)match(input,CLOSE_BOX,FOLLOW_CLOSE_BOX_in_array992); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_CLOSE_BOX.add(CLOSE_BOX86);
+            CLOSE_BOX85=(Token)match(input,CLOSE_BOX,FOLLOW_CLOSE_BOX_in_array980); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_CLOSE_BOX.add(CLOSE_BOX85);
 
 
             // AST REWRITE
@@ -3998,16 +3969,16 @@ public TreeAdaptor getTreeAdaptor() {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Tree)adaptor.nil();
-            // 150:4: -> ^( ARRAY ( expression_list )? )
+            // 146:4: -> ^( ARRAY ( expression_list )? )
             {
-                // /home/richard/workspace/RichTea/antlr/RichTea.g:150:7: ^( ARRAY ( expression_list )? )
+                // /home/richard/workspace/RichTea/antlr/RichTea.g:146:7: ^( ARRAY ( expression_list )? )
                 {
                 Tree root_1 = (Tree)adaptor.nil();
                 root_1 = (Tree)adaptor.becomeRoot(
                 (Tree)adaptor.create(ARRAY, "ARRAY")
                 , root_1);
 
-                // /home/richard/workspace/RichTea/antlr/RichTea.g:150:15: ( expression_list )?
+                // /home/richard/workspace/RichTea/antlr/RichTea.g:146:15: ( expression_list )?
                 if ( stream_expression_list.hasNext() ) {
                     adaptor.addChild(root_1, stream_expression_list.nextTree());
 
@@ -4056,7 +4027,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
     // $ANTLR start "expression_list"
-    // /home/richard/workspace/RichTea/antlr/RichTea.g:153:1: expression_list : ( expression ( COMMA expression )* ) -> ( expression )* ;
+    // /home/richard/workspace/RichTea/antlr/RichTea.g:149:1: expression_list : ( expression ( COMMA expression )* ) -> ( expression )* ;
     public final RichTeaParser.expression_list_return expression_list() throws RecognitionException {
         RichTeaParser.expression_list_return retval = new RichTeaParser.expression_list_return();
         retval.start = input.LT(1);
@@ -4064,60 +4035,60 @@ public TreeAdaptor getTreeAdaptor() {
 
         Tree root_0 = null;
 
-        Token COMMA88=null;
-        RichTeaParser.expression_return expression87 =null;
+        Token COMMA87=null;
+        RichTeaParser.expression_return expression86 =null;
 
-        RichTeaParser.expression_return expression89 =null;
+        RichTeaParser.expression_return expression88 =null;
 
 
-        Tree COMMA88_tree=null;
+        Tree COMMA87_tree=null;
         RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         try {
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:154:2: ( ( expression ( COMMA expression )* ) -> ( expression )* )
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:154:4: ( expression ( COMMA expression )* )
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:150:2: ( ( expression ( COMMA expression )* ) -> ( expression )* )
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:150:4: ( expression ( COMMA expression )* )
             {
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:154:4: ( expression ( COMMA expression )* )
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:154:5: expression ( COMMA expression )*
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:150:4: ( expression ( COMMA expression )* )
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:150:5: expression ( COMMA expression )*
             {
-            pushFollow(FOLLOW_expression_in_expression_list1016);
-            expression87=expression();
+            pushFollow(FOLLOW_expression_in_expression_list1004);
+            expression86=expression();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) stream_expression.add(expression87.getTree());
+            if ( state.backtracking==0 ) stream_expression.add(expression86.getTree());
 
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:154:16: ( COMMA expression )*
-            loop33:
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:150:16: ( COMMA expression )*
+            loop34:
             do {
-                int alt33=2;
-                int LA33_0 = input.LA(1);
+                int alt34=2;
+                int LA34_0 = input.LA(1);
 
-                if ( (LA33_0==COMMA) ) {
-                    alt33=1;
+                if ( (LA34_0==COMMA) ) {
+                    alt34=1;
                 }
 
 
-                switch (alt33) {
+                switch (alt34) {
             	case 1 :
-            	    // /home/richard/workspace/RichTea/antlr/RichTea.g:154:17: COMMA expression
+            	    // /home/richard/workspace/RichTea/antlr/RichTea.g:150:17: COMMA expression
             	    {
-            	    COMMA88=(Token)match(input,COMMA,FOLLOW_COMMA_in_expression_list1019); if (state.failed) return retval; 
-            	    if ( state.backtracking==0 ) stream_COMMA.add(COMMA88);
+            	    COMMA87=(Token)match(input,COMMA,FOLLOW_COMMA_in_expression_list1007); if (state.failed) return retval; 
+            	    if ( state.backtracking==0 ) stream_COMMA.add(COMMA87);
 
 
-            	    pushFollow(FOLLOW_expression_in_expression_list1021);
-            	    expression89=expression();
+            	    pushFollow(FOLLOW_expression_in_expression_list1009);
+            	    expression88=expression();
 
             	    state._fsp--;
             	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) stream_expression.add(expression89.getTree());
+            	    if ( state.backtracking==0 ) stream_expression.add(expression88.getTree());
 
             	    }
             	    break;
 
             	default :
-            	    break loop33;
+            	    break loop34;
                 }
             } while (true);
 
@@ -4138,9 +4109,9 @@ public TreeAdaptor getTreeAdaptor() {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Tree)adaptor.nil();
-            // 155:4: -> ( expression )*
+            // 151:4: -> ( expression )*
             {
-                // /home/richard/workspace/RichTea/antlr/RichTea.g:155:7: ( expression )*
+                // /home/richard/workspace/RichTea/antlr/RichTea.g:151:7: ( expression )*
                 while ( stream_expression.hasNext() ) {
                     adaptor.addChild(root_0, stream_expression.nextTree());
 
@@ -4186,7 +4157,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
     // $ANTLR start "executable_function_attribute"
-    // /home/richard/workspace/RichTea/antlr/RichTea.g:158:1: executable_function_attribute : AT function -> ^( EXECUTABLE_FUNCTION_ATTRIBUTE function ) ;
+    // /home/richard/workspace/RichTea/antlr/RichTea.g:154:1: executable_function_attribute : AT function -> ^( EXECUTABLE_FUNCTION_ATTRIBUTE function ) ;
     public final RichTeaParser.executable_function_attribute_return executable_function_attribute() throws RecognitionException {
         RichTeaParser.executable_function_attribute_return retval = new RichTeaParser.executable_function_attribute_return();
         retval.start = input.LT(1);
@@ -4194,27 +4165,27 @@ public TreeAdaptor getTreeAdaptor() {
 
         Tree root_0 = null;
 
-        Token AT90=null;
-        RichTeaParser.function_return function91 =null;
+        Token AT89=null;
+        RichTeaParser.function_return function90 =null;
 
 
-        Tree AT90_tree=null;
+        Tree AT89_tree=null;
         RewriteRuleTokenStream stream_AT=new RewriteRuleTokenStream(adaptor,"token AT");
         RewriteRuleSubtreeStream stream_function=new RewriteRuleSubtreeStream(adaptor,"rule function");
         try {
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:159:2: ( AT function -> ^( EXECUTABLE_FUNCTION_ATTRIBUTE function ) )
-            // /home/richard/workspace/RichTea/antlr/RichTea.g:159:5: AT function
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:155:2: ( AT function -> ^( EXECUTABLE_FUNCTION_ATTRIBUTE function ) )
+            // /home/richard/workspace/RichTea/antlr/RichTea.g:155:5: AT function
             {
-            AT90=(Token)match(input,AT,FOLLOW_AT_in_executable_function_attribute1046); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_AT.add(AT90);
+            AT89=(Token)match(input,AT,FOLLOW_AT_in_executable_function_attribute1034); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_AT.add(AT89);
 
 
-            pushFollow(FOLLOW_function_in_executable_function_attribute1048);
-            function91=function();
+            pushFollow(FOLLOW_function_in_executable_function_attribute1036);
+            function90=function();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) stream_function.add(function91.getTree());
+            if ( state.backtracking==0 ) stream_function.add(function90.getTree());
 
             // AST REWRITE
             // elements: function
@@ -4229,9 +4200,9 @@ public TreeAdaptor getTreeAdaptor() {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Tree)adaptor.nil();
-            // 160:4: -> ^( EXECUTABLE_FUNCTION_ATTRIBUTE function )
+            // 156:4: -> ^( EXECUTABLE_FUNCTION_ATTRIBUTE function )
             {
-                // /home/richard/workspace/RichTea/antlr/RichTea.g:160:7: ^( EXECUTABLE_FUNCTION_ATTRIBUTE function )
+                // /home/richard/workspace/RichTea/antlr/RichTea.g:156:7: ^( EXECUTABLE_FUNCTION_ATTRIBUTE function )
                 {
                 Tree root_1 = (Tree)adaptor.nil();
                 root_1 = (Tree)adaptor.becomeRoot(
@@ -4309,7 +4280,7 @@ public TreeAdaptor getTreeAdaptor() {
     // $ANTLR start synpred6_RichTea
     public final void synpred6_RichTea_fragment() throws RecognitionException {
         List list_=null;
-       // RuleReturnScope  = null;
+      //  RuleReturnScope  = null;
         // /home/richard/workspace/RichTea/antlr/RichTea.g:38:14: (attributes+= implicit_attribute )
         // /home/richard/workspace/RichTea/antlr/RichTea.g:38:14: attributes+= implicit_attribute
         {
@@ -4327,18 +4298,18 @@ public TreeAdaptor getTreeAdaptor() {
     // $ANTLR start synpred8_RichTea
     public final void synpred8_RichTea_fragment() throws RecognitionException {
         List list_=null;
-      // RuleReturnScope  = null;
+        //RuleReturnScope  = null;
         // /home/richard/workspace/RichTea/antlr/RichTea.g:38:37: ( ( COMMA )? attributes+= attribute )
         // /home/richard/workspace/RichTea/antlr/RichTea.g:38:37: ( COMMA )? attributes+= attribute
         {
         // /home/richard/workspace/RichTea/antlr/RichTea.g:38:37: ( COMMA )?
-        int alt36=2;
-        int LA36_0 = input.LA(1);
+        int alt37=2;
+        int LA37_0 = input.LA(1);
 
-        if ( (LA36_0==COMMA) ) {
-            alt36=1;
+        if ( (LA37_0==COMMA) ) {
+            alt37=1;
         }
-        switch (alt36) {
+        switch (alt37) {
             case 1 :
                 // /home/richard/workspace/RichTea/antlr/RichTea.g:38:37: COMMA
                 {
@@ -4351,7 +4322,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
         pushFollow(FOLLOW_attribute_in_synpred8_RichTea257);
-       // attributes=attribute();
+        //attributes=attribute();
 
         state._fsp--;
         if (state.failed) return ;
@@ -4509,33 +4480,33 @@ public TreeAdaptor getTreeAdaptor() {
 
     protected DFA18 dfa18 = new DFA18(this);
     static final String DFA18_eotS =
-        "\u00a3\uffff";
+        "\u00a4\uffff";
     static final String DFA18_eofS =
-        "\2\uffff\6\43\u009b\uffff";
+        "\2\uffff\6\43\u009c\uffff";
     static final String DFA18_minS =
         "\2\7\6\4\1\7\1\36\2\7\26\0\12\uffff\7\0\12\uffff\7\0\12\uffff\7"+
-        "\0\12\uffff\7\0\12\uffff\11\0\12\uffff\40\0";
+        "\0\12\uffff\11\0\12\uffff\10\0\12\uffff\40\0";
     static final String DFA18_maxS =
         "\2\75\6\73\1\75\1\62\2\75\26\0\12\uffff\7\0\12\uffff\7\0\12\uffff"+
-        "\7\0\12\uffff\7\0\12\uffff\11\0\12\uffff\40\0";
+        "\7\0\12\uffff\11\0\12\uffff\10\0\12\uffff\40\0";
     static final String DFA18_acceptS =
-        "\42\uffff\1\1\1\2\177\uffff";
+        "\42\uffff\1\1\1\2\u0080\uffff";
     static final String DFA18_specialS =
         "\14\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1"+
         "\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25\12\uffff\1\26\1"+
         "\27\1\30\1\31\1\32\1\33\1\34\12\uffff\1\35\1\36\1\37\1\40\1\41\1"+
         "\42\1\43\12\uffff\1\44\1\45\1\46\1\47\1\50\1\51\1\52\12\uffff\1"+
-        "\53\1\54\1\55\1\56\1\57\1\60\1\61\12\uffff\1\62\1\63\1\64\1\65\1"+
-        "\66\1\67\1\70\1\71\1\72\12\uffff\1\73\1\74\1\75\1\76\1\77\1\100"+
+        "\53\1\54\1\55\1\56\1\57\1\60\1\61\1\62\1\63\12\uffff\1\64\1\65\1"+
+        "\66\1\67\1\70\1\71\1\72\1\73\12\uffff\1\74\1\75\1\76\1\77\1\100"+
         "\1\101\1\102\1\103\1\104\1\105\1\106\1\107\1\110\1\111\1\112\1\113"+
         "\1\114\1\115\1\116\1\117\1\120\1\121\1\122\1\123\1\124\1\125\1\126"+
-        "\1\127\1\130\1\131\1\132}>";
+        "\1\127\1\130\1\131\1\132\1\133}>";
     static final String[] DFA18_transitionS = {
-            "\1\11\2\uffff\1\3\23\uffff\1\7\5\uffff\1\13\10\uffff\1\12\1"+
-            "\5\1\2\1\10\1\uffff\1\1\10\uffff\1\4\1\uffff\1\6",
+            "\1\11\2\uffff\1\3\23\uffff\1\6\5\uffff\1\13\10\uffff\1\12\1"+
+            "\5\1\2\1\10\1\uffff\1\1\10\uffff\1\4\1\uffff\1\7",
             "\1\24\2\uffff\1\16\5\uffff\1\32\1\uffff\1\27\12\uffff\1\30"+
-            "\1\22\5\uffff\1\26\10\uffff\1\25\1\20\1\15\1\23\1\31\1\14\10"+
-            "\uffff\1\17\1\uffff\1\21",
+            "\1\21\5\uffff\1\26\10\uffff\1\25\1\20\1\15\1\23\1\31\1\14\10"+
+            "\uffff\1\17\1\uffff\1\22",
             "\1\40\11\uffff\3\43\1\uffff\1\43\1\uffff\2\34\1\37\4\uffff"+
             "\2\36\2\43\3\uffff\2\36\2\35\3\34\3\uffff\1\37\4\uffff\1\43"+
             "\1\uffff\1\41\1\uffff\2\35\1\33\1\uffff\1\42\1\uffff\1\43",
@@ -4549,23 +4520,23 @@ public TreeAdaptor getTreeAdaptor() {
             "\2\121\2\43\3\uffff\2\121\2\120\3\117\3\uffff\1\122\4\uffff"+
             "\1\43\1\uffff\1\124\1\uffff\2\120\1\116\1\uffff\1\42\1\uffff"+
             "\1\43",
-            "\1\144\11\uffff\3\43\1\uffff\1\43\1\uffff\2\140\1\143\4\uffff"+
-            "\2\142\2\43\3\uffff\2\142\2\141\3\140\3\uffff\1\143\4\uffff"+
-            "\1\43\1\uffff\1\145\1\uffff\2\141\1\137\1\uffff\1\42\1\uffff"+
-            "\1\43",
-            "\1\167\11\uffff\3\43\1\uffff\1\43\1\uffff\2\163\1\166\4\uffff"+
-            "\2\165\2\43\3\uffff\2\165\2\164\3\163\3\uffff\1\166\4\uffff"+
-            "\1\43\1\160\1\170\1\161\2\164\1\162\1\uffff\1\42\1\uffff\1\43",
-            "\1\u008b\2\uffff\1\u0085\3\uffff\1\u008e\17\uffff\1\u0089\5"+
-            "\uffff\1\u008d\10\uffff\1\u008c\1\u0087\1\u0084\1\u008a\1\uffff"+
-            "\1\u0083\10\uffff\1\u0086\1\uffff\1\u0088",
-            "\1\u008f\23\uffff\1\u0090",
-            "\1\u0099\2\uffff\1\u0093\23\uffff\1\u0097\17\uffff\1\u0095"+
-            "\1\u0092\1\u0098\1\uffff\1\u0091\10\uffff\1\u0094\1\uffff\1"+
-            "\u0096",
-            "\1\u00a2\2\uffff\1\u009c\23\uffff\1\u00a0\17\uffff\1\u009e"+
-            "\1\u009b\1\u00a1\1\uffff\1\u009a\10\uffff\1\u009d\1\uffff\1"+
-            "\u009f",
+            "\1\146\11\uffff\3\43\1\uffff\1\43\1\uffff\2\142\1\145\4\uffff"+
+            "\2\144\2\43\3\uffff\2\144\2\143\3\142\3\uffff\1\145\4\uffff"+
+            "\1\43\1\137\1\147\1\140\2\143\1\141\1\uffff\1\42\1\uffff\1\43",
+            "\1\170\11\uffff\3\43\1\uffff\1\43\1\uffff\2\164\1\167\4\uffff"+
+            "\2\166\2\43\3\uffff\2\166\2\165\3\164\3\uffff\1\167\4\uffff"+
+            "\1\43\1\uffff\1\171\1\162\2\165\1\163\1\uffff\1\42\1\uffff\1"+
+            "\43",
+            "\1\u008c\2\uffff\1\u0086\3\uffff\1\u008f\17\uffff\1\u0089\5"+
+            "\uffff\1\u008e\10\uffff\1\u008d\1\u0088\1\u0085\1\u008b\1\uffff"+
+            "\1\u0084\10\uffff\1\u0087\1\uffff\1\u008a",
+            "\1\u0090\23\uffff\1\u0091",
+            "\1\u009a\2\uffff\1\u0094\23\uffff\1\u0097\17\uffff\1\u0096"+
+            "\1\u0093\1\u0099\1\uffff\1\u0092\10\uffff\1\u0095\1\uffff\1"+
+            "\u0098",
+            "\1\u00a3\2\uffff\1\u009d\23\uffff\1\u00a0\17\uffff\1\u009f"+
+            "\1\u009c\1\u00a2\1\uffff\1\u009b\10\uffff\1\u009e\1\uffff\1"+
+            "\u00a1",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -4656,17 +4627,18 @@ public TreeAdaptor getTreeAdaptor() {
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\uffff",
+            "\1\uffff",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -5656,10 +5628,10 @@ public TreeAdaptor getTreeAdaptor() {
                         break;
 
                     case 50 : 
-                        int LA18_112 = input.LA(1);
+                        int LA18_102 = input.LA(1);
 
                          
-                        int index18_112 = input.index();
+                        int index18_102 = input.index();
                         input.rewind();
 
                         s = -1;
@@ -5668,16 +5640,16 @@ public TreeAdaptor getTreeAdaptor() {
                         else if ( (true) ) {s = 35;}
 
                          
-                        input.seek(index18_112);
+                        input.seek(index18_102);
 
                         if ( s>=0 ) return s;
                         break;
 
                     case 51 : 
-                        int LA18_113 = input.LA(1);
+                        int LA18_103 = input.LA(1);
 
                          
-                        int index18_113 = input.index();
+                        int index18_103 = input.index();
                         input.rewind();
 
                         s = -1;
@@ -5686,7 +5658,7 @@ public TreeAdaptor getTreeAdaptor() {
                         else if ( (true) ) {s = 35;}
 
                          
-                        input.seek(index18_113);
+                        input.seek(index18_103);
 
                         if ( s>=0 ) return s;
                         break;
@@ -5818,10 +5790,10 @@ public TreeAdaptor getTreeAdaptor() {
                         break;
 
                     case 59 : 
-                        int LA18_131 = input.LA(1);
+                        int LA18_121 = input.LA(1);
 
                          
-                        int index18_131 = input.index();
+                        int index18_121 = input.index();
                         input.rewind();
 
                         s = -1;
@@ -5830,7 +5802,7 @@ public TreeAdaptor getTreeAdaptor() {
                         else if ( (true) ) {s = 35;}
 
                          
-                        input.seek(index18_131);
+                        input.seek(index18_121);
 
                         if ( s>=0 ) return s;
                         break;
@@ -6392,6 +6364,24 @@ public TreeAdaptor getTreeAdaptor() {
 
                         if ( s>=0 ) return s;
                         break;
+
+                    case 91 : 
+                        int LA18_163 = input.LA(1);
+
+                         
+                        int index18_163 = input.index();
+                        input.rewind();
+
+                        s = -1;
+                        if ( (synpred18_RichTea()) ) {s = 34;}
+
+                        else if ( (true) ) {s = 35;}
+
+                         
+                        input.seek(index18_163);
+
+                        if ( s>=0 ) return s;
+                        break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
 
@@ -6477,32 +6467,31 @@ public TreeAdaptor getTreeAdaptor() {
     public static final BitSet FOLLOW_BOOLEAN_in_data_type794 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_STRING_in_data_type799 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_NULL_in_data_type804 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_last_returned_value_in_data_type809 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_variable_in_data_type815 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_array_in_data_type820 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_function_in_data_type825 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_executable_function_attribute_in_data_type830 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_UNDERSCORE_in_last_returned_value842 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_lookup_chain_root_in_variable864 = new BitSet(new long[]{0x0010000000000002L});
-    public static final BitSet FOLLOW_PERIOD_in_variable867 = new BitSet(new long[]{0x0002000040000000L});
-    public static final BitSet FOLLOW_lookup_chain_element_in_variable871 = new BitSet(new long[]{0x0010000000000002L});
-    public static final BitSet FOLLOW_ID_in_lookup_chain_root897 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_lookup_chain_root_in_lookup_chain_element921 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_lookup_chain_element926 = new BitSet(new long[]{0x0004000000000000L});
-    public static final BitSet FOLLOW_OPEN_PAREN_in_lookup_chain_element928 = new BitSet(new long[]{0x2805E01040010480L});
-    public static final BitSet FOLLOW_expression_list_in_lookup_chain_element930 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_CLOSE_PAREN_in_lookup_chain_element933 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_BRACE_in_lookup_chain_element960 = new BitSet(new long[]{0x2805E01040000480L});
-    public static final BitSet FOLLOW_expression_in_lookup_chain_element962 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_CLOSE_BRACE_in_lookup_chain_element964 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPEN_BOX_in_array987 = new BitSet(new long[]{0x2805E01040004480L});
-    public static final BitSet FOLLOW_expression_list_in_array989 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_CLOSE_BOX_in_array992 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_expression_list1016 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_COMMA_in_expression_list1019 = new BitSet(new long[]{0x2805E01040000480L});
-    public static final BitSet FOLLOW_expression_in_expression_list1021 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_AT_in_executable_function_attribute1046 = new BitSet(new long[]{0x0004000040000000L});
-    public static final BitSet FOLLOW_function_in_executable_function_attribute1048 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_variable_in_data_type810 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_array_in_data_type815 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_function_in_data_type820 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_executable_function_attribute_in_data_type825 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_lookup_chain_root_in_variable840 = new BitSet(new long[]{0x0010000000000002L});
+    public static final BitSet FOLLOW_PERIOD_in_variable843 = new BitSet(new long[]{0x2002000040000000L});
+    public static final BitSet FOLLOW_lookup_chain_element_in_variable847 = new BitSet(new long[]{0x0010000000000002L});
+    public static final BitSet FOLLOW_ID_in_lookup_chain_root873 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_UNDERSCORE_in_lookup_chain_root890 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_lookup_chain_root_in_lookup_chain_element909 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ID_in_lookup_chain_element914 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_OPEN_PAREN_in_lookup_chain_element916 = new BitSet(new long[]{0x2805E01040010480L});
+    public static final BitSet FOLLOW_expression_list_in_lookup_chain_element918 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_CLOSE_PAREN_in_lookup_chain_element921 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPEN_BRACE_in_lookup_chain_element948 = new BitSet(new long[]{0x2805E01040000480L});
+    public static final BitSet FOLLOW_expression_in_lookup_chain_element950 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_CLOSE_BRACE_in_lookup_chain_element952 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPEN_BOX_in_array975 = new BitSet(new long[]{0x2805E01040004480L});
+    public static final BitSet FOLLOW_expression_list_in_array977 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_CLOSE_BOX_in_array980 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_expression_list1004 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_COMMA_in_expression_list1007 = new BitSet(new long[]{0x2805E01040000480L});
+    public static final BitSet FOLLOW_expression_in_expression_list1009 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_AT_in_executable_function_attribute1034 = new BitSet(new long[]{0x0004000040000000L});
+    public static final BitSet FOLLOW_function_in_executable_function_attribute1036 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_function_data_in_synpred1_RichTea164 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_function_data_in_synpred4_RichTea195 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_implicit_attribute_in_synpred6_RichTea248 = new BitSet(new long[]{0x0000000000000002L});

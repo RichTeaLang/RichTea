@@ -17,12 +17,10 @@ public class VariableAttribute extends LookupChainElement {
 		
 		setName(name);
 	}
-
+	
 	@Override
-	public Object getValue(ExecutionContext context) {
-		Object value = getLookupChain().getValue(context);
-		
-		return value;
+	protected Object performLookup(ExecutionContext content, Object lookupChainValue) {
+		return lookupChainValue;
 	}
 	
 	@Override

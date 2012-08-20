@@ -10,7 +10,6 @@ import richTea.antlr.tree.NodeData;
 import richTea.core.attribute.ArrayAttribute;
 import richTea.core.attribute.AssignmentExpression;
 import richTea.core.attribute.Attribute;
-import richTea.core.attribute.LastReturnedValueAttribute;
 import richTea.core.attribute.PrimativeAttribute;
 import richTea.core.attribute.TernaryExpressionAttribute;
 import richTea.core.attribute.VariableAttribute;
@@ -31,6 +30,7 @@ import richTea.core.attribute.math.MinusAttribute;
 import richTea.core.attribute.math.ModulusAttribute;
 import richTea.core.attribute.math.MultiplyAttribute;
 import richTea.core.attribute.math.PlusAttribute;
+import richTea.core.attribute.variable.LastReturnedValueAttribute;
 import richTea.core.attribute.variable.LookupChainRoot;
 import richTea.core.attribute.variable.NativeMethodCall;
 import richTea.core.attribute.variable.PropertyLookup;
@@ -133,9 +133,6 @@ public class RichTeaAttributeFactory {
 			case RichTeaParser.TERNARY_OPERATOR :
 				attribute = createTernaryExpressionAttribute(name, value);
 				break;
-			case RichTeaParser.LAST_RETURNED_VALUE :
-				attribute = createLastReturnedValueAttribute(name);
-				break;
 			default :
 				throw new IllegalArgumentException("Unknown attribute type");
 		}
@@ -178,6 +175,11 @@ public class RichTeaAttributeFactory {
 				case RichTeaParser.NATIVE_METHOD_CALL :
 					lookupChain = createNativeMethodCallAttribute(lookupElement, lookupChain);
 					break;
+				case RichTeaParser.LAST_RETURNED_VALUE :
+					lookupChain = createLastReturnedValueAttribute(lookupChain);
+					break;
+				default :
+					throw new IllegalArgumentException("Invalid variable element attribute type");
 			}
 		}
 		
@@ -307,8 +309,8 @@ public class RichTeaAttributeFactory {
 		return new TernaryExpressionAttribute(name, operands[0], operands[1], operands[2]);
 	}
 	
-	protected Attribute createLastReturnedValueAttribute(String name) {
-		return new LastReturnedValueAttribute(name);
+	protected Attribute createLastReturnedValueAttribute(Attribute lookupChain) {
+		return new LastReturnedValueAttribute(lookupChain);
 	}
 	
 	protected Attribute[] getAttributeOperands(String elementPrefix, Tree elements) {
