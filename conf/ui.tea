@@ -23,6 +23,11 @@
 		})
 	})
 	
+	Let("calculatorInput" be:"");
+	Let("t" be:Button(text:super.text #mouseClicked {
+		Set(calculatorInput to:calculatorInput + event.source.text)
+	}))
+	
 	Frame(
 		id:"myFrame"
 		title:"Rich Tea Sample UI"
@@ -65,10 +70,29 @@
 					width:200 height:200
 					
 					content {
-						TextField(id:"input" columns:10 editable:true);
-						TextField(id:"output" columns:10 editable:false);
+					
+						SplitPane({
+							Panel(
+								layout:@GridLayout(rows:3 columns:3)
+								
+								content {
+									t(text:"1")
+									t(text:"2")
+									t(text:"3")
+									t(text:"4")
+									t(text:"5")
+									t(text:"6")
+									t(text:"7")
+									t(text:"8")
+									t(text:"9")
+								}
+							)
+								
+							TextField(id:"output" columns:10 editable:false);
+						})
+						
 						Button("Eval" mouseClicked {
-							Set(output.text to:@Eval(input.text));
+							Set(output.text to:calculatorInput);
 						})
 					})
 			})

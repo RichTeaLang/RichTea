@@ -150,6 +150,12 @@ Bindings(#bindings {
 		}
 	)
 	
+	Function(name:"SplitPane" functionClass:"richTea.impl.ui.RSplitPane" implicitBranchName:"content"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JSplitPane")
+		}
+	)
+	
 	Function(name:"Label" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JLabel")
@@ -192,6 +198,12 @@ Bindings(#bindings {
 		}
 	)
 	
+	Function(name:"GridLayout" functionClass:"richTea.impl.CreateBean"
+		#attributes {
+			Attribute(name:"class" defaultValue:"java.awt.GridLayout")
+		}
+	)
+	
 	Function(name:"MenuBar" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitBranchName:"content"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JMenuBar")
@@ -219,6 +231,12 @@ Bindings(#bindings {
 	Function(name:"TextField" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
 		#attributes {
 			Attribute(name:"class" defaultValue:"javax.swing.JTextField")
+		}
+	)
+	
+	Function(name:"TextArea" functionClass:"richTea.impl.ui.CreateAWTComponent" implicitAttributeName:"text"
+		#attributes {
+			Attribute(name:"class" defaultValue:"javax.swing.JTextArea")
 		}
 	)
 	

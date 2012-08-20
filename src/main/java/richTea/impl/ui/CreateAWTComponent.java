@@ -62,11 +62,15 @@ public class CreateAWTComponent extends CreateBean {
 		Branch contentBranch = context.getCurrentNode().getBranch(contentBranchName);
 		
 		if(contentBranch != null) {
-			for(TreeNode contentNode : contentBranch.getChildren()) {
-				Container content = (Container) context.execute(contentNode);
-				
-				addContent(root, content);
-			}
+			addContent(root, contentBranch.getChildren());
+		}
+	}
+	
+	protected void addContent(Container root, TreeNode[] children) {
+		for(TreeNode contentNode : children) {
+			Container content = (Container) context.execute(contentNode);
+			
+			addContent(root, content);
 		}
 	}
 	
