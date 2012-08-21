@@ -19,6 +19,7 @@ public class VariableScope extends AttributeSet {
 		this.owner = owner;
 		this.parent = parent;
 		
+		setAttribute(new PrimativeAttribute("this", owner));
 		setAttribute(new PrimativeAttribute("super", parent));
 	}
 	

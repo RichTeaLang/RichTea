@@ -25,29 +25,30 @@ public class PropertyLookup extends LookupChainElement {
 	}
 
 	@Override
-	protected Object performLookup(ExecutionContext context, Object lookupChainValue) {
-		return resolveAttribute(context).getValue(context);
+	protected Object performLookup(ExecutionContext context, Object lookupContext) {
+		return resolveAttribute(context, lookupContext).getValue(context);
 	}
 	
 	@Override
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
-		return resolveAttribute(context).modify(context, modifier);
+		Attribute attribute = resolveAttribute(context, getLookupChain().getValue(context));
+		
+		return attribute.modify(context, modifier);
 	}
 	
-	private Attribute resolveAttribute(ExecutionContext context) {
+	private Attribute resolveAttribute(ExecutionContext context, Object lookupContext) {
 		Attribute attribute = null;
 		
 		String attributeName = getPropertyName(context);
-		Object attributeSource = getPropertyHolder(context);
 		
-		if(attributeSource instanceof AttributeSet) {
-			AttributeSet attributeSet = (AttributeSet) attributeSource;
+		if(lookupContext instanceof AttributeSet) {
+			AttributeSet attributeSet = (AttributeSet) lookupContext;
 			
 			if(attributeSet instanceof VariableScope) attribute = ((VariableScope) attributeSet).resolveAttribute(attributeName);
 			else attribute =  attributeSet.getAttribute(attributeName);
 		}
 		
-		if(attribute == null) attribute = new BeanLookup(attributeName, attributeSource);
+		if(attribute == null) attribute = new BeanLookup(attributeName, lookupContext);
 		
 		return attribute;
 	}

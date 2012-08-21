@@ -176,7 +176,7 @@ public class RichTeaAttributeFactory {
 					lookupChain = createNativeMethodCallAttribute(lookupElement, lookupChain);
 					break;
 				case RichTeaParser.LAST_RETURNED_VALUE :
-					lookupChain = createLastReturnedValueAttribute(lookupChain);
+					lookupChain = createLastReturnedValueAttribute(name);
 					break;
 				default :
 					throw new IllegalArgumentException("Invalid variable element attribute type");
@@ -309,8 +309,8 @@ public class RichTeaAttributeFactory {
 		return new TernaryExpressionAttribute(name, operands[0], operands[1], operands[2]);
 	}
 	
-	protected Attribute createLastReturnedValueAttribute(Attribute lookupChain) {
-		return new LastReturnedValueAttribute(lookupChain);
+	protected Attribute createLastReturnedValueAttribute(String name) {
+		return new LastReturnedValueAttribute(name);
 	}
 	
 	protected Attribute[] getAttributeOperands(String elementPrefix, Tree elements) {

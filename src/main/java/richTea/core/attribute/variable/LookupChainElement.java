@@ -38,7 +38,7 @@ public abstract class LookupChainElement implements Attribute {
 		return value;		
 	}
 	
-	abstract protected Object performLookup(ExecutionContext content, Object lookupChainValue);
+	abstract protected Object performLookup(ExecutionContext content, Object lookupContext);
 
 	@Override
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
