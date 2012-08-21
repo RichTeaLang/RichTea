@@ -2,6 +2,7 @@ package richTea.core.attribute.variable;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import richTea.core.attribute.Attribute;
@@ -56,12 +57,13 @@ public abstract class LookupChainElement implements Attribute {
 	
 	protected List<Object> convertArray(Object array) {
 		int arrayLength = Array.getLength(array);
+		
 		List<Object> list = new ArrayList<Object>(arrayLength);
 		
 		for(int i = 0; i < arrayLength; i++) {
 			list.add(Array.get(array, i));
 		}
 		
-		return list;
+		return Collections.unmodifiableList(list);
 	}
 }
