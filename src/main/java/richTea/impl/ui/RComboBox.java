@@ -10,7 +10,7 @@ import richTea.impl.ui.event.RActionListener;
 public class RComboBox extends CreateAWTComponent {
 	
 	@Override
-	protected Object createBean() throws ClassNotFoundException, InstantiationException, IllegalAccessException {		
+	protected JComboBox createBean() throws ClassNotFoundException, InstantiationException, IllegalAccessException {		
 		JComboBox comboBox = (JComboBox) super.createBean();
 		
 		comboBox.addActionListener(new RActionListener(context));

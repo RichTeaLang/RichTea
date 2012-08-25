@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.ItemSelectable;
 import java.awt.Rectangle;
 
-import richTea.core.attribute.Attribute;
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 import richTea.impl.CreateBean;
@@ -21,30 +20,33 @@ import richTea.impl.ui.event.RMouseWheelListener;
 import richTea.impl.ui.event.RPropertyChangeListener;
 
 public class CreateAWTComponent extends CreateBean {
-		
+	
 	@Override
-	protected void mapBeanAttributes(Object bean, Attribute[] attributes) {
-		Container component = (Container) bean;
+	protected Container createBean() throws ClassNotFoundException, InstantiationException, IllegalAccessException {		
+		Container container = (Container) super.createBean();
 		
-		addContent(component, "content");
+		addContent(container, "content");
 		
-		component.setBounds(getBounds(component));
+		Rectangle bounds = getBounds(container);
 		
-		component.addComponentListener(new RComponentListener(context));
-		component.addContainerListener(new RContainerListener(context));
-		component.addFocusListener(new RFocusListener(context));
-		component.addKeyListener(new RKeyListener(context));
-		component.addMouseListener(new RMouseListener(context));
-		component.addMouseMotionListener(new RMouseMotionListener(context));
-		component.addMouseWheelListener(new RMouseWheelListener(context));
-		component.addPropertyChangeListener(new RPropertyChangeListener(context));
+		container.setBounds(bounds);
+		//container.setPreferredSize(new Dimension(bounds.width, bounds.height));
+		
+		container.addComponentListener(new RComponentListener(context));
+		container.addContainerListener(new RContainerListener(context));
+		container.addFocusListener(new RFocusListener(context));
+		container.addKeyListener(new RKeyListener(context));
+		container.addMouseListener(new RMouseListener(context));
+		container.addMouseMotionListener(new RMouseMotionListener(context));
+		container.addMouseWheelListener(new RMouseWheelListener(context));
+		container.addPropertyChangeListener(new RPropertyChangeListener(context));
 		
 		// Listener support for a number of swing components
-		if(component instanceof ItemSelectable) {
-			((ItemSelectable) component).addItemListener(new RItemListener(context));
+		if(container instanceof ItemSelectable) {
+			((ItemSelectable) container).addItemListener(new RItemListener(context));
 		}
 		
-		super.mapBeanAttributes(component, attributes);
+		return container;
 	}
 	
 	protected Rectangle getBounds(Component component) {

@@ -13,7 +13,7 @@ public class RCreateAbstractButton extends CreateAWTComponent {
 	private static Map<String, ButtonGroup> buttonGroups = new HashMap<String, ButtonGroup>();
 	
 	@Override
-	protected Object createBean() throws ClassNotFoundException, InstantiationException, IllegalAccessException {		
+	protected AbstractButton createBean() throws ClassNotFoundException, InstantiationException, IllegalAccessException {		
 		AbstractButton button = (AbstractButton) super.createBean();
 		
 		button.addActionListener(new RActionListener(context));
