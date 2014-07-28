@@ -4,19 +4,13 @@ Welcome to my very first programming language!  I hope you like it.  I implore y
 
 `RichTea` is a hobby project which, if nothing else, is an interesting resource and reference point to use when learning to design and implement a simple programming language.
 
----
-
 ## Installation
 
 `RichTea` makes use of the `maven` build process - If you are familiar with `maven` compilation should be straight forward.
 
 In the near future, after setting up a continuous integration server,  I will write full documentation for setup and provide binaries.
 
----
-
 ## By example
-
-
 
 The infamous hello world program:
 
@@ -76,8 +70,6 @@ Frame("Hello UI", width:800, height:600, content {
     })
 })
 ```
----
-
 ## Language Documentation
 
 ### Data Types
