@@ -12,9 +12,10 @@ public class Binding extends DataNode {
 	
 	private static final String NODE_CLASS_ATTRIBUTE = "nodeClass";
 	private static final String FUNCTION_CLASS_ATTRIBUTE = "functionClass";
+	private static final String IMPLICIT_ATTRIBUTE_NAME_ATTRIBUTE = "implicitAttributeName";
+	private static final String IMPLICIT_BRANCH_NAME_ATTRIBUTE = "implicitBranchName";
 	
 	private AttributeSet defaultAttributes;
-
 	private Class<? extends TreeNode> nodeClass;
 	private Class<? extends RichTeaFunction> functionClass;
 
@@ -26,23 +27,25 @@ public class Binding extends DataNode {
 	}
 	
 	@Override
-	public void initialize() {
-		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+	public void initialize() throws ClassNotFoundException {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		
 		String nodeClassName = getNodeClassName();
 		
 		try {
 			nodeClass = classLoader.loadClass(nodeClassName).asSubclass(TreeNode.class);
 		} catch (ClassNotFoundException e) {
-			log.error(String.format("Could not find class %s for binding %s", nodeClassName, getName()), e);
+			String message = String.format("Could not find class %s for binding %s", nodeClassName, getName());
+			throw new ClassNotFoundException(message, e);
 		}
 		
 		String functionClassName = getFunctionClassName();
 		
-		try {			
+		try {
 			functionClass = classLoader.loadClass(functionClassName).asSubclass(RichTeaFunction.class);
 		} catch(ClassNotFoundException e) {
-			log.error(String.format("Cannot find class %s for binding %s", functionClassName, getName()), e);
+			String message = String.format("Cannot find class %s for binding %s", functionClassName, getName());
+			throw new ClassNotFoundException(message, e);
 		}
 	}
 	
@@ -74,17 +77,16 @@ public class Binding extends DataNode {
 		setValue(FUNCTION_CLASS_ATTRIBUTE, functionClassName);
 	}
 	
-	public RichTeaFunction createFunctionImplementation() {
+	public RichTeaFunction createFunctionImplementation() throws InstantiationException, IllegalAccessException {
 		try {
 			return functionClass.newInstance();
 		} catch (InstantiationException e) {
-			log.error(String.format("Unable in instantiate class %s for binding %s", getFunctionClassName(), getName()), e);
-			e.printStackTrace();
+			String message = String.format("Unable in instantiate class %s for binding %s", getFunctionClassName(), getName());
+			throw new InstantiationException(message);
 		} catch (IllegalAccessException e) {
-			log.error(String.format("Unable in access constructor for class %s for binding %s", getFunctionClassName(), getName()), e);
+			String message = String.format("Unable in access constructor for class %s for binding %s", getFunctionClassName(), getName());
+			throw new IllegalAccessException(message);
 		}
-		
-		return null;
 	}
 	
 	public Object getDefaultAttributeValue(String attributeName) {
@@ -98,11 +100,19 @@ public class Binding extends DataNode {
 	}
 	
 	public String getImplicitAttributeName() {
-		return resolver.getString("implicitAttributeName");
+		return resolver.getString(IMPLICIT_ATTRIBUTE_NAME_ATTRIBUTE);
+	}
+	
+	protected void setImplicitAttributeName(String name) {
+		this.setValue(IMPLICIT_ATTRIBUTE_NAME_ATTRIBUTE, name);
 	}
 	
 	public String getImplicitBranchName() {
-		return resolver.getString("implicitBranchName");
+		return resolver.getString(IMPLICIT_BRANCH_NAME_ATTRIBUTE);
+	}
+	
+	protected void setImplicitBranchName(String name) {
+		this.setValue(IMPLICIT_BRANCH_NAME_ATTRIBUTE, name);
 	}
 	
 	@Override

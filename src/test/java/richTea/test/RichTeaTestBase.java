@@ -1,12 +1,12 @@
 package richTea.test;
 
+import static org.junit.Assert.assertTrue;
+
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.apache.log4j.BasicConfigurator;
-
-import static org.junit.Assert.assertTrue;
 
 import richTea.antlr.RichTeaLexer;
 import richTea.antlr.RichTeaParser;
@@ -16,6 +16,7 @@ import richTea.antlr.tree.NodeData;
 import richTea.core.attribute.Attribute;
 import richTea.core.factory.RichTeaAttributeFactory;
 import richTea.core.factory.RichTeaNodeFactory;
+import richTea.core.factory.bindings.BindingSet;
 import richTea.core.factory.bindings.BootstrapBindingSet;
 import richTea.core.node.TreeNode;
 
@@ -27,7 +28,7 @@ public class RichTeaTestBase {
 	public RichTeaTestBase() {
 		BasicConfigurator.configure();
 		
-		nodeFactory = new RichTeaNodeFactory(new BootstrapBindingSet());
+		nodeFactory = new RichTeaNodeFactory(new BindingSet[] { new BootstrapBindingSet() });
 		attributeFactory = new RichTeaAttributeFactory(nodeFactory);
 	}
 	

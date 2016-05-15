@@ -19,6 +19,10 @@ public class BootstrapBinding extends Binding {
 		setNodeClassName(nodeClass.getName());
 		setFunctionClassName(functionClass.getName());
 		
-		initialize();
+		try {
+			initialize();
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

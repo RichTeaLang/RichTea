@@ -13,7 +13,7 @@ public class TreeNode extends FunctionNode {
 		branches = new HashMap<String, Branch>();
 	}
 	
-	public void initialize() {}
+	public void initialize() throws Exception {}
 	
 	public TreeNode getParent() {
 		return parent;

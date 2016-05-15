@@ -22,6 +22,10 @@ public class BindingSet extends TreeNode {
 		return bindings.get(bindingName.toLowerCase());
 	}
 	
+	public Binding[] getBindings() {
+		return bindings.values().toArray(new Binding[bindings.size()]);
+	}
+	
 	@Override
 	public void setBranch(Branch branch) {
 		super.setBranch(branch);

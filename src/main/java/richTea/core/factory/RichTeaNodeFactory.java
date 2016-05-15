@@ -1,8 +1,8 @@
 package richTea.core.factory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import org.apache.log4j.Logger;
 
 import richTea.antlr.tree.AttributeData;
 import richTea.antlr.tree.BranchData;
@@ -11,26 +11,23 @@ import richTea.core.attribute.Attribute;
 import richTea.core.factory.bindings.Binding;
 import richTea.core.factory.bindings.BindingSet;
 import richTea.core.factory.bindings.BootstrapBinding;
+import richTea.core.factory.bindings.ImportNode;
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
-import richTea.impl.functional.FunctionCall;
+import richTea.impl.FunctionCall;
 
 public class RichTeaNodeFactory {
-	
-	private Logger log;
-	
-	private BindingSet bindings;
+	private List<BindingSet> bindingSets;
 	
 	private RichTeaAttributeFactory attributeFactory;
 
-	public RichTeaNodeFactory(BindingSet bindings) {
-		this.log = Logger.getLogger(getClass());
-		this.bindings = bindings;
+	public RichTeaNodeFactory(BindingSet[] bindingSets) {
+		this.bindingSets = new ArrayList<BindingSet>(Arrays.asList(bindingSets));
 		this.attributeFactory = new RichTeaAttributeFactory(this);
 	}
 	
-	public BindingSet getBindings() {
-		return bindings;
+	public BindingSet[] getBindingSets() {
+		return bindingSets.toArray(new BindingSet[bindingSets.size()]);
 	}
 	
 	public TreeNode create(NodeData nodeData) {
@@ -46,25 +43,36 @@ public class RichTeaNodeFactory {
 			node = instanciateNodeFromClass(nodeClass);
 			
 			setBindingOnNode(node, binding);
-			
 			buildAttributes(node, nodeData);
-			
 			buildBranches(node, nodeData);
-
 			setFunctionOnNode(node, binding);
 			
 			node.initialize();
-		}catch(InstantiationException exception) {
-			log.error(String.format("Unable to create instance of %s", binding.getNodeClassName()), exception);
-		}catch(IllegalAccessException exception) {
-			log.error(String.format("Unable to access constructor for %s", binding.getNodeClassName()), exception);
+			
+			if (node instanceof ImportNode) {
+				bindingSets.add(((ImportNode) node).getImportedBindings());
+			}
+		} catch (Exception e) {
+			String message = String.format("Unable to create node %s", binding.getNodeClassName());
+			
+			throw new RuntimeException(message, e);
 		}
 		
 		return node;
 	}
 	
 	protected Binding getNodeBinding(NodeData nodeData) {
-		return getBindings().getBinding(nodeData.getName());
+		Binding binding = null;
+		
+		for(BindingSet bindingSet : bindingSets) {
+			binding = bindingSet.getBinding(nodeData.getName());
+			
+			if (binding != null) {
+				break;
+			}
+		}
+		
+		return binding;
 	}
 	
 	protected Binding createFunctionCallBinding(NodeData nodeData) {
@@ -91,8 +99,7 @@ public class RichTeaNodeFactory {
 				
 				Attribute attribute = attributeFactory.create(attributeData);
 						
-				if(attribute != null) 
-				{
+				if(attribute != null) {
 					boolean isImplicitAttribute = attribute.getName().equalsIgnoreCase("implicitAttribute");
 					
 					if(isImplicitAttribute) {
@@ -157,7 +164,7 @@ public class RichTeaNodeFactory {
 		}
 	}
 	
-	protected void setFunctionOnNode(TreeNode node, Binding binding) {
+	protected void setFunctionOnNode(TreeNode node, Binding binding) throws InstantiationException, IllegalAccessException {
 		node.setFunction(binding.createFunctionImplementation());
 	}
 }

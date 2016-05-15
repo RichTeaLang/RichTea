@@ -41,44 +41,33 @@ public class RichTea {
 		}
 
 		try {
-			BindingSet bindings = (BindingSet) loadRichTeaFile("./conf/bindings.tea", new BootstrapBindingSet());
+			TreeNode programRoot = (TreeNode) loadRichTeaFile(programFile, new BindingSet[] { new BootstrapBindingSet() });
 			
-			try {
-				TreeNode programRoot = (TreeNode) loadRichTeaFile(programFile, bindings);
+			if(programRoot != null) {
+				long startTime = System.currentTimeMillis();
 				
-				if(programRoot != null) {
-					long startTime = System.currentTimeMillis();
-					
-					new ExecutionContext().execute(programRoot);
-					
-					log.info(String.format("RichTea Execution took %s ms", System.currentTimeMillis() - startTime));
-				}
-			}catch (IOException exception) {
-				log.error("Unable to load program file", exception);
-			}catch (RecognitionException exception) {
-				log.error("Invalid RichTea code encountered in program", exception);
+				new ExecutionContext().execute(programRoot);
+				
+				log.info(String.format("RichTea Execution took %s ms", System.currentTimeMillis() - startTime));
 			}
-		}catch (IOException exception) {
-			log.error("Unable to load bindings file", exception);
-		}catch (RecognitionException exception) {
-			log.error("Invalid RichTea code encountered in bindings", exception);
+		} catch (IOException exception) {
+			log.error("Unable to load program file", exception);
+		} catch (RecognitionException exception) {
+			log.error("Invalid RichTea code encountered in program", exception);
 		}
 	}
 	
-	private TreeNode loadRichTeaFile(String fileName, BindingSet bindings) throws IOException, RecognitionException {
+	private TreeNode loadRichTeaFile(String fileName, BindingSet[] bindings) throws IOException, RecognitionException {
 		log.info("Loading RichTea file " + fileName);
 		
 		long startTime = System.currentTimeMillis();
 		
 		ANTLRFileStream sourceFile = new ANTLRFileStream(fileName);
-		
 		RichTeaLexer lexer = new RichTeaLexer(sourceFile);
 		RichTeaParser parser = new RichTeaParser(new CommonTokenStream(lexer));
 		parser.setTreeAdaptor(new RichTeaTreeAdaptor());
 		NodeData programData = (NodeData) parser.program().getTree();
-		
 		RichTeaNodeFactory nodeFactory = new RichTeaNodeFactory(bindings);
-		
 		TreeNode program = nodeFactory.create(programData);
 		
 		log.info(String.format("Load took %s ms", System.currentTimeMillis() - startTime));
