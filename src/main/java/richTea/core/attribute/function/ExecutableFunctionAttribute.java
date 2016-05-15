@@ -20,7 +20,6 @@ public class ExecutableFunctionAttribute extends AbstractAttribute {
 	
 	@Override
 	public Object getValue(ExecutionContext context) {
-		
 		TreeNode functionNode = getFunctionAttribute().getFunctionNode();
 		
 		functionNode.setParent(context.getCurrentNode());

@@ -7,7 +7,6 @@ import richTea.core.attribute.PrimativeAttribute;
 public abstract class AbstractFunction implements RichTeaFunction {
 
 	protected Logger log = Logger.getLogger(getClass());
-	
 	protected ExecutionContext context;
 	
 	abstract protected void run() throws Exception;
@@ -30,9 +29,9 @@ public abstract class AbstractFunction implements RichTeaFunction {
 						throw new IllegalArgumentException("No scope to create variable");
 					}
 				}
-			}catch(RuntimeException runtimeException) {
+			} catch(RuntimeException runtimeException) {
 				throw runtimeException;
-			}catch(Exception checkedExceception) {
+			} catch(Exception checkedExceception) {
 				log.error("Error executing function", checkedExceception);
 			}
 			
