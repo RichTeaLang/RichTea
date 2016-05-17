@@ -8,7 +8,7 @@ import org.junit.Test;
 import richTea.core.node.Branch;
 import richTea.core.node.TreeNode;
 
-public class TestBranches extends RichTeaTestBase {
+public class BranchesTest extends RichTeaTestBase {
 	
 	@Test
 	public void testNoBranch() throws RecognitionException {

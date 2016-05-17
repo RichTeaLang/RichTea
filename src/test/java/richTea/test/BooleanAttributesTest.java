@@ -3,7 +3,7 @@ package richTea.test;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
-public class TestBooleanAttributes extends RichTeaTestBase {
+public class BooleanAttributesTest extends RichTeaTestBase {
 	
 	@Test
 	public void testAndAttribute() throws RecognitionException {

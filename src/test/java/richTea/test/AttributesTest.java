@@ -12,7 +12,7 @@ import richTea.core.attribute.VariableAttribute;
 import richTea.core.attribute.function.ExecutableFunctionAttribute;
 import richTea.core.attribute.function.FunctionAttribute;
 
-public class TestAttributes extends RichTeaTestBase {
+public class AttributesTest extends RichTeaTestBase {
 	
 	@Test
 	public void testAttributeName() throws RecognitionException {

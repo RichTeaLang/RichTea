@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import richTea.core.attribute.Attribute;
 
-public class TestMathAttributes extends RichTeaTestBase {
+public class MathAttributesTest extends RichTeaTestBase {
 	
 	@Test
 	public void testAddition() throws RecognitionException {
