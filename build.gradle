@@ -1,0 +1,24 @@
+apply plugin: 'application'
+apply plugin: 'eclipse'
+apply plugin: 'java'
+
+mainClassName = 'richTea.RichTea'
+
+// Execute RichTea program like so: 'gradle run -Pargs="path/to/program.tea"'
+run {
+    if(project.hasProperty('args')){
+        args project.args.split('\\s')
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'commons-beanutils:commons-beanutils:1.8.3'
+    compile 'commons-collections:commons-collections:3.2.1'
+ 	compile 'org.antlr:antlr-runtime:3.4'
+    compile 'log4j:log4j:1.2.17'
+    testCompile 'junit:junit-dep:4.11' 
+}

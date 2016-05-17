@@ -1,7 +1,9 @@
-.class
-/.classpath
-/.project
-/.settings
-/bin/**
-/doc/**
-/target
+*.class
+.classpath
+.project
+.settings
+.gradle/*
+bin/*
+build/*
+/bin/
+/.gradle/
