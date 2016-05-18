@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
-import richTea.core.node.Branch;
-import richTea.core.node.TreeNode;
+import richTea.node.Branch;
+import richTea.node.TreeNode;
 
 public class BranchesTest extends RichTeaTestBase {
 	

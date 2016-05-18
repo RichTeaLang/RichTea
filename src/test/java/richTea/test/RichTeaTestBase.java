@@ -13,12 +13,12 @@ import richTea.antlr.RichTeaParser;
 import richTea.antlr.RichTeaTreeAdaptor;
 import richTea.antlr.tree.AttributeData;
 import richTea.antlr.tree.NodeData;
-import richTea.core.attribute.Attribute;
-import richTea.core.factory.RichTeaAttributeFactory;
-import richTea.core.factory.RichTeaNodeFactory;
-import richTea.core.factory.bindings.BindingSet;
-import richTea.core.factory.bindings.BootstrapBindingSet;
-import richTea.core.node.TreeNode;
+import richTea.attribute.Attribute;
+import richTea.factory.RichTeaAttributeFactory;
+import richTea.factory.RichTeaNodeFactory;
+import richTea.impl.BindingSet;
+import richTea.impl.BootstrapBindingSet;
+import richTea.node.TreeNode;
 
 public class RichTeaTestBase {
 	

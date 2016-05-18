@@ -7,10 +7,10 @@ import java.util.List;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
-import richTea.core.attribute.Attribute;
-import richTea.core.attribute.VariableAttribute;
-import richTea.core.attribute.function.ExecutableFunctionAttribute;
-import richTea.core.attribute.function.FunctionAttribute;
+import richTea.attribute.Attribute;
+import richTea.attribute.VariableAttribute;
+import richTea.attribute.function.ExecutableFunctionAttribute;
+import richTea.attribute.function.FunctionAttribute;
 
 public class AttributesTest extends RichTeaTestBase {
 	

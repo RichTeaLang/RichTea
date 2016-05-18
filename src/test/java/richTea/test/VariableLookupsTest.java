@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
-import richTea.core.attribute.Attribute;
-import richTea.core.execution.ExecutionContext;
-import richTea.core.execution.VariableScope;
+import richTea.attribute.Attribute;
+import richTea.execution.ExecutionContext;
+import richTea.execution.VariableScope;
 
 public class VariableLookupsTest extends RichTeaTestBase {
 	
