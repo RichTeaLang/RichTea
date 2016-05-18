@@ -3,7 +3,6 @@ package richTea.antlr.tree;
 import java.util.List;
 
 import org.antlr.runtime.Token;
-import org.antlr.runtime.tree.CommonTree;
 
 public class NodeData extends RichTeaTree {
 	
@@ -15,16 +14,10 @@ public class NodeData extends RichTeaTree {
 	}
 	
 	public List<AttributeData> getAttributes() {
-		@SuppressWarnings("unchecked")
-		List<AttributeData> attributes = ((CommonTree) getChild(ATTRIBUTES_CHILD_INDEX)).getChildren();
-		
-		return attributes;
+		return getChildrenOfChild(ATTRIBUTES_CHILD_INDEX);
 	}
 	
-	public List<BranchData> getBranches() {	
-		@SuppressWarnings("unchecked")
-		List<BranchData> branches = ((CommonTree) getChild(BRANCHES_CHILD_INDEX)).getChildren();
-						
-		return branches;
+	public List<BranchData> getBranches() {
+		return getChildrenOfChild(BRANCHES_CHILD_INDEX);
 	}
 }

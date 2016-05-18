@@ -1,20 +1,24 @@
 grammar RichTea;
 
-options	{ 	output=AST;
-		k=2; // Needed to correctly match implicitAttributes in the attribute_list rule
-		ASTLabelType=Tree;
-		language=Java;
-		backtrack=true;	}
-						
-tokens {	FUNCTION; 
-		CHILDREN; ATTRIBUTES;
-		ATTRIBUTE; NAME; VALUE;
-		BRANCHES; BRANCH;
-		ARRAY; VARIABLE;
-		PROPERTY_LOOKUP; NATIVE_METHOD_CALL; 
-		LAST_RETURNED_VALUE; 
-		EXECUTABLE_FUNCTION_ATTRIBUTE; 
-		TERNARY_OPERATOR; NEGATE;	}
+options	{
+	output=AST;
+	k=2; // Needed to correctly match implicitAttributes in the attribute_list rule
+	ASTLabelType=Tree;
+	language=Java;
+	backtrack=true;
+}
+
+tokens {
+	FUNCTION; 
+	CHILDREN; ATTRIBUTES;
+	ATTRIBUTE; NAME; VALUE;
+	BRANCHES; BRANCH;
+	ARRAY; VARIABLE;
+	PROPERTY_LOOKUP; NATIVE_METHOD_CALL; 
+	LAST_RETURNED_VALUE; 
+	EXECUTABLE_FUNCTION_ATTRIBUTE; 
+	TERNARY_OPERATOR; NEGATE;
+}
 			
 @header {package richTea.antlr;}
 @lexer::header {package richTea.antlr;}
