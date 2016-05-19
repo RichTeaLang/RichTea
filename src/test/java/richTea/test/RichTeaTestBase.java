@@ -8,17 +8,17 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.apache.log4j.BasicConfigurator;
 
-import richTea.antlr.RichTeaLexer;
-import richTea.antlr.RichTeaParser;
-import richTea.antlr.RichTeaTreeAdaptor;
-import richTea.antlr.tree.AttributeData;
-import richTea.antlr.tree.NodeData;
-import richTea.attribute.Attribute;
-import richTea.factory.RichTeaAttributeFactory;
-import richTea.factory.RichTeaNodeFactory;
-import richTea.impl.BindingSet;
-import richTea.impl.BootstrapBindingSet;
-import richTea.node.TreeNode;
+import richTea.compiler.RichTeaLexer;
+import richTea.compiler.RichTeaParser;
+import richTea.compiler.antlr.RichTeaTreeAdaptor;
+import richTea.compiler.antlr.tree.AttributeData;
+import richTea.compiler.antlr.tree.NodeData;
+import richTea.compiler.bootstrap.BindingSet;
+import richTea.compiler.bootstrap.BootstrapBindingSet;
+import richTea.compiler.factory.RichTeaAttributeFactory;
+import richTea.compiler.factory.RichTeaNodeFactory;
+import richTea.runtime.attribute.Attribute;
+import richTea.runtime.node.TreeNode;
 
 public class RichTeaTestBase {
 	

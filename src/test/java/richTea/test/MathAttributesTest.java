@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
-import richTea.attribute.Attribute;
+import richTea.runtime.attribute.Attribute;
 
 public class MathAttributesTest extends RichTeaTestBase {
 	

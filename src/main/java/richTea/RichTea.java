@@ -10,15 +10,15 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.HTMLLayout;
 import org.apache.log4j.Logger;
 
-import richTea.antlr.RichTeaLexer;
-import richTea.antlr.RichTeaParser;
-import richTea.antlr.RichTeaTreeAdaptor;
-import richTea.antlr.tree.NodeData;
-import richTea.execution.ExecutionContext;
-import richTea.factory.RichTeaNodeFactory;
-import richTea.impl.BindingSet;
-import richTea.impl.BootstrapBindingSet;
-import richTea.node.TreeNode;
+import richTea.compiler.RichTeaLexer;
+import richTea.compiler.RichTeaParser;
+import richTea.compiler.antlr.RichTeaTreeAdaptor;
+import richTea.compiler.antlr.tree.NodeData;
+import richTea.compiler.bootstrap.BindingSet;
+import richTea.compiler.bootstrap.BootstrapBindingSet;
+import richTea.compiler.factory.RichTeaNodeFactory;
+import richTea.runtime.execution.ExecutionContext;
+import richTea.runtime.node.TreeNode;
 
 public class RichTea {
 	
