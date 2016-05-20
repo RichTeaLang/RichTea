@@ -2,7 +2,6 @@ package richTea.compiler.bootstrap;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -10,15 +9,10 @@ import java.util.List;
 import java.util.jar.JarFile;
 
 import org.antlr.runtime.ANTLRInputStream;
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.CharStream;
 import org.antlr.runtime.RecognitionException;
 
-import richTea.compiler.RichTeaLexer;
-import richTea.compiler.RichTeaParser;
-import richTea.compiler.antlr.RichTeaTreeAdaptor;
-import richTea.compiler.antlr.tree.NodeData;
-import richTea.compiler.factory.RichTeaNodeFactory;
+import richTea.compiler.RichTeaCompiler;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.node.Branch;
 import richTea.runtime.node.DataNode;
@@ -103,22 +97,15 @@ public class ImportNode extends DataNode {
 		return new URLClassLoader(urls, this.getClass().getClassLoader());
 	}
 
-	protected BindingSet loadModuleExports(File moduleFile) throws IOException, RecognitionException {
+	protected BindingSet loadModuleExports(File moduleFile) throws IOException {
 		JarFile moduleJar = new JarFile(moduleFile);
-		InputStream bindingsFileInput = moduleJar.getInputStream(moduleJar.getEntry("bindings.tea"));
-		
-		ANTLRStringStream sourceStream = new ANTLRInputStream(bindingsFileInput);
-		RichTeaLexer lexer = new RichTeaLexer(sourceStream);
-		RichTeaParser parser = new RichTeaParser(new CommonTokenStream(lexer));
-		parser.setTreeAdaptor(new RichTeaTreeAdaptor());
-		
-		NodeData bindingsData = (NodeData) parser.program().getTree();
-		
-		RichTeaNodeFactory nodeFactory = new RichTeaNodeFactory(new BindingSet[] { new BootstrapBindingSet() });
+		CharStream moduleBindings = new ANTLRInputStream(moduleJar.getInputStream(moduleJar.getEntry("bindings.tea")));
+		BindingSet[] bindings = { new BootstrapBindingSet() };
+		RichTeaCompiler compiler = new RichTeaCompiler(moduleBindings, bindings);
 		
 		moduleJar.close();
-	
-		return (BindingSet) nodeFactory.create(bindingsData);
+		
+		return (BindingSet) compiler.compile();
 	}
 	
 	protected BindingNode registerImportedBinding(String name, String prefix, BindingNode binding) throws ClassNotFoundException {

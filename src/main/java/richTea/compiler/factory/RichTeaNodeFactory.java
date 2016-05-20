@@ -30,6 +30,10 @@ public class RichTeaNodeFactory {
 		return bindingSets.toArray(new BindingSet[bindingSets.size()]);
 	}
 	
+	public RichTeaAttributeFactory getAttributeFactory() {
+		return attributeFactory;
+	}
+	
 	public TreeNode create(NodeData nodeData) {
 		TreeNode node = null;
 		
