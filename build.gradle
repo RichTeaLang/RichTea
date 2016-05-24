@@ -1,7 +1,12 @@
+plugins {
+    id "com.jfrog.bintray" version "1.6"
+}
+
 apply plugin: 'antlr'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'java'
+apply plugin: 'maven-publish'
 
 mainClassName = 'richTea.RichTea'
 
@@ -12,8 +17,35 @@ run {
     }
 }
 
+bintray {
+	user = 'richard-walton'
+	key = '6c0c26e5209033f72ac38a18f4b12ce82f9cf1a7'
+	
+	pkg {
+		repo = 'RichTea'
+		name = 'RichTea'
+		licenses = ['MIT']
+		vcsUrl = 'git@github.com:RichTeaLang/RichTea.git'
+		publications = ['RichTea']
+		
+		version {
+			name = 'DevSnapshot'
+		}
+	}
+}
+
+publishing {
+    publications {
+        RichTea(MavenPublication) {
+            from components.java
+            groupId 'uk.co.richwalton'
+            artifactId 'richtea'
+            version '0.0.1'
+        }
+    }
+}
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
