@@ -11,6 +11,7 @@ import richTea.runtime.attribute.ArrayAttribute;
 import richTea.runtime.attribute.AssignmentExpression;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.PrimativeAttribute;
+import richTea.runtime.attribute.StringAttribute;
 import richTea.runtime.attribute.TernaryExpressionAttribute;
 import richTea.runtime.attribute.VariableAttribute;
 import richTea.runtime.attribute.bool.AndAttribute;
@@ -54,6 +55,9 @@ public class RichTeaAttributeFactory {
 		switch(value.getType()) {
 			case RichTeaParser.STRING :	
 				attribute = createStringAttribute(name, value);
+				break;
+			case RichTeaParser.STRING_CHARACTERS :
+				attribute = createStringCharactersAttribute(name, value);
 				break;
 			case RichTeaParser.NUMBER : 
 				attribute = createNumberAttribute(name, value);
@@ -134,17 +138,20 @@ public class RichTeaAttributeFactory {
 				attribute = createTernaryExpressionAttribute(name, value);
 				break;
 			default :
-				throw new IllegalArgumentException("Unknown attribute type");
+				throw new IllegalArgumentException("Unknown attribute type: " + value.getText());
 		}
 		
 		return attribute;
 	}
 	
 	protected Attribute createStringAttribute(String name, Tree value) {
-		String stringValue = value.getText().substring(1); // Remove the leading "
-		stringValue = stringValue.substring(0, stringValue.length() - 1); // Remove the trailing "
+		Attribute[] components = getAttributeOperands(name, value);
 
-		return new PrimativeAttribute(name, stringValue);
+		return new StringAttribute(name, Arrays.asList(components));
+	}
+	
+	protected Attribute createStringCharactersAttribute(String name, Tree value) {
+		return new PrimativeAttribute(name, value.getText());
 	}
 	
 	protected Attribute createNumberAttribute(String name, Tree value) {

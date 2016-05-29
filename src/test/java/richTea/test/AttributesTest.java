@@ -27,7 +27,7 @@ public class AttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testCreateStringAttribute() throws RecognitionException {
+	public void testSimpleCreateStringAttribute() throws RecognitionException {
 		testAttributeValue("x=\"Hello world\"", "Hello world");
 	}
 	
@@ -63,13 +63,12 @@ public class AttributesTest extends RichTeaTestBase {
 	@Test
 	public void testFunctionAttribute() throws RecognitionException {
 		Attribute attribute = buildAttribute("x=Scope()");
-				
+		
 		assertTrue(attribute instanceof FunctionAttribute);
 	}
 	
 	@Test
-	public void testExecutableFunctionAttribute() throws RecognitionException
-	{
+	public void testExecutableFunctionAttribute() throws RecognitionException {
 		Attribute attribute = buildAttribute("x=@Scope()");
 		
 		assertTrue(attribute instanceof ExecutableFunctionAttribute);

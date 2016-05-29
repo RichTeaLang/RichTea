@@ -41,6 +41,12 @@ public class VariableLookupsTest extends RichTeaTestBase {
 		createContextAndTestVariable("(x:1 y:\"class\" z:\"simpleName\")", "x.{y}.{z}", "Double");
 	}
 	
+	@Test
+	public void testStringInterpolation() throws RecognitionException {
+		createContextAndTestVariable("(name:\"RichTea\")", "\"Hello from {name}!\"", "Hello from RichTea!");
+		createContextAndTestVariable("()", "\"10 + 10 = {10 + 10}\"", "10 + 10 = 20.0");
+	}
+	
 	private void createContextAndTestVariable(String contextSource, String attributeSource, Object expected) throws RecognitionException {
 		ExecutionContext context = new ExecutionContext(new VariableScope(buildNode(contextSource)));
 		Attribute attribute = buildAttribute(attributeSource);
