@@ -17,7 +17,7 @@ public class AttributeData extends RichTeaTree {
 		addChild(data.getChild(0));
 		addChild(data.getChild(1));
 	}
-			
+	
 	public Tree getValue() {
 		return getChild(VALUE_CHILD_INDEX).getChild(0);
 	}

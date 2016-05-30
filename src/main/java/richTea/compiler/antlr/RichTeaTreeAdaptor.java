@@ -37,7 +37,7 @@ public class RichTeaTreeAdaptor extends CommonTreeAdaptor {
 			Class<? extends Tree> treeClass = treeTypes.get(token.getType());
 			
 			if(treeClass != null) {	
-				try {				
+				try {
 					Constructor<? extends Tree> constructor = treeClass.getConstructor(Token.class);
 					
 					Tree tree = constructor.newInstance(token);

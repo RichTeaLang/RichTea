@@ -43,14 +43,14 @@ public class RichTeaTestBase {
 		assertTrue(buildAttribute(input).getValue(null).equals(requiredValue));
 	}
 	
-	protected TreeNode buildNode(String input) throws RecognitionException {		
+	protected TreeNode buildNode(String input) throws RecognitionException {
 		NodeData nodeData = (NodeData) configureParser(input).program().getTree();
 		
 		return nodeFactory.create(nodeData);
 	}
 	
 	private RichTeaParser configureParser(String input) throws RecognitionException {
-	   	ANTLRStringStream source = new ANTLRStringStream(input);
+		ANTLRStringStream source = new ANTLRStringStream(input);
 		
 		RichTeaLexer lexer = new RichTeaLexer(source);
 		RichTeaParser parser = new RichTeaParser(new CommonTokenStream(lexer));

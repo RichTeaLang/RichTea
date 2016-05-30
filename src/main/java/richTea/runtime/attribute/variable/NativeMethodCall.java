@@ -29,7 +29,7 @@ public class NativeMethodCall extends LookupChainElement {
 	}
 
 	@Override
-	protected Object performLookup(ExecutionContext context, Object lookupContext) {		
+	protected Object performLookup(ExecutionContext context, Object lookupContext) {
 		String methodName = getMethodName();
 		Attribute[] arguments = getMethodArguments();
 		

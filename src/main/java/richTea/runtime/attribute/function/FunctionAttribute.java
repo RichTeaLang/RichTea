@@ -19,7 +19,7 @@ public class FunctionAttribute extends AbstractAttribute {
 	}
 		
 	@Override
-	public Object getValue(ExecutionContext context) {		
+	public Object getValue(ExecutionContext context) {
 		return getFunctionNode();
 	}
 }

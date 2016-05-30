@@ -7,7 +7,7 @@ import richTea.runtime.execution.ExecutionContext;
 public class AndAttribute extends AbstractBooleanExpressionAttribute {
 
 	public AndAttribute(String name, Attribute leftOperand, Attribute rightOperand) {
-		super(name, leftOperand, rightOperand);;
+		super(name, leftOperand, rightOperand);
 	}
 
 	@Override

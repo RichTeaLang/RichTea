@@ -10,7 +10,7 @@ public abstract class AbstractMathExpressionAttribute extends AbstractExpression
 	}
 	
 	@Override
-	protected Object getValue(Object value1, Object value2) {		
+	protected Object getValue(Object value1, Object value2) {
 		try {
 			// Try to convert to numbers
 			double doubleValue1 = Double.parseDouble(String.valueOf(value1));

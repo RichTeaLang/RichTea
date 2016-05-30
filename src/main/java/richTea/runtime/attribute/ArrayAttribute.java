@@ -8,26 +8,25 @@ import richTea.runtime.execution.ExecutionContext;
 
 public class ArrayAttribute extends AbstractAttribute {
 	
-	private List<Attribute> attributes;
+	private Attribute[] elements;
 	
-	public ArrayAttribute(String name, List<Attribute> attributes) {
+	public ArrayAttribute(String name, Attribute[] elements) {
 		super(name);
 		
-		this.attributes = attributes;
+		this.elements = elements;
 	}
 	
-	protected List<Attribute> getAttributes() {
-		return attributes;
+	protected Attribute[] getElements() {
+		return elements;
 	}
 	
 	@Override
-	public List<Object> getValue(ExecutionContext context) {	
-		List<Attribute> attributes = getAttributes();
+	public List<Object> getValue(ExecutionContext context) {
+		Attribute[] elements = getElements();
+		List<Object> values = new ArrayList<Object>(elements.length);
 		
-		List<Object> values = new ArrayList<Object>(attributes.size());
-		
-		for(Attribute attribute : attributes) {
-			values.add(attribute.getValue(context));
+		for(Attribute element : elements) {
+			values.add(element.getValue(context));
 		}
 		
 		return values;
@@ -35,8 +34,8 @@ public class ArrayAttribute extends AbstractAttribute {
 	
 	@Override	
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
-		for(Attribute attribute : getAttributes()) {
-			attribute.modify(context, modifier);
+		for(Attribute element : getElements()) {
+			element.modify(context, modifier);
 		}
 		
 		return getValue(context);

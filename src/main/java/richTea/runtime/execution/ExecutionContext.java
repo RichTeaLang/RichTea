@@ -82,7 +82,7 @@ public class ExecutionContext extends AbstractResolver {
 		return scope;
 	}
 
-	public void pushScope(VariableScope scope) {		
+	public void pushScope(VariableScope scope) {
 		scopes.push(scope);
 	}
 	
@@ -113,7 +113,7 @@ public class ExecutionContext extends AbstractResolver {
 	}
 
 	@Override
-	public Object getValue(String attributeName) {	
+	public Object getValue(String attributeName) {
 		Attribute attribute = getCurrentScope().getAttribute(attributeName);
 		
 		return attribute != null ? attribute.getValue(this) : null;

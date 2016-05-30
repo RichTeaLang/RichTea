@@ -10,12 +10,12 @@ public abstract class AbstractBooleanExpressionAttribute extends AbstractExpress
 	}
 
 	@Override
-	protected Boolean getValue(Object value1, Object value2) {		
+	protected Boolean getValue(Object value1, Object value2) {
 		boolean booleanValue1 = Boolean.parseBoolean(value1.toString());
 		boolean booleanValue2 = Boolean.parseBoolean(value2.toString());
-					
+		
 		return getValue(booleanValue1, booleanValue2);
 	}
 	
 	abstract protected boolean getValue(boolean value1, boolean value2);
-}  
+}

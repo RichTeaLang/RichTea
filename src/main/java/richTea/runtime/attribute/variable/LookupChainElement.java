@@ -34,7 +34,7 @@ public abstract class LookupChainElement implements Attribute {
 		
 		value = ensureValidDataType(value);
 		
-		return value;		
+		return value;
 	}
 	
 	abstract protected Object performLookup(ExecutionContext content, Object lookupContext);

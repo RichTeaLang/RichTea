@@ -35,7 +35,7 @@ public class Branch {
 		return parent;
 	}
 
-	public void addChild(TreeNode child) {		
+	public void addChild(TreeNode child) {
 		if(!containsChild(child)) {
 			child.setParent(parent);
 			children.add(child);

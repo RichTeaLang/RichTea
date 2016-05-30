@@ -14,7 +14,7 @@ public class CreateBean extends AbstractFunction {
 		context.setLastReturnValue(bean);
 	}
 	
-	protected Object createBean() throws ClassNotFoundException, InstantiationException, IllegalAccessException {		
+	protected Object createBean() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		Class<?> beanClass = getBeanClass();
 		
 		Object bean = instanciateBean(beanClass);

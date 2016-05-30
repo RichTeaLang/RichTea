@@ -1,7 +1,5 @@
 package richTea.compiler.factory;
 
-import java.util.Arrays;
-
 import org.antlr.runtime.tree.Tree;
 
 import richTea.compiler.RichTeaParser;
@@ -147,7 +145,7 @@ public class RichTeaAttributeFactory {
 	protected Attribute createStringAttribute(String name, Tree value) {
 		Attribute[] components = getAttributeOperands(name, value);
 
-		return new StringAttribute(name, Arrays.asList(components));
+		return new StringAttribute(name, components);
 	}
 	
 	protected Attribute createStringCharactersAttribute(String name, Tree value) {
@@ -166,7 +164,7 @@ public class RichTeaAttributeFactory {
 		return new PrimativeAttribute(name, null);
 	}
 	
-	protected Attribute createVariableAttribute(String name, Tree value) {				
+	protected Attribute createVariableAttribute(String name, Tree value) {
 		Attribute lookupChain = new LookupChainRoot(name);
 		
 		for(int i = 0; i < value.getChildCount(); i++) {
@@ -204,12 +202,12 @@ public class RichTeaAttributeFactory {
 		return new NativeMethodCall(methodName, methodArguments, lookupChain);
 	}
 	
-	protected Attribute createArrayAttribute(String name, Tree value) {		
+	protected Attribute createArrayAttribute(String name, Tree value) {
 		Attribute[] operands = getAttributeOperands(name, value);
 		
-		return new ArrayAttribute(name, Arrays.asList(operands));
+		return new ArrayAttribute(name, operands);
 	}
-		
+	
 	protected Attribute createFunctionAttribute(String name, NodeData nodeData) {
 		TreeNode functionNode = nodeFactory.create(nodeData);
 		
