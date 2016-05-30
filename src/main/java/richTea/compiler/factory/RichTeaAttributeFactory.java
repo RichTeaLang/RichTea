@@ -8,8 +8,8 @@ import richTea.compiler.antlr.tree.NodeData;
 import richTea.runtime.attribute.ArrayAttribute;
 import richTea.runtime.attribute.AssignmentExpression;
 import richTea.runtime.attribute.Attribute;
+import richTea.runtime.attribute.InterpolatedStringAttribute;
 import richTea.runtime.attribute.PrimativeAttribute;
-import richTea.runtime.attribute.StringAttribute;
 import richTea.runtime.attribute.TernaryExpressionAttribute;
 import richTea.runtime.attribute.VariableAttribute;
 import richTea.runtime.attribute.bool.AndAttribute;
@@ -143,9 +143,13 @@ public class RichTeaAttributeFactory {
 	}
 	
 	protected Attribute createStringAttribute(String name, Tree value) {
-		Attribute[] components = getAttributeOperands(name, value);
-
-		return new StringAttribute(name, components);
+		if (value.getChildCount() == 1) {
+			return create(name, value.getChild(0));
+		} else {
+			Attribute[] components = getAttributeOperands(name, value);
+			
+			return new InterpolatedStringAttribute(name, components);
+		}
 	}
 	
 	protected Attribute createStringCharactersAttribute(String name, Tree value) {

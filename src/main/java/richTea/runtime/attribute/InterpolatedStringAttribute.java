@@ -2,11 +2,11 @@ package richTea.runtime.attribute;
 
 import richTea.runtime.execution.ExecutionContext;
 
-public class StringAttribute extends AbstractAttribute {
+public class InterpolatedStringAttribute extends AbstractAttribute {
 
 	private Attribute[] components;
 	
-	public StringAttribute(String name, Attribute[] components) {
+	public InterpolatedStringAttribute(String name, Attribute[] components) {
 		super(name);
 		
 		this.components = components;
