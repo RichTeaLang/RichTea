@@ -45,10 +45,10 @@ attribute_list
 	;
 	
 attribute
-	:	ID (COLON | ASSIGN)! expression	
+	:	ID (COLON | ASSIGN) expression
 			->	^(NAME ID) ^(VALUE expression)
 	;
-
+	
 implicit_attribute
 	:	expression
 			->	^(NAME ID["implicitAttribute"]) ^(VALUE expression)
@@ -60,7 +60,7 @@ branch_list
 	;
 	
 branch
-	:	branch_name OPEN_BRACE function* CLOSE_BRACE
+	:	branch_name (COLON | ASSIGN)? OPEN_BRACE function* CLOSE_BRACE
 			->	^(NAME branch_name) ^(CHILDREN function*)
 	;
 	
