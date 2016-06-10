@@ -6,7 +6,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
-import java.util.jar.JarFile;
 
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CharStream;
@@ -37,16 +36,15 @@ public class ImportNode extends DataNode {
 
 	@Override
 	public void initialize() throws IOException, RecognitionException, ClassNotFoundException {
-		File moduleFile = getModuleFile();
-		String importPrefix = getImportPrefix();
-		
-		// Configure class loader before loading bindings
-		ClassLoader moduleClassLoader = createModuleClassLoader(moduleFile);
+		String modulePath = getModulePath();
+		String exportsFileName = getExportsFileName(modulePath);
+		ClassLoader moduleClassLoader = getClassLoaderForModule(modulePath);
 		Thread.currentThread().setContextClassLoader(moduleClassLoader);
-		BindingSet moduleExports = loadModuleExports(moduleFile);
+		BindingSet moduleExports = loadModuleExports(moduleClassLoader, exportsFileName);
 		
 		// Import bindings from functions attribute
 		Object functionsAttributeValue = resolver.getValueOrDefault(FUNCTIONS_ATTRIBUTE_NAME, "");
+		String importPrefix = getImportPrefix();
 		
 		if (functionsAttributeValue.equals(IMPORT_ALL)) {
 			for(BindingNode export : moduleExports.getBindings()) {
@@ -83,27 +81,49 @@ public class ImportNode extends DataNode {
 		}
 	}
 	
-	public File getModuleFile() {
-		return new File(resolver.getString("from") + ".jar");
+	public String getModulePath() {
+		String path = resolver.getString("from");
+		
+		return path.endsWith(".jar") ? path : path + ".jar";
 	}
 	
 	public String getImportPrefix() {
 		return resolver.getStringOrDefault("importPrefix",  "");
 	}
 	
-	protected URLClassLoader createModuleClassLoader(File moduleFile) throws MalformedURLException {
-		URL[] urls = { moduleFile.toURI().toURL() };
+	protected ClassLoader getClassLoaderForModule(String modulePath) {
+		String moduleName = getModuleName(modulePath);
+		String exportsFileName = getExportsFileName(moduleName);
+		ClassLoader classLoader = getClass().getClassLoader();
 		
-		return new URLClassLoader(urls, this.getClass().getClassLoader());
+		if (classLoader.getResource(exportsFileName) == null) {
+			try {
+				String workingDir = System.getProperty("user.dir");
+				URL moduleURL = new File(workingDir, modulePath).toURI().toURL();
+				
+				classLoader = new URLClassLoader(new URL[] { moduleURL }, classLoader);
+			} catch (MalformedURLException e) {
+				throw new RuntimeException("Unable to read module file", e);
+			}
+		}
+		
+		return classLoader;
+	}
+	
+	protected String getModuleName(String modulePath) {
+		String name = new File(modulePath).getName();
+		int extensionIndex = name.lastIndexOf('.');
+		
+		return extensionIndex == -1 ? name : name.substring(0, extensionIndex);
+	}
+	
+	protected String getExportsFileName(String modulePath) {
+		return getModuleName(modulePath) + ".tea";
 	}
 
-	protected BindingSet loadModuleExports(File moduleFile) throws IOException {
-		JarFile moduleJar = new JarFile(moduleFile);
-		CharStream moduleBindings = new ANTLRInputStream(moduleJar.getInputStream(moduleJar.getEntry("bindings.tea")));
-		BindingSet[] bindings = { new BootstrapBindingSet() };
-		RichTeaCompiler compiler = new RichTeaCompiler(moduleBindings, bindings);
-		
-		moduleJar.close();
+	protected BindingSet loadModuleExports(ClassLoader classLoader, String exportsFileName) throws IOException {
+		CharStream moduleBindings = new ANTLRInputStream(classLoader.getResourceAsStream(exportsFileName));
+		RichTeaCompiler compiler = new RichTeaCompiler(moduleBindings);
 		
 		return (BindingSet) compiler.compile();
 	}
