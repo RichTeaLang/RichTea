@@ -38,17 +38,21 @@ public class PropertyLookup extends LookupChainElement {
 	
 	private Attribute resolveAttribute(ExecutionContext context, Object lookupContext) {
 		Attribute attribute = null;
-		
 		String attributeName = getPropertyName(context);
 		
 		if(lookupContext instanceof AttributeSet) {
 			AttributeSet attributeSet = (AttributeSet) lookupContext;
 			
-			if(attributeSet instanceof VariableScope) attribute = ((VariableScope) attributeSet).resolveAttribute(attributeName);
-			else attribute =  attributeSet.getAttribute(attributeName);
+			if(attributeSet instanceof VariableScope) {
+				attribute = ((VariableScope) attributeSet).resolveAttribute(attributeName);
+			} else {
+				attribute =  attributeSet.getAttribute(attributeName);
+			}
 		}
 		
-		if(attribute == null) attribute = new BeanLookup(attributeName, lookupContext);
+		if(attribute == null) {
+			attribute = new BeanLookup(attributeName, lookupContext);
+		}
 		
 		return attribute;
 	}
