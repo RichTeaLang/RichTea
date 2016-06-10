@@ -32,7 +32,7 @@ public abstract class LookupChainElement implements Attribute {
 	public Object getValue(ExecutionContext context) {
 		Object value = performLookup(context, getLookupChain().getValue(context));
 		
-		value = ensureValidDataType(value);
+		value = ensureValidDataType(value, context);
 		
 		return value;
 	}
@@ -46,9 +46,11 @@ public abstract class LookupChainElement implements Attribute {
 		return getValue(context);
 	}
 	
-	protected Object ensureValidDataType(Object value) {
+	protected Object ensureValidDataType(Object value, ExecutionContext context) {
 		if(value != null && value.getClass().isArray()) {
 			value = convertArray(value);
+		} else if (value instanceof Attribute) {
+			value = ((Attribute) value).getValue(context);
 		}
 		
 		return value;
