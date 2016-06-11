@@ -57,8 +57,11 @@ public class RichTeaAttributeFactory {
 			case RichTeaParser.STRING_CHARACTERS :
 				attribute = createStringCharactersAttribute(name, value);
 				break;
-			case RichTeaParser.NUMBER : 
-				attribute = createNumberAttribute(name, value);
+			case RichTeaParser.INTEGER :
+				attribute = createIntegerAttribute(name, value);
+				break;
+			case RichTeaParser.DOUBLE :
+				attribute = createDoubleAttribute(name, value);
 				break;
 			case RichTeaParser.BOOLEAN : 
 				attribute = createBooleanAttribute(name, value);
@@ -156,8 +159,12 @@ public class RichTeaAttributeFactory {
 		return new PrimativeAttribute(name, value.getText());
 	}
 	
-	protected Attribute createNumberAttribute(String name, Tree value) {
-		return new PrimativeAttribute(name, Double.parseDouble(value.getText()));
+	protected Attribute createIntegerAttribute(String name, Tree value) {
+		return new PrimativeAttribute(name, new Integer(value.getText()));
+	}
+	
+	protected Attribute createDoubleAttribute(String name, Tree value) {
+		return new PrimativeAttribute(name, new Double(value.getText()));
 	}
 	
 	protected Attribute createBooleanAttribute(String name, Tree value) {

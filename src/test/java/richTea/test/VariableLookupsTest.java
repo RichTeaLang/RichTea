@@ -13,12 +13,12 @@ public class VariableLookupsTest extends RichTeaTestBase {
 	
 	@Test
 	public void testSimpleLookup() throws RecognitionException {
-		createContextAndTestVariable("(x:100)", "x", 100.0);
+		createContextAndTestVariable("(x:100)", "x", 100);
 	}
 	
 	@Test
 	public void testLookupChain() throws RecognitionException {
-		createContextAndTestVariable("(x:(y:200))", "x.y", 200.0);
+		createContextAndTestVariable("(x:(y:200))", "x.y", 200);
 	}
 	
 	@Test
@@ -37,8 +37,8 @@ public class VariableLookupsTest extends RichTeaTestBase {
 	
 	@Test
 	public void testNestedLookupChains() throws RecognitionException {
-		createContextAndTestVariable("(x:1 y:\"class\")", "x.{y}.simpleName", "Double");
-		createContextAndTestVariable("(x:1 y:\"class\" z:\"simpleName\")", "x.{y}.{z}", "Double");
+		createContextAndTestVariable("(x:1 y:\"class\")", "x.{y}.simpleName", "Integer");
+		createContextAndTestVariable("(x:1 y:\"class\" z:\"simpleName\")", "x.{y}.{z}", "Integer");
 	}
 	
 	@Test

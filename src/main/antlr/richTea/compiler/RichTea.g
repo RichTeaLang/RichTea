@@ -120,7 +120,8 @@ primary_expression
 	;
 	
 data_type 
-	:	NUMBER
+	:	INTEGER
+	|	DOUBLE
 	|	BOOLEAN
 	|	NULL
 	|	string
@@ -203,10 +204,14 @@ STRING_CHARACTERS
 			// Avoid consuming the string delimiter character - It needs to be matched in a different rule
 			{ input.rewind(lastMark); }
 	;
+ 	
+INTEGER
+	:	'0'..'9'+
+	;
 	
-NUMBER
- 	:	INTEGER | FLOAT
- 	;
+DOUBLE
+	:	INTEGER+ '.' INTEGER*
+	;
 		
 BOOLEAN
  	:	'true' 
@@ -272,16 +277,6 @@ OPEN_BOX	:	'['	;
 CLOSE_BOX	:	']'	;
 
 /*	FRAGMENTS	*/
-
-fragment
-INTEGER
-	:	'0'..'9'+
-	;
-	
-fragment
-FLOAT
-	:	INTEGER+ '.' INTEGER*
-	;
 	
 fragment
 LETTER
