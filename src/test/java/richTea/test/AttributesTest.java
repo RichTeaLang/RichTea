@@ -16,41 +16,41 @@ public class AttributesTest extends RichTeaTestBase {
 	
 	@Test
 	public void testAttributeName() throws RecognitionException {
-		Attribute attribute = buildAttribute("attributeName=1");
+		Attribute attribute = buildAttribute("attributeName:1");
 		
 		assertTrue(attribute.getName().equals("attributeName"));
 	}
 	
 	@Test
 	public void testCreateIntegerAttribute() throws RecognitionException {
-		testAttributeValue("x=1", 1);
+		testAttributeValue("x:1", 1);
 	}
 	
 	@Test
 	public void testCreateDoubleAttribute() throws RecognitionException {
-		testAttributeValue("x=1.2", 1.2);
+		testAttributeValue("x:1.2", 1.2);
 	}
 	
 	@Test
 	public void testSimpleCreateStringAttribute() throws RecognitionException {
-		testAttributeValue("x=\"Hello world\"", "Hello world");
+		testAttributeValue("x:\"Hello world\"", "Hello world");
 	}
 	
 	@Test
 	public void testCreateBooleanAttribute() throws RecognitionException {
-		testAttributeValue("x=true", true);
-		testAttributeValue("x=false", false);
+		testAttributeValue("x:true", true);
+		testAttributeValue("x:false", false);
 	}
 	
 	@Test
 	public void testCreateTernaryAttribute() throws RecognitionException {
-		testAttributeValue("x=true ? false : true", false);
-		testAttributeValue("x=false ? false : true", true);
+		testAttributeValue("x:true ? false : true", false);
+		testAttributeValue("x:false ? false : true", true);
 	}
 	
 	@Test
 	public void testListAttribute() throws RecognitionException {
-		Attribute attribute = buildAttribute("x=[1,2,3,4]");
+		Attribute attribute = buildAttribute("x:[1,2,3,4]");
 		
 		Object value = attribute.getValue(null);
 		
@@ -60,21 +60,21 @@ public class AttributesTest extends RichTeaTestBase {
 	
 	@Test
 	public void testVariableAttribute() throws RecognitionException {
-		Attribute attribute = buildAttribute("x=var");
+		Attribute attribute = buildAttribute("x:var");
 		
 		assertTrue(attribute instanceof VariableAttribute);
 	}
 	
 	@Test
 	public void testFunctionAttribute() throws RecognitionException {
-		Attribute attribute = buildAttribute("x=Scope()");
+		Attribute attribute = buildAttribute("x:Scope()");
 		
 		assertTrue(attribute instanceof FunctionAttribute);
 	}
 	
 	@Test
 	public void testExecutableFunctionAttribute() throws RecognitionException {
-		Attribute attribute = buildAttribute("x=@Scope()");
+		Attribute attribute = buildAttribute("x:@Scope()");
 		
 		assertTrue(attribute instanceof ExecutableFunctionAttribute);
 	}

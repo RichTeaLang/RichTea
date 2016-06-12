@@ -5,26 +5,35 @@ import richTea.runtime.attribute.modifier.SetModifier;
 import richTea.runtime.execution.ExecutionContext;
 
 public class AssignmentExpression extends AbstractAttribute {
-
-	private ExpressionAttribute expression;
+	
+	private Attribute target;
+	private Attribute value;
 	
 	public AssignmentExpression(String name, ExpressionAttribute expression) {
-		super(name);
-		
-		this.expression = expression;
+		this(name, expression.getLeftOperand(), expression);
 	}
 	
-	protected ExpressionAttribute getExpression() {
-		return expression;
+	public AssignmentExpression(String name, Attribute target, Attribute value) {
+		super(name);
+		
+		this.target = target;
+		this.value = value;
+	}
+	
+	public Attribute getTargetAttribute() {
+		return target;
+	}
+	
+	public Attribute getValueAttribute() {
+		return value;
 	}
 	
 	@Override 
 	public Object getValue(ExecutionContext context) {
-		ExpressionAttribute expression = getExpression();
+		Attribute target = getTargetAttribute();
+		Object value = getValueAttribute().getValue(context);
 		
-		Object value = expression.getValue(context);
-		
-		expression.getLeftOperand().modify(context, new SetModifier(value));
+		target.modify(context, new SetModifier(value));
 		
 		return value;
 	}

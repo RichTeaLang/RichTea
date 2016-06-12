@@ -81,6 +81,9 @@ public class RichTeaAttributeFactory {
 			case RichTeaParser.EXECUTABLE_FUNCTION_ATTRIBUTE :
 				attribute = createExecutableFunctionAttribute(name, value);
 				break;
+			case RichTeaParser.ASSIGN :
+				attribute = createAssignmentAttribute(name, value);
+				break;
 			case RichTeaParser.PLUS :
 				attribute = createPlusAttribute(name, value);
 				break;
@@ -259,6 +262,12 @@ public class RichTeaAttributeFactory {
 		Attribute[] operands = getAttributeOperands(name, value);
 		
 		return new ModulusAttribute(name, operands[0], operands[1]);
+	}
+	
+	protected Attribute createAssignmentAttribute(String name, Tree value) {
+		Attribute[] operands = getAttributeOperands(name, value);
+		
+		return new AssignmentExpression(name, operands[0], operands[1]);
 	}
 	
 	protected Attribute createAssignmentAttribute(String name, ExpressionAttribute value) {

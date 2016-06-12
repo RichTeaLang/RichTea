@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.execution.ExecutionContext;
-import richTea.runtime.execution.VariableScope;
 
 public class VariableLookupsTest extends RichTeaTestBase {
 	
@@ -47,8 +46,19 @@ public class VariableLookupsTest extends RichTeaTestBase {
 		createContextAndTestVariable("()", "\"10 + 10 = {10 + 10}\"", "10 + 10 = 20.0");
 	}
 	
+	@Test
+	public void testAssignmentAttribute() throws RecognitionException {
+		ExecutionContext context = buildExecutionContext("(value:1)");
+		Attribute assignment = buildAttribute("value = 2");
+		
+		Object value = assignment.getValue(context);
+		
+		assertTrue(value.equals(2));
+		assertTrue(context.getValue("value").equals(2));
+	}
+	
 	private void createContextAndTestVariable(String contextSource, String attributeSource, Object expected) throws RecognitionException {
-		ExecutionContext context = new ExecutionContext(new VariableScope(buildNode(contextSource)));
+		ExecutionContext context = buildExecutionContext(contextSource);
 		Attribute attribute = buildAttribute(attributeSource);
 		
 		assertTrue(attribute.getValue(context).equals(expected));

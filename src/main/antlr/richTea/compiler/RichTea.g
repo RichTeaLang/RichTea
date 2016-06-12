@@ -45,7 +45,7 @@ attribute_list
 	;
 	
 attribute
-	:	ID (COLON | ASSIGN) expression
+	:	ID COLON expression
 			->	^(NAME ID) ^(VALUE expression)
 	;
 	
@@ -60,7 +60,7 @@ branch_list
 	;
 	
 branch
-	:	branch_name (COLON | ASSIGN)? OPEN_BRACE function* CLOSE_BRACE
+	:	branch_name COLON? OPEN_BRACE function* CLOSE_BRACE
 			->	^(NAME branch_name) ^(CHILDREN function*)
 	;
 	
@@ -78,6 +78,7 @@ implicitBranch
 expression
 	:	logical_expression (QUESTION_MARK logical_expression COLON logical_expression) -> ^(TERNARY_OPERATOR logical_expression+)
 	|	logical_expression
+	|	variable ASSIGN^ logical_expression
 	;
 	
 logical_expression

@@ -13,11 +13,11 @@ import richTea.compiler.RichTeaParser;
 import richTea.compiler.antlr.RichTeaTreeAdaptor;
 import richTea.compiler.antlr.tree.AttributeData;
 import richTea.compiler.antlr.tree.NodeData;
-import richTea.compiler.bootstrap.BindingSet;
-import richTea.compiler.bootstrap.BootstrapBindingSet;
 import richTea.compiler.factory.RichTeaAttributeFactory;
 import richTea.compiler.factory.RichTeaNodeFactory;
 import richTea.runtime.attribute.Attribute;
+import richTea.runtime.execution.ExecutionContext;
+import richTea.runtime.execution.VariableScope;
 import richTea.runtime.node.TreeNode;
 
 public class RichTeaTestBase {
@@ -28,7 +28,7 @@ public class RichTeaTestBase {
 	public RichTeaTestBase() {
 		BasicConfigurator.configure();
 		
-		nodeFactory = new RichTeaNodeFactory(new BindingSet[] { new BootstrapBindingSet() });
+		nodeFactory = new RichTeaNodeFactory();
 		attributeFactory = new RichTeaAttributeFactory(nodeFactory);
 	}
 	
@@ -47,6 +47,10 @@ public class RichTeaTestBase {
 		NodeData nodeData = (NodeData) configureParser(input).program().getTree();
 		
 		return nodeFactory.create(nodeData);
+	}
+	
+	protected ExecutionContext buildExecutionContext(String input) throws RecognitionException {
+		return new ExecutionContext(new VariableScope(buildNode(input)));
 	}
 	
 	private RichTeaParser configureParser(String input) throws RecognitionException {
