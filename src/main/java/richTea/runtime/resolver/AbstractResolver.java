@@ -1,5 +1,7 @@
 package richTea.runtime.resolver;
 
+import java.math.BigDecimal;
+
 public abstract class AbstractResolver implements Resolver {
 	
 	public abstract Object getValue(String key);
@@ -15,35 +17,50 @@ public abstract class AbstractResolver implements Resolver {
 	public String getString(String key) {
 		Object value = getValue(key);
 		
-		return value != null ? String.valueOf(value) : null;
+		return value != null ? value.toString() : null;
 	}
 
 	@Override
 	public String getStringOrDefault(String key, String defaultValue) {
-		return String.valueOf(getValueOrDefault(key, defaultValue));
-	}
-
-	@Override
-	public boolean getBoolean(String key) {
-		return Boolean.valueOf(getString(key));
-	}
-
-	@Override
-	public boolean getBooleanOrDefault(String key, boolean defaultValue) {
 		String value = getString(key);
 		
-		return value != null ? Boolean.valueOf(value) : defaultValue;
+		return value != null ? value : defaultValue;
 	}
 
-	@Override
-	public double getNumber(String key) {
-		return Double.valueOf(getString(key));
-	}
-
-	@Override
-	public double getNumberOrDefault(String key, double defaultValue) {
-		String value = getString(key);
+	public Boolean getBoolean(String key) {
+		Object value = getValue(key);
+		Boolean bool = null;
 		
-		return value != null ? Double.valueOf(value) : defaultValue;
+		if (value != null) {
+			bool = value instanceof Boolean ? (Boolean) value : Boolean.valueOf(value.toString()); 
+		}
+		
+		return bool;
+	}
+
+	@Override
+	public Boolean getBooleanOrDefault(String key, Boolean defaultValue) {
+		Boolean value = getBoolean(key);
+		
+		return value != null ? value : defaultValue;
+	}
+
+	@Override
+	public Number getNumber(String key) {
+		Object value = getValue(key);
+		Number number = null;
+		
+		if (value != null) {
+			number = value instanceof Number ? (Number) value : new BigDecimal(value.toString());
+		}
+		
+		return number;
+	}
+
+	@Override
+	public Number getNumberOrDefault(String key, Number defaultValue) {
+		Number value = getNumber(key);
+		
+		return value != null ? value : defaultValue;
 	}
 }

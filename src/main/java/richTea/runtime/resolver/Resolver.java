@@ -8,9 +8,9 @@ public interface Resolver {
 	public String getString(String key);
 	public String getStringOrDefault(String key, String defaultValue);
 	
-	public boolean getBoolean(String key);
-	public boolean getBooleanOrDefault(String key, boolean defaultValue);
+	public Boolean getBoolean(String key);
+	public Boolean getBooleanOrDefault(String key, Boolean defaultValue);
 	
-	public double getNumber(String key);
-	public double getNumberOrDefault(String key, double defaultValue);
+	public Number getNumber(String key);
+	public Number getNumberOrDefault(String key, Number defaultValue);
 }
