@@ -55,6 +55,9 @@ public class BooleanAttributesTest extends RichTeaTestBase {
 		testAttributeValue("x:1 == 1", true);
 		testAttributeValue("x:0 == 1", false);
 		testAttributeValue("x:\"Hello\" == \"Hello\"", true);
+		testAttributeValue("x:null == null", true);
+		testAttributeValue("x:null == 1", false);
+		testAttributeValue("x:1 == null", false);
 	}
 	
 	@Test
@@ -63,6 +66,7 @@ public class BooleanAttributesTest extends RichTeaTestBase {
 		testAttributeValue("x:1 != 1", false);
 		testAttributeValue("x:0 != 1", true);
 		testAttributeValue("x:\"Hello\" != \"Hello\"", false);
+		testAttributeValue("x:null != null", false);
 	}
 	
 	@Test

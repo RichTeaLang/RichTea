@@ -22,6 +22,11 @@ public class AttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
+	public void testNullAttribute() throws RecognitionException {
+		testAttributeValue("x:null", null);
+	}
+	
+	@Test
 	public void testCreateIntegerAttribute() throws RecognitionException {
 		testAttributeValue("x:1", 1);
 	}

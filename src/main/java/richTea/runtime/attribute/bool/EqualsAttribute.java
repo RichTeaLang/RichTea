@@ -11,6 +11,6 @@ public class EqualsAttribute extends AbstractExpressionAttribute {
 
 	@Override
 	protected Boolean getValue(Object value1, Object value2) {
-		return value1.equals(value2);
+		return value1 != null && value1.equals(value2) || value1 == value2;
 	}
 }
