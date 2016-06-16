@@ -17,7 +17,9 @@ public class AttributeNode extends DataNode implements Attribute {
 	}
 		
 	public Object getValue(ExecutionContext context) {
-		return resolver.getValue("defaultValue");
+		Attribute attribute = getAttribute("defaultValue");
+		
+		return attribute != null ? attribute.getValue(context) : null;
 	}
 	
 	@Override
