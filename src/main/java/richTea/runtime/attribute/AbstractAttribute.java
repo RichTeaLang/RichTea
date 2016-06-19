@@ -28,6 +28,6 @@ public abstract class AbstractAttribute implements Attribute {
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s)", getClass().getSimpleName(), getName());
+		return String.format("%s(%s)", getName(), getClass().getSimpleName());
 	}
 }

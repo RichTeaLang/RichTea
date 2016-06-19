@@ -6,7 +6,7 @@ import richTea.runtime.attribute.expression.AbstractExpressionAttribute;
 public abstract class AbstractBooleanExpressionAttribute extends AbstractExpressionAttribute {
 
 	public AbstractBooleanExpressionAttribute(String name, Attribute leftOperand, Attribute rightOperand) {
-		super(name, leftOperand, rightOperand);;
+		super(name, leftOperand, rightOperand);
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public abstract class AbstractMathExpressionAttribute extends AbstractExpression
 			double doubleValue2 = Double.parseDouble(String.valueOf(value2));
 			
 			return getValue(doubleValue1, doubleValue2);
-		}catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			return null;
 		}
 	}
