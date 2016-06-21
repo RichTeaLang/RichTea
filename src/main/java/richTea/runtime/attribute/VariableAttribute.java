@@ -13,7 +13,7 @@ public class VariableAttribute extends LookupChainElement {
 	}
 	
 	public VariableAttribute(String name, String property) {
-		this(name, new PropertyLookup(new PrimativeAttribute("property", property), new LookupChainRoot("root")));
+		this(name, new PropertyLookup(new PrimativeAttribute("property", property), new LookupChainRoot("root", false)));
 	}
 	
 	public VariableAttribute(String name, Attribute lookupChain) {

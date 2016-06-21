@@ -3,7 +3,6 @@ package richTea.runtime.execution;
 import richTea.compiler.bootstrap.BindingNode;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.AttributeSet;
-import richTea.runtime.attribute.PrimativeAttribute;
 import richTea.runtime.node.TreeNode;
 
 public class VariableScope extends AttributeSet {
@@ -18,9 +17,6 @@ public class VariableScope extends AttributeSet {
 	public VariableScope(TreeNode owner, VariableScope parent) {
 		this.owner = owner;
 		this.parent = parent;
-		
-		setAttribute(new PrimativeAttribute("this", owner));
-		setAttribute(new PrimativeAttribute("super", parent));
 	}
 	
 	public TreeNode getOwner() {
@@ -72,5 +68,20 @@ public class VariableScope extends AttributeSet {
 	@Override
 	public boolean hasAttribute(String attributeName) {
 		return super.hasAttribute(attributeName) || getOwner().hasAttribute(attributeName);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder string = new StringBuilder("[VariableScope\n");
+		
+		string.append("Created by: " + owner.getFunction().getClass().getSimpleName());
+		string.append("\nAttibutes:");
+		for(Attribute attribute : getAttributes()) {
+			string.append("\n\t" + attribute.toString());
+		}
+		
+		string.append("]");
+		
+		return string.toString();
 	}
 }

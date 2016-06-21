@@ -15,7 +15,7 @@ tokens {
 	BRANCHES; BRANCH;
 	ARRAY; VARIABLE; STRING;
 	PROPERTY_LOOKUP; NATIVE_METHOD_CALL; 
-	LAST_RETURNED_VALUE; 
+	THIS; LAST_RETURNED_VALUE;
 	EXECUTABLE_FUNCTION_ATTRIBUTE; 
 	TERNARY_OPERATOR; NEGATE;
 }
@@ -148,16 +148,22 @@ variable
 	;
 
 lookup_chain_root
-	:	ID
-			->	^(PROPERTY_LOOKUP STRING_CHARACTERS[$ID.text])
+	:	ID { $ID.text.equals("this") }?
+			->	 THIS
 	|	UNDERSCORE
 			->	LAST_RETURNED_VALUE
+	|	property_lookup
 	;
 	
 lookup_chain_element
-	:	lookup_chain_root
+	:	property_lookup
 	|	ID OPEN_PAREN expression_list? CLOSE_PAREN
 			->	^(NATIVE_METHOD_CALL ^(NAME ID) ^(ATTRIBUTES expression_list?))
+	;
+	
+property_lookup 
+	:	ID
+			->	^(PROPERTY_LOOKUP STRING_CHARACTERS[$ID.text])
 	|	OPEN_BRACE expression CLOSE_BRACE
 			->	^(PROPERTY_LOOKUP expression)
 	;
@@ -224,7 +230,7 @@ NULL
 	;
 
 ID	:	UNDERSCORE? LETTER (LETTER | INTEGER | UNDERSCORE)*
-    ;
+	;
 
 COMMENT
 	:	'//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}

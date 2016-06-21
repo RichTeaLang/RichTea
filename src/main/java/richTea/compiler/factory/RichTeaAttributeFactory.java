@@ -179,12 +179,15 @@ public class RichTeaAttributeFactory {
 	}
 	
 	protected Attribute createVariableAttribute(String name, Tree value) {
-		Attribute lookupChain = new LookupChainRoot(name);
+		Attribute lookupChain = new LookupChainRoot(name, false);
 		
 		for(int i = 0; i < value.getChildCount(); i++) {
 			Tree lookupElement = value.getChild(i);
 			
 			switch(lookupElement.getType()) {
+				case RichTeaParser.THIS :
+					lookupChain = new LookupChainRoot(name, true);
+					break;
 				case RichTeaParser.VARIABLE :
 					lookupChain = create(name, lookupElement);
 					break;

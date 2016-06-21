@@ -3,16 +3,32 @@ package richTea.test;
 import static org.junit.Assert.assertTrue;
 
 import org.antlr.runtime.RecognitionException;
+import org.junit.Assert;
 import org.junit.Test;
 
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.execution.ExecutionContext;
+import richTea.runtime.execution.VariableScope;
 
 public class VariableLookupsTest extends RichTeaTestBase {
 	
 	@Test
 	public void testSimpleLookup() throws RecognitionException {
 		createContextAndTestVariable("(x:100)", "x", 100);
+	}
+	
+	@Test
+	public void testThisPrefix() throws RecognitionException {
+		ExecutionContext context = super.buildExecutionContext("(x:100)");
+
+		try {
+			// Variables resolve from the parent scope. Therefore there is no "x" variable to resolve
+			buildAttribute("x").getValue(context);
+			
+			Assert.fail("Expected exception when resolving 'x'");
+		} catch (Exception e) { // Expected.  Continue tests...
+			assertTrue(buildAttribute("this.x").getValue(context).equals(100));
+		}
 	}
 	
 	@Test
@@ -49,12 +65,19 @@ public class VariableLookupsTest extends RichTeaTestBase {
 	@Test
 	public void testAssignmentAttribute() throws RecognitionException {
 		ExecutionContext context = buildExecutionContext("(value:1)");
-		Attribute assignment = buildAttribute("value = 2");
+		Attribute setter = buildAttribute("value = 2");
+		Attribute getter = buildAttribute("value");
 		
-		Object value = assignment.getValue(context);
+		assertTrue(setter.getValue(context).equals(2));
+		assertTrue(getter.getValue(context).equals(2));
+	}
+	
+	@Override
+	protected ExecutionContext buildExecutionContext(String input) throws RecognitionException {
+		// Nest variable scope to avoid having to prefix all variable attributes with "this."
+		VariableScope root = new VariableScope(null, new VariableScope(buildNode(input)));
 		
-		assertTrue(value.equals(2));
-		assertTrue(context.getValue("value").equals(2));
+		return new ExecutionContext(root);
 	}
 	
 	private void createContextAndTestVariable(String contextSource, String attributeSource, Object expected) throws RecognitionException {
