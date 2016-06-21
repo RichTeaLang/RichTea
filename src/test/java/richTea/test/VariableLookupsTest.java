@@ -2,7 +2,6 @@ package richTea.test;
 
 import static org.junit.Assert.assertTrue;
 
-import org.antlr.runtime.RecognitionException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,14 +12,14 @@ import richTea.runtime.execution.VariableScope;
 public class VariableLookupsTest extends RichTeaTestBase {
 	
 	@Test
-	public void testSimpleLookup() throws RecognitionException {
+	public void testSimpleLookup() {
 		createContextAndTestVariable("(x:100)", "x", 100);
 	}
 	
 	@Test
-	public void testThisPrefix() throws RecognitionException {
+	public void testThisPrefix() {
 		ExecutionContext context = super.buildExecutionContext("(x:100)");
-
+		
 		try {
 			// Variables resolve from the parent scope. Therefore there is no "x" variable to resolve
 			buildAttribute("x").getValue(context);
@@ -32,17 +31,17 @@ public class VariableLookupsTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testLookupChain() throws RecognitionException {
+	public void testLookupChain() {
 		createContextAndTestVariable("(x:(y:200))", "x.y", 200);
 	}
 	
 	@Test
-	public void testBeanPropertyLookup() throws RecognitionException {
+	public void testBeanPropertyLookup() {
 		createContextAndTestVariable("(x:\"I'm a string\")", "x.class.simpleName", "String");
 	}
 	
 	@Test
-	public void testJavaMethodExecution() throws RecognitionException {
+	public void testJavaMethodExecution() {
 		createContextAndTestVariable("(x:\"I'm a string\")", "x.equals(\"I'm a string\")", true);
 		createContextAndTestVariable("(x:\"I'm a string\")", "x.equals(x)", true);
 		createContextAndTestVariable("(x:\"I'm a string\")", "x.equals(x + \".\")", false);
@@ -51,19 +50,19 @@ public class VariableLookupsTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testNestedLookupChains() throws RecognitionException {
+	public void testNestedLookupChains() {
 		createContextAndTestVariable("(x:1 y:\"class\")", "x.{y}.simpleName", "Integer");
 		createContextAndTestVariable("(x:1 y:\"class\" z:\"simpleName\")", "x.{y}.{z}", "Integer");
 	}
 	
 	@Test
-	public void testStringInterpolation() throws RecognitionException {
+	public void testStringInterpolation() {
 		createContextAndTestVariable("(name:\"RichTea\")", "\"Hello from {name}!\"", "Hello from RichTea!");
 		createContextAndTestVariable("()", "\"10 + 10 = {10 + 10}\"", "10 + 10 = 20.0");
 	}
 	
 	@Test
-	public void testAssignmentAttribute() throws RecognitionException {
+	public void testAssignmentAttribute() {
 		ExecutionContext context = buildExecutionContext("(value:1)");
 		Attribute setter = buildAttribute("value = 2");
 		Attribute getter = buildAttribute("value");
@@ -73,17 +72,17 @@ public class VariableLookupsTest extends RichTeaTestBase {
 	}
 	
 	@Override
-	protected ExecutionContext buildExecutionContext(String input) throws RecognitionException {
+	protected ExecutionContext buildExecutionContext(String input) {
 		// Nest variable scope to avoid having to prefix all variable attributes with "this."
 		VariableScope root = new VariableScope(null, new VariableScope(buildNode(input)));
 		
 		return new ExecutionContext(root);
 	}
 	
-	private void createContextAndTestVariable(String contextSource, String attributeSource, Object expected) throws RecognitionException {
+	private void createContextAndTestVariable(String contextSource, String attributeSource, Object expected) {
 		ExecutionContext context = buildExecutionContext(contextSource);
 		Attribute attribute = buildAttribute(attributeSource);
-		
 		assertTrue(attribute.getValue(context).equals(expected));
+		
 	}
 }

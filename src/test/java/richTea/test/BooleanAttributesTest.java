@@ -1,12 +1,11 @@
 package richTea.test;
 
-import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
 public class BooleanAttributesTest extends RichTeaTestBase {
 	
 	@Test
-	public void testAndAttribute() throws RecognitionException {
+	public void testAndAttribute() {
 		testAttributeValue("x:true && true", true);
 		testAttributeValue("x:true && false", false);
 		testAttributeValue("x:false && true", false);
@@ -14,7 +13,7 @@ public class BooleanAttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testOrAttribute() throws RecognitionException {
+	public void testOrAttribute() {
 		testAttributeValue("x:true || true", true);
 		testAttributeValue("x:true || false", true);
 		testAttributeValue("x:false || true", true);
@@ -22,35 +21,35 @@ public class BooleanAttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testGreaterThanAttribute() throws RecognitionException {
+	public void testGreaterThanAttribute() {
 		testAttributeValue("x:1 > 0", true);
 		testAttributeValue("x:1 > 1", false);
 		testAttributeValue("x:0 > 1", false);
 	}
 	
 	@Test
-	public void testGreaterThanOrEqualToAttribute() throws RecognitionException {
+	public void testGreaterThanOrEqualToAttribute() {
 		testAttributeValue("x:1 >= 0", true);
 		testAttributeValue("x:1 >= 1", true);
 		testAttributeValue("x:0 >= 1", false);
 	}
 	
 	@Test
-	public void testLessThanOrEqualToAttribute() throws RecognitionException {
+	public void testLessThanOrEqualToAttribute() {
 		testAttributeValue("x:1 <= 0", false);
 		testAttributeValue("x:1 <= 1", true);
 		testAttributeValue("x:0 <= 1", true);
 	}
 	
 	@Test
-	public void testLessThanAttribute() throws RecognitionException {
+	public void testLessThanAttribute() {
 		testAttributeValue("x:1 < 0", false);
 		testAttributeValue("x:1 < 1", false);
 		testAttributeValue("x:0 < 1", true);
 	}
 	
 	@Test
-	public void testEqualsAttribute() throws RecognitionException {
+	public void testEqualsAttribute() {
 		testAttributeValue("x:1 == 0", false);
 		testAttributeValue("x:1 == 1", true);
 		testAttributeValue("x:0 == 1", false);
@@ -61,7 +60,7 @@ public class BooleanAttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testNotEqualsAttribute() throws RecognitionException {
+	public void testNotEqualsAttribute() {
 		testAttributeValue("x:1 != 0", true);
 		testAttributeValue("x:1 != 1", false);
 		testAttributeValue("x:0 != 1", true);
@@ -70,7 +69,7 @@ public class BooleanAttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testNotAttribute() throws RecognitionException {
+	public void testNotAttribute() {
 		testAttributeValue("x:!true", false);
 		testAttributeValue("x:!false", true);
 	}

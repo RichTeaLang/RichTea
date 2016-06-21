@@ -2,7 +2,6 @@ package richTea.test;
 
 import static org.junit.Assert.assertTrue;
 
-import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
 import richTea.runtime.attribute.Attribute;
@@ -10,27 +9,27 @@ import richTea.runtime.attribute.Attribute;
 public class MathAttributesTest extends RichTeaTestBase {
 	
 	@Test
-	public void testAddition() throws RecognitionException {
+	public void testAddition() {
 		testAttributeValue("99 + 1", 100.0);
 	}
 	
 	@Test
-	public void testSubtraction() throws RecognitionException {
+	public void testSubtraction() {
 		testAttributeValue("99 - 1", 98.0);
 	}
 	
 	@Test
-	public void testMultiplcation() throws RecognitionException {
+	public void testMultiplcation() {
 		testAttributeValue("12 * 12", 144.0);
 	}
 	
 	@Test
-	public void testDivision() throws RecognitionException {
+	public void testDivision() {
 		testAttributeValue("50 / 2", 25.0);
 	}
 	
 	@Test
-	public void testPlusEquals() throws RecognitionException {
+	public void testPlusEquals() {
 		Attribute attribute = buildAttribute("0 += 2");
 		
 		assertTrue(attribute.getValue(null).equals(2.0));
@@ -38,7 +37,7 @@ public class MathAttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testMinusEquals() throws RecognitionException {
+	public void testMinusEquals() {
 		Attribute attribute = buildAttribute("0 -= 2");
 		
 		assertTrue(attribute.getValue(null).equals(-2.0));
@@ -46,7 +45,7 @@ public class MathAttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testMultiplyEquals() throws RecognitionException {
+	public void testMultiplyEquals() {
 		Attribute attribute = buildAttribute("5 *= 2");
 		
 		assertTrue(attribute.getValue(null).equals(10.0));
@@ -54,11 +53,10 @@ public class MathAttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testDivideEquals() throws RecognitionException {
+	public void testDivideEquals() {
 		Attribute attribute = buildAttribute("100 /= 2");
 		
 		assertTrue(attribute.getValue(null).equals(50.0));
 		assertTrue(attribute.getValue(null).equals(25.0));
 	}
-
 }
