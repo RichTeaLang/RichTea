@@ -1,297 +1,280 @@
 grammar RichTea;
 
-options	{
-	output=AST;
-	k=2; // Needed to correctly match implicitAttributes in the attribute_list rule
-	ASTLabelType=Tree;
-	language=Java;
-	backtrack=true;
+options {
+    output=AST;
+    k=2; // Needed to correctly match implicitAttributes in the attribute_list rule
+    ASTLabelType=Tree;
+    language=Java;
+    backtrack=true;
 }
 
 tokens {
-	FUNCTION; 
-	CHILDREN; ATTRIBUTES;
-	ATTRIBUTE; NAME; VALUE;
-	BRANCHES; BRANCH;
-	ARRAY; VARIABLE; STRING;
-	PROPERTY_LOOKUP; NATIVE_METHOD_CALL; 
-	THIS; LAST_RETURNED_VALUE;
-	EXECUTABLE_FUNCTION_ATTRIBUTE; 
-	TERNARY_OPERATOR; NEGATE;
+    FUNCTION; 
+    CHILDREN; ATTRIBUTES;
+    ATTRIBUTE; NAME; VALUE;
+    BRANCHES; BRANCH;
+    ARRAY; VARIABLE; STRING;
+    PROPERTY_LOOKUP; NATIVE_METHOD_CALL; 
+    THIS; LAST_RETURNED_VALUE;
+    EXECUTABLE_FUNCTION_ATTRIBUTE; 
+    TERNARY_OPERATOR; NEGATE;
 }
-			
-@header {package richTea.compiler;}
-@lexer::header {package richTea.compiler;}
-@lexer::members {boolean isLexingString = false; boolean isInterpolatingString = false;}
+
+@header         { package richTea.compiler; }
+@lexer::header  { package richTea.compiler; }
+@lexer::members { boolean isLexingString = false;
+                  boolean isInterpolatingString = false; }
+
+
+/*    PARSER RULES   */
+
 
 program
-	: 	function
-	;
-	
+    :    function
+    ;
+
 function
-	:	ID OPEN_PAREN function_data? CLOSE_PAREN SEMI_COLON?
-			-> ^(FUNCTION ^(NAME ID) function_data?)
-	|	OPEN_PAREN function_data? CLOSE_PAREN SEMI_COLON?
-			-> ^(FUNCTION ^(NAME ID["scope"]) function_data?)
-	;
+    :    ID OPEN_PAREN function_data? CLOSE_PAREN SEMI_COLON?
+             ->    ^(FUNCTION ^(NAME ID) function_data?)
+    |    OPEN_PAREN function_data? CLOSE_PAREN SEMI_COLON?
+             ->    ^(FUNCTION ^(NAME ID["scope"]) function_data?)
+    ;
 
 function_data
-	:	attribute_list branch_list	
-	;
-	
+    :    attribute_list branch_list
+    ;
+
 attribute_list
-	:	attributes+=implicit_attribute? (COMMA? attributes+=attribute)*
-			-> ^(ATTRIBUTES ^(ATTRIBUTE $attributes)*)
-	;
-	
+    :    attributes+=implicit_attribute? (COMMA? attributes+=attribute)*
+             ->    ^(ATTRIBUTES ^(ATTRIBUTE $attributes)*)
+    ;
+
 attribute
-	:	ID COLON expression
-			->	^(NAME ID) ^(VALUE expression)
-	;
-	
+    :    ID COLON expression
+             ->    ^(NAME ID) ^(VALUE expression)
+    ;
+
 implicit_attribute
-	:	expression
-			->	^(NAME ID["implicitAttribute"]) ^(VALUE expression)
-	;	
-	
+    :    expression
+             ->    ^(NAME ID["implicitAttribute"]) ^(VALUE expression)
+    ;
+
 branch_list
-	:	branches+=implicitBranch? (COMMA? branches+=branch)*
-			-> ^(BRANCHES ^(BRANCH $branches)*)
-	;
-	
+    :    branches+=implicitBranch? (COMMA? branches+=branch)*
+             ->    ^(BRANCHES ^(BRANCH $branches)*)
+    ;
+
 branch
-	:	branch_name COLON? OPEN_BRACE function* CLOSE_BRACE
-			->	^(NAME branch_name) ^(CHILDREN function*)
-	;
-	
+    :    branch_name COLON? OPEN_BRACE function* CLOSE_BRACE
+             ->    ^(NAME branch_name) ^(CHILDREN function*)
+    ;
+
 branch_name 
-	: 	HASH!? (ID | string)
-	;
+    :     HASH!? (ID | string)
+    ;
 
 implicitBranch 
-	:	HASH? OPEN_BRACE function* CLOSE_BRACE
-			->	^(NAME ID["implicitBranch"]) ^(CHILDREN function*)
-	;
-	
-/*	EXPRESSION EVALUATION	*/
-	
+    :    HASH? OPEN_BRACE function* CLOSE_BRACE
+             ->    ^(NAME ID["implicitBranch"]) ^(CHILDREN function*)
+    ;
+
+/*    EXPRESSION EVALUATION    */
+
 expression
-	:	logical_expression (QUESTION_MARK logical_expression COLON logical_expression) -> ^(TERNARY_OPERATOR logical_expression+)
-	|	logical_expression
-	|	variable ASSIGN^ logical_expression
-	;
-	
+    :    logical_expression (QUESTION_MARK logical_expression COLON logical_expression) -> ^(TERNARY_OPERATOR logical_expression+)
+    |    logical_expression
+    |    variable ASSIGN^ logical_expression
+    ;
+
 logical_expression
-	:	boolean_expression (OR^ boolean_expression)*
-	;
+    :    boolean_expression (OR^ boolean_expression)*
+    ;
 
 boolean_expression
-	:	equality_expression (AND^ equality_expression)*
-	;
-	
+    :    equality_expression (AND^ equality_expression)*
+    ;
+
 equality_expression
-	: relational_expression (( EQ | NEQ )^ relational_expression)*
-	;
-	
+    : relational_expression (( EQ | NEQ )^ relational_expression)*
+    ;
+
 relational_expression
-	:	additive_expression (( LT | LTEQ | GT | GTEQ )^ additive_expression)*
-	;
-	
+    :    additive_expression (( LT | LTEQ | GT | GTEQ )^ additive_expression)*
+    ;
+
 additive_expression
-	:	multiplicative_expression (( PLUS_EQUALS | MINUS_EQUALS | PLUS | MINUS )^ multiplicative_expression)*
-	;
-	
+    :    multiplicative_expression (( PLUS_EQUALS | MINUS_EQUALS | PLUS | MINUS )^ multiplicative_expression)*
+    ;
+
 multiplicative_expression
-	:	power_expression (( MULTIPLY_EQUALS | DIVIDE_EQUALS | MULTIPLY | DIVIDE | MODULUS )^ power_expression)*
-	;
-	
+    :    power_expression (( MULTIPLY_EQUALS | DIVIDE_EQUALS | MULTIPLY | DIVIDE | MODULUS )^ power_expression)*
+    ;
+
 power_expression
-	:	unary_expression ( POWER^ unary_expression)*
-	;
+    :    unary_expression ( POWER^ unary_expression)*
+    ;
 
 unary_expression
-	:	primary_expression
-	|	NOT^ primary_expression
-	|	MINUS primary_expression -> ^(NEGATE primary_expression)
-	;
-	
+    :    primary_expression
+    |    NOT^ primary_expression
+    |    MINUS primary_expression -> ^(NEGATE primary_expression)
+    ;
+
 primary_expression
-	:	OPEN_PAREN! logical_expression CLOSE_PAREN!
-	|	data_type
-	;
-	
+    :    OPEN_PAREN! logical_expression CLOSE_PAREN!
+    |    data_type
+    ;
+
 data_type 
-	:	INTEGER
-	|	DOUBLE
-	|	BOOLEAN
-	|	NULL
-	|	string
-	| 	variable
-	|	array
-	|	function
-	|	executable_function_attribute
-	;
+    :    INTEGER
+    |    DOUBLE
+    |    BOOLEAN
+    |    NULL
+    |    string
+    |    variable
+    |    array
+    |    function
+    |    executable_function_attribute
+    ;
 
 string
-	:	STRING_START string_content* STRING_END
-			-> ^(STRING string_content*)
-	;
-	
+    :    STRING_START string_content* STRING_END
+             ->    ^(STRING string_content*)
+    ;
+
 string_content
-	:	STRING_CHARACTERS | STRING_INTERPOLATION_START! expression STRING_INTERPOLATION_END!
-	;
-	
-		
+    :    STRING_CHARACTERS
+    |    STRING_INTERPOLATION_START! expression STRING_INTERPOLATION_END!
+    ;
+    
+
 variable
-	:	elements+=lookup_chain_root (PERIOD elements+=lookup_chain_element)*
-			->	^(VARIABLE $elements+)
-	;
+    :    elements+=lookup_chain_root (PERIOD elements+=lookup_chain_element)*
+             ->    ^(VARIABLE $elements+)
+    ;
 
 lookup_chain_root
-	:	ID { $ID.text.equals("this") }?
-			->	 THIS
-	|	UNDERSCORE
-			->	LAST_RETURNED_VALUE
-	|	property_lookup
-	;
-	
+    :    ID { $ID.text.equals("this") }?
+             ->    THIS
+    |    UNDERSCORE
+             ->    LAST_RETURNED_VALUE
+    |    property_lookup
+    ;
+
 lookup_chain_element
-	:	property_lookup
-	|	ID OPEN_PAREN expression_list? CLOSE_PAREN
-			->	^(NATIVE_METHOD_CALL ^(NAME ID) ^(ATTRIBUTES expression_list?))
-	;
-	
-property_lookup 
-	:	ID
-			->	^(PROPERTY_LOOKUP STRING_CHARACTERS[$ID.text])
-	|	OPEN_BRACE expression CLOSE_BRACE
-			->	^(PROPERTY_LOOKUP expression)
-	;
-	
+    :    property_lookup
+    |    ID OPEN_PAREN expression_list? CLOSE_PAREN
+             ->    ^(NATIVE_METHOD_CALL ^(NAME ID) ^(ATTRIBUTES expression_list?))
+    ;
+
+property_lookup
+    :    ID
+             ->    ^(PROPERTY_LOOKUP STRING_CHARACTERS[$ID.text])
+    |    OPEN_BRACE expression CLOSE_BRACE
+             ->    ^(PROPERTY_LOOKUP expression)
+    ;
+
 array
-	:	OPEN_BOX expression_list? CLOSE_BOX
-			->	^(ARRAY expression_list?)
-	;
+    :    OPEN_BOX expression_list? CLOSE_BOX
+            ->    ^(ARRAY expression_list?)
+    ;
 
 expression_list
-	:	expression (COMMA expression)*
-			->	expression*
-	;
-	
+    :    expression (COMMA expression)*
+             ->    expression*
+    ;
+
 executable_function_attribute
-	: 	AT function
-			->	^(EXECUTABLE_FUNCTION_ATTRIBUTE function)
-	;
-	
-	
-/*	TOKENS	*/
+    :    AT function
+             ->    ^(EXECUTABLE_FUNCTION_ATTRIBUTE function)
+    ;
+
+
+/*    LEXER RULES   */
 
 
 STRING_START
-    :	{!isLexingString}?=> '"' {isLexingString = true;}
-   	;
-   	
+    :    { !isLexingString }? => '"' 
+         { isLexingString = true; }
+    ;
+
 STRING_END
-	:	{isLexingString}?=> '"' {isLexingString = false;}
-	;
-	
+    :    { isLexingString }? => '"' 
+         { isLexingString = false; }
+    ;
+
 STRING_INTERPOLATION_START
-	:	{isLexingString && !isInterpolatingString}?=> '{' {isInterpolatingString = true;}
-	;
-	
+    :    { isLexingString && !isInterpolatingString }? => '{' 
+         { isInterpolatingString = true; }
+    ;
+
 STRING_INTERPOLATION_END
-	: 	{isInterpolatingString}?=> '}' {isInterpolatingString = false;}
-	;
-	
+    :    { isInterpolatingString }? => '}' 
+         { isInterpolatingString = false; }
+    ;
+
 STRING_CHARACTERS
-	@init { int lastMark = 0; }
-	:	{isLexingString && !isInterpolatingString}?=>
-			{ lastMark = input.mark(); } 
-			(~('{'|'"') { lastMark = input.mark(); })* ('{'|'"')
-			// Avoid consuming the string delimiter character - It needs to be matched in a different rule
-			{ input.rewind(lastMark); }
-	;
- 	
-INTEGER
-	:	'0'..'9'+
-	;
-	
-DOUBLE
-	:	INTEGER+ '.' INTEGER*
-	;
-		
-BOOLEAN
- 	:	'true' 
- 	|	'false'
-	;
+@init    { int lastMark = 0; }
+    :    { isLexingString && !isInterpolatingString }? =>
+         { lastMark = input.mark(); } 
+         (~('{'|'"') { lastMark = input.mark(); })* ('{'|'"')
+         { input.rewind(lastMark); } // Avoid consuming the delimiter character so that it is matched in a different rule
+    ;
 
-NULL
-	:	'null'
-	;
-
-ID	:	UNDERSCORE? LETTER (LETTER | INTEGER | UNDERSCORE)*
-	;
+INTEGER: '0'..'9'+;
+DOUBLE:  INTEGER+ '.' INTEGER*;
+BOOLEAN: 'true' | 'false';
+NULL:    'null';
+ID:      UNDERSCORE? LETTER (LETTER | INTEGER | UNDERSCORE)* ;
 
 COMMENT
-	:	'//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
-  	|	'/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;}
-  	;
+    :    '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
+    |    '/*' ( options {greedy=false;} : . )* '*/' { $channel=HIDDEN; }
+    ;
 
-WHITESPACE
-	:	('\r' | '\n' | '\r\n' | ' ' | '\t' ) {$channel=HIDDEN;} 
-	;
+WHITESPACE: ('\r' | '\n' | '\r\n' | ' ' | '\t' ) { $channel=HIDDEN; };
 
-COMMA	:	','	;
-PERIOD	:	'.'	;
-HASH	:	'#'	;
-AT	:	'@'	;
-UNDERSCORE	:	'_';
+COMMA:      ',';
+PERIOD:     '.';
+HASH:       '#';
+AT:         '@';
+UNDERSCORE: '_';
 
-PLUS_EQUALS		:	PLUS ASSIGN;
-MULTIPLY_EQUALS	:	MULTIPLY ASSIGN;
-MINUS_EQUALS	:	MINUS ASSIGN;
-DIVIDE_EQUALS	:	DIVIDE ASSIGN;
+PLUS_EQUALS:     PLUS ASSIGN;
+MULTIPLY_EQUALS: MULTIPLY ASSIGN;
+MINUS_EQUALS:    MINUS ASSIGN;
+DIVIDE_EQUALS:   DIVIDE ASSIGN;
 
-PLUS	:	'+'	;
-MINUS	:	'-'	;
-MULTIPLY:	'*'	;
-DIVIDE	:	'/'	;
-MODULUS	:	'%'	;
-POWER	:	'^'	;
+PLUS:     '+';
+MINUS:    '-';
+MULTIPLY: '*';
+DIVIDE:   '/';
+MODULUS:  '%';
+POWER:    '^';
 
-OR		:	'||';
-AND		:	'&&';
-GT		:	'>'	;
-GTEQ	:	'>=';
-LT		:	'<'	;
-LTEQ	:	'<=';
-EQ		:	'==';
-NEQ		:	'!=';
-NOT		:	'!'	;
+OR:   '||';
+AND:  '&&';
+GT:   '>' ;
+GTEQ: '>=';
+LT:   '<' ;
+LTEQ: '<=';
+EQ:   '==';
+NEQ:  '!=';
+NOT:  '!' ;
 
-ASSIGN		:	'=' ;
-COLON		:	':'	;
-SEMI_COLON	: 	';'	;
-QUESTION_MARK	:	'?'	;
+ASSIGN:        '=';
+COLON:         ':';
+SEMI_COLON:    ';';
+QUESTION_MARK: '?';
+OPEN_PAREN:    '(';
+CLOSE_PAREN:   ')';
+OPEN_BRACE:    '{';
+CLOSE_BRACE:   '}';
+OPEN_BOX:      '[';
+CLOSE_BOX:     ']';
 
-OPEN_PAREN 	:	'(' ;
-CLOSE_PAREN :	')' ;
-
-OPEN_BRACE	:	'{'	;
-CLOSE_BRACE	:	'}'	;
-
-OPEN_BOX	:	'['	;
-CLOSE_BOX	:	']'	;
-
-/*	FRAGMENTS	*/
-	
 fragment
 LETTER
-	:	'a'..'z'
-	|	'A'..'Z'
-	;
-	
-fragment
-ESC_SEQ 
-	:	'\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
-	;
+    :    'a'..'z'
+    |    'A'..'Z'
+    ;
