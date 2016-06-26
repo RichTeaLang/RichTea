@@ -4,6 +4,7 @@ import java.util.List;
 
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.AttributeSet;
+import richTea.runtime.attribute.InterpolatedStringAttribute;
 import richTea.runtime.node.TreeNode;
 
 public class ExecutionException extends RuntimeException {
@@ -114,7 +115,20 @@ class StackTraceBuilder {
 				}
 			}
 		} catch (Exception e) {
-			write(attribute.getClass().getSimpleName() + " <ERROR> = " + e.getMessage());
+			write(attribute.getClass().getSimpleName() + " <ERROR>", false);
+			if (attribute instanceof InterpolatedStringAttribute) {
+				write("");
+				
+				indent++;
+				
+				for(Attribute component : ((InterpolatedStringAttribute) attribute).getComponents()) {
+					writeAttribute(component, context);
+				}
+				
+				indent--;
+			} else {
+				write(" = " + e.getMessage());
+			}
 		}
 	}
 	
