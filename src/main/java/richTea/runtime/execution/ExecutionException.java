@@ -46,7 +46,8 @@ class StackTraceBuilder {
 	private void writeHeader(Throwable throwable) {
 		write("Message:");
 		indent++;
-		write(throwable.getMessage());
+		String message = throwable.getMessage();
+		write(message != null ? throwable.getMessage() : throwable.getClass().getName());
 		indent--;
 	}
 	
