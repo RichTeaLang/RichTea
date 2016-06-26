@@ -31,6 +31,8 @@ public class ExecutionContext extends AbstractResolver {
 		} catch(ReturnException e) {
 			/* If this node contains a Return function we will have to catch the return exception
 			 * ourselves.  Usually a "Scope" function would deal with a return exception */
+		} catch (Throwable e) {
+			throw new ExecutionException(this, e);
 		}
 		
 		return getLastReturnValue();
