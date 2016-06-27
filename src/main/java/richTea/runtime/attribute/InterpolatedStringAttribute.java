@@ -12,7 +12,7 @@ public class InterpolatedStringAttribute extends AbstractAttribute {
 		this.components = components;
 	}
 	
-	protected Attribute[] getComponents() {
+	public Attribute[] getComponents() {
 		return this.components;
 	}
 
