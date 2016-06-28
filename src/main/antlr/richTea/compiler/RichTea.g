@@ -82,8 +82,8 @@ implicitBranch
 
 expression
     :    logical_expression (QUESTION_MARK logical_expression COLON logical_expression) -> ^(TERNARY_OPERATOR logical_expression+)
-    |    logical_expression
     |    variable ASSIGN^ logical_expression
+    |    logical_expression
     ;
 
 logical_expression
