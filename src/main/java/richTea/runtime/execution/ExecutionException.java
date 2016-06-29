@@ -99,21 +99,28 @@ class StackTraceBuilder {
 			if (object instanceof String || object instanceof Boolean || object instanceof Number) {
 				write(" = " + String.valueOf(object));
 			} else {
+				indent++;
+				
 				if (object instanceof List<?>) {
-					write("[" + ((List<?>) object).size() + "]");
+					List<?> list = (List<?>) object;
+					int size = list.size();
+					
+					write("[" + size + "]");
+					
+					for(int i = 0; i < size; i++) {
+						write("[" + i + "]: " + String.valueOf(list.get(i)));
+					}
 				} else if (object instanceof AttributeSet) {
 					write("");
-					
-					indent++;
 					
 					for(Attribute childAttribute : ((AttributeSet) object).getAttributes()) {
 						writeAttribute(childAttribute, context);
 					}
-					
-					indent--;
 				} else {
 					write("");
 				}
+				
+				indent--;
 			}
 		} catch (Exception e) {
 			write(attribute.getClass().getSimpleName() + " <ERROR>", false);
