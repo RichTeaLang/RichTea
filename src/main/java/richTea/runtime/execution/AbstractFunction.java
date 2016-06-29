@@ -5,7 +5,8 @@ import org.apache.log4j.Logger;
 import richTea.runtime.attribute.PrimativeAttribute;
 
 public abstract class AbstractFunction implements RichTeaFunction {
-
+	
+	protected String exceptionBranchName = "onError";
 	protected Logger log = Logger.getLogger(getClass());
 	protected ExecutionContext context;
 	
@@ -32,7 +33,11 @@ public abstract class AbstractFunction implements RichTeaFunction {
 			} catch(RuntimeException runtimeException) {
 				throw runtimeException;
 			} catch(Exception checkedExceception) {
-				log.error("Error executing function", checkedExceception);
+				if (context.getCurrentNode().hasBranch(exceptionBranchName)) {
+					context.executeBranch(exceptionBranchName, new PrimativeAttribute("error", checkedExceception));
+				} else {
+					throw new RuntimeException(checkedExceception);
+				}
 			}
 			
 		}
