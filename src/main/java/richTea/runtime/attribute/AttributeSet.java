@@ -10,6 +10,18 @@ public class AttributeSet {
 	public AttributeSet() {
 		attributes = new HashMap<String, Attribute>();
 	}
+	
+	public AttributeSet(Attribute... attributes) {
+		this();
+		
+		for(Attribute attribute : attributes) {
+			if (!hasAttribute(attribute.getName())) {
+				setAttribute(attribute);
+			} else {
+				throw new IllegalArgumentException("Duplicate attribute name: " + attribute.getName());
+			}
+		}
+	}
 
 	public Attribute getAttribute(String attributeName) {
 		return attributes.get(attributeName.toLowerCase());

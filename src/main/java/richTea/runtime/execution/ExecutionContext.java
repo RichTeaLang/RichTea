@@ -55,10 +55,12 @@ public class ExecutionContext extends AbstractResolver {
 	}
 	
 	public boolean executeBranch(String branchName, Attribute... attributes) {
-		pushScope(createScope(attributes));
-		
+		return executeBranch(branchName, createScope(attributes));
+	}
+	
+	public boolean executeBranch(String branchName, VariableScope scope) {
+		pushScope(scope);
 		boolean executed = executeBranch(branchName);
-		
 		popScope();
 		
 		return executed;
@@ -118,8 +120,28 @@ public class ExecutionContext extends AbstractResolver {
 		return scopes.peek();
 	}
 	
+	public VariableScope getParentScope() {
+		return getParentScope(null);
+	}
+	
+	public VariableScope getParentScope(Class<? extends RichTeaFunction> ownedBy) {
+		Iterator<VariableScope> iterator = scopes.iterator();
+		
+		while(iterator.hasNext()) {
+			VariableScope scope = iterator.next();
+			
+			if (scope.getOwner().getFunction().getClass().equals(ownedBy)) {
+				return scope;
+			}
+		}
+		
+		return null;
+	}
+	
 	public TreeNode getCurrentNode() {
-		return getCurrentScope().getOwner();
+		VariableScope scope = getCurrentScope();
+		
+		return scope != null ? scope.getOwner() : null;
 	}
 
 	public Object getLastReturnValue() {
