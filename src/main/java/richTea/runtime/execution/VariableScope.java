@@ -1,5 +1,8 @@
 package richTea.runtime.execution;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import richTea.compiler.bootstrap.BindingNode;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.AttributeSet;
@@ -35,7 +38,7 @@ public class VariableScope extends AttributeSet {
 	public Attribute getAttribute(String attributeName) {
 		Attribute attribute = super.getAttribute(attributeName);
 		
-		if(attribute == null) {
+		if(attribute == null && owner != null) {
 			attribute = owner.getAttribute(attributeName);
 			
 			if(attribute == null) {
@@ -67,20 +70,47 @@ public class VariableScope extends AttributeSet {
 	
 	@Override
 	public boolean hasAttribute(String attributeName) {
-		return super.hasAttribute(attributeName) || getOwner().hasAttribute(attributeName);
+		return super.hasAttribute(attributeName) || (owner != null && owner.hasAttribute(attributeName));
+	}
+	
+	@Override
+	public Attribute[] getAttributes() {
+		Map<String, Attribute> attributes = new HashMap<>();
+		
+		for(Attribute attribute : super.getAttributes()) {
+			attributes.put(attribute.getName(), attribute);
+		}
+		
+		if (owner != null) {
+			for(Attribute attribute : owner.getAttributes()) {
+				if (! attributes.containsKey(attribute.getName())) {
+					attributes.put(attribute.getName(), attribute);
+				}
+			}
+			
+			for(Attribute attribute : owner.getBinding().getDefaultAttributes().getAttributes()) {
+				if (! attributes.containsKey(attribute.getName())) {
+					attributes.put(attribute.getName(), attribute);
+				}
+			}
+		}
+		
+		return attributes.values().toArray(new Attribute[attributes.size()]);
 	}
 	
 	@Override
 	public String toString() {
-		StringBuilder string = new StringBuilder("[VariableScope\n");
+		String ownerName = owner != null ? owner.getFunction().getClass().getSimpleName() : "";
+		StringBuilder string = new StringBuilder(ownerName);
+		Attribute[] attributes = getAttributes();
 		
-		string.append("Created by: " + owner.getFunction().getClass().getSimpleName());
-		string.append("\nAttibutes:");
-		for(Attribute attribute : getAttributes()) {
-			string.append("\n\t" + attribute.toString());
+		if (attributes.length > 0) {
+			string.append("\n  Attibutes:");
+			
+			for (Attribute attribute : attributes) {
+				string.append("\n\t" + attribute.toString());
+			}
 		}
-		
-		string.append("]");
 		
 		return string.toString();
 	}
