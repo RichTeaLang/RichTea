@@ -5,6 +5,8 @@ import java.util.List;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.AttributeSet;
 import richTea.runtime.attribute.InterpolatedStringAttribute;
+import richTea.runtime.attribute.TernaryExpressionAttribute;
+import richTea.runtime.attribute.function.ExecutableFunctionAttribute;
 import richTea.runtime.node.TreeNode;
 
 public class ExecutionException extends RuntimeException {
@@ -41,6 +43,7 @@ class StackTraceBuilder {
 		writeHeader(throwable);
 		writeContext(context);
 		write("");
+		indent--;
 	}
 	
 	private void writeHeader(Throwable throwable) {
@@ -65,7 +68,9 @@ class StackTraceBuilder {
 			
 			if (owner != null) {
 				functionName = owner.getBinding().getName();
-				functionClass = owner.getBinding().getFunctionClassName();
+				functionClass = owner.getBinding().getFunctionClass().getName();
+			} else if (scope.getRoot() == scope) {
+				functionName = "<Globals>";
 			}
 			
 			write(functionName + ":" + functionClass);
@@ -91,53 +96,69 @@ class StackTraceBuilder {
 	private void writeAttribute(Attribute attribute, ExecutionContext context) {
 		write(attribute.getName() + ":", false);
 		
+		indent++;
+		
 		try {
 			Object object = attribute.getValue(context);
 			
 			write(object.getClass().getName(), false);
 			
-			if (object instanceof String || object instanceof Boolean || object instanceof Number) {
-				write(" = " + String.valueOf(object));
-			} else {
-				indent++;
+			if (object instanceof List<?>) {
+				List<?> list = (List<?>) object;
+				int size = list.size();
 				
-				if (object instanceof List<?>) {
-					List<?> list = (List<?>) object;
-					int size = list.size();
-					
-					write("[" + size + "]");
-					
-					for(int i = 0; i < size; i++) {
-						write("[" + i + "]: " + String.valueOf(list.get(i)));
-					}
-				} else if (object instanceof AttributeSet) {
-					write("");
-					
-					for(Attribute childAttribute : ((AttributeSet) object).getAttributes()) {
-						writeAttribute(childAttribute, context);
-					}
-				} else {
-					write("");
+				write("[" + size + "]");
+				
+				for(int i = 0; i < size; i++) {
+					write("[" + i + "]: " + String.valueOf(list.get(i)));
 				}
-				
-				indent--;
-			}
-		} catch (Exception e) {
-			write(attribute.getClass().getSimpleName() + " <ERROR>", false);
-			if (attribute instanceof InterpolatedStringAttribute) {
+			} else if (object instanceof AttributeSet) {
 				write("");
 				
-				indent++;
+				for(Attribute childAttribute : ((AttributeSet) object).getAttributes()) {
+					writeAttribute(childAttribute, context);
+				}
+			} else if (object instanceof String) {
+				write(" = \"" + object.toString() + "\"");
+			} else {
+				String stringRepresentation = String.valueOf(object);
 				
+//				if (string.length() > 100) {
+//					string = string.substring(0, 97) + "...";
+//				}
+				
+				write(" = " + stringRepresentation);
+			}
+		} catch (Throwable e) {
+			write(attribute.getClass().getSimpleName() + " <ERROR> = " + e.getMessage());
+			
+			if (attribute instanceof InterpolatedStringAttribute) {
 				for(Attribute component : ((InterpolatedStringAttribute) attribute).getComponents()) {
 					writeAttribute(component, context);
 				}
+			} else if (attribute instanceof TernaryExpressionAttribute) {
+				TernaryExpressionAttribute expression = (TernaryExpressionAttribute) attribute;
+				
+				writeAttribute(expression.getExpression(), context);
+				writeAttribute(expression.getTrueAttribute(), context);
+				writeAttribute(expression.getFalseAttribute(), context);
+			} else if (attribute instanceof ExecutableFunctionAttribute) {
+				ExecutableFunctionAttribute functionRef = (ExecutableFunctionAttribute) attribute;
+				TreeNode functionNode = functionRef.getFunctionAttribute().getFunctionNode();
+				
+				write("Function: " + functionNode.getFunction().getClass().getName());
+				
+				indent++;
+				
+				for(Attribute a : functionNode.getAttributes()) {
+					writeAttribute(a, context);
+				}
 				
 				indent--;
-			} else {
-				write(" = " + e.getMessage());
 			}
 		}
+		
+		indent--;
 	}
 	
 	private void write(String line) {
