@@ -46,7 +46,7 @@ public class PropertyLookup extends LookupChainElement {
 			if(attributeSet instanceof VariableScope) {
 				attribute = ((VariableScope) attributeSet).resolveAttribute(attributeName);
 			} else {
-				attribute =  attributeSet.getAttribute(attributeName);
+				attribute = attributeSet.getAttribute(attributeName);
 			}
 		}
 		
