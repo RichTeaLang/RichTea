@@ -1,15 +1,19 @@
 package richTea.compiler.bootstrap;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.antlr.runtime.ANTLRInputStream;
-import org.antlr.runtime.CharStream;
-import org.antlr.runtime.RecognitionException;
 
 import richTea.compiler.RichTeaCompiler;
 import richTea.runtime.attribute.Attribute;
@@ -19,42 +23,104 @@ import richTea.runtime.node.TreeNode;
 import richTea.runtime.resolver.AttributeResolver;
 
 public class ImportNode extends DataNode {
-	
 	public static final String FUNCTIONS_ATTRIBUTE_NAME = "functions";
 	public static final String REBINDING_BRANCH_NAME = "rebind";
-	protected static final String IMPORT_ALL = "*";
+	public static final String IMPORT_ALL = "*";
+	public static final String EXPORTS_FILE_NAME = "exports.tea";
 	
-	private BindingSet importedBindings;
+	private Path workingDir;
+	private URLClassLoader classLoader;
+	private Map<String, BindingDefinition> definitions;
+	private Map<String, Binding> bindings;
 	
-	public ImportNode() {
-		importedBindings = new BindingSet();
-	}
-	
-	public BindingSet getImportedBindings() {
-		return importedBindings;
-	}
-
 	@Override
-	public void initialize() throws IOException, RecognitionException, ClassNotFoundException {
-		String modulePath = getModulePath();
-		String exportsFileName = getExportsFileName(modulePath);
-		ClassLoader moduleClassLoader = getClassLoaderForModule(modulePath);
-		Thread.currentThread().setContextClassLoader(moduleClassLoader);
-		BindingSet moduleExports = loadModuleExports(moduleClassLoader, exportsFileName);
+	public void initialize() throws ClassNotFoundException, IOException {
+		workingDir = new File(System.getProperty("user.dir")).toPath().toAbsolutePath().normalize();
+		classLoader = getClassLoaderForModule(getModulePath());
+		definitions = getImportDefinitions(getExportDefinitions(classLoader));
+		bindings = createBindings(getImportPrefix(), classLoader, definitions.values());
+	}
+	
+	public Path getDeclaredPath() {
+		String from = resolver.getString("from");
+		
+		return new File(from.endsWith(".jar") ? from : from + ".jar").toPath();
+	}
+	
+	public Path getModulePath() {
+		Path path = getDeclaredPath();
+		String pathOverride = System.getProperty(path.toString());
+		path = pathOverride == null ? workingDir.resolve(path) : new File(pathOverride).toPath();
+		
+		return path.toAbsolutePath().normalize();
+	}
+	
+	public String getImportPrefix() {
+		return resolver.getStringOrDefault("importPrefix",  "");
+	}
+	
+	public Binding getImportedBinding(String name) {
+		return bindings.get(name);
+	}
+	
+	public Map<String, Binding> getImportedBindings() {
+		return Collections.unmodifiableMap(bindings);
+	}
+	
+	public URLClassLoader getClassLoader() {
+		return classLoader;
+	}
+	
+	protected URLClassLoader getClassLoaderForModule(Path modulePath) {
+		try {
+			File moduleFile = modulePath.toFile();
+			URL moduleURL = moduleFile.toURI().toURL();
+			
+			if (!moduleFile.exists()) {
+				throw new FileNotFoundException(modulePath + " does not exist");
+			}
+			
+			return new URLClassLoader(new URL[] { moduleURL }, getClass().getClassLoader());
+		} catch (Exception e) {
+			throw new RuntimeException("Unable to read module file (" + modulePath + ")", e);
+		}
+	}
+	
+	protected Map<String, BindingDefinition> getExportDefinitions(ClassLoader classLoader) throws IOException {
+		InputStream manifest = classLoader.getResourceAsStream(EXPORTS_FILE_NAME);
+		
+		if (manifest == null) {
+			throw new IllegalArgumentException("Missing export manifest: " + EXPORTS_FILE_NAME + " in " + getModulePath());
+		}
+		
+		RichTeaCompiler compiler = new RichTeaCompiler(new ANTLRInputStream(manifest));
+		TreeNode manifestNode =  compiler.compile().getProgram();
+		Map<String, BindingDefinition> exports = new HashMap<>();
+		
+		for(TreeNode node : manifestNode.getBranch("exports").getChildren()) {
+			BindingDefinition export = (BindingDefinition) node;
+			
+			exports.put(export.getName().toLowerCase(), export);
+		}
+		
+		return exports;
+	}
+	
+	protected Map<String, BindingDefinition> getImportDefinitions(Map<String, BindingDefinition> exportedDefinitions) throws IOException {
+		Map<String, BindingDefinition> importedDefinitions = new HashMap<>();
 		
 		// Import bindings from functions attribute
 		Object functionsAttributeValue = resolver.getValueOrDefault(FUNCTIONS_ATTRIBUTE_NAME, "");
-		String importPrefix = getImportPrefix();
 		
 		if (functionsAttributeValue.equals(IMPORT_ALL)) {
-			for(BindingNode export : moduleExports.getBindings()) {
-				registerImportedBinding(export.getName(), importPrefix, export);
+			for(BindingDefinition export : exportedDefinitions.values()) {
+				importedDefinitions.put(export.getName(), export);
 			}
 		} else if (functionsAttributeValue instanceof List<?>) {
 			for(Object namedImport : (List<?>) functionsAttributeValue) {
-				BindingNode export = moduleExports.getBinding(String.valueOf(namedImport));
+				BindingDefinition export = exportedDefinitions.get(String.valueOf(namedImport).toLowerCase());
 				
-				registerImportedBinding(export.getName(), importPrefix, export);
+				importedDefinitions.put(export.getName(), export);
 			}
 		}
 		
@@ -66,90 +132,38 @@ public class ImportNode extends DataNode {
 			for(TreeNode rebindNode : rebindBranch.getChildren()) {
 				resolver.setContext(rebindNode);
 				
-				String exportName = resolver.getString("if"); // Hack: Scope's implicit attribute is "if"
-				String importName = resolver.getStringOrDefault("as", exportName);
-				BindingNode exportedBinding = moduleExports.getBinding(exportName);
-				BindingNode importedBinding = registerImportedBinding(importName, importPrefix, exportedBinding);
+				String exportedName = resolver.getString("if"); // Hack: Scope's implicit attribute is "if"
+				String importedName = resolver.getStringOrDefault("as", exportedName);
+				BindingDefinition exportedDefinition = exportedDefinitions.get(exportedName.toLowerCase());
+				BindingDefinition importedDefinition = new BindingDefinition(importedName, exportedDefinition);
 				
 				for(Attribute attribute : rebindNode.getAttributes()) {
 					String attributeName = attribute.getName();
 					if (!attributeName.equals("if") && !attributeName.equals("as")) {
-						importedBinding.getDefaultAttributes().setAttribute(attribute);
+						importedDefinition.getDefaultAttributes().setAttribute(attribute);
 					}
 				}
-			}
-		}
-	}
-	
-	public String getModulePath() {
-		String path = resolver.getString("from");
-		
-		return path.endsWith(".jar") ? path : path + ".jar";
-	}
-	
-	public String getImportPrefix() {
-		return resolver.getStringOrDefault("importPrefix",  "");
-	}
-	
-	protected ClassLoader getClassLoaderForModule(String modulePath) {
-		String moduleName = getModuleName(modulePath);
-		String exportsFileName = getExportsFileName(moduleName);
-		ClassLoader classLoader = getClass().getClassLoader();
-		
-		if (classLoader.getResource(exportsFileName) == null) {
-			try {
-				String workingDir = System.getProperty("user.dir");
-				URL moduleURL = new File(workingDir, modulePath).toURI().toURL();
 				
-				classLoader = new URLClassLoader(new URL[] { moduleURL }, classLoader);
-			} catch (MalformedURLException e) {
-				throw new RuntimeException("Unable to read module file", e);
+				importedDefinitions.put(importedDefinition.getName(), importedDefinition);
 			}
 		}
 		
-		return classLoader;
+		return importedDefinitions;
 	}
 	
-	protected String getModuleName(String modulePath) {
-		String name = new File(modulePath).getName();
-		int extensionIndex = name.lastIndexOf('.');
+	protected Map<String, Binding> createBindings(
+			String prefix, 
+			URLClassLoader classLoader, 
+			Collection<BindingDefinition> definitions) throws ClassNotFoundException {
 		
-		return extensionIndex == -1 ? name : name.substring(0, extensionIndex);
-	}
-	
-	protected String getExportsFileName(String modulePath) {
-		return getModuleName(modulePath) + ".tea";
-	}
-
-	protected BindingSet loadModuleExports(ClassLoader classLoader, String exportsFileName) throws IOException {
-		CharStream moduleBindings = new ANTLRInputStream(classLoader.getResourceAsStream(exportsFileName));
-		RichTeaCompiler compiler = new RichTeaCompiler(moduleBindings);
+		Map<String, Binding> bindings = new HashMap<>();
 		
-		return (BindingSet) compiler.compile();
-	}
-	
-	protected BindingNode registerImportedBinding(String name, String prefix, BindingNode binding) throws ClassNotFoundException {
-		BindingNode importedBinding = createImportedBinding(name, prefix, binding);
-		
-		getImportedBindings().registerBinding(importedBinding);
-		
-		return importedBinding;
-	}
-	
-	protected BindingNode createImportedBinding(String name, String prefix, BindingNode binding) throws ClassNotFoundException {
-		BindingNode importedBinding = new BindingNode();
-		
-		for(Attribute attribute : binding.getAttributes()) {
-			importedBinding.setAttribute(attribute);
+		for(BindingDefinition definition : definitions) {
+			String name = prefix + definition.getName();
+			Binding binding = new Binding(name, classLoader, definition);
+			
+			bindings.put(name.toLowerCase(), binding);
 		}
-		
-		for(Branch branch : binding.getBranches()) {
-			importedBinding.setBranch(branch);
-		}
-		
-		importedBinding.setName(prefix + name);
-		importedBinding.initialize();
-		
-		return importedBinding;
+		return bindings;
 	}
 }

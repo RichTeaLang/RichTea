@@ -1,7 +1,9 @@
 package richTea.compiler;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
+import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.ParserRuleReturnScope;
@@ -10,31 +12,29 @@ import org.antlr.runtime.tree.CommonTree;
 import richTea.compiler.antlr.RichTeaTreeAdaptor;
 import richTea.compiler.antlr.tree.AttributeData;
 import richTea.compiler.antlr.tree.NodeData;
-import richTea.compiler.bootstrap.BindingSet;
+import richTea.compiler.bootstrap.ImportNode;
 import richTea.compiler.factory.RichTeaNodeFactory;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.node.TreeNode;
 
 public class RichTeaCompiler {
 	private CharStream source;
-	private BindingSet[] bindings;
 	private RichTeaParser parser;
 	private RichTeaNodeFactory nodeFactory;
 	
-	public RichTeaCompiler(CharStream source, BindingSet[] bindings) {
+	public RichTeaCompiler(String source) {
+		this(new ANTLRStringStream(source));
+	}
+	
+	public RichTeaCompiler(CharStream source) {
 		this.source = source;
-		this.bindings = bindings;
 		this.parser = new RichTeaParser(new CommonTokenStream(new RichTeaLexer(source)));
 		this.parser.setTreeAdaptor(new RichTeaTreeAdaptor());
-		this.nodeFactory = new RichTeaNodeFactory(bindings);
+		this.nodeFactory = new RichTeaNodeFactory();
 	}
 
 	public CharStream getSource() {
 		return source;
-	}
-
-	public BindingSet[] getBindings() {
-		return bindings;
 	}
 	
 	public RichTeaParser getParser() {
@@ -45,11 +45,14 @@ public class RichTeaCompiler {
 		return nodeFactory;
 	}
 	
-	public TreeNode compile() {
+	public CompilationResult compile() {
 		NodeData programData = (NodeData) getParseResult("program");
-		TreeNode program = getNodeFactory().create(programData);
+		RichTeaNodeFactory nodeFactory = getNodeFactory();
+		String source = getSource().toString().trim();
+		TreeNode program = nodeFactory.create(programData);
+		List<ImportNode> imports = nodeFactory.getImports();
 		
-		return program;
+		return new CompilationResult(source, program, imports);
 	}
 	
 	public Attribute compileAttribute() {
@@ -69,6 +72,5 @@ public class RichTeaCompiler {
 		} catch (Exception e) {
 			throw new RuntimeException("Parse failed", e);
 		}
-		
 	}
 }

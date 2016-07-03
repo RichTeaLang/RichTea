@@ -1,33 +1,63 @@
 package richTea.compiler.factory;
 
+import java.net.URLClassLoader;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import richTea.compiler.antlr.tree.AttributeData;
 import richTea.compiler.antlr.tree.BranchData;
 import richTea.compiler.antlr.tree.NodeData;
-import richTea.compiler.bootstrap.BindingNode;
-import richTea.compiler.bootstrap.BindingSet;
-import richTea.compiler.bootstrap.BootstrapBinding;
+import richTea.compiler.bootstrap.Binding;
+import richTea.compiler.bootstrap.BindingDefinition;
+import richTea.compiler.bootstrap.BootstrapImportNode;
 import richTea.compiler.bootstrap.ImportNode;
 import richTea.runtime.attribute.Attribute;
+import richTea.runtime.execution.RichTeaFunction;
 import richTea.runtime.functions.CallFunctionReference;
 import richTea.runtime.node.Branch;
 import richTea.runtime.node.TreeNode;
 
 public class RichTeaNodeFactory {
-	private List<BindingSet> bindingSets;
-	
+	private BootstrapImportNode bootstrapBindings;
+	private Map<String, ImportNode> bindings; // Map of binding to ImportNode containing the binding
 	private RichTeaAttributeFactory attributeFactory;
 
-	public RichTeaNodeFactory(BindingSet[] bindingSets) {
-		this.bindingSets = new ArrayList<BindingSet>(Arrays.asList(bindingSets));
-		this.attributeFactory = new RichTeaAttributeFactory(this);
+	public RichTeaNodeFactory() {
+		bootstrapBindings = new BootstrapImportNode();
+		bindings = new HashMap<>();
+		attributeFactory = new RichTeaAttributeFactory(this);
 	}
 	
-	public BindingSet[] getBindingSets() {
-		return bindingSets.toArray(new BindingSet[bindingSets.size()]);
+	public List<ImportNode> getImports() {
+		List<ImportNode> imports = new ArrayList<>();
+		
+		for(ImportNode node : bindings.values()) {
+			if (!imports.contains(node)) {
+				imports.add(node);
+			}
+		}
+		
+		return imports;
+	}
+	
+	public void registerImportNode(ImportNode node) {
+		for(Binding binding : node.getImportedBindings().values()) {
+			String bindingName = binding.getName();
+			ImportNode existing = bindings.put(bindingName.toLowerCase(), node);
+			
+			if (existing == null) {
+				continue;
+			}
+			
+			Path existingPath = existing.getModulePath();
+			Path newPath = node.getModulePath();
+			String errorFormat = "Import conflict. \"%s\" is imported by %s and %s. Use \"importPrefix\" to avoid conflicts";
+			
+			throw new IllegalArgumentException(String.format(errorFormat, bindingName, existingPath, newPath));
+		}
 	}
 	
 	public RichTeaAttributeFactory getAttributeFactory() {
@@ -36,14 +66,15 @@ public class RichTeaNodeFactory {
 	
 	public TreeNode create(NodeData nodeData) {
 		TreeNode node = null;
+		Binding binding = getNodeBinding(nodeData);
 		
-		BindingNode binding = getNodeBinding(nodeData);
-		
-		if(binding == null) binding = createFunctionReferenceBinding(nodeData);
-
 		try {
+			if(binding == null) {
+				binding = createFunctionReferenceBinding(nodeData);
+			}
+			
 			Class<? extends TreeNode> nodeClass = getNodeClass(binding);
-
+			
 			node = instanciateNodeFromClass(nodeClass);
 			
 			setBindingOnNode(node, binding);
@@ -54,10 +85,10 @@ public class RichTeaNodeFactory {
 			node.initialize();
 			
 			if (node instanceof ImportNode) {
-				bindingSets.add(((ImportNode) node).getImportedBindings());
+				registerImportNode((ImportNode) node);
 			}
 		} catch (Exception e) {
-			String message = String.format("Unable to create node %s", binding.getNodeClassName());
+			String message = String.format("Unable to create node %s", binding.getNodeClass().getName());
 			
 			throw new RuntimeException(message, e);
 		}
@@ -65,25 +96,21 @@ public class RichTeaNodeFactory {
 		return node;
 	}
 	
-	protected BindingNode getNodeBinding(NodeData nodeData) {
-		BindingNode binding = null;
+	protected Binding getNodeBinding(NodeData nodeData) {
+		String bindingName = nodeData.getName().toLowerCase();
+		ImportNode node = bindings.get(bindingName);
 		
-		for(BindingSet bindingSet : bindingSets) {
-			binding = bindingSet.getBinding(nodeData.getName());
-			
-			if (binding != null) {
-				break;
-			}
-		}
-		
-		return binding;
+		return node != null ? node.getImportedBinding(bindingName) : bootstrapBindings.getImportedBinding(bindingName);
 	}
 	
-	protected BindingNode createFunctionReferenceBinding(NodeData nodeData) {
-		return new BootstrapBinding(nodeData.getName(), TreeNode.class, CallFunctionReference.class);
+	protected Binding createFunctionReferenceBinding(NodeData nodeData) throws ClassNotFoundException {
+		String name = nodeData.getName();
+		BindingDefinition definition = new BindingDefinition(name, TreeNode.class, CallFunctionReference.class);
+		
+		return new Binding(name, (URLClassLoader) getClass().getClassLoader(), definition);
 	}
 	
-	protected Class<? extends TreeNode> getNodeClass(BindingNode binding) {
+	protected Class<? extends TreeNode> getNodeClass(Binding binding) {
 		return binding.getNodeClass();
 	}
 	
@@ -91,7 +118,7 @@ public class RichTeaNodeFactory {
 		return nodeClass.newInstance();
 	}
 	
-	protected void setBindingOnNode(TreeNode node, BindingNode binding) {
+	protected void setBindingOnNode(TreeNode node, Binding binding) {
 		node.setBinding(binding);
 	}
 	
@@ -108,7 +135,7 @@ public class RichTeaNodeFactory {
 					
 					if(isImplicitAttribute) {
 						// Try rename the implictAttribute only if we haven't already set an attribute with the explicit name
-						String implicitAttributeName = node.getBinding().getImplicitAttributeName();
+						String implicitAttributeName = node.getBinding().getDefinition().getImplicitAttributeName();
 						
 						if(implicitAttributeName != null && !node.hasAttribute(implicitAttributeName)) {
 							attribute.setName(implicitAttributeName); // Rename implicitAttribute to it's explicit name
@@ -142,7 +169,7 @@ public class RichTeaNodeFactory {
 		
 		if(isImplicitBranch) {
 			// Try rename the implictBranch only if we haven't already set an branch with the explicit name
-			String implicitBranchName = node.getBinding().getImplicitBranchName();
+			String implicitBranchName = node.getBinding().getDefinition().getImplicitBranchName();
 			
 			if(implicitBranchName != null && !node.hasBranch(implicitBranchName)) {
 				branch.setName(implicitBranchName); // Rename implicitBranch to it's explicit name
@@ -168,7 +195,9 @@ public class RichTeaNodeFactory {
 		}
 	}
 	
-	protected void setFunctionOnNode(TreeNode node, BindingNode binding) throws InstantiationException, IllegalAccessException {
-		node.setFunction(binding.createFunctionImplementation());
+	protected void setFunctionOnNode(TreeNode node, Binding binding) throws InstantiationException, IllegalAccessException {
+		RichTeaFunction function = binding.getFunctionClass().newInstance();
+		
+		node.setFunction(function);
 	}
 }

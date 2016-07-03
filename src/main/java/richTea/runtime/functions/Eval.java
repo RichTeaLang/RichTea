@@ -4,8 +4,6 @@ import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.RecognitionException;
 
 import richTea.compiler.RichTeaCompiler;
-import richTea.compiler.bootstrap.BindingSet;
-import richTea.compiler.bootstrap.BootstrapBindingSet;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.execution.AbstractFunction;
 
@@ -26,8 +24,7 @@ public class Eval extends AbstractFunction {
 	
 	protected Attribute evaluateSource(String source) throws RecognitionException {
 		ANTLRStringStream sourceStream = new ANTLRStringStream(source);
-		BindingSet[] bindings = { new BootstrapBindingSet() };
-		RichTeaCompiler compiler = new RichTeaCompiler(sourceStream, bindings);
+		RichTeaCompiler compiler = new RichTeaCompiler(sourceStream);
 		Attribute compilationResult = compiler.compileAttribute();
 		
 		return compilationResult;

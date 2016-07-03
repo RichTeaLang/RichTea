@@ -3,7 +3,7 @@ package richTea.runtime.execution;
 import java.util.HashMap;
 import java.util.Map;
 
-import richTea.compiler.bootstrap.BindingNode;
+import richTea.compiler.bootstrap.Binding;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.AttributeSet;
 import richTea.runtime.node.TreeNode;
@@ -42,9 +42,11 @@ public class VariableScope extends AttributeSet {
 			attribute = owner.getAttribute(attributeName);
 			
 			if(attribute == null) {
-				BindingNode binding = owner.getBinding();
+				Binding binding = owner.getBinding();
 				
-				if(binding != null) attribute = binding.getDefaultAttributes().getAttribute(attributeName);
+				if(binding != null) {
+					attribute = binding.getDefinition().getDefaultAttributes().getAttribute(attributeName);
+				}
 			}
 		}
 		
@@ -88,7 +90,7 @@ public class VariableScope extends AttributeSet {
 				}
 			}
 			
-			for(Attribute attribute : owner.getBinding().getDefaultAttributes().getAttributes()) {
+			for(Attribute attribute : owner.getBinding().getDefinition().getDefaultAttributes().getAttributes()) {
 				if (! attributes.containsKey(attribute.getName())) {
 					attributes.put(attribute.getName(), attribute);
 				}

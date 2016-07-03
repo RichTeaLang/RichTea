@@ -1,6 +1,6 @@
 package richTea.runtime.resolver;
 
-import richTea.compiler.bootstrap.BindingNode;
+import richTea.compiler.bootstrap.Binding;
 import richTea.runtime.node.BasicNode;
 
 public class BasicNodeResolver<T extends BasicNode> extends AttributeResolver<T> {
@@ -10,10 +10,10 @@ public class BasicNodeResolver<T extends BasicNode> extends AttributeResolver<T>
 		Object value = super.getValue(attributeName);
 		
 		if(value == null) {
-			BindingNode binding = getContext().getBinding();
+			Binding binding = getContext().getBinding();
 			
 			if(binding != null) {
-				value = binding.getDefaultAttributeValue(attributeName);
+				value = binding.getDefinition().getDefaultAttributeValue(attributeName);
 			}
 		}
 		

@@ -1,17 +1,17 @@
 package richTea.runtime.node;
 
-import richTea.compiler.bootstrap.BindingNode;
+import richTea.compiler.bootstrap.Binding;
 import richTea.runtime.attribute.AttributeSet;
 
 public class BasicNode extends AttributeSet {
 	
-	private BindingNode binding;
+	private Binding binding;
 	
-	public BindingNode getBinding() {
+	public Binding getBinding() {
 		return binding;
 	}
 	
-	public void setBinding(BindingNode binding) {
+	public void setBinding(Binding binding) {
 		this.binding = binding;
 	}
 }
