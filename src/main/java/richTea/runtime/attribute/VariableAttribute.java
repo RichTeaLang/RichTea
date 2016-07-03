@@ -31,4 +31,9 @@ public class VariableAttribute extends LookupChainElement {
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
 		return getLookupChain().modify(context, modifier);
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s(%s)", getName(), getClass().getSimpleName());
+	}
 }
