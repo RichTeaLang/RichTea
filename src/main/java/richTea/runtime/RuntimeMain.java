@@ -1,49 +1,107 @@
-package richTea;
+package richTea.runtime;
 
-import org.antlr.runtime.ANTLRFileStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
+import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CharStream;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.impl.NoOpLog;
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.HTMLLayout;
 import org.apache.log4j.Logger;
 
-import richTea.compiler.RichTeaCompiler;
-import richTea.compiler.bootstrap.BindingSet;
-import richTea.compiler.bootstrap.BootstrapBindingSet;
+import richTea.compiler.CompilationResult;
+import richTea.compiler.Compiler;
+import richTea.runtime.attribute.AbstractAttribute;
+import richTea.runtime.attribute.Attribute;
+import richTea.runtime.attribute.AttributeSet;
+import richTea.runtime.attribute.PrimativeAttribute;
+import richTea.runtime.attribute.modifier.AttributeModifier;
 import richTea.runtime.execution.ExecutionContext;
 import richTea.runtime.node.TreeNode;
 
-public class RichTea {
+public class RuntimeMain {
+	public static final String CWD_DIR_PROPERTY = "user.dir";
 	
 	public static void main(String[] args) throws Exception {
-		new RichTea(args[0]);
+		File inputFile = new File(args[0]);
+		
+		new RuntimeMain(inputFile.getParentFile().getAbsolutePath(), new FileInputStream(inputFile), args);
 	}
 	
-	protected Logger log;
+	public RuntimeMain(InputStream programInput, String[] args) throws IOException {
+		this(System.getProperty(CWD_DIR_PROPERTY), programInput, args);
+	}
 	
-	public RichTea(String programFile) throws Exception {
-		// Disable commons logging (Used by the BeanUtils lib)
-		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-		
+	public RuntimeMain(String cwd, InputStream programInput, String[] args) throws IOException {
+		// Configure logging
+		Logger log = Logger.getLogger(getClass());
 		BasicConfigurator.configure();
-		log = Logger.getLogger(getClass());
-		log.addAppender(new FileAppender(new HTMLLayout(), "./output.html"));
+		System.setProperty(Log.class.getName(), NoOpLog.class.getName()); // Disable logging (Used by the BeanUtils lib)
+		System.setProperty(CWD_DIR_PROPERTY, cwd);
 		
-		CharStream source = new ANTLRFileStream(programFile);
-		BindingSet[] bindings = { new BootstrapBindingSet() };
-		RichTeaCompiler compiler = new RichTeaCompiler(source, bindings);
+		log.info("Compiling RichTea file");
+		
+		CharStream input = new ANTLRInputStream(programInput, StandardCharsets.UTF_8.name());
+		Compiler compiler = new Compiler(input);
 		
 		long compileStartTime = System.currentTimeMillis();
-		log.info("Compiling RichTea file: " + programFile);
 		
-		TreeNode program = compiler.compile();
+		CompilationResult compilation = compiler.compile();
+		TreeNode program = compilation.getProgram();
 		
 		log.info(String.format("Compilation took %s ms", System.currentTimeMillis() - compileStartTime));
 		log.info("Executing RichTea program...");
+		
 		long executeStartTime = System.currentTimeMillis();
 		
-		new ExecutionContext().execute(program);
+		ExecutionContext context = new ExecutionContext();
+		
+		Attribute env = new PrimativeAttribute("env", new AttributeSet(
+			new PrimativeAttribute("mainArgs", Arrays.asList(args)),
+			new PrimativeAttribute("compilation", compilation),
+			new CwdAttribute("cwd")
+		));
+		
+		context.pushScope(context.createScope(env));
+		context.execute(program);
 		
 		log.info(String.format("Execution completed in %s ms", System.currentTimeMillis() - executeStartTime));
+	}
+}
+
+class CwdAttribute extends AbstractAttribute {
+	private File cwd;
+	private File originalCwd;
+	
+	public CwdAttribute(String name) {
+		super(name);
+		
+		originalCwd = new File(".").getAbsoluteFile();
+		cwd = originalCwd;
+	}
+
+	@Override
+	public Object getValue(ExecutionContext context) {
+		return cwd;
+	}
+	
+	@Override
+	public Object modify(ExecutionContext context, AttributeModifier modifier) {
+		Object value = super.modify(context, modifier);
+		
+		cwd = value == null ? originalCwd : new File(value.toString());
+		
+		if (!cwd.isDirectory()) {
+			cwd = cwd.getParentFile().getAbsoluteFile();
+		}
+		
+		System.setProperty(RuntimeMain.CWD_DIR_PROPERTY, cwd.getAbsolutePath());
+		
+		return value;
 	}
 }
