@@ -17,16 +17,16 @@ import richTea.compiler.factory.RichTeaNodeFactory;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.node.TreeNode;
 
-public class RichTeaCompiler {
+public class Compiler {
 	private CharStream source;
 	private RichTeaParser parser;
 	private RichTeaNodeFactory nodeFactory;
 	
-	public RichTeaCompiler(String source) {
+	public Compiler(String source) {
 		this(new ANTLRStringStream(source));
 	}
 	
-	public RichTeaCompiler(CharStream source) {
+	public Compiler(CharStream source) {
 		this.source = source;
 		this.parser = new RichTeaParser(new CommonTokenStream(new RichTeaLexer(source)));
 		this.parser.setTreeAdaptor(new RichTeaTreeAdaptor());

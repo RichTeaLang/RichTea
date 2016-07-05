@@ -3,7 +3,7 @@ package richTea.runtime.functions;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.RecognitionException;
 
-import richTea.compiler.RichTeaCompiler;
+import richTea.compiler.Compiler;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.execution.AbstractFunction;
 
@@ -24,7 +24,7 @@ public class Eval extends AbstractFunction {
 	
 	protected Attribute evaluateSource(String source) throws RecognitionException {
 		ANTLRStringStream sourceStream = new ANTLRStringStream(source);
-		RichTeaCompiler compiler = new RichTeaCompiler(sourceStream);
+		Compiler compiler = new Compiler(sourceStream);
 		Attribute compilationResult = compiler.compileAttribute();
 		
 		return compilationResult;

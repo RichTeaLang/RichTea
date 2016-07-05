@@ -15,7 +15,7 @@ import java.util.Map;
 
 import org.antlr.runtime.ANTLRInputStream;
 
-import richTea.compiler.RichTeaCompiler;
+import richTea.compiler.Compiler;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.node.Branch;
 import richTea.runtime.node.DataNode;
@@ -93,7 +93,7 @@ public class ImportNode extends DataNode {
 			throw new IllegalArgumentException("Missing export manifest: " + EXPORTS_FILE_NAME + " in " + getModulePath());
 		}
 		
-		RichTeaCompiler compiler = new RichTeaCompiler(new ANTLRInputStream(manifest));
+		Compiler compiler = new Compiler(new ANTLRInputStream(manifest));
 		TreeNode manifestNode =  compiler.compile().getProgram();
 		Map<String, BindingDefinition> exports = new HashMap<>();
 		

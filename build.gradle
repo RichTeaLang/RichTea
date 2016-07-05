@@ -8,7 +8,7 @@ apply plugin: 'eclipse'
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 
-mainClassName = 'richTea.RichTea'
+mainClassName = 'richTea.runtime.RuntimeMain'
 
 // Execute RichTea program like so: 'gradle run -Pargs="path/to/program.tea"'
 run {
