@@ -7,7 +7,7 @@ mainClassName = 'richTea.runtime.RuntimeMain'
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'richTea.RichTea'
+		attributes 'Main-Class': mainClassName
 	}
 }
 // Execute RichTea program like so: 'gradle run -Pargs="path/to/program.tea"'
