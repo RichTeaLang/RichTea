@@ -30,16 +30,16 @@ public class RuntimeMain {
 	public static void main(String[] args) throws Exception {
 		File inputFile = new File(args[0]);
 		
-		new RuntimeMain(inputFile.getParentFile().getAbsolutePath(), new FileInputStream(inputFile), args);
+		RuntimeMain.main(inputFile.getParentFile().getAbsolutePath(), new FileInputStream(inputFile), args);
 	}
 	
-	public RuntimeMain(InputStream programInput, String[] args) throws IOException {
-		this(System.getProperty(CWD_DIR_PROPERTY), programInput, args);
+	public static void main(InputStream programInput, String[] args) throws IOException {
+		RuntimeMain.main(System.getProperty(CWD_DIR_PROPERTY), programInput, args);
 	}
 	
-	public RuntimeMain(String cwd, InputStream programInput, String[] args) throws IOException {
+	public static void main(String cwd, InputStream programInput, String[] args) throws IOException {
 		// Configure logging
-		Logger log = Logger.getLogger(getClass());
+		Logger log = Logger.getLogger(Runtime.class.getName());
 		BasicConfigurator.configure();
 		System.setProperty(Log.class.getName(), NoOpLog.class.getName()); // Disable logging (Used by the BeanUtils lib)
 		System.setProperty(CWD_DIR_PROPERTY, cwd);
@@ -72,6 +72,8 @@ public class RuntimeMain {
 		
 		log.info(String.format("Execution completed in %s ms", System.currentTimeMillis() - executeStartTime));
 	}
+	
+	private RuntimeMain() {}
 }
 
 class CwdAttribute extends AbstractAttribute {
