@@ -27,6 +27,7 @@ public class ImportNode extends DataNode {
 	public static final String REBINDING_BRANCH_NAME = "rebind";
 	public static final String IMPORT_ALL = "*";
 	public static final String EXPORTS_FILE_NAME = "exports.tea";
+	public static final String EXPORTS_BRANCH_NAME = "exports";
 	
 	private Path workingDir;
 	private URLClassLoader classLoader;
@@ -34,11 +35,15 @@ public class ImportNode extends DataNode {
 	private Map<String, Binding> bindings;
 	
 	@Override
-	public void initialize() throws ClassNotFoundException, IOException {
-		workingDir = new File(System.getProperty("user.dir")).toPath().toAbsolutePath().normalize();
-		classLoader = getClassLoaderForModule(getModulePath());
-		definitions = getImportDefinitions(getExportDefinitions(classLoader));
-		bindings = createBindings(getImportPrefix(), classLoader, definitions.values());
+	public void initialize() throws Exception {
+		try {
+			workingDir = new File(System.getProperty("user.dir")).toPath().toAbsolutePath().normalize();
+			classLoader = getClassLoaderForModule(getModulePath());
+			definitions = getImportDefinitions(getExportDefinitions(classLoader));
+			bindings = createBindings(getImportPrefix(), classLoader, definitions.values());
+		} catch (Throwable e) {
+			throw new Exception(getModulePath().toString(), e);
+		}
 	}
 	
 	public Path getDeclaredPath() {
@@ -90,20 +95,24 @@ public class ImportNode extends DataNode {
 		InputStream manifest = classLoader.getResourceAsStream(EXPORTS_FILE_NAME);
 		
 		if (manifest == null) {
-			throw new IllegalArgumentException("Missing export manifest: " + EXPORTS_FILE_NAME + " in " + getModulePath());
+			throw new FileNotFoundException("Missing export manifest: " + EXPORTS_FILE_NAME);
 		}
 		
 		Compiler compiler = new Compiler(new ANTLRInputStream(manifest));
 		TreeNode manifestNode =  compiler.compile().getProgram();
 		Map<String, BindingDefinition> exports = new HashMap<>();
 		
-		for(TreeNode node : manifestNode.getBranch("exports").getChildren()) {
-			BindingDefinition export = (BindingDefinition) node;
+		if (manifestNode.hasBranch(EXPORTS_BRANCH_NAME)) {
+			for(TreeNode node : manifestNode.getBranch(EXPORTS_BRANCH_NAME).getChildren()) {
+				BindingDefinition export = (BindingDefinition) node;
+				
+				exports.put(export.getName().toLowerCase(), export);
+			}
 			
-			exports.put(export.getName().toLowerCase(), export);
+			return exports;
+		} else {
+			throw new IllegalArgumentException("Export manifest does not contain " + EXPORTS_BRANCH_NAME + " branch");
 		}
-		
-		return exports;
 	}
 	
 	protected Map<String, BindingDefinition> getImportDefinitions(Map<String, BindingDefinition> exportedDefinitions) throws IOException {
