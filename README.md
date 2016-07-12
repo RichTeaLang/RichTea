@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/RichTeaLang/RichTea.svg?branch=master)](https://travis-ci.org/RichTeaLang/RichTea)
+[![Dependency Status](https://dependencyci.com/github/RichTeaLang/RichTea/badge)](https://dependencyci.com/github/RichTeaLang/RichTea)
 
 # RichTea
 
