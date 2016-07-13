@@ -1,7 +1,6 @@
 package richTea.compiler.antlr;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,16 +43,8 @@ public class RichTeaTreeAdaptor extends CommonTreeAdaptor {
 					
 					return tree;
 					
-				}catch(NoSuchMethodException exception) {
-					log.error("Unable to find constructor for given class type" , exception);
-				}catch(SecurityException exception) {
-					log.error("Security exception invoking constructor for tree class" , exception);
-				}catch(InvocationTargetException exception) {
-					log.error("Unable to invoke constructor for tree class" , exception);
-				}catch(IllegalAccessException exception) {
-					log.error("Unable to access constructor for tree class" , exception);
-				}catch(InstantiationException exception) {
-					log.error("Error instantiating tree class", exception);
+				} catch (Exception exception) {
+					throw new RuntimeException("Unable to create node: " + token.toString(), exception);
 				}
 			}
 		}
