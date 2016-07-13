@@ -6,7 +6,7 @@ import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.AttributeSet;
 import richTea.runtime.attribute.InterpolatedStringAttribute;
 import richTea.runtime.attribute.TernaryExpressionAttribute;
-import richTea.runtime.attribute.function.ExecutableFunctionAttribute;
+import richTea.runtime.attribute.function.FunctionAttribute;
 import richTea.runtime.node.TreeNode;
 
 public class ExecutionException extends RuntimeException {
@@ -142,9 +142,9 @@ class StackTraceBuilder {
 				writeAttribute(expression.getExpression(), context);
 				writeAttribute(expression.getTrueAttribute(), context);
 				writeAttribute(expression.getFalseAttribute(), context);
-			} else if (attribute instanceof ExecutableFunctionAttribute) {
-				ExecutableFunctionAttribute functionRef = (ExecutableFunctionAttribute) attribute;
-				TreeNode functionNode = functionRef.getFunctionAttribute().getFunctionNode();
+			} else if (attribute instanceof FunctionAttribute) {
+				FunctionAttribute functionRef = (FunctionAttribute) attribute;
+				TreeNode functionNode = functionRef.getNode();
 				
 				write("Function: " + functionNode.getFunction().getClass().getName());
 				

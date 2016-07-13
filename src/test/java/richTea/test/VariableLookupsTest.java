@@ -32,7 +32,7 @@ public class VariableLookupsTest extends RichTeaTestBase {
 	
 	@Test
 	public void testLookupChain() {
-		createContextAndTestVariable("(x:(y:200))", "x.y", 200);
+		createContextAndTestVariable("(x:@(y:200))", "x.y", 200);
 	}
 	
 	@Test
@@ -82,6 +82,7 @@ public class VariableLookupsTest extends RichTeaTestBase {
 	private void createContextAndTestVariable(String contextSource, String attributeSource, Object expected) {
 		ExecutionContext context = buildExecutionContext(contextSource);
 		Attribute attribute = buildAttribute(attributeSource);
+		
 		assertTrue(attribute.getValue(context).equals(expected));
 		
 	}

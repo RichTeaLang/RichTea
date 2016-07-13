@@ -22,8 +22,8 @@ import richTea.runtime.attribute.bool.NotAttribute;
 import richTea.runtime.attribute.bool.NotEqualsAttribute;
 import richTea.runtime.attribute.bool.OrAttribute;
 import richTea.runtime.attribute.expression.ExpressionAttribute;
-import richTea.runtime.attribute.function.ExecutableFunctionAttribute;
 import richTea.runtime.attribute.function.FunctionAttribute;
+import richTea.runtime.attribute.function.NodeReferenceAttribute;
 import richTea.runtime.attribute.math.DivideAttribute;
 import richTea.runtime.attribute.math.MinusAttribute;
 import richTea.runtime.attribute.math.ModulusAttribute;
@@ -78,8 +78,8 @@ public class RichTeaAttributeFactory {
 			case RichTeaParser.FUNCTION :
 				attribute = createFunctionAttribute(name, (NodeData) value);
 				break;
-			case RichTeaParser.EXECUTABLE_FUNCTION_ATTRIBUTE :
-				attribute = createExecutableFunctionAttribute(name, value);
+			case RichTeaParser.NODE_REFERENCE_ATTRIBUTE :
+				attribute = createNodeReferenceAttribute(name, value);
 				break;
 			case RichTeaParser.ASSIGN :
 				attribute = createAssignmentAttribute(name, value);
@@ -225,16 +225,16 @@ public class RichTeaAttributeFactory {
 		return new ArrayAttribute(name, operands);
 	}
 	
-	protected Attribute createFunctionAttribute(String name, NodeData nodeData) {
-		TreeNode functionNode = nodeFactory.create(nodeData);
+	protected Attribute createFunctionAttribute(String name, NodeData value) {
+		TreeNode node = nodeFactory.create(value);
 		
-		return new FunctionAttribute(name, functionNode);
+		return new FunctionAttribute(name, node);
 	}
 	
-	protected Attribute createExecutableFunctionAttribute(String name, Tree value) {
-		FunctionAttribute attribute = (FunctionAttribute) createFunctionAttribute(name, (NodeData) value.getChild(0));
+	protected Attribute createNodeReferenceAttribute(String name, Tree value) {
+		TreeNode node = nodeFactory.create((NodeData) value.getChild(0));
 		
-		return new ExecutableFunctionAttribute(name, attribute);
+		return new NodeReferenceAttribute(name, node);
 	}
 	
 	protected ExpressionAttribute createPlusAttribute(String name, Tree value) {

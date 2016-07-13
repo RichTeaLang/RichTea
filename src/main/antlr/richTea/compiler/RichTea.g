@@ -16,7 +16,7 @@ tokens {
     ARRAY; VARIABLE; STRING;
     PROPERTY_LOOKUP; NATIVE_METHOD_CALL; 
     THIS; LAST_RETURNED_VALUE;
-    EXECUTABLE_FUNCTION_ATTRIBUTE; 
+    NODE_REFERENCE_ATTRIBUTE; 
     TERNARY_OPERATOR; NEGATE;
 }
 
@@ -134,7 +134,7 @@ data_type
     |    variable
     |    array
     |    function
-    |    executable_function_attribute
+    |    node_reference_attribute
     ;
 
 string
@@ -184,9 +184,9 @@ expression_list
              ->    expression*
     ;
 
-executable_function_attribute
+node_reference_attribute
     :    AT function
-             ->    ^(EXECUTABLE_FUNCTION_ATTRIBUTE function)
+             ->    ^(NODE_REFERENCE_ATTRIBUTE function)
     ;
 
 

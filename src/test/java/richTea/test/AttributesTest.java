@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.VariableAttribute;
-import richTea.runtime.attribute.function.ExecutableFunctionAttribute;
 import richTea.runtime.attribute.function.FunctionAttribute;
+import richTea.runtime.attribute.function.NodeReferenceAttribute;
 
 public class AttributesTest extends RichTeaTestBase {
 	
@@ -77,9 +77,11 @@ public class AttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testExecutableFunctionAttribute() {
+	public void testNodeReferenceAttribute() {
 		Attribute attribute = buildAttribute("x:@Scope()");
 		
-		assertTrue(attribute instanceof ExecutableFunctionAttribute);
+		System.out.println(attribute.getClass().getName());
+		
+		assertTrue(attribute instanceof NodeReferenceAttribute);
 	}
 }
