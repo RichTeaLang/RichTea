@@ -9,6 +9,7 @@ public class Scope extends AbstractFunction {
 	protected void run() {
 		try {
 			context.executeBranch("do");
+			context.setLastReturnValue(context.getCurrentNode());
 		} catch(ReturnException e) {
 			context.unRollScopeTo(this);
 		}
