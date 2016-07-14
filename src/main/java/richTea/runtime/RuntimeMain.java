@@ -28,7 +28,11 @@ public class RuntimeMain {
 	public static final String CWD_DIR_PROPERTY = "user.dir";
 	
 	public static void main(String[] args) throws Exception {
+		if (args.length == 0) {
+			throw new IllegalArgumentException("Path to RichTea file not specified");
+		}
 		File inputFile = new File(args[0]);
+		args = Arrays.copyOfRange(args, 1, args.length); // Pass any additional arguments to the RichTea program
 		
 		RuntimeMain.main(inputFile.getParentFile().getAbsolutePath(), new FileInputStream(inputFile), args);
 	}
