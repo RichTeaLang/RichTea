@@ -26,7 +26,6 @@ public class ImportNode extends DataNode {
 	public static final String FUNCTIONS_ATTRIBUTE_NAME = "functions";
 	public static final String REBINDING_BRANCH_NAME = "rebind";
 	public static final String IMPORT_ALL = "*";
-	public static final String EXPORTS_FILE_NAME = "exports.tea";
 	public static final String EXPORTS_BRANCH_NAME = "exports";
 	
 	private Path workingDir;
@@ -39,7 +38,7 @@ public class ImportNode extends DataNode {
 		try {
 			workingDir = new File(System.getProperty("user.dir")).toPath().toAbsolutePath().normalize();
 			classLoader = getClassLoaderForModule(getModulePath());
-			definitions = getImportDefinitions(getExportDefinitions(classLoader));
+			definitions = getImportDefinitions(getExportDefinitions(classLoader, getExportsFileName()));
 			bindings = createBindings(getImportPrefix(), classLoader, definitions.values());
 		} catch (Throwable e) {
 			throw new Exception(getModulePath().toString(), e);
@@ -60,8 +59,12 @@ public class ImportNode extends DataNode {
 		return path.toAbsolutePath().normalize();
 	}
 	
+	public String getExportsFileName() {
+		return resolver.getStringOrDefault("exportsFileName", "exports.tea");
+	}
+	
 	public String getImportPrefix() {
-		return resolver.getStringOrDefault("importPrefix",  "");
+		return resolver.getStringOrDefault("importPrefix", "");
 	}
 	
 	public Binding getImportedBinding(String name) {
@@ -91,11 +94,11 @@ public class ImportNode extends DataNode {
 		}
 	}
 	
-	protected Map<String, BindingDefinition> getExportDefinitions(ClassLoader classLoader) throws IOException {
-		InputStream manifest = classLoader.getResourceAsStream(EXPORTS_FILE_NAME);
+	protected Map<String, BindingDefinition> getExportDefinitions(ClassLoader classLoader, String exportsFileName) throws IOException {
+		InputStream manifest = classLoader.getResourceAsStream(exportsFileName);
 		
 		if (manifest == null) {
-			throw new FileNotFoundException("Missing export manifest: " + EXPORTS_FILE_NAME);
+			throw new FileNotFoundException("Missing export manifest: " + exportsFileName);
 		}
 		
 		Compiler compiler = new Compiler(new ANTLRInputStream(manifest));
