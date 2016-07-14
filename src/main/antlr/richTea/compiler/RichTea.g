@@ -166,6 +166,8 @@ lookup_chain_root
 
 lookup_chain_element
     :    property_lookup
+    |    OPEN_BRACE expression CLOSE_BRACE
+             ->    ^(PROPERTY_LOOKUP expression)
     |    ID OPEN_PAREN expression_list? CLOSE_PAREN
              ->    ^(NATIVE_METHOD_CALL ^(NAME ID) ^(ATTRIBUTES expression_list?))
     ;
@@ -173,8 +175,6 @@ lookup_chain_element
 property_lookup
     :    ID
              ->    ^(PROPERTY_LOOKUP STRING_CHARACTERS[$ID.text])
-    |    OPEN_BRACE expression CLOSE_BRACE
-             ->    ^(PROPERTY_LOOKUP expression)
     ;
 
 array
