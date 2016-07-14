@@ -32,7 +32,7 @@ tokens {
 program
     :    function function+
              // Wrap root-level function lists inside an anon scope function so we have a single entry point to the program
-             ->    ^(FUNCTION ^(NAME ID["scope"]) ^(BRANCHES ^(BRANCH ^(NAME ID["implicitBranch"]) ^(CHILDREN function+))))
+             ->    ^(FUNCTION ^(NAME ID["scope"]) ^(ATTRIBUTES) ^(BRANCHES ^(BRANCH ^(NAME ID["implicitBranch"]) ^(CHILDREN function+))))
     |    function // No need to wrap
     ;
 
