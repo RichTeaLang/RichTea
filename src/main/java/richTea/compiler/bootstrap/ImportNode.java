@@ -48,7 +48,17 @@ public class ImportNode extends DataNode {
 	public Path getDeclaredPath() {
 		String from = resolver.getString("from");
 		
-		return new File(from.endsWith(".jar") ? from : from + ".jar").toPath();
+		if (from != null) {
+			from = from.endsWith(".jar") ? from : from + ".jar";
+		} else {
+			// No path was specified.  Assume the import library in is composed of classes on the current class path
+			// and so provide a best-guess at the location of those classes.
+			URL location = getClass().getProtectionDomain().getCodeSource().getLocation();
+			
+			from = location.getPath();
+		}
+		
+		return new File(from).toPath();
 	}
 	
 	public Path getModulePath() {

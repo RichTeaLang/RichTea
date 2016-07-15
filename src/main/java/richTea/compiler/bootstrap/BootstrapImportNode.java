@@ -1,9 +1,6 @@
 package richTea.compiler.bootstrap;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -36,28 +33,12 @@ public class BootstrapImportNode extends ImportNode {
 	}
 	
 	@Override
-	public Path getModulePath() {
-		URL location = this.getClass().getProtectionDomain().getCodeSource().getLocation();
-
-		try {
-			return new File(location.toURI()).toPath();
-		} catch (URISyntaxException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public String getImportPrefix() {
-		return "";
-	}
-	
-	@Override
 	public URLClassLoader getClassLoaderForModule(Path modulePath) {
 		return (URLClassLoader) getClass().getClassLoader();
 	}
 	
 	@Override
-	protected Map<String, BindingDefinition> getExportDefinitions(ClassLoader classLoader) throws IOException {
+	protected Map<String, BindingDefinition> getExportDefinitions(ClassLoader classLoader, String exportsFileName) throws IOException {
 		BindingDefinition[] definitions = new BindingDefinition[] {
 			createAttributeDefinition(),
 			createBranchDefinition(),
