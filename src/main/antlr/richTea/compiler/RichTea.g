@@ -22,8 +22,11 @@ tokens {
 
 @header         { package richTea.compiler; }
 @lexer::header  { package richTea.compiler; }
-@lexer::members { boolean isLexingString = false;
-                  boolean isInterpolatingString = false; }
+@lexer::members { final int NOT_LEXING_STRING = 0;
+                  final int LEXING_STRING = 1;
+                  final int ESCAPING_CHARACTER = 2;
+                  final int INTERPOLATING_STRING = 3;
+                  int stringLexingState = NOT_LEXING_STRING; }
 
 
 /*    PARSER RULES   */
@@ -197,31 +200,37 @@ node_reference_attribute
 
 
 STRING_START
-    :    { !isLexingString }? => '"' 
-         { isLexingString = true; }
+    :    { stringLexingState == NOT_LEXING_STRING }? => '"'
+         { stringLexingState = LEXING_STRING; }
     ;
 
 STRING_END
-    :    { isLexingString }? => '"' 
-         { isLexingString = false; }
+    :    { stringLexingState == LEXING_STRING }? => '"'
+         { stringLexingState = NOT_LEXING_STRING; }
     ;
 
 STRING_INTERPOLATION_START
-    :    { isLexingString && !isInterpolatingString }? => '{' 
-         { isInterpolatingString = true; }
+    :    { stringLexingState == LEXING_STRING }? => '{'
+         { stringLexingState = INTERPOLATING_STRING; }
     ;
 
 STRING_INTERPOLATION_END
-    :    { isInterpolatingString }? => '}' 
-         { isInterpolatingString = false; }
+    :    { stringLexingState == INTERPOLATING_STRING }? => '}'
+         { stringLexingState = LEXING_STRING; }
+    ;
+
+ESCAPE_CHARACTER
+    :    { stringLexingState == LEXING_STRING }? => '\\'
+         { stringLexingState = ESCAPING_CHARACTER; $channel = HIDDEN; }
     ;
 
 STRING_CHARACTERS
 @init    { int lastMark = 0; }
-    :    { isLexingString && !isInterpolatingString }? =>
+    :    { stringLexingState == LEXING_STRING }? =>
          { lastMark = input.mark(); } 
-         (~('{'|'"') { lastMark = input.mark(); })* ('{'|'"')
+         (~('{'|'"'|'\\') { lastMark = input.mark(); })* ('{'|'"'|'\\')
          { input.rewind(lastMark); } // Avoid consuming the delimiter character so that it is matched in a different rule
+    |    { stringLexingState == ESCAPING_CHARACTER }? => . { stringLexingState = LEXING_STRING; }
     ;
 
 INTEGER: '0'..'9'+;

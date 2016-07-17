@@ -56,12 +56,6 @@ public class VariableLookupsTest extends RichTeaTestBase {
 	}
 	
 	@Test
-	public void testStringInterpolation() {
-		createContextAndTestVariable("(name:\"RichTea\")", "\"Hello from {name}!\"", "Hello from RichTea!");
-		createContextAndTestVariable("()", "\"10 + 10 = {10 + 10}\"", "10 + 10 = 20.0");
-	}
-	
-	@Test
 	public void testAssignmentAttribute() {
 		ExecutionContext context = buildExecutionContext("(value:1)");
 		Attribute setter = buildAttribute("value = 2");
