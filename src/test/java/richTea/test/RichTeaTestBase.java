@@ -1,6 +1,6 @@
 package richTea.test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -46,7 +46,7 @@ public class RichTeaTestBase {
 	protected void testAttributeValue(String input, Object requiredValue) {
 		Object value = buildAttribute(input).getValue(null);
 		
-		assertTrue(value != null ? value.equals(requiredValue) : value == requiredValue);
+		assertEquals(requiredValue, value);
 	}
 	
 	protected TreeNode buildNode(String input) {
