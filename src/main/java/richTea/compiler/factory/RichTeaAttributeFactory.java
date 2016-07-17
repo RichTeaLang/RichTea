@@ -149,7 +149,7 @@ public class RichTeaAttributeFactory {
 	}
 	
 	protected Attribute createStringAttribute(String name, Tree value) {
-		if (value.getChildCount() == 1) {
+		if (value.getChildCount() == 1 && value.getChild(0).getType() == RichTeaParser.STRING_CHARACTERS) {
 			return create(name, value.getChild(0));
 		} else {
 			Attribute[] components = getAttributeOperands(name, value);

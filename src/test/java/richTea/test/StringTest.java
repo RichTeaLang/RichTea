@@ -25,6 +25,11 @@ public class StringTest extends RichTeaTestBase {
 	}
 	
 	@Test
+	public void testInterpolationWithoutStringContents() {
+		testAttributeValue("\"{99 + 1}\"", "100.0");
+	}
+	
+	@Test
 	public void testEmptyInterpolation() {
 		try {
 			buildAttribute("\"Hello {} world\"");
