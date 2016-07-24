@@ -1,6 +1,6 @@
 package richTea.test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class VariableLookupsTest extends RichTeaTestBase {
 			
 			Assert.fail("Expected exception when resolving 'x'");
 		} catch (Exception e) { // Expected.  Continue tests...
-			assertTrue(buildAttribute("this.x").getValue(context).equals(100));
+			assertEquals(100, buildAttribute("this.x").getValue(context));
 		}
 	}
 	
@@ -61,8 +61,8 @@ public class VariableLookupsTest extends RichTeaTestBase {
 		Attribute setter = buildAttribute("value = 2");
 		Attribute getter = buildAttribute("value");
 		
-		assertTrue(setter.getValue(context).equals(2));
-		assertTrue(getter.getValue(context).equals(2));
+		assertEquals(2, setter.getValue(context));
+		assertEquals(2, getter.getValue(context));
 	}
 	
 	@Override
@@ -77,7 +77,6 @@ public class VariableLookupsTest extends RichTeaTestBase {
 		ExecutionContext context = buildExecutionContext(contextSource);
 		Attribute attribute = buildAttribute(attributeSource);
 		
-		assertTrue(attribute.getValue(context).equals(expected));
-		
+		assertEquals(expected, attribute.getValue(context));
 	}
 }
