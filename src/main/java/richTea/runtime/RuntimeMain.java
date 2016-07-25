@@ -68,7 +68,8 @@ public class RuntimeMain {
 		Attribute env = new PrimativeAttribute("env", new AttributeSet(
 			new PrimativeAttribute("mainArgs", Arrays.asList(args)),
 			new PrimativeAttribute("compilation", compilation),
-			new CwdAttribute("cwd")
+			new CwdAttribute("cwd"),
+			new PrimativeAttribute("context", context)
 		));
 		
 		context.pushScope(context.createScope(env));
