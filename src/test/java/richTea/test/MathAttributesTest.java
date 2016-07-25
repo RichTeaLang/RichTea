@@ -29,6 +29,12 @@ public class MathAttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
+	public void testModulus() {
+		testAttributeValue("100 % 2", 0.0);
+		testAttributeValue("99 % 2", 1.0);
+	}
+	
+	@Test
 	public void testPlusEquals() {
 		Attribute attribute = buildAttribute("0 += 2");
 		

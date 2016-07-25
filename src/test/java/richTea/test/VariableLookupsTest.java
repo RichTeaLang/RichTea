@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.PrimativeAttribute;
+import richTea.runtime.attribute.modifier.SetModifier;
+import richTea.runtime.attribute.variable.LastReturnedValueAttribute;
 import richTea.runtime.execution.ExecutionContext;
 import richTea.runtime.execution.VariableScope;
 
@@ -83,6 +85,26 @@ public class VariableLookupsTest extends RichTeaTestBase {
 		((PrimativeAttribute) nameReference.getValue(context)).setValue("123");
 		
 		assertEquals("123", nameValue.getValue(context));
+	}
+	
+	@Test
+	public void testLastReturnedValueAttribute() {
+		ExecutionContext context = new ExecutionContext();
+		Attribute attribute = buildAttribute("_");
+		Object someValue = new Object();
+		Object someOtherValue = new Object();
+		
+		assertEquals(null, attribute.getValue(context));
+		
+		context.setLastReturnValue(someValue);
+		
+		assertEquals(someValue, attribute.getValue(context));
+		
+		Object result = attribute.modify(context, new SetModifier(someOtherValue));
+		
+		assertEquals(someOtherValue, result);
+		assertEquals(someOtherValue, attribute.getValue(context));
+		assertEquals(someOtherValue, context.getLastReturnValue());
 	}
 	
 	@Override
