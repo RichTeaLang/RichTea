@@ -1,9 +1,15 @@
+plugins {
+	id 'net.saliman.cobertura' version '2.3.2'
+	id 'com.github.kt3k.coveralls' version '2.6.3'
+}
+
 apply plugin: 'antlr'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'java'
 
 mainClassName = 'richTea.runtime.RuntimeMain'
+cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 
 jar {
 	manifest {
@@ -27,4 +33,5 @@ dependencies {
 	compile 'log4j:log4j:1.2.17'
 	compile 'org.antlr:antlr-runtime:3.5.2'
 	testCompile 'junit:junit-dep:4.11'
+	testRuntime "org.slf4j:slf4j-api:1.7.10"
 }
