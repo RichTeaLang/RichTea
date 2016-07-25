@@ -11,7 +11,6 @@ import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.InterpolatedStringAttribute;
 import richTea.runtime.attribute.PrimativeAttribute;
 import richTea.runtime.attribute.TernaryExpressionAttribute;
-import richTea.runtime.attribute.VariableAttribute;
 import richTea.runtime.attribute.bool.AndAttribute;
 import richTea.runtime.attribute.bool.EqualsAttribute;
 import richTea.runtime.attribute.bool.GreaterThanAttribute;
@@ -78,7 +77,7 @@ public class RichTeaAttributeFactory {
 			case RichTeaParser.FUNCTION :
 				attribute = createFunctionAttribute(name, (NodeData) value);
 				break;
-			case RichTeaParser.NODE_REFERENCE_ATTRIBUTE :
+			case RichTeaParser.REFERENCE :
 				attribute = createNodeReferenceAttribute(name, value);
 				break;
 			case RichTeaParser.ASSIGN :
@@ -182,20 +181,33 @@ public class RichTeaAttributeFactory {
 		Attribute lookupChain = new LookupChainRoot(name, false);
 		
 		for(int i = 0; i < value.getChildCount(); i++) {
-			Tree lookupElement = value.getChild(i);
+			Tree root = value.getChild(i);
+			Tree element = root.getChild(0);
+			boolean resolveAttributeValue = true;
 			
-			switch(lookupElement.getType()) {
+			switch(root.getType()) {
+				case RichTeaParser.REFERENCE :
+					resolveAttributeValue = false;
+					break;
+				case RichTeaParser.VALUE :
+					resolveAttributeValue = true;
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid variable type");
+			}
+			
+			switch(element.getType()) {
 				case RichTeaParser.THIS :
 					lookupChain = new LookupChainRoot(name, true);
 					break;
 				case RichTeaParser.VARIABLE :
-					lookupChain = create(name, lookupElement);
+					lookupChain = create(name, element);
 					break;
 				case RichTeaParser.PROPERTY_LOOKUP :
-					lookupChain = createPropertyLookupAttribute(name, lookupElement, lookupChain);
+					lookupChain = createPropertyLookupAttribute(name, element, lookupChain, resolveAttributeValue);
 					break;
 				case RichTeaParser.NATIVE_METHOD_CALL :
-					lookupChain = createNativeMethodCallAttribute(lookupElement, lookupChain);
+					lookupChain = createNativeMethodCallAttribute(element, lookupChain, resolveAttributeValue);
 					break;
 				case RichTeaParser.LAST_RETURNED_VALUE :
 					lookupChain = createLastReturnedValueAttribute(name);
@@ -205,18 +217,18 @@ public class RichTeaAttributeFactory {
 			}
 		}
 		
-		return new VariableAttribute(name, lookupChain);
+		return lookupChain;
 	}
 	
-	protected Attribute createPropertyLookupAttribute(String name, Tree value, Attribute lookupChain) {
-		return new PropertyLookup(create(name, value.getChild(0)), lookupChain);
+	protected Attribute createPropertyLookupAttribute(String name, Tree value, Attribute lookupChain, boolean resolveAttributeValue) {
+		return new PropertyLookup(create(name, value.getChild(0)), lookupChain, resolveAttributeValue);
 	}
 	
-	protected Attribute createNativeMethodCallAttribute(Tree value, Attribute lookupChain) {
+	protected Attribute createNativeMethodCallAttribute(Tree value, Attribute lookupChain, boolean resolveAttributeValue) {
 		String methodName = value.getChild(0).getChild(0).getText();
 		Attribute[] methodArguments = getAttributeOperands("", value.getChild(1));
 	
-		return new NativeMethodCall(methodName, methodArguments, lookupChain);
+		return new NativeMethodCall(methodName, methodArguments, lookupChain, resolveAttributeValue);
 	}
 	
 	protected Attribute createArrayAttribute(String name, Tree value) {

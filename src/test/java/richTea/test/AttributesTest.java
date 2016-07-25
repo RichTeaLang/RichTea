@@ -7,9 +7,9 @@ import java.util.List;
 import org.junit.Test;
 
 import richTea.runtime.attribute.Attribute;
-import richTea.runtime.attribute.VariableAttribute;
 import richTea.runtime.attribute.function.FunctionAttribute;
 import richTea.runtime.attribute.function.NodeReferenceAttribute;
+import richTea.runtime.attribute.variable.LookupChainElement;
 
 public class AttributesTest extends RichTeaTestBase {
 	
@@ -66,7 +66,7 @@ public class AttributesTest extends RichTeaTestBase {
 	public void testVariableAttribute() {
 		Attribute attribute = buildAttribute("x:var");
 		
-		assertTrue(attribute instanceof VariableAttribute);
+		assertTrue(attribute instanceof LookupChainElement);
 	}
 	
 	@Test
@@ -79,8 +79,6 @@ public class AttributesTest extends RichTeaTestBase {
 	@Test
 	public void testNodeReferenceAttribute() {
 		Attribute attribute = buildAttribute("x:@Scope()");
-		
-		System.out.println(attribute.getClass().getName());
 		
 		assertTrue(attribute instanceof NodeReferenceAttribute);
 	}

@@ -2,7 +2,8 @@ package richTea.runtime.functions;
 
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.PrimativeAttribute;
-import richTea.runtime.attribute.VariableAttribute;
+import richTea.runtime.attribute.variable.LookupChainRoot;
+import richTea.runtime.attribute.variable.PropertyLookup;
 import richTea.runtime.execution.AbstractFunction;
 import richTea.runtime.node.TreeNode;
 
@@ -32,7 +33,9 @@ public class CallFunctionReference extends AbstractFunction {
 	
 	protected TreeNode getFunctionNode() {
 		String functionName = context.getCurrentNode().getBinding().getName();
-		Object functionNode = new VariableAttribute(functionName).getValue(context);
+		Attribute functionVariable = new PropertyLookup(new PrimativeAttribute("", functionName), new LookupChainRoot("", false));
+		
+		Object functionNode = functionVariable.getValue(context);
 		
 		return functionNode instanceof TreeNode ? (TreeNode) functionNode : null;
 	}

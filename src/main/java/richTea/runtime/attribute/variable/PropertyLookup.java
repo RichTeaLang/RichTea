@@ -11,7 +11,11 @@ public class PropertyLookup extends LookupChainElement {
 	private Attribute property;
 	
 	public PropertyLookup(Attribute property, Attribute lookupChain) {
-		super(lookupChain);
+		this(property, lookupChain, true);
+	}
+	
+	public PropertyLookup(Attribute property, Attribute lookupChain, boolean resolveAttributeValue) {
+		super(lookupChain, resolveAttributeValue);
 		
 		this.property = property;
 	}
@@ -26,12 +30,13 @@ public class PropertyLookup extends LookupChainElement {
 
 	@Override
 	protected Object performLookup(ExecutionContext context, Object lookupContext) {
-		return resolveAttribute(context, lookupContext).getValue(context);
+		return resolveAttribute(context, lookupContext);
 	}
 	
 	@Override
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
 		Attribute attribute = resolveAttribute(context, getLookupChain().getValue(context));
+		attribute = resolveAttributeReference(attribute, context);
 		
 		return attribute.modify(context, modifier);
 	}

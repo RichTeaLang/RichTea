@@ -11,9 +11,11 @@ import richTea.runtime.execution.ExecutionContext;
 public abstract class LookupChainElement implements Attribute {
 
 	private Attribute lookupChain;
+	private boolean resolveAttributeValue;
 	
-	public LookupChainElement(Attribute lookupChain) {
+	public LookupChainElement(Attribute lookupChain, boolean resolveAttributeValue) {
 		this.lookupChain = lookupChain;
+		this.resolveAttributeValue = resolveAttributeValue;
 	}
 	
 	public String getName() {
@@ -28,9 +30,14 @@ public abstract class LookupChainElement implements Attribute {
 		return lookupChain;
 	}
 	
+	public boolean willResolveAttributeValue() {
+		return resolveAttributeValue;
+	}
+	
 	@Override
 	public Object getValue(ExecutionContext context) {
-		Object value = performLookup(context, getLookupChain().getValue(context));
+		Object lookupContext = getLookupChain().getValue(context);
+		Object value = performLookup(context, lookupContext);
 		
 		value = ensureValidDataType(value, context);
 		
@@ -48,15 +55,26 @@ public abstract class LookupChainElement implements Attribute {
 	
 	protected Object ensureValidDataType(Object value, ExecutionContext context) {
 		if(value != null && value.getClass().isArray()) {
-			value = convertArray(value);
-		} else if (value instanceof Attribute) {
-			value = ((Attribute) value).getValue(context);
+			value = convertArray((Object[]) value);
+		} else if (value instanceof Attribute && willResolveAttributeValue()) {
+			value = resolveAttributeReference((Attribute) value, context).getValue(context);
 		}
 		
 		return value;
 	}
 	
-	protected List<Object> convertArray(Object array) {
+	protected List<Object> convertArray(Object[] array) {
 		return Collections.unmodifiableList(Arrays.asList(array));
+	}
+	
+	protected Attribute resolveAttributeReference(Attribute attribute, ExecutionContext context) {
+		Object value = attribute.getValue(context);
+		
+		while(value instanceof Attribute) {
+			attribute = (Attribute) value;
+			value = attribute.getValue(context);
+		}
+		
+		return attribute;
 	}
 }

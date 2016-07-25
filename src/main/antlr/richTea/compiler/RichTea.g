@@ -16,7 +16,6 @@ tokens {
     ARRAY; VARIABLE; STRING;
     PROPERTY_LOOKUP; NATIVE_METHOD_CALL; 
     THIS; LAST_RETURNED_VALUE;
-    NODE_REFERENCE_ATTRIBUTE; 
     TERNARY_OPERATOR; NEGATE;
 }
 
@@ -137,10 +136,10 @@ data_type
     |    BOOLEAN
     |    NULL
     |    string
-    |    variable
     |    array
     |    function
     |    node_reference_attribute
+    |    variable
     ;
 
 string
@@ -152,14 +151,25 @@ string_content
     :    STRING_CHARACTERS
     |    STRING_INTERPOLATION_START! expression STRING_INTERPOLATION_END!
     ;
-    
 
 variable
-    :    elements+=lookup_chain_root (PERIOD elements+=lookup_chain_element)*
+    :    elements+=variable_root (PERIOD elements+=variable_element)*
              ->    ^(VARIABLE $elements+)
     ;
 
-lookup_chain_root
+variable_root
+    :    REFERENCE? variable_roots
+             -> { $REFERENCE != null }? ^(REFERENCE variable_roots)
+             ->                         ^(VALUE variable_roots)
+    ;
+
+variable_element
+    :    REFERENCE? variable_elements
+             -> { $REFERENCE != null }? ^(REFERENCE variable_elements)
+             ->                         ^(VALUE variable_elements)
+    ;
+
+variable_roots
     :    ID { $ID.text.equals("this") }?
              ->    THIS
     |    UNDERSCORE
@@ -167,12 +177,12 @@ lookup_chain_root
     |    property_lookup
     ;
 
-lookup_chain_element
-    :    property_lookup
-    |    OPEN_BRACE expression CLOSE_BRACE
+variable_elements
+    :    OPEN_BRACE expression CLOSE_BRACE
              ->    ^(PROPERTY_LOOKUP expression)
     |    ID OPEN_PAREN expression_list? CLOSE_PAREN
              ->    ^(NATIVE_METHOD_CALL ^(NAME ID) ^(ATTRIBUTES expression_list?))
+    |    property_lookup
     ;
 
 property_lookup
@@ -182,7 +192,7 @@ property_lookup
 
 array
     :    OPEN_BOX expression_list? CLOSE_BOX
-            ->    ^(ARRAY expression_list?)
+             ->    ^(ARRAY expression_list?)
     ;
 
 expression_list
@@ -191,8 +201,8 @@ expression_list
     ;
 
 node_reference_attribute
-    :    AT function
-             ->    ^(NODE_REFERENCE_ATTRIBUTE function)
+    :    REFERENCE function
+             ->    ^(REFERENCE function)
     ;
 
 
@@ -249,7 +259,7 @@ WHITESPACE: ('\r' | '\n' | '\r\n' | ' ' | '\t' ) { $channel=HIDDEN; };
 COMMA:      ',';
 PERIOD:     '.';
 HASH:       '#';
-AT:         '@';
+REFERENCE:  '@';
 UNDERSCORE: '_';
 
 PLUS_EQUALS:     PLUS ASSIGN;

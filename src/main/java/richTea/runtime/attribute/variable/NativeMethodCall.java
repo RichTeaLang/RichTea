@@ -13,8 +13,8 @@ public class NativeMethodCall extends LookupChainElement {
 	private String methodName;
 	private Attribute[] methodArguments;
 	
-	public NativeMethodCall(String methodName, Attribute[] methodArguments, Attribute lookupChain) {
-		super(lookupChain);
+	public NativeMethodCall(String methodName, Attribute[] methodArguments, Attribute lookupChain, boolean resolveAttributeValue) {
+		super(lookupChain, resolveAttributeValue);
 		
 		this.methodName = methodName;
 		this.methodArguments = methodArguments;
@@ -65,7 +65,6 @@ public class NativeMethodCall extends LookupChainElement {
 	protected Method findBestMatchMethod(Class<?> clazz, String methodName, Class<?>[] argumentTypes) {
 		methodFinder:
 		for(Method method : clazz.getMethods()) {
-			
 			if(!method.getName().equals(methodName)) continue methodFinder;
 			
 			Class<?>[] params = method.getParameterTypes();
@@ -73,7 +72,6 @@ public class NativeMethodCall extends LookupChainElement {
 			if(params.length != argumentTypes.length) continue methodFinder;
 			
 			for(int i = 0; i < params.length; i++) {
-				
 				if(!(argumentTypes[i] == Null.class || MethodUtils.isAssignmentCompatible(params[i], argumentTypes[i]))) {
 					continue methodFinder;
 				}
@@ -87,7 +85,7 @@ public class NativeMethodCall extends LookupChainElement {
 
 	@Override
 	public Object modify(ExecutionContext context, AttributeModifier modifier) {
-		return null; // Cannot modify a method call.
+		throw new UnsupportedOperationException("Cannot modify a method call");
 	}
 	
 	// Class which represents a null value.

@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import richTea.runtime.attribute.Attribute;
+import richTea.runtime.attribute.PrimativeAttribute;
 import richTea.runtime.execution.ExecutionContext;
 import richTea.runtime.execution.VariableScope;
 
@@ -63,6 +64,25 @@ public class VariableLookupsTest extends RichTeaTestBase {
 		
 		assertEquals(2, setter.getValue(context));
 		assertEquals(2, getter.getValue(context));
+	}
+	
+	@Test
+	public void testFirstClassAttribute() {
+		createContextAndTestVariable("(x:true)", "@x.name", "x");
+	}
+	
+	@Test
+	public void testNestedFirstClassAttribute() {
+		ExecutionContext context = buildExecutionContext("(obj:@(name:\"abc\"))");
+		Attribute nameValue = buildAttribute("obj.name");
+		Attribute nameReference = buildAttribute("obj.@name");
+		
+		assertEquals("abc", nameValue.getValue(context));
+		assertEquals(nameReference.getValue(context).getClass(), PrimativeAttribute.class);
+		
+		((PrimativeAttribute) nameReference.getValue(context)).setValue("123");
+		
+		assertEquals("123", nameValue.getValue(context));
 	}
 	
 	@Override
