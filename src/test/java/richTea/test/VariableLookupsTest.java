@@ -8,7 +8,6 @@ import org.junit.Test;
 import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.PrimativeAttribute;
 import richTea.runtime.attribute.modifier.SetModifier;
-import richTea.runtime.attribute.variable.LastReturnedValueAttribute;
 import richTea.runtime.execution.ExecutionContext;
 import richTea.runtime.execution.VariableScope;
 
@@ -85,6 +84,19 @@ public class VariableLookupsTest extends RichTeaTestBase {
 		((PrimativeAttribute) nameReference.getValue(context)).setValue("123");
 		
 		assertEquals("123", nameValue.getValue(context));
+	}
+	
+	@Test
+	public void testAttributeNesting() {
+		ExecutionContext context = new ExecutionContext();
+		Attribute nested = new PrimativeAttribute("value", 123);
+		
+		// "reference" attribute value is "nested" attribute.  When an attributes value is another attribute, the value
+		// of the nested attribute should be resolved, not the attribute itself.
+		context.pushScope(context.createScope(new PrimativeAttribute("reference", nested)));
+		
+		assertEquals(123, buildAttribute("this.reference").getValue(context));
+		assertEquals(nested, buildAttribute("this.@reference").getValue(context));
 	}
 	
 	@Test

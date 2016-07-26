@@ -54,10 +54,18 @@ public abstract class LookupChainElement implements Attribute {
 	}
 	
 	protected Object ensureValidDataType(Object value, ExecutionContext context) {
+		if (value instanceof Attribute) {
+			Attribute attribute = resolveAttributeReference((Attribute) value, context);
+			
+			if (willResolveAttributeValue()) {
+				value = attribute.getValue(context);
+			} else {
+				value = attribute;
+			}
+		}
+		
 		if(value != null && value.getClass().isArray()) {
 			value = convertArray((Object[]) value);
-		} else if (value instanceof Attribute && willResolveAttributeValue()) {
-			value = resolveAttributeReference((Attribute) value, context).getValue(context);
 		}
 		
 		return value;
