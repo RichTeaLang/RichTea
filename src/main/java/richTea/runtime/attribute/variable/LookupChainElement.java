@@ -1,6 +1,7 @@
 package richTea.runtime.attribute.variable;
 
-import java.util.Arrays;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,14 +66,21 @@ public abstract class LookupChainElement implements Attribute {
 		}
 		
 		if(value != null && value.getClass().isArray()) {
-			value = convertArray((Object[]) value);
+			value = convertArray(value);
 		}
 		
 		return value;
 	}
 	
-	protected List<Object> convertArray(Object[] array) {
-		return Collections.unmodifiableList(Arrays.asList(array));
+	protected List<Object> convertArray(Object array) {
+		int length = Array.getLength(array);
+		List<Object> list = new ArrayList<>(length);
+		
+		for (int i = 0; i < length; i++) {
+			list.add(i, Array.get(array, i));
+		}
+		
+		return Collections.unmodifiableList(list);
 	}
 	
 	protected Attribute resolveAttributeReference(Attribute attribute, ExecutionContext context) {

@@ -2,6 +2,8 @@ package richTea.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -117,6 +119,20 @@ public class VariableLookupsTest extends RichTeaTestBase {
 		assertEquals(someOtherValue, result);
 		assertEquals(someOtherValue, attribute.getValue(context));
 		assertEquals(someOtherValue, context.getLastReturnValue());
+	}
+	
+	@Test
+	public void testArrayConversion() {
+		ExecutionContext context = new ExecutionContext();
+		
+		context.pushScope(context.createScope(new PrimativeAttribute("array", new int[] { 3, 1, 2, 5 })));
+		
+		Object value = buildAttribute("this.array").getValue(context);
+		
+		assertEquals(false, value.getClass().isArray());
+		assertEquals(true, List.class.isAssignableFrom(value.getClass()));
+		assertEquals(4, ((List<?>) value).size());
+		assertEquals(3, buildAttribute("this.array.get(0)").getValue(context));
 	}
 	
 	@Override
