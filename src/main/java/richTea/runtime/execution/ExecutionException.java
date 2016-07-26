@@ -6,6 +6,7 @@ import richTea.runtime.attribute.Attribute;
 import richTea.runtime.attribute.AttributeSet;
 import richTea.runtime.attribute.InterpolatedStringAttribute;
 import richTea.runtime.attribute.TernaryExpressionAttribute;
+import richTea.runtime.attribute.expression.ExpressionAttribute;
 import richTea.runtime.attribute.function.FunctionAttribute;
 import richTea.runtime.node.TreeNode;
 
@@ -155,6 +156,11 @@ class StackTraceBuilder {
 				}
 				
 				indent--;
+			} else if (attribute instanceof ExpressionAttribute) {
+				ExpressionAttribute expression = (ExpressionAttribute) attribute;
+				
+				writeAttribute(expression.getLeftOperand(), context);
+				writeAttribute(expression.getRightOperand(), context);
 			}
 		}
 		
