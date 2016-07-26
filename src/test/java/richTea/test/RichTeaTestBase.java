@@ -6,6 +6,8 @@ import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.impl.NoOpLog;
 import org.apache.log4j.BasicConfigurator;
 
 import richTea.compiler.RichTeaLexer;
@@ -27,6 +29,7 @@ public class RichTeaTestBase {
 
 	public RichTeaTestBase() {
 		BasicConfigurator.configure();
+		System.setProperty(Log.class.getName(), NoOpLog.class.getName()); // Disable logging (Used by the BeanUtils lib)
 		
 		nodeFactory = new RichTeaNodeFactory();
 		attributeFactory = new RichTeaAttributeFactory(nodeFactory);
