@@ -47,7 +47,11 @@ public class RichTeaTestBase {
 	}
 	
 	protected void testAttributeValue(String input, Object requiredValue) {
-		Object value = buildAttribute(input).getValue(null);
+		testAttributeValue(input, requiredValue, null);
+	}
+	
+	protected void testAttributeValue(String input, Object requiredValue, ExecutionContext context) {
+		Object value = buildAttribute(input).getValue(context);
 		
 		assertEquals(requiredValue, value);
 	}

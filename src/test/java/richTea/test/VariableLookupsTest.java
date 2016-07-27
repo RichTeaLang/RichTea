@@ -12,6 +12,7 @@ import richTea.runtime.attribute.PrimativeAttribute;
 import richTea.runtime.attribute.modifier.SetModifier;
 import richTea.runtime.execution.ExecutionContext;
 import richTea.runtime.execution.VariableScope;
+import richTea.test.testLib.TestJavaObject;
 
 public class VariableLookupsTest extends RichTeaTestBase {
 	
@@ -51,6 +52,39 @@ public class VariableLookupsTest extends RichTeaTestBase {
 		createContextAndTestVariable("(x:\"I'm a string\")", "x.equals(x + \".\")", false);
 		createContextAndTestVariable("(x:\"I'm a string\")", "x.length()", 12);
 		createContextAndTestVariable("(x:\"I'm a string\")", "x.length().equals((x.length()))", true);
+	}
+	
+	@Test
+	public void testJavaMethodExecutionWithMethodOverloads() {
+		ExecutionContext context = new ExecutionContext();
+		context.pushScope(context.createScope(new PrimativeAttribute("object", new TestJavaObject())));
+		
+		testAttributeValue("this.object.someMethod(1)", "method1", context);
+		testAttributeValue("this.object.someMethod(1, 2)", "method2", context);
+		testAttributeValue("this.object.someMethod(null, 2)", "method2", context);
+		testAttributeValue("this.object.someMethod(1, null)", "method2", context);
+		testAttributeValue("this.object.someMethod(null, null)", "method2", context);
+		testAttributeValue("this.object.someMethod(1, 3, false)", "method3", context);
+		testAttributeValue("this.object.someMethod(1, null, false)", "method3", context);
+		testAttributeValue("this.object.someMethod(null, null, false)", "method3", context);
+		
+		try {
+			buildAttribute("this.object.someMethod(true)").getValue(context);
+			
+			Assert.fail("Expected exception calling method with incorrect types");
+		} catch (Exception e) {}
+		
+		try {
+			buildAttribute("this.object.someMethod(1, 2, true, 4, 5)").getValue(context);
+			
+			Assert.fail("Expected exception attemping to call method with mismatched argument count");
+		} catch (Exception e) {}
+		
+		try {
+			buildAttribute("this.object.anotherMethod()").getValue(context);
+			
+			Assert.fail("Expected exception attemping to call none-existent method");
+		} catch (Exception e) {}
 	}
 	
 	@Test
