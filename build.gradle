@@ -1,6 +1,6 @@
 plugins {
-	id 'net.saliman.cobertura' version '2.3.2'
-	id 'com.github.kt3k.coveralls' version '2.6.3'
+    id 'net.saliman.cobertura' version '2.3.2'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
 apply plugin: 'antlr'
@@ -12,26 +12,27 @@ mainClassName = 'richTea.runtime.RuntimeMain'
 cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 
 jar {
-	manifest {
-		attributes 'Main-Class': mainClassName
-	}
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
 }
+
 // Execute RichTea program like so: 'gradle run -Pargs="path/to/program.tea"'
 run {
-	if(project.hasProperty('args')){
-		args project.args.split('\\s')
-	}
+    if(project.hasProperty('args')){
+        args project.args.split('\\s')
+    }
 }
 
 repositories {
-	jcenter()
+    jcenter()
 }
 
 dependencies {
-	antlr 'org.antlr:antlr:3.5.2'
-	compile 'commons-beanutils:commons-beanutils:1.9.2'
-	compile 'log4j:log4j:1.2.17'
-	compile 'org.antlr:antlr-runtime:3.5.2'
-	testCompile 'junit:junit-dep:4.11'
-	testRuntime "org.slf4j:slf4j-api:1.7.10"
+    antlr 'org.antlr:antlr:3.5.2'
+    compile 'commons-beanutils:commons-beanutils:1.9.2'
+    compile 'log4j:log4j:1.2.17'
+    compile 'org.antlr:antlr-runtime:3.5.2'
+    testCompile 'junit:junit-dep:4.11'
+    testRuntime "org.slf4j:slf4j-api:1.7.10"
 }
