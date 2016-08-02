@@ -2,7 +2,6 @@ grammar RichTea;
 
 options {
     output=AST;
-    k=2; // Needed to correctly match implicitAttributes in the attribute_list rule
     ASTLabelType=Tree;
     language=Java;
     backtrack=true;
@@ -20,6 +19,7 @@ tokens {
 }
 
 @header         { package richTea.compiler; }
+@members        { private boolean noWhitespace() { return input.get(input.index() - 1).getType() != WHITESPACE; } }
 @lexer::header  { package richTea.compiler; }
 @lexer::members { final int NOT_LEXING_STRING = 0;
                   final int LEXING_STRING = 1;
@@ -39,28 +39,20 @@ program
     ;
 
 function
-    :    ID OPEN_PAREN function_data? CLOSE_PAREN SEMI_COLON?
-             ->    ^(FUNCTION ^(NAME ID) function_data?)
-    |    OPEN_PAREN function_data? CLOSE_PAREN SEMI_COLON?
-             ->    ^(FUNCTION ^(NAME ID["scope"]) function_data?)
-    ;
-
-function_data
-    :    attribute_list branch_list
+    :    ID? OPEN_PAREN attribute_list COMMA? branch_list CLOSE_PAREN SEMI_COLON?
+             ->    { $ID != null }? ^(FUNCTION ^(NAME ID) attribute_list branch_list)
+             ->                     ^(FUNCTION ^(NAME ID["scope"]) attribute_list branch_list)
     ;
 
 attribute_list
-    :    attributes+=implicit_attribute? (COMMA? attributes+=attribute)*
-             ->    ^(ATTRIBUTES ^(ATTRIBUTE $attributes)*)
+    :    attribute[true]? (COMMA? attribute[false])*
+             ->    ^(ATTRIBUTES ^(ATTRIBUTE attribute)*)
     ;
 
-attribute
-    :    ID COLON expression
+attribute[boolean isImplicit]
+    :    ID { noWhitespace() }? COLON expression
              ->    ^(NAME ID) ^(VALUE expression)
-    ;
-
-implicit_attribute
-    :    expression
+    |    expression { isImplicit }?
              ->    ^(NAME ID["implicitAttribute"]) ^(VALUE expression)
     ;
 
