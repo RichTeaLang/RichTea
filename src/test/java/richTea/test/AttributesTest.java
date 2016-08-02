@@ -1,5 +1,6 @@
 package richTea.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class AttributesTest extends RichTeaTestBase {
 	public void testAttributeName() {
 		Attribute attribute = buildAttribute("attributeName:1");
 		
-		assertTrue(attribute.getName().equals("attributeName"));
+		assertEquals("attributeName", attribute.getName());
 	}
 	
 	@Test
@@ -65,8 +66,8 @@ public class AttributesTest extends RichTeaTestBase {
 		
 		Object value = attribute.getValue(null);
 		
-		assertTrue(value instanceof List<?>);
-		assertTrue(((List<?>) value).size() == 4);
+		assertTrue(List.class.isAssignableFrom(value.getClass()));
+		assertEquals(4, ((List<?>) value).size());
 	}
 	
 	@Test
