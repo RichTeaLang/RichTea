@@ -35,6 +35,14 @@ public class MathAttributesTest extends RichTeaTestBase {
 	}
 	
 	@Test
+	public void testNegativeNumbers() {
+		testAttributeValue("-1", -1);
+		testAttributeValue("-1.0", -1.0);
+		testAttributeValue("-1 - -5", 4.0);
+		testAttributeValue("-1 + -5.2", -6.2);
+	}
+	
+	@Test
 	public void testPlusEquals() {
 		Attribute attribute = buildAttribute("0 += 2");
 		

@@ -16,7 +16,7 @@ tokens {
     ARRAY; VARIABLE; STRING;
     PROPERTY_LOOKUP; NATIVE_METHOD_CALL; 
     THIS; LAST_RETURNED_VALUE;
-    TERNARY_OPERATOR; NEGATE;
+    TERNARY_OPERATOR;
 }
 
 @header         { package richTea.compiler; }
@@ -122,7 +122,6 @@ power_expression
 unary_expression
     :    primary_expression
     |    NOT^ primary_expression
-    |    MINUS primary_expression -> ^(NEGATE primary_expression)
     ;
 
 primary_expression
@@ -243,8 +242,8 @@ STRING_CHARACTERS
     |    { stringLexingState == ESCAPING_CHARACTER }? => . { stringLexingState = LEXING_STRING; }
     ;
 
-INTEGER: '0'..'9'+;
-DOUBLE:  INTEGER+ '.' INTEGER*;
+INTEGER: MINUS? NUMBER+;
+DOUBLE:  MINUS? NUMBER+ '.' NUMBER*;
 BOOLEAN: 'true' | 'false';
 NULL:    'null';
 ID:      UNDERSCORE? LETTER (LETTER | INTEGER | UNDERSCORE)* ;
@@ -300,3 +299,7 @@ LETTER
     :    'a'..'z'
     |    'A'..'Z'
     ;
+
+fragment
+NUMBER
+    :   '0'..'9';
