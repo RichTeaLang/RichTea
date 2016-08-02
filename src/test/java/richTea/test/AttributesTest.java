@@ -33,6 +33,13 @@ public class AttributesTest extends RichTeaTestBase {
 	@Test
 	public void testCreateDoubleAttribute() {
 		testAttributeValue("x:1.2", 1.2);
+		testAttributeValue("x:10.2", 10.2);
+	}
+	
+	@Test
+	public void testCreateFractionalDouble() {
+		testAttributeValue("x:.5", 0.5);
+		testAttributeValue("x:.123", 0.123);
 	}
 	
 	@Test
