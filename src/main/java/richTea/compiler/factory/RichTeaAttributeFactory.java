@@ -46,7 +46,7 @@ public class RichTeaAttributeFactory {
 		return create(attributeData.getName(), attributeData.getValue());
 	}
 	
-	protected Attribute create(String name, Tree value) {
+	public Attribute create(String name, Tree value) {
 		Attribute attribute = null;
 		
 		switch(value.getType()) {

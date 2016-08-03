@@ -1,9 +1,9 @@
-({
-	(false {
+(:{
+	(false :{
 		Assert(false, message:"Should not execute branch when 'if' attribute is 'false'")
 	})
 	
-	(x:(y:10) {
+	(x:@(y:10) :{
 		Assert(x.y == 10 message:"Nested scope variable lookup")
 	})
 	

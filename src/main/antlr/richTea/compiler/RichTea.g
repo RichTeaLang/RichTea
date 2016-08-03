@@ -11,7 +11,7 @@ tokens {
     FUNCTION; 
     CHILDREN; ATTRIBUTES;
     ATTRIBUTE; NAME; VALUE;
-    BRANCHES; BRANCH;
+    BRANCHES; BRANCH; GUARD;
     ARRAY; VARIABLE; STRING;
     PROPERTY_LOOKUP; NATIVE_METHOD_CALL; 
     THIS; LAST_RETURNED_VALUE;
@@ -34,7 +34,7 @@ tokens {
 program
     :    function function+
              // Wrap root-level function lists inside an anon scope function so we have a single entry point to the program
-             ->    ^(FUNCTION ^(NAME ID["scope"]) ^(ATTRIBUTES) ^(BRANCHES ^(BRANCH ^(NAME ID["implicitBranch"]) ^(CHILDREN function+))))
+             ->    ^(FUNCTION ^(NAME ID["scope"]) ^(ATTRIBUTES) ^(BRANCHES ^(BRANCH ^(NAME ID["implicitBranch"]) ^(GUARD BOOLEAN["true"]) ^(ATTRIBUTES) ^(CHILDREN function+))))
     |    function // No need to wrap
     ;
 
@@ -57,22 +57,35 @@ attribute[boolean isImplicit]
     ;
 
 branch_list
-    :    branches+=implicitBranch? (COMMA? branches+=branch)*
-             ->    ^(BRANCHES ^(BRANCH $branches)*)
+    :    branch[true]? (COMMA? branch[false])*
+             ->    ^(BRANCHES ^(BRANCH branch)*)
     ;
 
-branch
-    :    branch_name COLON? OPEN_BRACE function* CLOSE_BRACE
-             ->    ^(NAME branch_name) ^(CHILDREN function*)
+branch[boolean isImplicit]
+    :    COLON { noWhitespace() }? branch_name[isImplicit] branch_guard branch_attributes? OPEN_BRACE function* CLOSE_BRACE
+             ->    ^(NAME branch_name) ^(GUARD branch_guard) ^(ATTRIBUTES branch_attributes?) ^(CHILDREN function*)
     ;
 
-branch_name 
-    :     HASH!? (ID | string)
+branch_name[boolean isImplicit]
+    :     { isImplicit }? -> ID["implicitBranch"]
+    |	  ID | string
     ;
 
-implicitBranch 
-    :    HASH? OPEN_BRACE function* CLOSE_BRACE
-             ->    ^(NAME ID["implicitBranch"]) ^(CHILDREN function*)
+branch_guard
+    :    OPEN_PAREN! expression CLOSE_PAREN!
+    |    -> BOOLEAN["true"]
+    ;
+
+branch_attributes
+    :    PIPE branch_attribute (COMMA? branch_attribute)* PIPE
+             ->    branch_attribute+
+    ;
+
+branch_attribute
+    :    attribute[false]
+             ->    ^(ATTRIBUTE attribute)
+    |    ID
+             ->    ^(ATTRIBUTE ^(NAME ID) ^(VALUE NULL))
     ;
 
 /*    EXPRESSION EVALUATION    */
@@ -230,7 +243,7 @@ STRING_CHARACTERS
     :    { stringLexingState == LEXING_STRING }? =>
          { lastMark = input.mark(); } 
          (~('{'|'"'|'\\') { lastMark = input.mark(); })* ('{'|'"'|'\\')
-         { input.rewind(lastMark); } // Avoid consuming the delimiter character so that it is matched in a different rule
+         { input.rewind(); } // Avoid consuming the delimiter character so that it is matched in a different rule
     |    { stringLexingState == ESCAPING_CHARACTER }? => . { stringLexingState = LEXING_STRING; }
     ;
 
@@ -239,10 +252,9 @@ DOUBLE:  MINUS? NUMBER* '.' NUMBER+;
 BOOLEAN: 'true' | 'false';
 NULL:    'null';
 ID:      UNDERSCORE? LETTER (LETTER | INTEGER | UNDERSCORE)* ;
-
 COMMENT
-    :    '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
-    |    '/*' ( options {greedy=false;} : . )* '*/' { $channel=HIDDEN; }
+    :    '//' ~('\n'|'\r')* '\r'? '\n' { $channel=HIDDEN; }
+    |    '/*' ( options { greedy=false; } : . )* '*/' { $channel=HIDDEN; }
     ;
 
 WHITESPACE: ('\r' | '\n' | '\r\n' | ' ' | '\t' ) { $channel=HIDDEN; };
@@ -252,6 +264,7 @@ PERIOD:     '.';
 HASH:       '#';
 REFERENCE:  '@';
 UNDERSCORE: '_';
+PIPE:       '|';
 
 PLUS_EQUALS:     PLUS ASSIGN;
 MULTIPLY_EQUALS: MULTIPLY ASSIGN;

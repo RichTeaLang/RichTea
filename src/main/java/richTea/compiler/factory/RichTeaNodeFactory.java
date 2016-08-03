@@ -161,37 +161,32 @@ public class RichTeaNodeFactory {
 		}
 	}
 	
-	protected void buildBranch(TreeNode node, BranchData branchData) {	
-		Branch branch = new Branch(branchData.getName());
-		
-		boolean isImplicitBranch = branch.getName().equalsIgnoreCase("implicitBranch");
+	protected void buildBranch(TreeNode node, BranchData branchData) {
+		String branchName = branchData.getName();
+		Attribute guard = attributeFactory.create("guard", branchData.getGuard());
+		List<Attribute> attributes = branchData.getAttributes().stream().map(attributeFactory::create).collect(Collectors.toList());
+		boolean isImplicitBranch = branchName.equalsIgnoreCase("implicitBranch");
 		
 		if(isImplicitBranch) {
-			// Try rename the implictBranch only if we haven't already set an branch with the explicit name
-			String implicitBranchName = node.getBinding().getDefinition().getImplicitBranchName();
+			// Rename implicitBranch to it's explicit name
+			branchName = node.getBinding().getDefinition().getImplicitBranchName();
+		}
+		
+		if (branchName == null || branchName.length() == 0) {
+			throw new IllegalArgumentException("Branch name cannot be null or 0 length: " + branchName);
+		}
+		
+		Branch branch = new Branch(branchName, guard, attributes);
+		
+		for(NodeData child : branchData.getChildren()) {
+			TreeNode branchChild = create(child);
 			
-			if(implicitBranchName != null && !node.hasBranch(implicitBranchName)) {
-				branch.setName(implicitBranchName); // Rename implicitBranch to it's explicit name
-				
-				isImplicitBranch = false;
+			if(branchChild != null) {
+				branch.addChild(branchChild);
 			}
 		}
-				
-		if(!isImplicitBranch) {
-			List<NodeData> children = branchData.getChildren();
-			
-			if(children != null) {
-				for(NodeData child : branchData.getChildren()) {
-					TreeNode branchChild = create(child);
-					
-					if(branchChild != null) {
-						branch.addChild(branchChild);
-					}
-				}
-			}
-			
-			node.setBranch(branch);
-		}
+		
+		node.setBranch(branch);
 	}
 	
 	protected void setFunctionOnNode(TreeNode node, Binding binding) throws InstantiationException, IllegalAccessException {
