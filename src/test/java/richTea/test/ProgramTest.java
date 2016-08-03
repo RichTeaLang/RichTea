@@ -9,9 +9,8 @@ import org.junit.Test;
 import richTea.compiler.CompilationResult;
 import richTea.compiler.Compiler;
 import richTea.runtime.execution.ExecutionContext;
-import richTea.test.testLib.TestLibImportNode;
 
-public class ProgramTest {
+public class ProgramTest extends RichTeaTestBase {
 	
 	@Test
 	public void testFunctionUsage() {
@@ -31,8 +30,7 @@ public class ProgramTest {
 	protected void executeProgram(String resourcePath) {
 		try {
 			InputStream input = getClass().getClassLoader().getResourceAsStream(resourcePath);
-			Compiler compiler = new Compiler(new ANTLRInputStream(input));
-			compiler.getNodeFactory().registerImportNode(new TestLibImportNode());
+			Compiler compiler = createTestLibCompiler(new ANTLRInputStream(input));
 			CompilationResult compilation = compiler.compile();
 			Object lastReturnedValue = new ExecutionContext().execute(compilation.getProgram());
 			Assert.assertEquals("Last returned value", "Test Completed", lastReturnedValue);
