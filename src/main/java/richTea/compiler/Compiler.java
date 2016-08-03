@@ -56,7 +56,7 @@ public class Compiler {
 	}
 	
 	public Attribute compileAttribute() {
-		AttributeData attributeData = new AttributeData((CommonTree) getParseResult("implicit_attribute"));
+		AttributeData attributeData = new AttributeData(((CommonTree) getParseResult("attribute_list")).getChild(0));
 		Attribute attribute = getNodeFactory().getAttributeFactory().create(attributeData);
 		
 		return attribute;
