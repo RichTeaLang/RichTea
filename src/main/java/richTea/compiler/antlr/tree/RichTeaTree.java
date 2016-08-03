@@ -1,5 +1,6 @@
 package richTea.compiler.antlr.tree;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.antlr.runtime.Token;
@@ -19,6 +20,8 @@ public class RichTeaTree extends CommonTree {
 	
 	@SuppressWarnings("unchecked")
 	protected <T> List<T> getChildrenOfChild(int index) {
-		return (List<T>) ((CommonTree) getChild(index)).getChildren();
+		CommonTree child = (CommonTree) getChild(index);
+		
+		return child != null && child.getChildCount() > 0 ? (List<T>) child.getChildren() : Collections.EMPTY_LIST;
 	}
 }

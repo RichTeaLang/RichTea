@@ -4,8 +4,11 @@ import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import richTea.compiler.antlr.tree.AttributeData;
 import richTea.compiler.antlr.tree.BranchData;
@@ -124,30 +127,26 @@ public class RichTeaNodeFactory {
 	
 	protected void buildAttributes(TreeNode node, NodeData functionData) {
 		List<AttributeData> attributes = functionData.getAttributes();
+		Set<String> attributeNames = new HashSet<>();
 		
-		if(attributes != null) {
-			for(AttributeData attributeData : attributes) {
+		for(AttributeData attributeData : attributes) {
+			String attributeName = attributeData.getName();
+			boolean isImplicitAttribute = attributeName.equalsIgnoreCase("implicitAttribute");
+			
+			if (isImplicitAttribute) {
+				// Set the name of the implicit attribute
+				attributeName = node.getBinding().getDefinition().getImplicitAttributeName();
+			}
+			
+			if (attributeName == null || attributeName.length() == 0) {
+				throw new IllegalArgumentException("Attribute name cannot be null or 0 length: " + attributeName);
+			} else if (attributeNames.contains(attributeName)) {
+				throw new IllegalArgumentException("Duplicate attribute name: " + attributeName);
+			} else {
+				Attribute attribute = attributeFactory.create(attributeName, attributeData.getValue());
 				
-				Attribute attribute = attributeFactory.create(attributeData);
-						
-				if(attribute != null) {
-					boolean isImplicitAttribute = attribute.getName().equalsIgnoreCase("implicitAttribute");
-					
-					if(isImplicitAttribute) {
-						// Try rename the implictAttribute only if we haven't already set an attribute with the explicit name
-						String implicitAttributeName = node.getBinding().getDefinition().getImplicitAttributeName();
-						
-						if(implicitAttributeName != null && !node.hasAttribute(implicitAttributeName)) {
-							attribute.setName(implicitAttributeName); // Rename implicitAttribute to it's explicit name
-							
-							isImplicitAttribute = false;
-						}
-					}
-					
-					if(!isImplicitAttribute) {
-						node.setAttribute(attribute);
-					}
-				}
+				node.setAttribute(attribute);
+				attributeNames.add(attribute.getName());
 			}
 		}
 	}
