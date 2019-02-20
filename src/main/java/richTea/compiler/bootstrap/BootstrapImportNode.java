@@ -33,8 +33,8 @@ public class BootstrapImportNode extends ImportNode {
 	}
 	
 	@Override
-	public URLClassLoader getClassLoaderForModule(Path modulePath) {
-		return (URLClassLoader) getClass().getClassLoader();
+	public ClassLoader getClassLoaderForModule(Path modulePath) {
+		return getClass().getClassLoader();
 	}
 	
 	@Override

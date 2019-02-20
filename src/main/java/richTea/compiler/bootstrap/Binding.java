@@ -1,19 +1,17 @@
 package richTea.compiler.bootstrap;
 
-import java.net.URLClassLoader;
-
 import richTea.runtime.execution.RichTeaFunction;
 import richTea.runtime.node.TreeNode;
 
 public class Binding {
 	
 	private String name;
-	private URLClassLoader classLoader;
+	private ClassLoader classLoader;
 	private BindingDefinition definition;
 	private Class<? extends TreeNode> nodeClass;
 	private Class<? extends RichTeaFunction> functionClass;
 	
-	public Binding(String name, URLClassLoader classLoader, BindingDefinition definition) throws ClassNotFoundException {
+	public Binding(String name, ClassLoader classLoader, BindingDefinition definition) throws ClassNotFoundException {
 		this.name = name;
 		this.classLoader = classLoader;
 		this.definition = definition;
@@ -40,7 +38,7 @@ public class Binding {
 		return name;
 	}
 	
-	public URLClassLoader getClassLoader() {
+	public ClassLoader getClassLoader() {
 		return classLoader;
 	}
 	

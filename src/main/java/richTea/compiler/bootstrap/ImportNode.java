@@ -29,7 +29,7 @@ public class ImportNode extends DataNode {
 	public static final String EXPORTS_BRANCH_NAME = "exports";
 	
 	private Path workingDir;
-	private URLClassLoader classLoader;
+	private ClassLoader classLoader;
 	private Map<String, BindingDefinition> definitions;
 	private Map<String, Binding> bindings;
 	
@@ -85,11 +85,11 @@ public class ImportNode extends DataNode {
 		return Collections.unmodifiableMap(bindings);
 	}
 	
-	public URLClassLoader getClassLoader() {
+	public ClassLoader getClassLoader() {
 		return classLoader;
 	}
 	
-	protected URLClassLoader getClassLoaderForModule(Path modulePath) {
+	protected ClassLoader getClassLoaderForModule(Path modulePath) {
 		try {
 			File moduleFile = modulePath.toFile();
 			URL moduleURL = moduleFile.toURI().toURL();
@@ -175,7 +175,7 @@ public class ImportNode extends DataNode {
 	
 	protected Map<String, Binding> createBindings(
 			String prefix, 
-			URLClassLoader classLoader, 
+			ClassLoader classLoader, 
 			Collection<BindingDefinition> definitions) throws ClassNotFoundException {
 		
 		Map<String, Binding> bindings = new HashMap<>();

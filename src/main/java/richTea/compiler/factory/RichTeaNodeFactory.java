@@ -1,6 +1,5 @@
 package richTea.compiler.factory;
 
-import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,7 +109,7 @@ public class RichTeaNodeFactory {
 		String name = nodeData.getName();
 		BindingDefinition definition = new BindingDefinition(name, TreeNode.class, CallFunctionReference.class);
 		
-		return new Binding(name, (URLClassLoader) getClass().getClassLoader(), definition);
+		return new Binding(name, getClass().getClassLoader(), definition);
 	}
 	
 	protected Class<? extends TreeNode> getNodeClass(Binding binding) {

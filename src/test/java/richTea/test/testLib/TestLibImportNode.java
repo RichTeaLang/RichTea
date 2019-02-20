@@ -20,8 +20,8 @@ public class TestLibImportNode extends ImportNode {
 	}
 	
 	@Override
-	protected URLClassLoader getClassLoaderForModule(Path modulePath) {
-		return (URLClassLoader) getClass().getClassLoader();
+	protected ClassLoader getClassLoaderForModule(Path modulePath) {
+		return getClass().getClassLoader();
 	}
 	
 	@Override
