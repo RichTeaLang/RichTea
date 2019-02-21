@@ -18,14 +18,28 @@ tokens {
     TERNARY_OPERATOR;
 }
 
-@header         { package richTea.compiler; }
-@members        { private boolean noWhitespace() { return input.get(input.index() - 1).getType() != WHITESPACE; } }
-@lexer::header  { package richTea.compiler; }
-@lexer::members { final int NOT_LEXING_STRING = 0;
-                  final int LEXING_STRING = 1;
-                  final int ESCAPING_CHARACTER = 2;
-                  final int INTERPOLATING_STRING = 3;
-                  int stringLexingState = NOT_LEXING_STRING; }
+@header { 
+    package richTea.compiler;
+}
+
+@members {
+    private boolean isToken(int offset, int type) { return input.get(input.index() + offset).getType() == type; }
+    private boolean noWhitespace() { return !isToken(-1, WHITESPACE); }
+    private boolean isKeyValueAttribute() { return isToken(0, ID) && isToken(1, COLON); }
+    private boolean isImplicit = true; // Workaround for code generation error in attribute rule
+}
+
+@lexer::header {
+    package richTea.compiler;
+}
+
+@lexer::members {
+    final int NOT_LEXING_STRING = 0;
+    final int LEXING_STRING = 1;
+    final int ESCAPING_CHARACTER = 2;
+    final int INTERPOLATING_STRING = 3;
+    int stringLexingState = NOT_LEXING_STRING;
+}
 
 
 /*    PARSER RULES   */
@@ -50,10 +64,12 @@ attribute_list
     ;
 
 attribute[boolean isImplicit]
-    :    ID { noWhitespace() }? COLON expression
+    :    { isKeyValueAttribute() }?=> ID COLON expression
              ->    ^(NAME ID) ^(VALUE expression)
-    |    expression { isImplicit }?
+    |    { isImplicit }? expression 
              ->    ^(NAME ID["implicitAttribute"]) ^(VALUE expression)
+    |    ID 
+             ->    ^(NAME ID) ^(VALUE ^(VARIABLE ^(VALUE ^(PROPERTY_LOOKUP STRING_CHARACTERS[$ID.text]))))
     ;
 
 branch_list
@@ -68,7 +84,7 @@ branch[boolean isImplicit]
 
 branch_name[boolean isImplicit]
     :     { isImplicit }? -> ID["implicitBranch"]
-    |	  ID | string
+    |     ID | string
     ;
 
 branch_guard

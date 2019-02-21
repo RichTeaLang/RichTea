@@ -55,7 +55,6 @@ public class BranchesTest extends RichTeaTestBase {
 		
 		assertEquals(2, attributes.size());
 		assertEquals("x", attributes.get(0).getName());
-		assertEquals(null, attributes.get(0).getValue(null));
 		assertEquals("y", attributes.get(1).getName());
 		assertEquals(10, attributes.get(1).getValue(null));
 	}
