@@ -14,18 +14,22 @@ public class CallFunctionReference extends AbstractFunction {
 		TreeNode functionNode = getFunctionNode();
 		
 		if(functionNode != null) {
-			Attribute[] callAttributes = context.getCurrentNode().getAttributes();
-			Attribute[] callAttributeValues = new Attribute[callAttributes.length];
+			Attribute[] newAttributes = context.getCurrentNode().getAttributes();
+			Attribute[] oldAttributes = functionNode.getAttributes();
 			
-			for(int i = 0; i < callAttributes.length; i++) {
-				Attribute attribute = callAttributes[i];
-				
-				callAttributeValues[i] = new PrimativeAttribute(attribute.getName(), attribute.getValue(context));
+			for(Attribute attribute : newAttributes){
+				functionNode.setAttribute(new PrimativeAttribute(attribute.getName(), attribute.getValue(context)));
 			}
 			
-			context.pushScope(context.createScope(callAttributeValues));
 			context.execute(functionNode);
-			context.popScope();
+			
+			for(Attribute attribute : newAttributes) {
+				functionNode.removeAttribute(attribute.getName());
+			}
+			
+			for(Attribute attribute : oldAttributes) {
+				functionNode.setAttribute(attribute);
+			}
 		} else {
 			throw new IllegalArgumentException("Invalid function specified");
 		}

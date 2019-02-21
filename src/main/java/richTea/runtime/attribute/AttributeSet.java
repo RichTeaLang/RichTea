@@ -31,6 +31,10 @@ public class AttributeSet {
 		return attributes.put(attribute.getName().toLowerCase(), attribute);
 	}
 	
+	public Attribute removeAttribute(String attributeName) {
+		return attributes.remove(attributeName);
+	}
+	
 	public boolean hasAttribute(String attributeName) {
 		return attributes.containsKey(attributeName.toLowerCase());
 	}
